@@ -16,7 +16,7 @@
     "lint-staged": "lint-staged"
 	},
 	"eslintConfig": {
-		"extends": ["eslint:recommended","plugin:react/recommended", "react-app"]
+		"extends": ["eslint:recommended","plugin:react/recommended", "react-app", "airbnb"]
 	},
 	"browserslist": [
 		">0.2%",
@@ -36,6 +36,7 @@
 			"pre-commit": "lint-staged"
 		}
 	},
+
 	"lint-staged": {
 		"*.jsx" : [
       "eslint",
