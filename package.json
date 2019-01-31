@@ -16,7 +16,7 @@
     "lint-staged": "lint-staged"
 	},
 	"eslintConfig": {
-		"extends": "react-app"
+		"extends": ["eslint:recommended","plugin:react/recommended", "react-app"]
 	},
 	"browserslist": [
 		">0.2%",
@@ -38,7 +38,7 @@
 	},
 	"lint-staged": {
 		"*.jsx" : [
-     
+      "eslint",
       "eslint --fix",
 			"git add"
     ],
