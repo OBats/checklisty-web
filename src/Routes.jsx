@@ -12,7 +12,7 @@ const Routes = () => (
 			<Route path="/auth/signup/" component={SignUp} />
 		</Switch>
 	</BrowserRouter>
-)
+);
 	
 
 export default Routes;
