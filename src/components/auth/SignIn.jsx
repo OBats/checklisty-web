@@ -1,11 +1,6 @@
 import React, { Component } from 'react';
 // import {Switch, BrowserRouter, Route} from 'react-router-dom';
 
-class SignIn extends Component {
-  render() {
-    return <div>SignIn</div>;
-  }
-}
-
+const SignIn = () => <div>SignUp</div>;
 
 export default SignIn;

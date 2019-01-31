@@ -7,8 +7,8 @@ import SignUp from './components/auth/SignUp';
 const Routes = () => (
   <BrowserRouter>
     <Switch>
-      <Route path='/auth/signin/' component={SignIn} />
-      <Route path='/auth/signup/' component={SignUp} />
+      <Route path="/auth/signin/" component={SignIn} />
+      <Route path="/auth/signup/" component={SignUp} />
     </Switch>
   </BrowserRouter>
 );
