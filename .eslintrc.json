@@ -4,7 +4,11 @@
         "es6": true,
         "mongo": true
     },
-    "extends": ["eslint:recommended","plugin:react/recommended", "airbnb"],
+    "extends": [
+        "eslint:recommended",
+        "plugin:react/recommended",
+        "airbnb"
+    ],
     "parserOptions": {
         "ecmaFeatures": {
             "jsx": true
@@ -16,7 +20,10 @@
         "react"
     ],
     "rules": {
-        "indent": ["error", 2],
+        "indent": [
+            "error",
+            2
+        ],
         "linebreak-style": [
             "error",
             "unix"
@@ -29,7 +36,21 @@
             "error",
             "always"
         ],
-        "no-unused-vars" : 1,
-        "no-undef" : 1
+        "object-curly-newline": [
+            "error",
+            {
+                "ObjectExpression": "always",
+                "ObjectPattern": {
+                    "multiline": true
+                },
+                "ImportDeclaration": "never",
+                "ExportDeclaration": {
+                    "multiline": true,
+                    "minProperties": 3
+                }
+            }
+        ],
+        "no-unused-vars": 1,
+        "no-undef": 1
     }
 }
