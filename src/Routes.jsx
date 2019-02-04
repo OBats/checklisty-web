@@ -1,22 +1,25 @@
+/* eslint-disable linebreak-style */
 import React from 'react';
-import { Switch, BrowserRouter, Route, Redirect } from 'react-router-dom';
+import { Switch, Route, Redirect } from 'react-router-dom';
+import NavBar from './components/navbar/NavBar';
 import SignIn from './components/auth/SignIn';
 import SignUp from './components/auth/SignUp';
-import MainPage from './components/main/MainPage';
-import ShowCheckList from './components/main/ShowCheckList';
+// import MainPage from './components/main/MainPage';
+// import ShowCheckList from './components/main/ShowCheckList';
 import HomePage from './components/main/HomePage';
+import Profile from './components/profile/ProfilePage';
 
 const Routes = () => (
-  <BrowserRouter>
+  <div>
+    <NavBar />
     <Switch>
-      <Route path="/" component={HomePage} />
-      <Route path="/auth/signin/" component={SignIn} />
-      <Route path="/auth/signup/" component={SignUp} />
-      <Route exact path="/home" component={MainPage} />
-      <Route exact path="/home/:id" component={ShowCheckList} />
-      <Redirect to="/home" />
+      <Route exact path="/" component={HomePage} />
+      <Route exact path="/auth/signin/" component={SignIn} />
+      <Route exact path="/auth/signup/" component={SignUp} />
+      <Route exact path="/profile" component={Profile} />
+      <Redirect exact to="/" />
     </Switch>
-  </BrowserRouter>
+  </div>
 );
 
 export default Routes;
