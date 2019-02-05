@@ -1,0 +1,12 @@
+.checkListItems{
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    font-size: 30px;
+}
+.checkListLink{
+    margin-top: 30%;
+}
+.checkListLink:hover {
+    text-decoration: underline;
+}

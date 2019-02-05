@@ -2,6 +2,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import checkListData from './simpleData';
+import styles from './MainPage.module.css';
 
 class MainPage extends Component {
   constructor(props) {
@@ -32,11 +33,12 @@ class MainPage extends Component {
     return (
       <div>
         <h1> CheckLists </h1>
-        <div className="list-of-checklist">
+        <div className={styles.checkListItems}>
           {showAllCheckList && showAllCheckList.map(currentCheckList => (
             <Link
               key={currentCheckList.id}
               to={`/home/${currentCheckList.id}`}
+              className={styles.checkListLink}
             >
               {currentCheckList.title}
             </Link>
