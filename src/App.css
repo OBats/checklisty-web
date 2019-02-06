@@ -1,3 +1,17 @@
+.Auth {
+  height: 100vh;
+  background-color: #F7F7F7;
+}
+
+.Form {
+  max-width: 450px;
+}
+
+.Message {
+  text-align: center;
+  font-weight: bold;
+}
+
 .App {
   text-align: center;
 }
