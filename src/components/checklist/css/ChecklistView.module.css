@@ -1,0 +1,19 @@
+.checklistItem{
+    border: 1px solid lightgray;
+}
+
+.checklistItem:nth-child(odd){
+    background-color: #ffffff;
+}
+
+.checklistItem:nth-child(even){
+    background-color: #f8f7f6;
+}
+
+.checklistItem:nth-child(odd):hover{
+    background-color: #f1f1f1;
+}
+
+.checklistItem:nth-child(even):hover{
+    background-color: rgb(241, 240, 237)
+}

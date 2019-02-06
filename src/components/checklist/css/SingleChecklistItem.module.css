@@ -1,0 +1,37 @@
+.priorityCircle{
+    padding-left: 3vh;
+    padding-bottom: 2vh;
+}
+
+.checklistTitle{
+    font-weight: 800;
+    font-size: 1.3rem; 
+    color: black;
+}
+
+.checklistDescription{
+    font-weight: 500;
+    color: black;
+    font-size: 1.2rem;
+}
+
+.checklistTitleCrossedOut{
+    font-weight: 800;
+    color: gray;
+    text-decoration: line-through;
+    font-size: 1.3rem; 
+}
+
+.checklistDescriptionCrossedOut{
+    font-weight: 500;
+    color: gray;
+    text-decoration: line-through;
+    font-size: 1.2rem;
+}
+
+.labelStyle{
+    text-transform: uppercase;
+}
+.labelStyleBottomPadding{
+    padding-bottom: 1vh;
+}
