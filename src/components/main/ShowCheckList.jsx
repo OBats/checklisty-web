@@ -37,11 +37,7 @@ class ShowCheckList extends Component {
     }
     return (
       <div>
-        <h1>
-          Here will be
-          {checkList.title}
-          check list
-        </h1>
+        <h1>{`Here will be ${checkList.title} check list`}</h1>
       </div>
     );
   }

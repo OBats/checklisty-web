@@ -147,7 +147,7 @@ class ChecklistView extends Component {
                 </Button>
               </Grid.Column>
               <Grid.Column width={1}>
-                <Button size="medium" icon color={isWholeChecklistHidden && ('red')} onClick={this.handleClickEyeButton}>
+                <Button size="medium" icon color={isWholeChecklistHidden ? 'red' : 'grey'} onClick={this.handleClickEyeButton}>
                   {!isWholeChecklistHidden && (
                     <Icon name="eye" />
                   )
