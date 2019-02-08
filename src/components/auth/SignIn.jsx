@@ -1,21 +1,11 @@
 /* eslint-disable no-tabs */
 import React from 'react';
 import { Formik, Form } from 'formik';
-import * as Yup from 'yup';
-import '../../App.css';
+import './Auth.css';
 import { Input, Button, Grid, Segment, Message } from 'semantic-ui-react';
 import Link from 'react-router-dom/Link';
 import { signIn } from '../../api/auth-api';
-
-const SigninSchema = Yup.object().shape({
-  email: Yup.string()
-    .email('Invalid email, please input correct data')
-    .required('Email is required'),
-  password: Yup.string()
-    .min(6, 'Invalid password, please input correct data')
-    .max(15, 'Invalid password, please input correct data')
-    .required('Password is required'),
-});
+import { SigninSchema } from './validationSchema';
 
 const SignIn = () => (
   <div>
@@ -27,7 +17,15 @@ const SignIn = () => (
               email: '', password: '',
             }}
             validationSchema={SigninSchema}
-            onSubmit={values => signIn(values)}
+            onSubmit={(values, actions) => {
+              signIn(values)
+                .then(() => {
+                  window.location = '/';
+                })
+                .catch(error => (
+                  actions.setErrors(error.response.data)
+                ));
+            }}
           >
             {({
               values,
@@ -36,7 +34,6 @@ const SignIn = () => (
               handleSubmit,
               errors,
               touched,
-              isSubmitting,
               isValid,
             }) => (
               <Form className="login-form" onSubmit={handleSubmit}>
@@ -52,8 +49,7 @@ const SignIn = () => (
                   onBlur={handleBlur}
                   value={values.email}
                 />
-                {touched.email && errors.email}
-                <br />
+                <div className="Error">{touched.email && errors.email}</div>
                 <Input
                   required
                   icon="lock"
@@ -66,8 +62,8 @@ const SignIn = () => (
                   onBlur={handleBlur}
                   value={values.password}
                 />
-                {touched.password && errors.password}
-                <br />
+                <div className="Error">{touched.password && errors.password}</div>
+                <div className="Message Red">{errors.message}</div>
                 <Button
                   fluid
                   size="large"
@@ -76,7 +72,6 @@ const SignIn = () => (
                   disabled={!isValid}
                 >
 										Login
-
                 </Button>
               </Form>
             )}
