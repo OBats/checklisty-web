@@ -58,7 +58,6 @@ const PlacesComplete = (props) => {
                     </small>
                   </div>
                 );
-                /* eslint-enable react/jsx-key */
               })}
             </div>
           )}

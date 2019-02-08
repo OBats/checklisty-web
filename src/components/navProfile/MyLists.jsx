@@ -1,27 +1,16 @@
 import React from 'react';
-import { Container, Header, Segment } from 'semantic-ui-react';
-
-import ProfileItem from './ProfileItem';
-import SearchComponent from './Search';
-
-const Listdata = [{
-  icon: 'file',
-  name: 'Frontend',
-  url: 'url',
-},
-{
-  icon: 'file',
-  name: 'Backend',
-  url: 'url',
-}];
+import { Container, Header, Image } from 'semantic-ui-react';
 
 const ProfilesubInfo = () => (
   <Container>
-    <SearchComponent />
-    <Segment>
-      <Header as="h2">Here is your Lists</Header>
-      <ProfileItem data={Listdata} />
-    </Segment>
+    <Header as="h1">Your list will be here</Header>
+    <Image
+      src="http://www.joelnelsongroup.com/wp-content/uploads/2015/08/Coming-Soon.jpg"
+      as="a"
+      size="medium"
+      href="http://google.com"
+      target="_blank"
+    />
   </Container>
 );
 

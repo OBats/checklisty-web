@@ -2,7 +2,6 @@ import React from 'react';
 import { Container, Header, Segment } from 'semantic-ui-react';
 
 import FriendElement from './FriendElement';
-import SearchComponent from './Search';
 
 const Frienddata = [{
   icon: 'users',
@@ -19,7 +18,6 @@ const Frienddata = [{
 
 const MyFriends = () => (
   <Container>
-    <SearchComponent data={Frienddata} />
     <Segment>
       <Header as="h2">Here is your Friends</Header>
       <FriendElement data={Frienddata} />

@@ -2,43 +2,44 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react';
 import Avatar from 'react-avatar';
-import { Container, Form, Card } from 'semantic-ui-react';
-
-import ProfileButtons from './ProfileButtons';
+import { Form, Card, Button, Grid } from 'semantic-ui-react';
 
 const image = <Avatar size={200} color="green" name="Elliot Baker" />;
 
 const ProfileMainInfo = () => (
-  <Container>
-    <Card
-      className="card_image"
-      centered
-      image={image}
-      header="Elliot Baker"
-    />
-    <Form>
-      <Form.Field>
-        <label>Name</label>
-        <input placeholder="Change name" />
-      </Form.Field>
-      <Form.Field>
-        <label>Email</label>
-        <input type="email" placeholder="Change email" />
-      </Form.Field>
-      <Form.Field>
-        <label>Old password</label>
-        <input type="password" placeholder="Type password" />
-      </Form.Field>
-      <Form.Field>
-        <label>New password</label>
-        <Form.Group>
-          <input type="password" placeholder="Type new password" />
-          <input type="password" placeholder="Repeat password" />
-        </Form.Group>
-      </Form.Field>
-      <ProfileButtons />
-    </Form>
-  </Container>
+  <Grid columns="equal">
+    <Grid.Row width={8}>
+      <Grid.Column>
+        <Card
+          className="card_image"
+          image={image}
+          header="Elliot Baker"
+        />
+        <Form>
+          <Form.Field>
+            <Form.Input label="Name" placeholder="Change name" width={6} />
+          </Form.Field>
+          <Form.Field>
+            <Form.Input label="Email" placeholder="Change email" width={6} />
+          </Form.Field>
+          <Form.Field>
+            <Form.Input label="Old password" placeholder="Type password" width={6} />
+          </Form.Field>
+          <Form.Field>
+            <Form.Group>
+              <Form.Input label="Old password" placeholder="Type new password" width={6} />
+              <Form.Input label="Old password" placeholder="Repeat password" width={6} />
+            </Form.Group>
+          </Form.Field>
+        </Form>
+      </Grid.Column>
+    </Grid.Row>
+    <Grid.Row>
+      <Grid.Column width={6}>
+        <Button fluid color="green" type="submit" size="big">Save</Button>
+      </Grid.Column>
+    </Grid.Row>
+  </Grid>
 );
 
 export default ProfileMainInfo;
