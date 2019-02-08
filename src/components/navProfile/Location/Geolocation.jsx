@@ -16,6 +16,7 @@ class Geolocation extends React.Component {
       isGeocoding: false,
     };
   }
+
   handleChange = (address) => {
     this.setState({
       address,

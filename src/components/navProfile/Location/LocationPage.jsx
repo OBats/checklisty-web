@@ -9,7 +9,7 @@ class LocationPage extends Component {
     this.state = {
       showSearch: false,
     };
-  };
+  }
 
   addLocation = () => {
     this.setState({
@@ -26,7 +26,9 @@ class LocationPage extends Component {
         && (
           <Segment placeholder>
             <Header icon>
-              <Icon name="search" /> You have not yet specified your location yet
+              <Icon name="search" />
+              {' '}
+You have not yet specified your location yet
             </Header>
             <Segment.Inline>
               <Button onClick={this.addLocation} primary>Add Location</Button>

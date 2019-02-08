@@ -8,15 +8,19 @@ import HomePage from './components/main/HomePage';
 import ProfileNav from './components/navProfile/ProfileNav';
 import { validateUser } from './api/auth-api';
 import Logout from './components/auth/Logout';
+
 class Routes extends Component {
-  state = {};
-  
+  state = {
+  };
+
   async componentDidMount() {
     try {
       const token = await localStorage.getItem('access-token');
       const user = await validateUser();
-      this.setState({ user });
-    } catch(err) {
+      this.setState({
+        user,
+      });
+    } catch (err) {
       return null;
     }
   }
@@ -25,7 +29,7 @@ class Routes extends Component {
     const { user } = this.state;
     return (
       <React.Fragment>
-        <NavBar user={user}/>
+        <NavBar user={user} />
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route exact path="/auth/signin/" component={SignIn} />
@@ -37,7 +41,7 @@ class Routes extends Component {
         </Switch>
       </React.Fragment>
     );
-  };
-};
+  }
+}
 
 export default Routes;

@@ -131,7 +131,7 @@ class SingleChecklistItem extends Component {
               <Grid.Row>
                 <Grid.Column width={1} />
                 <Grid.Column width={6} className={style.labelStyleBottomPadding}>
-                  {this.props.propsData.tags.map((elem, index) => <Label key={index} size="medium"><span className={style.labelStyle}>{elem}</span></Label>)}
+                  {this.props.propsData.tags.map((elem, index) => <Label key={index.toString()} size="medium"><span className={style.labelStyle}>{elem}</span></Label>)}
                 </Grid.Column>
               </Grid.Row>
             </Grid>

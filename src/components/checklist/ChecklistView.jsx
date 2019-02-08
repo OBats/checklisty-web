@@ -165,7 +165,7 @@ class ChecklistView extends Component {
                   {
                     data.item_data.map((elem, index) => (
                       <SingleChecklistItem
-                        key={index}
+                        key={index.toString()}
                         propsData={elem}
                         index={index}
                         handleClickAccordion={this.handleClickAccordion}

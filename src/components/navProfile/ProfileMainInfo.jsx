@@ -1,20 +1,14 @@
 /* eslint-disable jsx-a11y/label-has-for */
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react';
-import Avatar from 'react-avatar';
-import { Form, Card, Button, Grid } from 'semantic-ui-react';
-
-const image = <Avatar size={200} color="green" name="Elliot Baker" />;
+import { Form, Button, Grid } from 'semantic-ui-react';
+import AvatarForProfile from './Avatar';
 
 const ProfileMainInfo = () => (
   <Grid columns="equal">
     <Grid.Row width={8}>
       <Grid.Column>
-        <Card
-          className="card_image"
-          image={image}
-          header="Elliot Baker"
-        />
+        <AvatarForProfile />
         <Form>
           <Form.Field>
             <Form.Input label="Name" placeholder="Change name" width={6} />
