@@ -1,55 +1,48 @@
-import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
+/* eslint-disable react/prop-types */
+import React from 'react';
+import { Link, NavLink } from 'react-router-dom';
 import { Menu } from 'semantic-ui-react';
 
-class NavBar extends Component {
-  constructor(props) {
-    super(props);
 
-    this.state = {
-      activeItem: '',
-    };
-
-    this.handleItemClick = (e, { name }) => this.setState({
-      activeItem: name,
-    });
-  }
-
-  render() {
-    const { activeItem } = this.state;
-    return (
-      <Menu>
-        <Menu.Item
-          name="main"
-          as={Link}
-          to="/"
-          active={activeItem === 'main'}
-          onClick={this.handleItemClick}
-        >
-          Main Page
-        </Menu.Item>
+const NavBar = ({ user }) => (
+  <Menu>
+    <Menu.Item
+      name="main"
+      as={Link}
+      to="/"
+    >
+      Main Page
+    </Menu.Item>
+    {!user && (
+      <Menu.Item
+        name="signIn"
+        position="right"
+        as={NavLink}
+        to="/auth/signin/"
+      >
+          Sign In
+      </Menu.Item>
+    )}
+    {user && (
+      <React.Fragment>
         <Menu.Item
           name="profile"
           position="right"
-          as={Link}
+          as={NavLink}
           to="/profile"
-          active={activeItem === 'profile'}
-          onClick={this.handleItemClick}
         >
-          Profile
+          {user.username}
         </Menu.Item>
         <Menu.Item
-          name="signUp"
-          as={Link}
-          to="/auth/signup/"
-          active={activeItem === 'signUp'}
-          onClick={this.handleItemClick}
+          name="profile"
+          as={NavLink}
+          to="/logout"
         >
-          Sign Up
+          Logout
         </Menu.Item>
-      </Menu>
-    );
-  }
-}
+      </React.Fragment>
+    )}
+  </Menu>
+);
 
 export default NavBar;
