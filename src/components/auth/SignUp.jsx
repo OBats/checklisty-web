@@ -1,8 +1,8 @@
 import React from 'react';
 import { Formik, Form } from 'formik';
-import './Auth.css';
 import Link from 'react-router-dom/Link';
 import { Input, Button, Grid, Segment, Message } from 'semantic-ui-react';
+import style from './auth.module.css';
 import { signUp } from '../../api/auth-api';
 import { SignupSchema } from './validationSchema';
 

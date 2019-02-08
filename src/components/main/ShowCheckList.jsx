@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import checkListData from './simpleData';
+import ChecklistView from '../checklist/ChecklistView';
+import http from '../../api/http';
+import loaderStyle from './loader.module.css';
 
 class ShowCheckList extends Component {
   constructor(props) {
@@ -14,21 +16,22 @@ class ShowCheckList extends Component {
 
   componentDidMount() {
     const { match } = this.props;
-    setTimeout(() => {
-      const getId = parseInt(match.params.id, 10);
-      const found = checkListData.find(checkListType => checkListType.id === getId);
-      this.setState({
-        checkList: found,
-        loading: false,
+    const getId = match.params.id;
+
+    http.get(`/api/checklists/${getId}`)
+      .then((res) => {
+        this.setState({
+          checkList: res.data,
+          loading: false,
+        });
       });
-    }, 2000);
   }
 
   render() {
-    const { checkList, loading } = this.state;
+    const { loading, checkList } = this.state;
     if (loading) {
       return (
-        <h1>Loading</h1>
+        <div className={loaderStyle.loader}>Loading...</div>
       );
     } if (!checkList) {
       return (
@@ -38,6 +41,7 @@ class ShowCheckList extends Component {
     return (
       <div>
         <h1>{`Here will be ${checkList.title} check list`}</h1>
+        <ChecklistView checkListData={checkList} />
       </div>
     );
   }

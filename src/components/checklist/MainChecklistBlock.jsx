@@ -1,8 +1,7 @@
-/* eslint-disable import/no-named-as-default-member */
-/* eslint-disable import/no-named-as-default */
+/* eslint-disable react/prop-types */
 import React, { Component } from 'react';
 import { Grid, Container } from 'semantic-ui-react';
-import ChecklistView from './ChecklistView';
+// import ChecklistView from './ChecklistView';
 import checkListData from './dataExample';
 
 class MainChecklistBlock extends Component {
@@ -20,8 +19,8 @@ class MainChecklistBlock extends Component {
         <Grid.Column width={3}></Grid.Column>
         <Grid.Column width={10}>
           <Container>
-            <ChecklistView checkListData={data[0]} />
-            <ChecklistView checkListData={data[1]} />
+            {/* <ChecklistView checkListData={data[0]} />
+            <ChecklistView checkListData={data[1]} /> */}
           </Container>
         </Grid.Column>
         <Grid.Column width={3}></Grid.Column>

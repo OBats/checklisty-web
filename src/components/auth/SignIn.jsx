@@ -1,9 +1,9 @@
 /* eslint-disable no-tabs */
 import React from 'react';
 import { Formik, Form } from 'formik';
-import './Auth.css';
 import { Input, Button, Grid, Segment, Message } from 'semantic-ui-react';
 import Link from 'react-router-dom/Link';
+import style from './auth.module.css';
 import { signIn } from '../../api/auth-api';
 import { SigninSchema } from './validationSchema';
 

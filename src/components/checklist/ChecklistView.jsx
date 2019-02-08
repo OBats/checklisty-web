@@ -1,8 +1,4 @@
-/* eslint-disable no-plusplus */
-/* eslint-disable react/sort-comp */
-/* eslint-disable react/no-access-state-in-setstate */
 /* eslint-disable react/prop-types */
-/* eslint-disable react/destructuring-assignment */
 import React, { Component } from 'react';
 import { Accordion, Container, Grid, Progress, Button, Header, Icon } from 'semantic-ui-react';
 import SingleChecklistItem from './SingleChecklistItem';
@@ -11,179 +7,195 @@ import style from './css/ChecklistView.module.css';
 class ChecklistView extends Component {
   constructor(props) {
     super(props);
+    const { checkListData } = this.props;
     this.state = {
-      data: this.props.checkListData,
+      data: checkListData,
       checkboxArray: [],
       accordionIndexArray: [],
       iconNameArray: [],
       isWholeChecklistHidden: false,
       currentProgress: 0,
     };
+
     this.handleClickEyeButton = this.handleClickEyeButton.bind(this);
+    this.handleChecked = this.handleChecked.bind(this);
+    this.handleClickAccordion = this.handleClickAccordion.bind(this);
+    this.handleSetAllCheckboxes = this.handleSetAllCheckboxes.bind(this);
+    this.handleResetAllCheckboxes = this.handleResetAllCheckboxes.bind(this);
+    this.handleOpenAllAccordions = this.handleOpenAllAccordions.bind(this);
+    this.handleCloseAllAccordions = this.handleCloseAllAccordions.bind(this);
   }
 
   componentDidMount() {
-    const checkboxArray = [];
+    const checkboxArrayTemporal = [];
     const accordionIndexArray = [];
     const iconNameArray = [];
 
-    for (let i = 0; i < this.state.data.item_data.length; i++) {
-      checkboxArray.push(false);
+    const { data } = this.state;
+
+    for (let i = 0; i < data.items_data.length; i += 1) {
+      checkboxArrayTemporal.push(false);
       accordionIndexArray.push(-1);
       iconNameArray.push('chevron down');
     }
     this.setState({
-      checkboxArray, accordionIndexArray, iconNameArray,
+      checkboxArray: checkboxArrayTemporal, accordionIndexArray, iconNameArray,
     });
   }
 
-    handleChecked = (index) => {
-      const checkboxArray = [...this.state.checkboxArray];
-      checkboxArray[index] = !checkboxArray[index];
+  handleChecked(index) {
+    const { checkboxArray } = this.state;
 
-      let countOfCheckedItems = 0;
+    const checkboxArrayTemporal = [...checkboxArray];
+    checkboxArrayTemporal[index] = !checkboxArrayTemporal[index];
 
-      for (let i = 0; i < this.state.checkboxArray.length; i++) {
-        if (checkboxArray[i] === true) {
-          countOfCheckedItems++;
-        }
+    let countOfCheckedItems = 0;
+
+    for (let i = 0; i < checkboxArray.length; i += 1) {
+      if (checkboxArrayTemporal[i] === true) {
+        countOfCheckedItems += 1;
       }
-
-      const currentProgress = (
-        (countOfCheckedItems / this.state.checkboxArray.length) * 100
-      ).toFixed(0);
-
-      this.setState({
-        checkboxArray,
-        currentProgress,
-      });
     }
 
-    handleClickAccordion = (index) => {
-      const accordionIndexArray = [...this.state.accordionIndexArray];
-      accordionIndexArray[index] = accordionIndexArray[index] === 0 ? -1 : 0;
+    const currentProgress = (
+      (countOfCheckedItems / checkboxArray.length) * 100
+    ).toFixed(0);
 
-      const iconNameArray = [...this.state.iconNameArray];
-      iconNameArray[index] = accordionIndexArray[index] === 0 ? 'chevron up' : 'chevron down';
+    this.setState({
+      checkboxArray: checkboxArrayTemporal,
+      currentProgress,
+    });
+  }
 
-      this.setState({
-        accordionIndexArray,
-        iconNameArray,
-      });
-    }
+  handleClickAccordion(index) {
+    const { accordionIndexArray, iconNameArray } = this.state;
 
-    handleClickEyeButton() {
-      this.setState({
-        isWholeChecklistHidden: !this.state.isWholeChecklistHidden,
-      });
-    }
+    const accordionIndexArrayTemporal = [...accordionIndexArray];
+    accordionIndexArrayTemporal[index] = accordionIndexArrayTemporal[index] === 0 ? -1 : 0;
 
-    handleSetAllCheckboxes = () => {
-      this.setState(({ checkboxArray }) => ({
-        checkboxArray: checkboxArray.map(() => true),
-        currentProgress: 100,
-      }));
-    }
+    const iconNameArrayTemporal = [...iconNameArray];
+    iconNameArrayTemporal[index] = accordionIndexArrayTemporal[index] === 0 ? 'chevron up' : 'chevron down';
 
-    handleResetAllCheckboxes = () => {
-      this.setState(({ checkboxArray }) => ({
-        checkboxArray: checkboxArray.map(() => false),
-        currentProgress: 0,
-      }));
-    }
+    this.setState({
+      accordionIndexArray: accordionIndexArrayTemporal,
+      iconNameArray: iconNameArrayTemporal,
+    });
+  }
 
-    handleOpenAllAccordions = () => {
-      this.setState(({ accordionIndexArray, iconNameArray }) => ({
-        accordionIndexArray: accordionIndexArray.map(() => 0),
-        iconNameArray: iconNameArray.map(() => 'chevron up'),
-      }));
-    }
+  handleClickEyeButton() {
+    const { isWholeChecklistHidden } = this.state;
 
-    handleCloseAllAccordions = () => {
-      this.setState(({ accordionIndexArray, iconNameArray }) => ({
-        accordionIndexArray: accordionIndexArray.map(() => -1),
-        iconNameArray: iconNameArray.map(() => 'chevron down'),
-      }));
-    }
+    this.setState({
+      isWholeChecklistHidden: !isWholeChecklistHidden,
+    });
+  }
 
-    render() {
-      const {
-        data,
-        currentProgress,
-        isWholeChecklistHidden,
-        accordionIndexArray,
-        checkboxArray,
-        iconNameArray,
-      } = this.state;
-      return (
-        <Container>
-          <Grid>
-            <Grid.Row verticalAlign="middle">
-              <Grid.Column width={6}>
-                <Header size="large">{data.title}</Header>
-              </Grid.Column>
-              <Grid.Column width={4}>
-                <Progress percent={currentProgress} indicating size="medium">
-                  {' '}
-                  {`Current progress: ${currentProgress}%`}
-                  {' '}
-                </Progress>
-              </Grid.Column>
-              <Grid.Column width={1}></Grid.Column>
-              <Grid.Column width={2} floated="right">
-                <Button size="medium" icon color="teal" onClick={this.handleSetAllCheckboxes}>
-                  <Icon name="check" />
-                </Button>
-                <Button size="medium" icon color="red" onClick={this.handleResetAllCheckboxes}>
-                  <Icon name="expand" />
-                </Button>
-              </Grid.Column>
-              <Grid.Column width={2} floated="right">
-                <Button size="medium" icon color="teal" onClick={this.handleOpenAllAccordions}>
-                  <Icon name="angle double down" />
-                </Button>
-                <Button size="medium" icon color="red" onClick={this.handleCloseAllAccordions}>
-                  <Icon name="angle double up" />
-                </Button>
-              </Grid.Column>
-              <Grid.Column width={1}>
-                <Button size="medium" icon color={isWholeChecklistHidden ? 'red' : 'grey'} onClick={this.handleClickEyeButton}>
-                  {!isWholeChecklistHidden && (
-                    <Icon name="eye" />
-                  )
-                  }
-                  {isWholeChecklistHidden && (
-                    <Icon name="eye slash" />
-                  )
-                  }
-                </Button>
-              </Grid.Column>
+  handleSetAllCheckboxes() {
+    this.setState(({ checkboxArray }) => ({
+      checkboxArray: checkboxArray.map(() => true),
+      currentProgress: 100,
+    }));
+  }
+
+  handleResetAllCheckboxes() {
+    this.setState(({ checkboxArray }) => ({
+      checkboxArray: checkboxArray.map(() => false),
+      currentProgress: 0,
+    }));
+  }
+
+  handleOpenAllAccordions() {
+    this.setState(({ accordionIndexArray, iconNameArray }) => ({
+      accordionIndexArray: accordionIndexArray.map(() => 0),
+      iconNameArray: iconNameArray.map(() => 'chevron up'),
+    }));
+  }
+
+  handleCloseAllAccordions() {
+    this.setState(({ accordionIndexArray, iconNameArray }) => ({
+      accordionIndexArray: accordionIndexArray.map(() => -1),
+      iconNameArray: iconNameArray.map(() => 'chevron down'),
+    }));
+  }
+
+  render() {
+    const {
+      data,
+      currentProgress,
+      isWholeChecklistHidden,
+      accordionIndexArray,
+      checkboxArray,
+      iconNameArray,
+    } = this.state;
+    return (
+      <Container>
+        <Grid>
+          <Grid.Row verticalAlign="middle">
+            <Grid.Column width={6}>
+              <Header size="large">{data.title}</Header>
+            </Grid.Column>
+            <Grid.Column width={4}>
+              <Progress percent={currentProgress} indicating size="medium">
+                {' '}
+                {`Current progress: ${currentProgress}%`}
+                {' '}
+              </Progress>
+            </Grid.Column>
+            <Grid.Column width={1}></Grid.Column>
+            <Grid.Column width={2} floated="right">
+              <Button size="medium" icon color="teal" onClick={this.handleSetAllCheckboxes}>
+                <Icon name="check" />
+              </Button>
+              <Button size="medium" icon color="red" onClick={this.handleResetAllCheckboxes}>
+                <Icon name="expand" />
+              </Button>
+            </Grid.Column>
+            <Grid.Column width={2} floated="right">
+              <Button size="medium" icon color="teal" onClick={this.handleOpenAllAccordions}>
+                <Icon name="angle double down" />
+              </Button>
+              <Button size="medium" icon color="red" onClick={this.handleCloseAllAccordions}>
+                <Icon name="angle double up" />
+              </Button>
+            </Grid.Column>
+            <Grid.Column width={1}>
+              <Button size="medium" icon color={isWholeChecklistHidden ? 'red' : 'grey'} onClick={this.handleClickEyeButton}>
+                {!isWholeChecklistHidden && (
+                  <Icon name="eye" />
+                )
+                }
+                {isWholeChecklistHidden && (
+                  <Icon name="eye slash" />
+                )
+                }
+              </Button>
+            </Grid.Column>
+          </Grid.Row>
+          {!isWholeChecklistHidden && (
+            <Grid.Row>
+              <Accordion className={style.accordionStyle} fluid>
+                {
+                  data.items_data.map((elem, index) => (
+                    <SingleChecklistItem
+                      key={index.toString()}
+                      propsData={elem}
+                      index={index}
+                      handleClickAccordion={this.handleClickAccordion}
+                      accordionIndex={accordionIndexArray[index]}
+                      handleChecked={this.handleChecked}
+                      checkedIndex={checkboxArray[index]}
+                      iconName={iconNameArray[index]}
+                      className={style.checklistItem}
+                    />
+                  ))
+                }
+              </Accordion>
             </Grid.Row>
-            {!isWholeChecklistHidden && (
-              <Grid.Row>
-                <Accordion className={style.accordionStyle} fluid>
-                  {
-                    data.item_data.map((elem, index) => (
-                      <SingleChecklistItem
-                        key={index.toString()}
-                        propsData={elem}
-                        index={index}
-                        handleClickAccordion={this.handleClickAccordion}
-                        accordionIndex={accordionIndexArray[index]}
-                        handleChecked={this.handleChecked}
-                        checkedIndex={checkboxArray[index]}
-                        iconName={iconNameArray[index]}
-                        className={style.checklistItem}
-                      />
-                    ))
-                  }
-                </Accordion>
-              </Grid.Row>
-            )}
-          </Grid>
-        </Container>
-      );
-    }
+          )}
+        </Grid>
+      </Container>
+    );
+  }
 }
 
 export default ChecklistView;
