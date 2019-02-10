@@ -40,7 +40,6 @@
         "object-curly-newline": [
             "error",
             {
-                "ObjectExpression": "always",
                 "ObjectPattern": {
                     "multiline": true
                 },
