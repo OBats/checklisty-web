@@ -8,8 +8,8 @@ import { SignupSchema } from './validationSchema';
 
 const SignUp = () => (
   <div>
-    <Grid className="Auth" centered verticalAlign="middle">
-      <Grid.Column className="Form" width={8}>
+    <Grid className={style.Auth} centered verticalAlign="middle">
+      <Grid.Column className={style.Form} width={8}>
         <Segment>
           <Formik
             initialValues={{
@@ -35,8 +35,9 @@ const SignUp = () => (
               touched,
               isValid,
             }) => (
-              <Form className="login-form" onSubmit={handleSubmit}>
+              <Form onSubmit={handleSubmit}>
                 <Input
+                  className={touched.username && errors.username ? style.InputError : ''}
                   required
                   icon="user"
                   iconPosition="left"
@@ -48,8 +49,9 @@ const SignUp = () => (
                   onBlur={handleBlur}
                   value={values.username}
                 />
-                <div className="Error">{touched.username && errors.username}</div>
+                <div className={style.Error}>{touched.username && errors.username}</div>
                 <Input
+                  className={touched.email && errors.email ? style.InputError : ''}
                   required
                   icon="mail"
                   iconPosition="left"
@@ -61,8 +63,9 @@ const SignUp = () => (
                   onBlur={handleBlur}
                   value={values.email}
                 />
-                <div className="Error">{touched.email && errors.email}</div>
+                <div className={style.Error}>{touched.email && errors.email}</div>
                 <Input
+                  className={touched.password && errors.password ? style.InputError : ''}
                   required
                   icon="lock"
                   iconPosition="left"
@@ -74,7 +77,7 @@ const SignUp = () => (
                   onBlur={handleBlur}
                   value={values.password}
                 />
-                <div className="Error">{touched.password && errors.password}</div>
+                <div className={style.Error}>{touched.password && errors.password}</div>
                 <Button
                   fluid
                   size="large"
@@ -88,7 +91,7 @@ const SignUp = () => (
             )}
           </Formik>
         </Segment>
-        <Message className="Message">
+        <Message className={style.Message}>
           Already Signed Up?
           <Link to="/auth/signin/"> Login</Link>
         </Message>
