@@ -21,8 +21,8 @@ const ProfileMainInfo = () => (
           </Form.Field>
           <Form.Field>
             <Form.Group>
-              <Form.Input label="Old password" placeholder="Type new password" width={6} />
-              <Form.Input label="Old password" placeholder="Repeat password" width={6} />
+              <Form.Input label="New password" placeholder="Type new password" width={6} />
+              <Form.Input label="Repeat new password" placeholder="Repeat password" width={6} />
             </Form.Group>
           </Form.Field>
         </Form>
