@@ -1,5 +1,5 @@
 .priorityCircle{
-    padding-left: 3vh;
+    padding-left: 50%;
     padding-bottom: 2vh;
 }
 
@@ -34,4 +34,8 @@
 }
 .labelStyleBottomPadding{
     padding-bottom: 1vh;
+}
+
+.pointerStyle{
+    cursor: default;
 }

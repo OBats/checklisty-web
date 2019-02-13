@@ -13,7 +13,7 @@ class MainChecklistBlock extends Component {
   }
 
   render() {
-    const { data } = this.state;
+    // const { data } = this.state;
     return (
       <Grid>
         <Grid.Column width={3}></Grid.Column>
