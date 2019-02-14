@@ -1,7 +1,18 @@
 import React from 'react';
 import AvatarEdit from 'react-avatar-edit';
-import { Card, Image, Icon, Modal, Button } from 'semantic-ui-react';
+import { Image, Modal, Button } from 'semantic-ui-react';
 import style from './Avatar.module.css';
+import http from '../../../api/http';
+
+const labelStyles = {
+  fontSize: '1.25em',
+  fontWeight: '700',
+  color: 'green',
+  fontFamily: 'sans-serif',
+  width: '100%',
+  display: 'block',
+  cursor: 'pointer',
+};
 
 class AvatarForProfile extends React.Component {
   constructor(props) {
@@ -13,16 +24,33 @@ class AvatarForProfile extends React.Component {
     };
   }
 
-  openModal = () => this.setState({
-    modalOpen: true,
-  });
+  componentDidMount() {
+    http.get('api/profile/avatar').then((res) => {
+      this.setState(() => ({
+        avatarUrl: res.data,
+      }));
+    });
+  }
 
-  handleAddPhoto = () => setTimeout(
-    () => this.setState({
-      modalOpen: false, avatarUrl: this.state.preview,
-    }),
-    1000,
-  );
+  onBeforeFileLoad = (elem) => {
+    if (elem.target.files[0].size > 1000000) {
+      alert('File is too big!');
+      elem.target.value = '';
+    }
+  };
+
+  handleAddPhoto = () => {
+    http
+      .post('api/profile/avatar', {
+        img: this.state.preview,
+      })
+      .then((res) => {
+        this.setState({
+          modalOpen: false,
+          avatarUrl: res.data,
+        });
+      });
+  };
 
   close = () => this.setState({
     modalOpen: false,
@@ -34,6 +62,10 @@ class AvatarForProfile extends React.Component {
 
   onCrop = preview => this.setState({
     preview,
+  });
+
+  openModal = () => this.setState({
+    modalOpen: true,
   });
 
   handleUpload = () => this.setState({
@@ -57,8 +89,7 @@ class AvatarForProfile extends React.Component {
                     this.state.avatarUrl
                     || 'https://react.semantic-ui.com/images/avatar/large/matthew.png'
                   }
-                  className={{
-                  }}
+                  className={{}}
                   size="medium"
                   circular
                 />
@@ -69,8 +100,10 @@ class AvatarForProfile extends React.Component {
             open={modalOpen}
           >
             <AvatarEdit
+              onBeforeFileLoad={this.onBeforeFileLoad}
+              labelStyle={labelStyles}
               class="avatar"
-              width={360}
+              width="100%"
               height={295}
               onCrop={this.onCrop}
               onClose={this.onClose}
@@ -85,21 +118,6 @@ class AvatarForProfile extends React.Component {
             </Modal.Actions>
           </Modal>
         </div>
-
-        <Card>
-          <Card.Content>
-            <Card.Header>Matthew</Card.Header>
-            <Card.Meta>
-              <span className="date">Joined in 2015</span>
-            </Card.Meta>
-          </Card.Content>
-          <Card.Content extra>
-            <a>
-              <Icon name="user" />
-              22 Friends
-            </a>
-          </Card.Content>
-        </Card>
       </div>
     );
   }

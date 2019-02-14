@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react';
 import { Form, Button, Grid } from 'semantic-ui-react';
-import AvatarForProfile from './Avatar';
+import AvatarForProfile from './Avatar/Avatar';
 
 const ProfileMainInfo = () => (
   <Grid columns="equal">

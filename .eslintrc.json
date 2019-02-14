@@ -1,67 +1,49 @@
 {
-    "env": {
-        "browser": true,
-        "es6": true,
-        "mongo": true
+  "env": {
+    "browser": true,
+    "es6": true,
+    "mongo": true
+  },
+  "extends": ["eslint:recommended", "plugin:react/recommended", "airbnb"],
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
     },
-    "extends": [
-        "eslint:recommended",
-        "plugin:react/recommended",
-        "airbnb"
-    ],
-    "parserOptions": {
-        "ecmaFeatures": {
-            "jsx": true
+    "ecmaVersion": 2018,
+    "sourceType": "module"
+  },
+  "plugins": ["react"],
+  "parser": "babel-eslint",
+  "rules": {
+    "indent": ["error", 2],
+    "linebreak-style": ["error", "unix"],
+    "quotes": ["warn", "single"],
+    "semi": ["error", "always"],
+    "object-curly-newline": [
+      "error",
+      {
+        "ObjectPattern": {
+          "multiline": true
         },
-        "ecmaVersion": 2018,
-        "sourceType": "module"
-    },
-    "plugins": [
-        "react"
+        "ImportDeclaration": "never",
+        "ExportDeclaration": {
+          "multiline": true,
+          "minProperties": 3
+        }
+      }
     ],
-    "parser": "babel-eslint",
-    "rules": {
-        "indent": [
-            "error",
-            2
-        ],
-        "linebreak-style": [
-            "error",
-            "unix"
-        ],
-        "quotes": [
-            "warn",
-            "single"
-        ],
-        "semi": [
-            "error",
-            "always"
-        ],
-        "object-curly-newline": [
-            "error",
-            {
-                "ObjectPattern": {
-                    "multiline": true
-                },
-                "ImportDeclaration": "never",
-                "ExportDeclaration": {
-                    "multiline": true,
-                    "minProperties": 3
-                }
-            }
-        ],
-        "no-unused-vars": 1,
-        "no-undef": 1,
-        "import/no-named-as-default": 0,
-        "import/no-named-as-default-member": 0,
-        "react/destructuring-assignment": 1,
-        "react/no-access-state-in-setstate": 1,
-        "jsx-a11y/anchor-is-valid": 1,
-        "jsx-a11y/click-events-have-key-events": 1,
-        "jsx-a11y/interactive-supports-focus": 1,
-        "react/prop-types": 1,
-        "react/no-unused-state": 1,
-        "consistent-return": 1
-
-    }
+    "no-unused-vars": 1,
+    "no-undef": 1,
+    "import/no-named-as-default": 0,
+    "import/no-named-as-default-member": 0,
+    "react/destructuring-assignment": 1,
+    "react/no-access-state-in-setstate": 1,
+    "jsx-a11y/anchor-is-valid": 1,
+    "jsx-a11y/click-events-have-key-events": 1,
+    "jsx-a11y/interactive-supports-focus": 1,
+    "react/prop-types": 1,
+    "react/no-unused-state": 1,
+    "consistent-return": 1,
+    "no-param-reassign": 1
+  }
 }

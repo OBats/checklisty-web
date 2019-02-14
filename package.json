@@ -8,7 +8,6 @@
     "formik": "^1.4.3",
     "prop-types": "^15.6.2",
     "react": "^16.7.0",
-    "react-avatar": "^3.5.0",
     "react-avatar-edit": "^0.7.1",
     "react-dom": "^16.7.0",
     "react-markdown": "^4.0.6",
