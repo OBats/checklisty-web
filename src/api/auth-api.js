@@ -2,14 +2,14 @@ import http from './http';
 
 export const signIn = async (values) => {
   const response = await http.post('/api/auth/signin', values);
-  localStorage.setItem('access-token', response.data);
+  localStorage.setItem('access-token', response.headers['access-token']);
   return response.data.user;
 };
 
 export const signUp = async (values) => {
-  const responce = await http.post('/api/auth/signup', values);
-  localStorage.setItem('access-token', responce.headers['access-token']);
-  return responce.data.user;
+  const response = await http.post('/api/auth/signup', values);
+  localStorage.setItem('access-token', response.headers['access-token']);
+  return response.data.user;
 };
 
 export const validateUser = async () => {

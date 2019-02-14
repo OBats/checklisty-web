@@ -1,10 +1,11 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
+import { connect } from 'react-redux';
 import { Link, NavLink } from 'react-router-dom';
 import { Menu, Dropdown } from 'semantic-ui-react';
 
 
-const NavBar = ({ user }) => (
+const NavBar = ({ userData }) => (
   <Menu borderless>
     <Menu.Item
       name="main"
@@ -14,7 +15,7 @@ const NavBar = ({ user }) => (
     >
       Main Page
     </Menu.Item>
-    {!user && (
+    {!userData && (
       <Menu.Item
         name="signIn"
         position="right"
@@ -24,10 +25,10 @@ const NavBar = ({ user }) => (
           Sign In
       </Menu.Item>
     )}
-    {user && (
+    {userData && (
       <React.Fragment>
         <Menu.Menu>
-          <Dropdown item text={user.username}>
+          <Dropdown item text={userData.username}>
             <Dropdown.Menu>
               <Dropdown.Item icon="edit" text="Edit Profile" as={NavLink} to="/profile/maininfo" />
               <Dropdown.Item icon="list" text="My Lists" as={NavLink} to="/profile/mylists" />
@@ -44,4 +45,8 @@ const NavBar = ({ user }) => (
   </Menu>
 );
 
-export default NavBar;
+const mapStateToProps = ({ user }) => ({
+  userData: user.userData,
+});
+
+export default connect(mapStateToProps, null)(NavBar);

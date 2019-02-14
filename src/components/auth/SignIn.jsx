@@ -23,7 +23,7 @@ const SignIn = props => (
               signIn(values)
                 .then((data) => {
                   props.saveUserData(data);
-                  // window.location = '/';
+                  // props.history.push("/");
                 })
                 .catch(error => (
                   actions.setErrors(error.response.data)

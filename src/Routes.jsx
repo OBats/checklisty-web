@@ -1,7 +1,6 @@
 /* eslint-disable react/prefer-stateless-function */
 import React, { Component } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
-import { connect } from 'react-redux';
 import NavBar from './components/navbar/NavBar';
 import SignIn from './components/auth/SignIn';
 import SignUp from './components/auth/SignUp';
@@ -17,10 +16,9 @@ import SignOut from './components/auth/SignOut';
 
 class Routes extends Component {
   render() {
-    const { userData } = this.props;
     return (
       <React.Fragment>
-        <NavBar user={userData} />
+        <NavBar />
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route exact path="/auth/signin/" component={SignIn} />
@@ -39,8 +37,4 @@ class Routes extends Component {
   }
 }
 
-const mapStateToProps = ({ user }) => ({
-  userData: user.userData,
-});
-
-export default connect(mapStateToProps, null)(Routes);
+export default Routes;
