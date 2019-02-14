@@ -1,13 +1,14 @@
 /* eslint-disable react/prop-types */
 import React from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import { Menu } from 'semantic-ui-react';
+import { Menu, Dropdown } from 'semantic-ui-react';
 
 
 const NavBar = ({ user }) => (
-  <Menu>
+  <Menu borderless>
     <Menu.Item
       name="main"
+      position="left"
       as={Link}
       to="/"
     >
@@ -25,21 +26,19 @@ const NavBar = ({ user }) => (
     )}
     {user && (
       <React.Fragment>
-        <Menu.Item
-          name="profile"
-          position="right"
-          as={NavLink}
-          to="/profile"
-        >
-          {user.username}
-        </Menu.Item>
-        <Menu.Item
-          name="profile"
-          as={NavLink}
-          to="/logout"
-        >
-          Logout
-        </Menu.Item>
+        <Menu.Menu>
+          <Dropdown item text={user.username}>
+            <Dropdown.Menu>
+              <Dropdown.Item icon="edit" text="Edit Profile" as={NavLink} to="/profile/maininfo" />
+              <Dropdown.Item icon="list" text="My Lists" as={NavLink} to="/profile/mylists" />
+              <Dropdown.Item icon="group" text="Team" as={NavLink} to="/profile/myteam" />
+              <Dropdown.Item icon="sign-out" text="Sing Out" as={NavLink} to="/singout" />
+            </Dropdown.Menu>
+          </Dropdown>
+          <Menu.Item>
+            <img src="https://react.semantic-ui.com/logo.png" alt="user avatar" />
+          </Menu.Item>
+        </Menu.Menu>
       </React.Fragment>
     )}
   </Menu>
