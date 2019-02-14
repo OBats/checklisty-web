@@ -1,13 +1,15 @@
 /* eslint-disable no-tabs */
 import React from 'react';
+import { connect } from 'react-redux';
 import { Formik, Form } from 'formik';
 import { Input, Button, Grid, Segment, Message } from 'semantic-ui-react';
 import Link from 'react-router-dom/Link';
 import style from './auth.module.css';
-import { signIn } from '../../api/auth-api';
+import { signIn, validateUser } from '../../api/auth-api';
 import { SigninSchema } from './validationSchema';
+import { saveUserData } from '../../actions/user';
 
-const SignIn = () => (
+const SignIn = props => (
   <div>
     <Grid className="Auth" centered verticalAlign="middle">
       <Grid.Column className="Form" width={8}>
@@ -19,8 +21,9 @@ const SignIn = () => (
             validationSchema={SigninSchema}
             onSubmit={(values, actions) => {
               signIn(values)
-                .then(() => {
-                  window.location = '/';
+                .then((data) => {
+                  props.saveUserData(data);
+                  // window.location = '/';
                 })
                 .catch(error => (
                   actions.setErrors(error.response.data)
@@ -85,4 +88,11 @@ const SignIn = () => (
     </Grid>
   </div>
 );
-export default SignIn;
+
+const mapDispatchToProps = dispatch => ({
+  saveUserData: (data) => {
+    dispatch(saveUserData(data));
+  },
+});
+
+export default connect(null, mapDispatchToProps)(SignIn);

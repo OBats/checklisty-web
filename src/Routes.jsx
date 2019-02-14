@@ -1,5 +1,7 @@
+/* eslint-disable react/prefer-stateless-function */
 import React, { Component } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
 import NavBar from './components/navbar/NavBar';
 import SignIn from './components/auth/SignIn';
 import SignUp from './components/auth/SignUp';
@@ -8,30 +10,15 @@ import ShowCheckList from './components/main/ShowCheckList';
 import HomePage from './components/main/HomePage';
 import ProfileNav from './components/navProfile/ProfileNav';
 import NewChecklistForm from './components/create-checklist/NewChecklistForm';
-import { validateUser } from './api/auth-api';
 import Logout from './components/auth/Logout';
+import ProtectedRoute from './ProtectedRoute';
 
 class Routes extends Component {
-  state = {
-  };
-
-  async componentDidMount() {
-    try {
-      const token = await localStorage.getItem('access-token');
-      const user = await validateUser();
-      this.setState({
-        user,
-      });
-    } catch (err) {
-      return null;
-    }
-  }
-
   render() {
-    const { user } = this.state;
+    const { userData } = this.props;
     return (
       <React.Fragment>
-        <NavBar user={user} />
+        <NavBar user={userData} />
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route exact path="/auth/signin/" component={SignIn} />
@@ -40,7 +27,7 @@ class Routes extends Component {
           <Route exact path="/home" component={MainPage} />
           <Route exact path="/home/:id" component={ShowCheckList} />
           <Route exact path="/logout" component={Logout} />
-          <Route exact path="/create_checklist" component={NewChecklistForm} />
+          <ProtectedRoute exact path="/create_checklist" component={NewChecklistForm} />
           <Redirect exact to="/" />
         </Switch>
       </React.Fragment>
@@ -48,4 +35,8 @@ class Routes extends Component {
   }
 }
 
-export default Routes;
+const mapStateToProps = ({ user }) => ({
+  userData: user.userData,
+});
+
+export default connect(mapStateToProps, null)(Routes);

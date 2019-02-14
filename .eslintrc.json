@@ -14,7 +14,8 @@
             "jsx": true
         },
         "ecmaVersion": 2018,
-        "sourceType": "module"
+        "sourceType": "module",
+        "allowImportExportEverywhere": true
     },
     "plugins": [
         "react"
@@ -61,7 +62,7 @@
         "jsx-a11y/interactive-supports-focus": 1,
         "react/prop-types": 1,
         "react/no-unused-state": 1,
-        "consistent-return": 1
-
+        "consistent-return": 1,
+        "react/jsx-filename-extension": 1
     }
 }

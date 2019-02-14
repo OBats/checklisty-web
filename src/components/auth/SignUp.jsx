@@ -1,12 +1,14 @@
 import React from 'react';
 import { Formik, Form } from 'formik';
+import { connect } from 'react-redux';
 import Link from 'react-router-dom/Link';
 import { Input, Button, Grid, Segment, Message } from 'semantic-ui-react';
 import style from './auth.module.css';
 import { signUp } from '../../api/auth-api';
 import { SignupSchema } from './validationSchema';
+import { saveUserData } from '../../actions/user';
 
-const SignUp = () => (
+const SignUp = props => (
   <div>
     <Grid className="Auth" centered verticalAlign="middle">
       <Grid.Column className="Form" width={8}>
@@ -18,8 +20,9 @@ const SignUp = () => (
             validationSchema={SignupSchema}
             onSubmit={(values, actions) => {
               signUp(values)
-                .then(() => {
-                  window.location = '/';
+                .then((data) => {
+                  props.saveUserData(data);
+                  // window.location = '/';
                 })
                 .catch(error => (
                   actions.setErrors(error.response.data)
@@ -96,4 +99,11 @@ const SignUp = () => (
     </Grid>
   </div>
 );
-export default SignUp;
+
+const mapDispatchToProps = dispatch => ({
+  saveUserData: (data) => {
+    dispatch(saveUserData(data));
+  },
+});
+
+export default connect(null, mapDispatchToProps)(SignUp);
