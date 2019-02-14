@@ -41,7 +41,7 @@ class AvatarForProfile extends React.Component {
 
   handleAddPhoto = () => {
     http
-      .post('api/profile/avatar', {
+      .post('/api/profile/avatar', {
         img: this.state.preview,
       })
       .then((res) => {
