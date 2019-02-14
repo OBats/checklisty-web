@@ -1,5 +1,3 @@
-import data from './readme.md';
-
 export default [
   {
 

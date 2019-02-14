@@ -13,7 +13,7 @@
   transition-duration: 0.3s;
 }
 .hvrRadialOut:before {
-  content: "";
+  content: '';
   position: absolute;
   z-index: 1;
   top: 0;
@@ -32,11 +32,15 @@
   -webkit-transition-timing-function: ease-out;
   transition-timing-function: ease-out;
 }
-.hvrRadialOut:hover, .hvrRadialOut:focus, .hvrRadialOut:active {
-  content: "+";
+.hvrRadialOut:hover,
+.hvrRadialOut:focus,
+.hvrRadialOut:active {
+  content: '+';
   color: white;
 }
-.hvrRadialOut:hover:before, .hvrRadialOut:focus:before, .hvrRadialOut:active:before {
+.hvrRadialOut:hover:before,
+.hvrRadialOut:focus:before,
+.hvrRadialOut:active:before {
   -webkit-transform: scale(2);
   transform: scale(1);
 }

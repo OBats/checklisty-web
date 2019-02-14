@@ -63,6 +63,6 @@
         "react/prop-types": 1,
         "react/no-unused-state": 1,
         "consistent-return": 1,
-        "react/jsx-filename-extension": 1
+        "no-param-reassign": 1
     }
 }

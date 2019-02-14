@@ -2,7 +2,7 @@
 /* eslint-disable jsx-a11y/label-has-associated-control */
 import React from 'react';
 import { Form, Button, Grid } from 'semantic-ui-react';
-import AvatarForProfile from './Avatar';
+import AvatarForProfile from './Avatar/Avatar';
 
 const ProfileMainInfo = () => (
   <Grid columns="equal">
@@ -21,8 +21,8 @@ const ProfileMainInfo = () => (
           </Form.Field>
           <Form.Field>
             <Form.Group>
-              <Form.Input label="Old password" placeholder="Type new password" width={6} />
-              <Form.Input label="Old password" placeholder="Repeat password" width={6} />
+              <Form.Input label="New password" placeholder="Type new password" width={6} />
+              <Form.Input label="Repeat new password" placeholder="Repeat password" width={6} />
             </Form.Group>
           </Form.Field>
         </Form>

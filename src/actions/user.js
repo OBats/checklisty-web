@@ -5,6 +5,5 @@ export function saveUserData(data) {
 }
 
 export function handleLogOut() {
-  console.error('in action handleLogOut');
   return { type: 'HANDLE_LOG_OUT' };
 }

@@ -19,35 +19,18 @@ const priorities = [
 ];
 
 class SingleChecklistItem extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      readyMDFile: null,
-    };
-    this.handleClickAccordion = this.handleClickAccordion.bind(this);
-    this.handleChecked = this.handleChecked.bind(this);
-  }
-
-  componentDidMount() {
-    const { propsData } = this.props;
-    this.setState({
-      readyMDFile: propsData.details,
-    });
-  }
-
-  handleClickAccordion() {
+  handleClickAccordion = () => {
     const { handleClickAccordion, index } = this.props;
     handleClickAccordion(index);
   }
 
-  handleChecked() {
+  handleChecked = () => {
     const { handleChecked, index } = this.props;
     handleChecked(index);
   }
 
   render() {
     const { propsData, className, checkedIndex, accordionIndex, iconName } = this.props;
-    const { readyMDFile } = this.state;
     return (
       <Container className={className}>
         <Accordion.Title className={style.accordionTitle}>
@@ -67,7 +50,7 @@ class SingleChecklistItem extends Component {
                   </Popup.Content>
                 </Popup>
               </Grid.Column>
-              <Grid.Column width={14}>
+              <Grid.Column width={14} className={style.pointerStyle}>
                 <Checkbox
                   checked={checkedIndex}
                   onChange={this.handleChecked}
@@ -100,21 +83,23 @@ class SingleChecklistItem extends Component {
                   )}
                 />
               </Grid.Column>
-              <Grid.Column width={1} floated="right">
-                <Accordion.Title
-                  active={accordionIndex === 0}
-                  index={0}
-                  onClick={this.handleClickAccordion
-                  }
-                >
-                  {
-                    !checkedIndex
+              {propsData.details && (
+                <Grid.Column width={1} floated="right">
+                  <Accordion.Title
+                    active={accordionIndex === 0}
+                    index={0}
+                    onClick={this.handleClickAccordion
+                    }
+                  >
+                    {
+                      !checkedIndex
                         && (
                           <Icon name={iconName} className={style.accordionArrow} />
                         )
-                  }
-                </Accordion.Title>
-              </Grid.Column>
+                    }
+                  </Accordion.Title>
+                </Grid.Column>
+              )}
             </Grid.Row>
           </Grid>
         </Accordion.Title>
@@ -123,7 +108,7 @@ class SingleChecklistItem extends Component {
             <Grid>
               <Grid.Column width={2}></Grid.Column>
               <Grid.Column width={12}>
-                <ReactMarkdown source={readyMDFile} />
+                <ReactMarkdown source={propsData.details} />
               </Grid.Column>
             </Grid>
           </Accordion.Content>

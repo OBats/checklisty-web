@@ -5,6 +5,7 @@ import { handleLogOut } from '../../actions/user';
 
 class Logout extends Component {
   componentDidMount() {
+    this.props.handleLogOut();
     signOut();
   }
 
@@ -13,10 +14,10 @@ class Logout extends Component {
   }
 }
 
-// const mapDispatchToProps = dispatch => ({
-//   handleLogOut: () => {
-//     dispatch(handleLogOut());
-//   },
-// });
+const mapDispatchToProps = dispatch => ({
+  handleLogOut: () => {
+    dispatch(handleLogOut());
+  },
+});
 
-export default Logout;
+export default connect(null, mapDispatchToProps)(Logout);

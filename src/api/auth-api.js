@@ -7,10 +7,8 @@ export const signIn = async (values) => {
 };
 
 export const signUp = async (values) => {
-  console.error('hello', values);
   const responce = await http.post('/api/auth/signup', values);
   localStorage.setItem('access-token', responce.headers['access-token']);
-  console.error('action in Sign Up auth-api', responce.data.user);
   return responce.data.user;
 };
 
@@ -21,5 +19,5 @@ export const validateUser = async () => {
 
 export const signOut = () => {
   localStorage.removeItem('access-token');
-  window.location = '/';
+  // window.location = '/';
 };

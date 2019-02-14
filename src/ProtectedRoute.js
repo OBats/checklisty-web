@@ -5,7 +5,6 @@ import { connect } from 'react-redux';
 import { validateUser } from './api/auth-api';
 import { saveUserData } from './actions/user';
 
-
 class ProtectedRoute extends Component {
   constructor(props) {
     super(props);

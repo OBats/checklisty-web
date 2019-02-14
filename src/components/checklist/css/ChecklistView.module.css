@@ -17,3 +17,21 @@
 .checklistItem:nth-child(even):hover{
     background-color: rgb(241, 240, 237)
 }
+
+.toRightAlign{
+    padding-right: 0rem !important;
+}
+
+.toLeftAlign{
+    padding-left: 0rem !important;
+}
+
+@media screen and (max-width: 992px) {
+    .toRightAlign{
+        padding-right: 1rem !important;
+    }
+    
+    .toLeftAlign{
+        padding-left: 1rem !important;
+    }
+}

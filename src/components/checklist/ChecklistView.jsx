@@ -16,14 +16,6 @@ class ChecklistView extends Component {
       isWholeChecklistHidden: false,
       currentProgress: 0,
     };
-
-    this.handleClickEyeButton = this.handleClickEyeButton.bind(this);
-    this.handleChecked = this.handleChecked.bind(this);
-    this.handleClickAccordion = this.handleClickAccordion.bind(this);
-    this.handleSetAllCheckboxes = this.handleSetAllCheckboxes.bind(this);
-    this.handleResetAllCheckboxes = this.handleResetAllCheckboxes.bind(this);
-    this.handleOpenAllAccordions = this.handleOpenAllAccordions.bind(this);
-    this.handleCloseAllAccordions = this.handleCloseAllAccordions.bind(this);
   }
 
   componentDidMount() {
@@ -43,7 +35,7 @@ class ChecklistView extends Component {
     });
   }
 
-  handleChecked(index) {
+  handleChecked = (index) => {
     const { checkboxArray } = this.state;
 
     const checkboxArrayTemporal = [...checkboxArray];
@@ -67,7 +59,7 @@ class ChecklistView extends Component {
     });
   }
 
-  handleClickAccordion(index) {
+  handleClickAccordion = (index) => {
     const { accordionIndexArray, iconNameArray } = this.state;
 
     const accordionIndexArrayTemporal = [...accordionIndexArray];
@@ -82,7 +74,7 @@ class ChecklistView extends Component {
     });
   }
 
-  handleClickEyeButton() {
+  handleClickEyeButton = () => {
     const { isWholeChecklistHidden } = this.state;
 
     this.setState({
@@ -90,28 +82,28 @@ class ChecklistView extends Component {
     });
   }
 
-  handleSetAllCheckboxes() {
+  handleSetAllCheckboxes = () => {
     this.setState(({ checkboxArray }) => ({
       checkboxArray: checkboxArray.map(() => true),
       currentProgress: 100,
     }));
   }
 
-  handleResetAllCheckboxes() {
+  handleResetAllCheckboxes = () => {
     this.setState(({ checkboxArray }) => ({
       checkboxArray: checkboxArray.map(() => false),
       currentProgress: 0,
     }));
   }
 
-  handleOpenAllAccordions() {
+  handleOpenAllAccordions = () => {
     this.setState(({ accordionIndexArray, iconNameArray }) => ({
       accordionIndexArray: accordionIndexArray.map(() => 0),
       iconNameArray: iconNameArray.map(() => 'chevron up'),
     }));
   }
 
-  handleCloseAllAccordions() {
+  handleCloseAllAccordions = () => {
     this.setState(({ accordionIndexArray, iconNameArray }) => ({
       accordionIndexArray: accordionIndexArray.map(() => -1),
       iconNameArray: iconNameArray.map(() => 'chevron down'),
@@ -129,31 +121,33 @@ class ChecklistView extends Component {
     } = this.state;
     return (
       <Container>
-        <Grid>
+        <Grid container>
           <Grid.Row verticalAlign="middle">
             <Grid.Column width={6}>
               <Header size="large">{data.title}</Header>
             </Grid.Column>
             <Grid.Column width={4}>
               <Progress percent={currentProgress} indicating size="medium">
-                {' '}
                 {`Current progress: ${currentProgress}%`}
-                {' '}
               </Progress>
             </Grid.Column>
             <Grid.Column width={1}></Grid.Column>
-            <Grid.Column width={2} floated="right">
+            <Grid.Column width={1} className={style.toRightAlign}>
               <Button size="medium" icon color="teal" onClick={this.handleSetAllCheckboxes}>
                 <Icon name="check" />
               </Button>
+            </Grid.Column>
+            <Grid.Column width={1} className={style.toLeftAlign}>
               <Button size="medium" icon color="red" onClick={this.handleResetAllCheckboxes}>
                 <Icon name="expand" />
               </Button>
             </Grid.Column>
-            <Grid.Column width={2} floated="right">
-              <Button size="medium" icon color="teal" onClick={this.handleOpenAllAccordions}>
+            <Grid.Column width={1} className={style.toRightAlign}>
+              <Button size="medium" icon color="teal" onClick={this.handleOpenAllAccordions} className={style.hoverStyle}>
                 <Icon name="angle double down" />
               </Button>
+            </Grid.Column>
+            <Grid.Column width={1} className={style.toLeftAlign}>
               <Button size="medium" icon color="red" onClick={this.handleCloseAllAccordions}>
                 <Icon name="angle double up" />
               </Button>
