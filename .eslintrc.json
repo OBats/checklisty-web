@@ -64,6 +64,7 @@
         "react/no-unused-state": 1,
         "consistent-return": 1,
         "no-param-reassign": 1,
-        "import/no-unresolved": 0
+        "import/no-unresolved": 0,
+        "no-shadow": 1
     }
 }

@@ -12,7 +12,6 @@ import ShowCheckList from './components/main/ShowCheckList';
 import HomePage from './components/main/HomePage';
 import NewChecklistForm from './components/create-checklist/NewChecklistForm';
 import ProtectedRoute from './ProtectedRoute';
-import SignOut from './components/auth/SignOut';
 
 class Routes extends Component {
   render() {
@@ -29,7 +28,6 @@ class Routes extends Component {
           <Route exact path="/home" component={MainPage} />
           <Route exact path="/home/:id" component={ShowCheckList} />
           <ProtectedRoute exact path="/create_checklist" component={NewChecklistForm} />
-          <Route exact path="/signout" component={SignOut} />
           <Redirect exact to="/" />
         </Switch>
       </React.Fragment>

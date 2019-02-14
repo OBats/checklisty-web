@@ -19,5 +19,4 @@ export const validateUser = async () => {
 
 export const signOut = () => {
   localStorage.removeItem('access-token');
-  // window.location = '/';
 };
