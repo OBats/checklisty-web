@@ -32,7 +32,7 @@ const NavBar = ({ user }) => (
               <Dropdown.Item icon="edit" text="Edit Profile" as={NavLink} to="/profile/maininfo" />
               <Dropdown.Item icon="list" text="My Lists" as={NavLink} to="/profile/mylists" />
               <Dropdown.Item icon="group" text="Team" as={NavLink} to="/profile/myteam" />
-              <Dropdown.Item icon="sign-out" text="Sing Out" as={NavLink} to="/singout" />
+              <Dropdown.Item icon="sign-out" text="Sing Out" as={NavLink} to="/signout" />
             </Dropdown.Menu>
           </Dropdown>
           <Menu.Item>
