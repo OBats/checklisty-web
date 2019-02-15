@@ -11,7 +11,7 @@ const reducer = (state = initialState, action) => {
                 loggedUser: true,
             };
         }
-        case 'HANDLE_LOG_OUT': {
+        case 'HANDLE_SIGN_OUT': {
             return {
                 userData: null,
                 loggedUser: false,

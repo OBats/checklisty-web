@@ -2,10 +2,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link, NavLink } from 'react-router-dom';
-import { Menu, Dropdown } from 'semantic-ui-react';
+import { Menu, Dropdown, Icon } from 'semantic-ui-react';
+import { signOut } from '../../api/auth-api';
+import style from './NavBar.module.css';
+import home from './logo.png';
+import { handleSignOut } from '../../actions/user';
 
 
-const NavBar = ({ userData }) => (
+const NavBar = ({ userData, handleSignOut }) => (
   <Menu borderless>
     <Menu.Item
       name="main"
@@ -13,7 +17,8 @@ const NavBar = ({ userData }) => (
       as={Link}
       to="/"
     >
-      Main Page
+      <img src={home} alt="home" />
+      <span className={style.home}>Checklisty</span>
     </Menu.Item>
     {!userData && (
       <Menu.Item
@@ -22,22 +27,50 @@ const NavBar = ({ userData }) => (
         as={NavLink}
         to="/auth/signin/"
       >
-          Sign In
+        Sign In
+      </Menu.Item>
+    )}
+    {!userData && (
+      <Menu.Item
+        className={style.signUp}
+        name="signUp"
+        as={NavLink}
+        to="/auth/signup/"
+      >
+        Sign Up
       </Menu.Item>
     )}
     {userData && (
       <React.Fragment>
         <Menu.Menu>
-          <Dropdown item text={userData.username}>
-            <Dropdown.Menu>
-              <Dropdown.Item icon="edit" text="Edit Profile" as={NavLink} to="/profile/maininfo" />
-              <Dropdown.Item icon="list" text="My Lists" as={NavLink} to="/profile/mylists" />
-              <Dropdown.Item icon="group" text="Team" as={NavLink} to="/profile/myteam" />
-              <Dropdown.Item icon="sign-out" text="Sing Out" as={NavLink} to="/signout" />
+          <Dropdown item text={userData.username} className={style.NavBarUsername}>
+            <Dropdown.Menu className={style.NavBarMenu}>
+              <Dropdown.Item as={NavLink} to="/profile/maininfo" className={style.MenuItem}>
+                <Icon name="edit" className={style.MenuItemIcon} />
+                <span className={style.MenuItemText}>Edit Profile</span>
+              </Dropdown.Item>
+              <Dropdown.Item as={NavLink} to="/profile/mylists" className={style.MenuItem}>
+                <Icon name="list" className={style.MenuItemIcon} />
+                <span className={style.MenuItemText}>My Lists</span>
+              </Dropdown.Item>
+              <Dropdown.Item as={NavLink} to="/profile/myteam" className={style.MenuItem}>
+                <Icon name="group" className={style.MenuItemIcon} />
+                <span className={style.MenuItemText}>Team</span>
+              </Dropdown.Item>
+              <Dropdown.Item
+                className={style.MenuItem}
+                onClick={() => {
+                  signOut();
+                  handleSignOut();
+                }}
+              >
+                <Icon name="sign-out" className={style.MenuItemIcon} />
+                <span className={style.MenuItemText}>Sign Out</span>
+              </Dropdown.Item>
             </Dropdown.Menu>
           </Dropdown>
-          <Menu.Item>
-            <img src="https://react.semantic-ui.com/logo.png" alt="user avatar" />
+          <Menu.Item className={style.NavBarAvatarWrapper}>
+            <img src="https://react.semantic-ui.com/images/avatar/large/matthew.png" alt="user avatar" className={style.NavBarAvatar} />
           </Menu.Item>
         </Menu.Menu>
       </React.Fragment>
@@ -49,4 +82,10 @@ const mapStateToProps = ({ user }) => ({
   userData: user.userData,
 });
 
-export default connect(mapStateToProps, null)(NavBar);
+const mapDispatchToProps = dispatch => ({
+  handleSignOut: () => {
+    dispatch(handleSignOut());
+  },
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(NavBar);
