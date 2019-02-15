@@ -2,10 +2,10 @@ import React from 'react';
 import styles from './Header.module.css';
 import Banner from './Banner';
 
-const Header = () => (
+const Header = ({ title }) => (
   <div className={styles.header_wrapper}>
     <header className={styles.header}>
-      <Banner />
+      <Banner title={title} />
     </header>
   </div>
 );

@@ -3,6 +3,9 @@ import PropTypes from 'prop-types';
 import ChecklistView from '../checklist/ChecklistView';
 import http from '../../api/http';
 import loaderStyle from './loader.module.css';
+import Header from './Header';
+import styles from './ShowCheckList.module.css';
+import Footer from './Footer';
 
 class ShowCheckList extends Component {
   constructor(props) {
@@ -40,8 +43,11 @@ class ShowCheckList extends Component {
     }
     return (
       <div>
-        <h1>{`Here will be ${checkList.title} check list`}</h1>
-        <ChecklistView checkListData={checkList} />
+        <Header title={checkList.title} />
+        <div className={styles.checkListContainer}>
+          <ChecklistView checkListData={checkList} />
+        </div>
+        <Footer />
       </div>
     );
   }

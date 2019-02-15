@@ -89,7 +89,6 @@ class AvatarForProfile extends React.Component {
                     this.state.avatarUrl
                     || 'https://react.semantic-ui.com/images/avatar/large/matthew.png'
                   }
-                  className={{}}
                   size="medium"
                   circular
                 />
