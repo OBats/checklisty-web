@@ -10,43 +10,24 @@ import ProfileTeam from './components/profile/MyTeam';
 import ShowCheckList from './components/main/ShowCheckList';
 import HomePage from './components/main/HomePage';
 import NewChecklistForm from './components/create-checklist/NewChecklistForm';
-import { validateUser } from './api/auth-api';
+import ProtectedRoute from './ProtectedRoute';
 
-class Routes extends Component {
-  state = {
-  };
-
-  async componentDidMount() {
-    try {
-      const user = await validateUser();
-      this.setState({
-        user,
-      });
-    } catch (err) {
-      return null;
-    }
-  }
-
-  render() {
-    const { user } = this.state;
-    return (
-      <React.Fragment>
-        <NavBar user={user} />
-        <Switch>
-          <Route exact path="/" component={HomePage} />
-          <Route exact path="/auth/signin/" component={SignIn} />
-          <Route exact path="/auth/signup/" component={SignUp} />
-          <Route exact path="/profile/maininfo" component={ProfileInfo} />
-          <Route exact path="/profile/mylists" component={ProfileLists} />
-          <Route exact path="/profile/myteam" component={ProfileTeam} />
-          <Route exact path="/home" component={MainPage} />
-          <Route exact path="/home/:id" component={ShowCheckList} />
-          <Route exact path="/create_checklist" component={NewChecklistForm} />
-          <Redirect exact to="/" />
-        </Switch>
-      </React.Fragment>
-    );
-  }
-}
+const Routes = () => (
+  <React.Fragment>
+    <NavBar />
+    <Switch>
+      <Route exact path="/" component={HomePage} />
+      <Route exact path="/auth/signin/" component={SignIn} />
+      <Route exact path="/auth/signup/" component={SignUp} />
+      <Route exact path="/profile/maininfo" component={ProfileInfo} />
+      <Route exact path="/profile/mylists" component={ProfileLists} />
+      <Route exact path="/profile/myteam" component={ProfileTeam} />
+      <Route exact path="/home" component={MainPage} />
+      <Route exact path="/home/:id" component={ShowCheckList} />
+      <ProtectedRoute exact path="/create_checklist" component={NewChecklistForm} />
+      <Redirect exact to="/" />
+    </Switch>
+  </React.Fragment>
+);
 
 export default Routes;

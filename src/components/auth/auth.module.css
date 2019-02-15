@@ -1,6 +1,6 @@
 .Auth {
-  height: calc(100vh - 80px);
-  background-color: #EDEDED;
+  height: calc(100vh - 41.6px);
+  background-color: #F7F7F7;
 }
 
 .Form {
@@ -31,12 +31,4 @@
   border-color: #eb5656 !important;
   color: #9f3a38 !important;
   box-shadow: none !important;
-}
-
-.AuthBtn.AuthBtn.AuthBtn.AuthBtn {
-  background-color: #3A4753;
-}
-
-.AuthBtn.AuthBtn.AuthBtn.AuthBtn:hover {
-  background-color: rgb(42, 51, 59);
 }

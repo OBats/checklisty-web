@@ -1,11 +1,11 @@
 import React from 'react';
+import logo from './logo.png';
 import styles from './Banner.module.css';
-import logo from './logo.svg';
 
 const Banner = () => (
-  <div className={styles.BannerWrapper}>
-    <img src={logo} alt="logo" width={140} />
-    <h1 className={styles.banner}>Checklisty</h1>
+  <div className={styles.banner}>
+    <img src={logo} width={100} height={100} alt="Site logo" />
+    <h1 className={styles.header}>Checklists</h1>
   </div>
 );
 

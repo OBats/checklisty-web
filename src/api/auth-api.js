@@ -1,17 +1,15 @@
 import http from './http';
 
 export const signIn = async (values) => {
-  await http.post('/api/auth/signin', values)
-    .then((req) => {
-      localStorage.setItem('access-token', req.data);
-    });
+  const response = await http.post('/api/auth/signin', values);
+  localStorage.setItem('access-token', response.headers['access-token']);
+  return response.data.user;
 };
 
 export const signUp = async (values) => {
-  await http.post('/api/auth/signup', values)
-    .then((req) => {
-      localStorage.setItem('access-token', req.headers['access-token']);
-    });
+  const response = await http.post('/api/auth/signup', values);
+  localStorage.setItem('access-token', response.headers['access-token']);
+  return response.data.user;
 };
 
 export const validateUser = async () => {
@@ -21,5 +19,4 @@ export const validateUser = async () => {
 
 export const signOut = () => {
   localStorage.removeItem('access-token');
-  window.location = '/';
 };
