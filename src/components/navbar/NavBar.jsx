@@ -40,6 +40,16 @@ const NavBar = ({ userData, handleSignOut }) => (
         Sign Up
       </Menu.Item>
     )}
+    {!userData && (
+      <Menu.Item
+        className={style.signUp}
+        name="signUp"
+        as={NavLink}
+        to="/auth/signup/"
+      >
+        Sign Up
+      </Menu.Item>
+    )}
     {userData && (
       <React.Fragment>
         <Menu.Menu>
