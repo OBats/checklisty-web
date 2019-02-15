@@ -67,13 +67,14 @@ const SignIn = () => (
                 <div className={style.Error}>{touched.password && errors.password}</div>
                 <div className={style.RedMessage}>{errors.message}</div>
                 <Button
+                  className={style.AuthBtn}
                   fluid
                   size="large"
                   color="black"
                   type="submit"
                   disabled={!isValid}
                 >
-										Login
+										Sign In
                 </Button>
               </Form>
             )}

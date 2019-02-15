@@ -11,7 +11,6 @@ import ShowCheckList from './components/main/ShowCheckList';
 import HomePage from './components/main/HomePage';
 import NewChecklistForm from './components/create-checklist/NewChecklistForm';
 import { validateUser } from './api/auth-api';
-import SignOut from './components/auth/SignOut';
 
 class Routes extends Component {
   state = {
@@ -42,7 +41,6 @@ class Routes extends Component {
           <Route exact path="/profile/myteam" component={ProfileTeam} />
           <Route exact path="/home" component={MainPage} />
           <Route exact path="/home/:id" component={ShowCheckList} />
-          <Route exact path="/signout" component={SignOut} />
           <Route exact path="/create_checklist" component={NewChecklistForm} />
           <Redirect exact to="/" />
         </Switch>

@@ -79,6 +79,7 @@ const SignUp = () => (
                 />
                 <div className={style.Error}>{touched.password && errors.password}</div>
                 <Button
+                  className={style.AuthBtn}
                   fluid
                   size="large"
                   color="black"
