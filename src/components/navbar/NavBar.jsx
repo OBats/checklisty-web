@@ -10,7 +10,7 @@ import { handleSignOut } from '../../actions/user';
 
 
 const NavBar = ({ userData, handleSignOut }) => (
-  <Menu borderless>
+  <Menu className={style.menu} inverted borderless>
     <Menu.Item
       name="main"
       position="left"
@@ -28,16 +28,6 @@ const NavBar = ({ userData, handleSignOut }) => (
         to="/auth/signin/"
       >
         Sign In
-      </Menu.Item>
-    )}
-    {!userData && (
-      <Menu.Item
-        className={style.signUp}
-        name="signUp"
-        as={NavLink}
-        to="/auth/signup/"
-      >
-        Sign Up
       </Menu.Item>
     )}
     {!userData && (

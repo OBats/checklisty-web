@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import NavBar from './components/navbar/NavBar';
 import SignIn from './components/auth/SignIn';

@@ -1,11 +1,12 @@
-.banner {
+.BannerWrapper {
   display: flex;
-  justify-content: flex-start;
 }
 
-.header {
-  align-self: center;
+.banner {
+  display: flex;
+  align-items: center;
+  color: #fff;
+  font-size: 70px;
   margin: 0;
-  padding-left: 20px;
-  color: #ffffff;
+  margin-left: 20px;
 }
