@@ -25,7 +25,7 @@ class AvatarForProfile extends React.Component {
   }
 
   componentDidMount() {
-    http.get('api/profile/avatar').then((res) => {
+    http.get('/api/profile/avatar').then((res) => {
       this.setState(() => ({
         avatarUrl: res.data,
       }));
