@@ -1,0 +1,22 @@
+.headerStyle{
+    text-align: center;
+}
+
+.segmentHoverDisabled{
+    opacity: 0.7;
+}
+
+.plusButtonStyle{
+    background-color: #08a3a3 !important;
+    transition: 0.4s ease-in-out !important;
+}
+
+.plusButtonStyle:hover{
+    background-color: #118dbf !important;
+    transform: rotate(180deg);
+    transition: 0.4s ease-in-out !important; 
+}
+
+.iconPlusButtonStyle{
+    color: whitesmoke;
+}
