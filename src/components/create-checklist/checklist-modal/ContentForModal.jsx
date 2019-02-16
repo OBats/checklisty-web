@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Grid, Modal, Icon, Segment, Header } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import style from './CreateChecklistModal.module.css';

@@ -5,7 +5,7 @@ import styles from './MainPage.module.css';
 import http from '../../api/http';
 import loaderStyle from './loader.module.css';
 import logo from '../navbar/logo.png';
-import CreateChecklistModal from '../create-checklist/create-checklist-modal';
+import CreateChecklistModal from '../create-checklist/checklist-modal';
 
 class MainPage extends Component {
   constructor(props) {

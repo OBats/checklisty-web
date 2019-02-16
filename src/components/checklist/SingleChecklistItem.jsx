@@ -1,22 +1,11 @@
-/* eslint-disable jsx-a11y/label-has-associated-control */
-/* eslint-disable jsx-a11y/label-has-for */
-/* eslint-disable react/prop-types */
 import React, { Component } from 'react';
-import { Container, Grid, Checkbox, Accordion, Icon, Popup, Label } from 'semantic-ui-react';
-import ReactMarkdown from 'react-markdown';
+import { Container, Grid, Accordion } from 'semantic-ui-react';
 import style from './css/SingleChecklistItem.module.css';
-
-const priorities = [
-  {
-    color: 'green', label: 'Low',
-  },
-  {
-    color: 'yellow', label: 'Medium',
-  },
-  {
-    color: 'red', label: 'High',
-  },
-];
+import SingleChecklistDetails from './SingleChecklistDetails';
+import SingleChecklistLabels from './SingleChecklistLabels';
+import SingleChecklistCheckbox from './SingleChecklistCheckbox';
+import SingleChecklistPopup from './SingleChecklistPopup';
+import SingleChecklistAccordionArrow from './SingleChecklistAccordionArrow';
 
 class SingleChecklistItem extends Component {
   handleClickAccordion = () => {
@@ -37,94 +26,33 @@ class SingleChecklistItem extends Component {
           <Grid container>
             <Grid.Row verticalAlign="middle">
               <Grid.Column width={1}>
-                <Popup
-                  position="top center"
-                  basic
-                  trigger={
-                    <Icon name="circle" size="tiny" color={priorities[propsData.priority].color} className={style.priorityCircle} />
-                  }
-                >
-                  <Popup.Content>
-                    <Icon name="bolt" size="small" color={priorities[propsData.priority].color} />
-                    {`${priorities[propsData.priority].label} priority`}
-                  </Popup.Content>
-                </Popup>
+                <SingleChecklistPopup propsData={propsData} />
               </Grid.Column>
               <Grid.Column width={14} className={style.pointerStyle}>
-                <Checkbox
-                  checked={checkedIndex}
-                  onChange={this.handleChecked}
-                  label={(
-                    <label>
-                      {!checkedIndex && (
-                        <p>
-                          <span className={style.checklistTitle}>
-                            {propsData.item_title}
-                            {' '}
-                          </span>
-                          <span className={style.checklistDescription}>
-                            {propsData.description}
-                          </span>
-                        </p>
-                      )}
-                      {checkedIndex && (
-                        <p>
-                          <span className={style.checklistTitleCrossedOut}>
-                            {propsData.item_title}
-                            {' '}
-                          </span>
-                          <span className={style.checklistDescriptionCrossedOut}>
-                            {propsData.description}
-                          </span>
-                        </p>
-                      )
-                      }
-                    </label>
-                  )}
+                <SingleChecklistCheckbox
+                  checkedIndex={checkedIndex}
+                  propsData={propsData}
+                  handleChecked={this.handleChecked}
                 />
               </Grid.Column>
               {propsData.details && (
                 <Grid.Column width={1} floated="right">
-                  <Accordion.Title
-                    active={accordionIndex === 0}
-                    index={0}
-                    onClick={this.handleClickAccordion
-                    }
-                  >
-                    {
-                      !checkedIndex
-                        && (
-                          <Icon name={iconName} className={style.accordionArrow} />
-                        )
-                    }
-                  </Accordion.Title>
+                  <SingleChecklistAccordionArrow
+                    iconName={iconName}
+                    checkedIndex={checkedIndex}
+                    handleClickAccordion={this.handleClickAccordion}
+                    accordionIndex={accordionIndex}
+                  />
                 </Grid.Column>
               )}
             </Grid.Row>
           </Grid>
         </Accordion.Title>
         {!checkedIndex && (
-          <Accordion.Content active={accordionIndex === 0}>
-            <Grid>
-              <Grid.Column width={2}></Grid.Column>
-              <Grid.Column width={12}>
-                <ReactMarkdown source={propsData.details} />
-              </Grid.Column>
-            </Grid>
-          </Accordion.Content>
+          <SingleChecklistDetails propsData={propsData} accordionIndex={accordionIndex} />
         )
         }
-        {!checkedIndex && (
-          <Grid>
-            <Grid.Row>
-              <Grid.Column width={1} />
-              <Grid.Column width={6} className={style.labelStyleBottomPadding}>
-                {propsData.tags.map((elem, index) => <Label key={index.toString()} size="medium"><span className={style.labelStyle}>{elem}</span></Label>)}
-              </Grid.Column>
-            </Grid.Row>
-          </Grid>
-        )
-        }
+        {!checkedIndex && (<SingleChecklistLabels propsData={propsData} />)}
       </Container>
     );
   }
