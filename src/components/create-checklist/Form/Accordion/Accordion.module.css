@@ -1,0 +1,46 @@
+.accordion, .accordion_open {
+  position: relative;
+  padding: 5px 0;
+  font-size: 15px;
+}
+
+.accordion::before, .accordion::after,
+.accordion_open::before, .accordion_open::after {
+  content: "";
+  position: absolute;
+  top: 9px;
+  left: 5px;
+  transform: translate(-6px, -50%);
+  transition: transform 0.4s;
+  background-color: #3399ff;
+  width: 5px;
+  height: 11px;
+}
+
+.accordion::before {
+  transform: translate(-2px, 0) rotate(135deg);
+}
+
+.accordion::after {
+  transform: translate(2px, 0) rotate(-135deg);
+}
+
+.accordion_open::before {
+  transform: translate(-2px, 0) rotate(45deg);
+}
+
+.accordion_open::after {
+  transform: translate(2px, 0) rotate(-45deg);
+}
+
+.accordion span,
+.accordion_open span {
+  display: block;
+  padding-left: 25px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.inner_content {
+  margin-top: 10px;
+}

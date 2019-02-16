@@ -61,7 +61,7 @@ class MainPage extends Component {
                       { currentCheckList.title }
                     </div>
                     <div className={styles.author}>
-                      { currentCheckList.author}
+                      { currentCheckList.author.username}
                     </div>
                   </div>
                   <div className={styles.checkListAmount}>

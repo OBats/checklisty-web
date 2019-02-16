@@ -11,7 +11,7 @@ const ActionsForModal = (props) => {
         <Grid>
           <Grid.Row columns={2}>
             <Grid.Column textAlign="center">
-              <Link to="/create_checklist">
+              <Link to="/create-checklist">
                 <Button animated="vertical" color="teal">
                   <Button.Content visible>Fields</Button.Content>
                   <Button.Content hidden>

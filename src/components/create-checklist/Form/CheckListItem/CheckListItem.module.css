@@ -1,0 +1,65 @@
+.section.section {
+  display: flex;
+  flex-direction: column;
+}
+
+.section.section.section input:focus,
+.section.section.section textarea:focus {
+  border-width: 2px;
+  border-color: #3399ff;
+}
+
+.section.section button.remove_section {
+  position: relative;
+  align-self: flex-end;
+  width: 25px;
+  height: 25px;
+  margin: 0;
+  background: none;
+}
+
+.section.section button.remove_section:hover,
+.section.section button.remove_section:focus {
+  background: none;
+}
+
+.section.section.section button.remove_section i {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 25px;
+  height: 25px;
+  line-height: 25px;
+  font-size: 25px;
+  transform: translate(-50%, -50%);
+}
+
+.section.section.section button.remove_section i {
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  font-size: 20px;
+  color: red;
+  transition: font-size 0.2s ease;
+}
+
+.section.section.section button.remove_section i:hover {
+  font-size: 25px;
+}
+
+.select {
+  margin-bottom: 14px;
+}
+
+.error,
+.error_title {
+  position: relative;
+  top: -10px;
+  left: 0;
+  font-weight: bold;
+  color: red;
+}
+
+.error_title {
+  top: 0;
+}

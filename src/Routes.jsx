@@ -9,7 +9,7 @@ import ProfileLists from './components/profile/MyLists';
 import ProfileTeam from './components/profile/MyTeam';
 import ShowCheckList from './components/main/ShowCheckList';
 import HomePage from './components/main/HomePage';
-import NewChecklistForm from './components/create-checklist/NewChecklistForm';
+import NewChecklistForm from './components/create-checklist/Form/NewChecklistForm';
 import ProtectedRoute from './ProtectedRoute';
 
 const Routes = () => (
@@ -24,7 +24,7 @@ const Routes = () => (
       <Route exact path="/profile/myteam" component={ProfileTeam} />
       <Route exact path="/home" component={MainPage} />
       <Route exact path="/home/:id" component={ShowCheckList} />
-      <ProtectedRoute exact path="/create_checklist" component={NewChecklistForm} />
+      <ProtectedRoute exact path="/create-checklist" component={NewChecklistForm} />
       <Redirect exact to="/" />
     </Switch>
   </React.Fragment>
