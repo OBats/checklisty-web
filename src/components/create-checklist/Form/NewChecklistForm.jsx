@@ -3,7 +3,7 @@ import { Grid, Form, Button } from 'semantic-ui-react';
 import { Formik, FieldArray } from 'formik';
 import styles from './NewCheckListForm.module.css';
 import ChecklistSchema from './utils/ChecklistSchema';
-import createChecklist from '../../../api/http';
+import createChecklistReq from '../../../api/checklist-api';
 import ChecklistItem from './CheckListItem/CheckListItem';
 import CheckListTitle from './CheckListTitle/CheckListTitle';
 
@@ -25,7 +25,7 @@ const NewChecklistForm = ({ history }) => (
 
           validationSchema={ChecklistSchema}
 
-          onSubmit={values => createChecklist(values)
+          onSubmit={values => createChecklistReq(values)
             .then((res) => {
               history.push(`/home/${res.data._id}`);
             })}

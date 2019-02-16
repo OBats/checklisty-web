@@ -15,6 +15,7 @@ class ChecklistView extends Component {
       currentProgress: 0,
     };
   }
+
   componentDidMount() {
     const checkboxArrayTemporal = [];
     const accordionIndexArray = [];
@@ -27,6 +28,7 @@ class ChecklistView extends Component {
     }
     this.setState({ checkboxArray: checkboxArrayTemporal, accordionIndexArray, iconNameArray });
   }
+
   handleChecked = (index) => {
     const { checkboxArray } = this.state;
     const checkboxArrayTemporal = [...checkboxArray];
@@ -43,6 +45,7 @@ class ChecklistView extends Component {
     ).toFixed(0);
     this.setState({ checkboxArray: checkboxArrayTemporal, currentProgress });
   }
+
   handleClickAccordion = (index) => {
     const { accordionIndexArray, iconNameArray } = this.state;
     const accordionIndexArrayTemporal = [...accordionIndexArray];
@@ -54,34 +57,40 @@ class ChecklistView extends Component {
       iconNameArray: iconNameArrayTemporal,
     });
   }
+
   handleClickEyeButton = () => {
     const { isWholeChecklistHidden } = this.state;
     this.setState({ isWholeChecklistHidden: !isWholeChecklistHidden });
   }
+
   handleSetAllCheckboxes = () => {
     this.setState(({ checkboxArray }) => ({
       checkboxArray: checkboxArray.map(() => true),
       currentProgress: 100,
     }));
   }
+
   handleResetAllCheckboxes = () => {
     this.setState(({ checkboxArray }) => ({
       checkboxArray: checkboxArray.map(() => false),
       currentProgress: 0,
     }));
   }
+
   handleOpenAllAccordions = () => {
     this.setState(({ accordionIndexArray, iconNameArray }) => ({
       accordionIndexArray: accordionIndexArray.map(() => 0),
       iconNameArray: iconNameArray.map(() => 'chevron up'),
     }));
   }
+
   handleCloseAllAccordions = () => {
     this.setState(({ accordionIndexArray, iconNameArray }) => ({
       accordionIndexArray: accordionIndexArray.map(() => -1),
       iconNameArray: iconNameArray.map(() => 'chevron down'),
     }));
   }
+
   render() {
     const {
       data,
@@ -89,23 +98,24 @@ class ChecklistView extends Component {
       isWholeChecklistHidden,
       accordionIndexArray,
       checkboxArray,
-      iconNameArray } = this.state;
+      iconNameArray,
+    } = this.state;
     return (
       <ChecklistViewComponents
-      data={data}
-      currentProgress={currentProgress}
-      isWholeChecklistHidden={isWholeChecklistHidden}
-      accordionIndexArray={accordionIndexArray}
-      checkboxArray={checkboxArray}
-      iconNameArray={iconNameArray}
-      handleChecked={this.handleChecked}
-      handleClickAccordion={this.handleClickAccordion}
-      handleClickEyeButton={this.handleClickEyeButton}
-      handleOpenAllAccordions={this.handleOpenAllAccordions}
-      handleCloseAllAccordions={this.handleCloseAllAccordions}
-      handleSetAllCheckboxes={this.handleSetAllCheckboxes}
-      handleResetAllCheckboxes={this.handleResetAllCheckboxes}
-       />
+        data={data}
+        currentProgress={currentProgress}
+        isWholeChecklistHidden={isWholeChecklistHidden}
+        accordionIndexArray={accordionIndexArray}
+        checkboxArray={checkboxArray}
+        iconNameArray={iconNameArray}
+        handleChecked={this.handleChecked}
+        handleClickAccordion={this.handleClickAccordion}
+        handleClickEyeButton={this.handleClickEyeButton}
+        handleOpenAllAccordions={this.handleOpenAllAccordions}
+        handleCloseAllAccordions={this.handleCloseAllAccordions}
+        handleSetAllCheckboxes={this.handleSetAllCheckboxes}
+        handleResetAllCheckboxes={this.handleResetAllCheckboxes}
+      />
     );
   }
 }

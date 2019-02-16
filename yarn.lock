@@ -9849,6 +9849,11 @@ react-avatar-edit@^0.7.1:
     konva "2.5.1"
     webpack-cli "2.1.4"
 
+react-collapsible@^2.5.0:
+  version "2.5.0"
+  resolved "https://registry.yarnpkg.com/react-collapsible/-/react-collapsible-2.5.0.tgz#7950ec4038c0b11f92f470ce17f596144044e42f"
+  integrity sha512-6O9lGdQq/YJsWbEEf+geoTzv/vWFKUNrCHOUyrzIWV8eEgFT8xP3EB64/Xj232hEavDOb7SEKhcjeMUNAQFUvg==
+
 react-dev-utils@^7.0.1:
   version "7.0.1"
   resolved "https://registry.yarnpkg.com/react-dev-utils/-/react-dev-utils-7.0.1.tgz#c53e759a22668ee2c0d146c24ce4bdec2b41e3c8"
@@ -10046,6 +10051,14 @@ react-select@^2.3.0:
     raf "^3.4.0"
     react-input-autosize "^2.2.1"
     react-transition-group "^2.2.1"
+
+react-textarea-autosize@^7.1.0:
+  version "7.1.0"
+  resolved "https://registry.yarnpkg.com/react-textarea-autosize/-/react-textarea-autosize-7.1.0.tgz#3132cb77e65d94417558d37c0bfe415a5afd3445"
+  integrity sha512-c2FlR/fP0qbxmlrW96SdrbgP/v0XZMTupqB90zybvmDVDutytUgPl7beU35klwcTeMepUIQEpQUn3P3bdshGPg==
+  dependencies:
+    "@babel/runtime" "^7.1.2"
+    prop-types "^15.6.0"
 
 react-transition-group@^2.2.1:
   version "2.5.3"

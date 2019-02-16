@@ -24,7 +24,7 @@ const Routes = props => (
       <ProtectedRoute exact path="/profile/myteam" loggedUser={props.loggedUser} component={ProfileTeam} />
       <Route exact path="/home" component={MainPage} />
       <Route exact path="/home/:id" component={ShowCheckList} />
-      <ProtectedRoute exact path="/create-checklist" component={NewChecklistForm} />
+      <Route exact path="/create-checklist" component={NewChecklistForm} />
       <Redirect exact to="/" />
     </Switch>
   </React.Fragment>
