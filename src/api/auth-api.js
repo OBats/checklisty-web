@@ -13,7 +13,7 @@ export const signUp = async (values) => {
 };
 
 export const validateUser = async () => {
-  const { data } = await http.post('./api/auth/validate');
+  const { data } = await http.post('/api/auth/validate');
   return data;
 };
 
