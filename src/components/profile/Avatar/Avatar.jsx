@@ -3,6 +3,7 @@ import AvatarEdit from 'react-avatar-edit';
 import { Image, Modal, Button } from 'semantic-ui-react';
 import style from './Avatar.module.css';
 import http from '../../../api/http';
+import loaderStyle from '../../main/loader.module.css';
 
 const labelStyles = {
   fontSize: '1.25em',
@@ -21,13 +22,15 @@ class AvatarForProfile extends React.Component {
       avatarUrl: null,
       preview: null,
       modalOpen: false,
+      loading: true,
     };
   }
 
   componentDidMount() {
-    http.get('api/profile/avatar').then((res) => {
+    http.get('/api/profile/avatar').then((res) => {
       this.setState(() => ({
         avatarUrl: res.data,
+        loading: false,
       }));
     });
   }
@@ -48,6 +51,7 @@ class AvatarForProfile extends React.Component {
         this.setState({
           modalOpen: false,
           avatarUrl: res.data,
+          loading: false,
         });
       });
   };
@@ -73,7 +77,12 @@ class AvatarForProfile extends React.Component {
   });
 
   render() {
-    const { modalOpen } = this.state;
+    const { modalOpen, loading } = this.state;
+    if (loading) {
+      return (
+        <div className={loaderStyle.loader}>Loading...</div>
+      );
+    }
     return (
       <div>
         <div>

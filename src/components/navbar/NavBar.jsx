@@ -70,7 +70,7 @@ const NavBar = ({ userData, handleSignOut }) => (
             </Dropdown.Menu>
           </Dropdown>
           <Menu.Item className={style.NavBarAvatarWrapper}>
-            <img src="https://react.semantic-ui.com/images/avatar/large/matthew.png" alt="user avatar" className={style.NavBarAvatar} />
+            <img src="https://uniandes.hcmifactum.com/resources/images/no-image.jpg" alt="user avatar" className={style.NavBarAvatar} />
           </Menu.Item>
         </Menu.Menu>
       </React.Fragment>
