@@ -12,16 +12,16 @@ import HomePage from './components/main/HomePage';
 import NewChecklistForm from './components/create-checklist/NewChecklistForm';
 import ProtectedRoute from './ProtectedRoute';
 
-const Routes = () => (
+const Routes = props => (
   <React.Fragment>
     <NavBar />
     <Switch>
       <Route exact path="/" component={HomePage} />
       <Route exact path="/auth/signin/" component={SignIn} />
       <Route exact path="/auth/signup/" component={SignUp} />
-      <Route exact path="/profile/maininfo" component={ProfileInfo} />
-      <Route exact path="/profile/mylists" component={ProfileLists} />
-      <Route exact path="/profile/myteam" component={ProfileTeam} />
+      <ProtectedRoute exact path="/profile/maininfo" loggedUser={props.loggedUser} component={ProfileInfo} />
+      <ProtectedRoute exact path="/profile/mylists" loggedUser={props.loggedUser} component={ProfileLists} />
+      <ProtectedRoute exact path="/profile/myteam" loggedUser={props.loggedUser} component={ProfileTeam} />
       <Route exact path="/home" component={MainPage} />
       <Route exact path="/home/:id" component={ShowCheckList} />
       <ProtectedRoute exact path="/create_checklist" component={NewChecklistForm} />
