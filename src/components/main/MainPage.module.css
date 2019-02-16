@@ -2,6 +2,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    margin-top: 3%;
 }
 .modalWindow{
     width: 30%;
@@ -68,4 +69,7 @@
     display: flex;
     justify-content: center;
     align-items: flex-end;
+}
+.checkListAmount{
+    padding-right: 30px;
 }

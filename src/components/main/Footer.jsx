@@ -3,7 +3,7 @@ import styles from './Footer.module.css';
 
 const Footer = () => (
   <footer className={styles.menu}>
-    <span className={styles.fonts}>Made with ❤️ by Lv-379 NodeJS</span>
+    <span className={styles.fonts}>Made by Lv-379 NodeJS</span>
     <a href="https://github.com/ss-ita/checklisty-web">
       <img
         className={styles.distance}
