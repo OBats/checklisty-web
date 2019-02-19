@@ -3,6 +3,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import Routes from './Routes';
+import loaderStyle from './components/main/loader.module.css';
 import { validateUser } from './api/auth-api';
 import { saveUserData } from './actions/user';
 import './App.css';
@@ -28,8 +29,7 @@ class App extends Component {
   render() {
     const { fetching } = this.state;
 
-    if (fetching) return 'Loading...';
-    // eslint-disable-next-line react/jsx-filename-extension
+    if (fetching) return <div className={loaderStyle.loader}>Loading...</div>;
     return <BrowserRouter><Routes /></BrowserRouter>;
   }
 }
