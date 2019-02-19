@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import React from 'react';
 import { Accordion, Container, Grid, Progress, Button, Header, Icon } from 'semantic-ui-react';
 import SingleChecklistItem from './SingleChecklistItem';
@@ -28,7 +27,7 @@ const ChecklistViewComponents = props => (
           </Button>
         </Grid.Column>
         <Grid.Column width={1} className={style.toRightAlign}>
-          <Button size="medium" icon color="teal" onClick={props.handleOpenAllAccordions} className={style.hoverStyle}>
+          <Button size="medium" icon color="teal" onClick={props.handleOpenAllAccordions}>
             <Icon name="angle double down" />
           </Button>
         </Grid.Column>
@@ -39,12 +38,7 @@ const ChecklistViewComponents = props => (
         </Grid.Column>
         <Grid.Column width={1}>
           <Button size="medium" icon color={props.isWholeChecklistHidden ? 'red' : 'grey'} onClick={props.handleClickEyeButton}>
-            {!props.isWholeChecklistHidden && (
-              <Icon name="eye" />)
-            }
-            {props.isWholeChecklistHidden && (
-              <Icon name="eye slash" />)
-            }
+            <Icon name={props.isWholeChecklistHidden ? 'eye' : 'eye slash'} />
           </Button>
         </Grid.Column>
       </Grid.Row>

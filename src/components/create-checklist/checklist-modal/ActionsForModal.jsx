@@ -1,4 +1,3 @@
-/* eslint-disable react/prop-types */
 import React from 'react';
 import { Grid, Modal, Button, Icon } from 'semantic-ui-react';
 import { connect } from 'react-redux';

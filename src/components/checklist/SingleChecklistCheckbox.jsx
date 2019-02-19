@@ -8,27 +8,20 @@ const SingleChecklistCheckbox = props => (
     onChange={props.handleChecked}
     label={(
       <label>
-        {!props.checkedIndex && (
-          <p>
-            <span className={style.checklistTitle}>
-              {props.propsData.item_title}
-            </span>
-            <span className={style.checklistDescription}>
-              {props.propsData.description}
-            </span>
-          </p>
-        )}
-        {props.checkedIndex && (
-          <p>
-            <span className={style.checklistTitleCrossedOut}>
-              {props.propsData.item_title}
-            </span>
-            <span className={style.checklistDescriptionCrossedOut}>
-              {props.propsData.description}
-            </span>
-          </p>
-        )
-        }
+        <p>
+          <span className={
+            props.checkedIndex ? style.checklistTitleCrossedOut : style.checklistTitle
+          }
+          >
+            {`${props.propsData.item_title} `}
+          </span>
+          <span className={
+            props.checkedIndex ? style.checklistDescriptionCrossedOut : style.checklistDescription
+          }
+          >
+            {props.propsData.description}
+          </span>
+        </p>
       </label>
     )}
   />
