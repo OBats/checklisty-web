@@ -30,7 +30,7 @@ class App extends Component {
 
     if (fetching) return 'Loading...';
     // eslint-disable-next-line react/jsx-filename-extension
-    return <BrowserRouter><Routes loggedUser={this.props.loggedUser} /></BrowserRouter>;
+    return <BrowserRouter><Routes /></BrowserRouter>;
   }
 }
 
