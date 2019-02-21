@@ -6,6 +6,7 @@ import ChecklistSchema from './utils/ChecklistSchema';
 import createChecklistReq from '../../../api/checklist-api';
 import ChecklistItem from './CheckListItem/CheckListItem';
 import CheckListTitle from './CheckListTitle/CheckListTitle';
+import { ErrorHandling, ErrorContainer } from '../../errors/ErrorsHandling';
 
 const NewChecklistForm = ({ history }) => (
   <Grid centered>
@@ -25,10 +26,20 @@ const NewChecklistForm = ({ history }) => (
 
           validationSchema={ChecklistSchema}
 
-          onSubmit={values => createChecklistReq(values)
-            .then((res) => {
-              history.push(`/home/${res.data._id}`);
-            })}
+          onSubmit={(values, actions) => {
+            createChecklistReq(values)
+              .then((res) => {
+                history.push(`/home/${res.data._id}`);
+              })
+              .catch((error) => {
+                if (error.response.status === 500) {
+                  ErrorHandling('Server is down. Please try again later.');
+                } else {
+                  ErrorHandling(error.response.data.message);
+                }
+                actions.setSubmitting(false);
+              });
+          }}
 
           render={({
             values,
@@ -81,7 +92,8 @@ const NewChecklistForm = ({ history }) => (
                 )}
               />
               <div>
-                <Button primary fluid type="submit" disabled={!isValid || isSubmitting}>Submit</Button>
+                <Button primary fluid type="submit" disabled={isSubmitting || !isValid}>Submit</Button>
+                <ErrorContainer />
               </div>
             </Form>
           )}

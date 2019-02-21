@@ -9,12 +9,12 @@ const ChecklistSchema = Yup.object().shape({
     .of(
       Yup.object().shape({
         item_title: Yup.string()
-          .min(2, 'Checklist title should be at least 2 symbols long')
-          .max(50, 'Checklist title should be maximum 50 symbols long')
+          .min(2, 'Section title should be at least 2 symbols long')
+          .max(50, 'Section title should be maximum 50 symbols long')
           .required('Section title is required'),
         description: Yup.string()
-          .min(2, 'Checklist title should be at least 2 symbols long')
-          .max(500, 'Checklist title should be maximum 500 symbols long')
+          .min(2, 'Description title should be at least 2 symbols long')
+          .max(500, 'Description title should be maximum 500 symbols long')
           .required('Description is required'),
         tags: Yup.array()
           .of(Yup.string())
