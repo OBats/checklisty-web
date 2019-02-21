@@ -107,6 +107,7 @@ class ChecklistView extends Component {
         accordionIndexArray={accordionIndexArray}
         checkboxArray={checkboxArray}
         iconNameArray={iconNameArray}
+        styleSectionDivider={this.props.styleSectionDivider}
         handleChecked={this.handleChecked}
         handleClickAccordion={this.handleClickAccordion}
         handleClickEyeButton={this.handleClickEyeButton}

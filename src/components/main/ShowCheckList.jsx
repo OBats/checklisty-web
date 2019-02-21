@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import ChecklistView from '../checklist/ChecklistView';
 import http from '../../api/http';
 import loaderStyle from './loader.module.css';
 import Header from './Header';
 import styles from './ShowCheckList.module.css';
 import Footer from './Footer';
+import MainChecklistBlock from '../checklist/MainChecklistBlock';
 
 class ShowCheckList extends Component {
   constructor(props) {
@@ -45,7 +45,7 @@ class ShowCheckList extends Component {
       <div>
         <Header title={checkList.title} />
         <div className={styles.checkListContainer}>
-          <ChecklistView checkListData={checkList} />
+          <MainChecklistBlock checkListData={checkList} />
         </div>
         <Footer />
       </div>
