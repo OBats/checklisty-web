@@ -26,12 +26,9 @@ class MainPage extends Component {
       });
   }
 
-  countingItems = (checklist) => {
-    if (checklist.length === 1) {
-      return `${checklist.length} item`;
-    }
-    return `${checklist.length} items`;
-  }
+  countingItems = checklist => (checklist.length === 1 || checklist.length === 0 ? `${checklist.length} section` : `${checklist.length} sections`)
+
+  showCreationData = data => `Created: ${data.slice(0, 10).split('-').reverse().join('/')}`
 
   render() {
     const { showAllCheckList, loading } = this.state;
@@ -61,11 +58,16 @@ class MainPage extends Component {
                       { currentCheckList.title }
                     </div>
                     <div className={styles.author}>
-                      { currentCheckList.author.username}
+                      { currentCheckList.author === null ? 'User was deleted' : currentCheckList.author.username}
                     </div>
                   </div>
                   <div className={styles.checkListAmount}>
-                    {this.countingItems(currentCheckList.items_data)}
+                    <div>
+                      {this.countingItems(currentCheckList.sections_data)}
+                    </div>
+                    <div>
+                      {this.showCreationData(currentCheckList.creation_date)}
+                    </div>
                   </div>
                 </div>
               </Link>

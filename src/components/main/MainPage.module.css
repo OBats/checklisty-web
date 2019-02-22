@@ -72,4 +72,6 @@
 }
 .checkListAmount{
     padding-right: 30px;
+    display: flex;
+    flex-direction: column;
 }
