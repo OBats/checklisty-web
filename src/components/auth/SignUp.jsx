@@ -8,6 +8,7 @@ import style from './auth.module.css';
 import { signUp } from '../../api/auth-api';
 import { SignupSchema } from './validationSchema';
 import { saveUserData } from '../../actions/user';
+import { ErrorHandling, ErrorContainer } from '../errors/ErrorsHandling';
 
 const SignUp = ({ loggedUser, saveUserData }) => {
   if (!loggedUser) {
@@ -26,9 +27,14 @@ const SignUp = ({ loggedUser, saveUserData }) => {
                     .then((data) => {
                       saveUserData(data);
                     })
-                    .catch(error => (
-                      actions.setErrors(error.response.data)
-                    ));
+                    .catch((error) => {
+                      if (error.response.status === 500) {
+                        ErrorHandling('Server is down. Please try again later.');
+                      } else {
+                        ErrorHandling(error.response.data.username || error.response.data.email);
+                      }
+                      actions.setSubmitting(false);
+                    });
                 }}
               >
                 {({
@@ -39,6 +45,7 @@ const SignUp = ({ loggedUser, saveUserData }) => {
                   errors,
                   touched,
                   isValid,
+                  isSubmitting,
                 }) => (
                   <Form onSubmit={handleSubmit}>
                     <Input
@@ -83,13 +90,14 @@ const SignUp = ({ loggedUser, saveUserData }) => {
                       value={values.password}
                     />
                     <div className={style.Error}>{touched.password && errors.password}</div>
+                    <ErrorContainer />
                     <Button
                       className={style.AuthBtn}
                       fluid
                       size="large"
                       color="black"
                       type="submit"
-                      disabled={!isValid}
+                      disabled={isSubmitting || !isValid}
                     >
                     Sign Up
                     </Button>

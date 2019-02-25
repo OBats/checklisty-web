@@ -9,6 +9,7 @@ import style from './auth.module.css';
 import { signIn } from '../../api/auth-api';
 import { SigninSchema } from './validationSchema';
 import { saveUserData } from '../../actions/user';
+import { ErrorHandling, ErrorContainer } from '../errors/ErrorsHandling';
 
 const SignIn = ({ loggedUser, saveUserData }) => {
   if (!loggedUser) {
@@ -27,9 +28,14 @@ const SignIn = ({ loggedUser, saveUserData }) => {
                     .then((data) => {
                       saveUserData(data);
                     })
-                    .catch(error => (
-                      actions.setErrors(error.response.data)
-                    ));
+                    .catch((error) => {
+                      if (error.response.status === 500) {
+                        ErrorHandling('Server is down. Please try again later.');
+                      } else {
+                        ErrorHandling(error.response.data.message);
+                      }
+                      actions.setSubmitting(false);
+                    });
                 }}
               >
                 {({
@@ -40,6 +46,7 @@ const SignIn = ({ loggedUser, saveUserData }) => {
                   errors,
                   touched,
                   isValid,
+                  isSubmitting,
                 }) => (
                   <Form onSubmit={handleSubmit}>
                     <Input
@@ -70,14 +77,14 @@ const SignIn = ({ loggedUser, saveUserData }) => {
                       value={values.password}
                     />
                     <div className={style.Error}>{touched.password && errors.password}</div>
-                    <div className={style.RedMessage}>{errors.message}</div>
+                    <ErrorContainer />
                     <Button
                       className={style.AuthBtn}
                       fluid
                       size="large"
                       color="black"
                       type="submit"
-                      disabled={!isValid}
+                      disabled={isSubmitting || !isValid}
                     >
 										Sign In
                     </Button>
