@@ -4,6 +4,9 @@ import { Image, Modal, Button } from 'semantic-ui-react';
 import style from './Avatar.module.css';
 import http from '../../../api/http';
 import loaderStyle from '../../main/loader.module.css';
+import { validateUser } from '../../../api/auth-api';
+import { saveUserData } from '../../../actions/user';
+import updateUser from '../../../api/user';
 
 const labelStyles = {
   fontSize: '1.25em',
@@ -26,13 +29,14 @@ class AvatarForProfile extends React.Component {
     };
   }
 
-  componentDidMount() {
+  async componentDidMount() {
     http.get('/api/profile/avatar').then((res) => {
       this.setState(() => ({
         avatarUrl: res.data,
         loading: false,
       }));
     });
+    await updateUser();
   }
 
   onBeforeFileLoad = (elem) => {

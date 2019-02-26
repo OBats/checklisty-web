@@ -2,7 +2,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { Link, NavLink } from 'react-router-dom';
-import { Menu, Dropdown, Icon } from 'semantic-ui-react';
+import { Menu, Dropdown, Icon, Image } from 'semantic-ui-react';
 import { signOut } from '../../api/auth-api';
 import style from './NavBar.module.css';
 import home from './logo.png';
@@ -70,7 +70,12 @@ const NavBar = ({ userData, handleSignOut }) => (
             </Dropdown.Menu>
           </Dropdown>
           <Menu.Item className={style.NavBarAvatarWrapper}>
-            <img src="https://uniandes.hcmifactum.com/resources/images/no-image.jpg" alt="user avatar" className={style.NavBarAvatar} />
+            <Image
+              src={userData.image || 'https://uniandes.hcmifactum.com/resources/images/no-image.jpg'}
+              style={{ width: '60px' }}
+              size="tiny"
+              avatar
+            />
           </Menu.Item>
         </Menu.Menu>
       </React.Fragment>

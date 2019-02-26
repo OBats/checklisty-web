@@ -6,6 +6,7 @@ import Routes from './Routes';
 import loaderStyle from './components/main/loader.module.css';
 import { validateUser } from './api/auth-api';
 import { saveUserData } from './actions/user';
+import updateUser from './api/user';
 import './App.css';
 
 class App extends Component {
@@ -15,7 +16,7 @@ class App extends Component {
   }
 
   async componentDidMount() {
-    if (!this.props.loggedUser) {
+    if (!this.props.loggedUser && localStorage.getItem('access-token')) {
       try {
         const user = await validateUser();
         this.props.saveUserData(user);
