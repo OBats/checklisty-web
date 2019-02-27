@@ -48,7 +48,7 @@ class SingleChecklistItem extends Component {
             </Grid.Row>
           </Grid>
         </Accordion.Title>
-        {!checkedIndex && (
+        {(!checkedIndex && propsData.details !== '') && (
           <SingleChecklistDetails propsData={propsData} accordionIndex={accordionIndex} />
         )
         }

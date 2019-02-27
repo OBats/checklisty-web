@@ -1,7 +1,7 @@
 import * as Yup from 'yup';
 
-const minLength = 6;
-const maxLength = 15;
+const minLength = 3;
+const maxLength = 25;
 
 export const SignupSchema = Yup.object().shape({
   username: Yup

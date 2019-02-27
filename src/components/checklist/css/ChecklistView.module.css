@@ -26,6 +26,11 @@
     padding-left: 0rem !important;
 }
 
+.sectionDivider{
+    padding-top: 3%;
+    padding-bottom: 3%;
+}
+
 @media screen and (max-width: 992px) {
     .toRightAlign{
         padding-right: 1rem !important;

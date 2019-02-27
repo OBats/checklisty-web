@@ -1,13 +1,14 @@
 import React from 'react';
-import { Accordion, Container, Grid, Progress, Button, Header, Icon } from 'semantic-ui-react';
+import { Accordion, Container, Grid, Progress, Button, Header, Icon, Divider } from 'semantic-ui-react';
 import SingleChecklistItem from './SingleChecklistItem';
 import style from './css/ChecklistView.module.css';
 
 const ChecklistViewComponents = props => (
   <Container>
-    <div className={props.styleSectionDivider}>
+    {props.checklistIndex !== 0 && (<Divider />)}
+    <div className={style.sectionDivider}>
       <Grid container>
-        <Grid.Row verticalAlign="middle">
+        <Grid.Row>
           <Grid.Column width={6}>
             <Header size="large">{props.data.section_title}</Header>
           </Grid.Column>

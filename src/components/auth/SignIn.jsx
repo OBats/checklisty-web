@@ -3,21 +3,32 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { Formik, Form } from 'formik';
-import { Input, Button, Grid, Segment, Message } from 'semantic-ui-react';
+import { Input, Button, Grid, Segment, Message, Header, Divider } from 'semantic-ui-react';
 import Link from 'react-router-dom/Link';
 import style from './auth.module.css';
 import { signIn } from '../../api/auth-api';
 import { SigninSchema } from './validationSchema';
 import { saveUserData } from '../../actions/user';
 import { ErrorHandling, ErrorContainer } from '../errors/ErrorsHandling';
+import SignInWithSocials from './SignInWithSocials';
 
 const SignIn = ({ loggedUser, saveUserData }) => {
   if (!loggedUser) {
     return (
       <div>
         <Grid className={style.Auth} centered verticalAlign="middle">
-          <Grid.Column className={style.Form} width={8}>
-            <Segment>
+          <Grid.Column className={style.Form} width={14}>
+            <Segment raised padded>
+              <Header textAlign="center" size="huge">
+                {'Sign In'}
+                <Header.Subheader size="small" color="grey" className={style.subheader}>
+                  {'Connect our website using:'}
+                </Header.Subheader>
+              </Header>
+              <SignInWithSocials />
+              <Divider horizontal>
+                <Header as="h4">or</Header>
+              </Divider>
               <Formik
                 initialValues={{
                   email: '', password: '',

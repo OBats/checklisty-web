@@ -3,7 +3,6 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import NavBar from './components/navbar/NavBar';
 import SignIn from './components/auth/SignIn';
 import SignUp from './components/auth/SignUp';
-import MainPage from './components/main/MainPage';
 import ProfileInfo from './components/profile/ProfileMainInfo';
 import ProfileLists from './components/profile/MyLists';
 import ProfileTeam from './components/profile/MyTeam';
@@ -11,6 +10,7 @@ import ShowCheckList from './components/main/ShowCheckList';
 import HomePage from './components/main/HomePage';
 import NewChecklistForm from './components/create-checklist/Form/NewChecklistForm';
 import ProtectedRoute from './ProtectedRoute';
+import SignInWithSocialsRedirected from './components/auth/SignInWithSocialsRedirected';
 
 const Routes = () => (
   <React.Fragment>
@@ -22,8 +22,8 @@ const Routes = () => (
       <ProtectedRoute exact path="/profile/maininfo" component={ProfileInfo} />
       <ProtectedRoute exact path="/profile/mylists" component={ProfileLists} />
       <ProtectedRoute exact path="/profile/myteam" component={ProfileTeam} />
-      <Route exact path="/home" component={MainPage} />
       <Route exact path="/home/:id" component={ShowCheckList} />
+      <Route exact path="/redirect/" component={SignInWithSocialsRedirected} />
       <ProtectedRoute exact path="/create-checklist" component={NewChecklistForm} />
       <Redirect exact to="/" />
     </Switch>

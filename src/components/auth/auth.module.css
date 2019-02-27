@@ -40,3 +40,7 @@
 .AuthBtn.AuthBtn.AuthBtn.AuthBtn:hover {
   background-color: rgb(42, 51, 59);
 }
+
+.subheader{
+  margin: 10px 0 15px 0 !important;
+}

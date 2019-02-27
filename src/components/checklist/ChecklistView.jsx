@@ -99,6 +99,7 @@ class ChecklistView extends Component {
       checkboxArray,
       iconNameArray,
     } = this.state;
+    const { checklistIndex } = this.props;
     return (
       <ChecklistViewComponents
         data={data}
@@ -107,7 +108,7 @@ class ChecklistView extends Component {
         accordionIndexArray={accordionIndexArray}
         checkboxArray={checkboxArray}
         iconNameArray={iconNameArray}
-        styleSectionDivider={this.props.styleSectionDivider}
+        checklistIndex={checklistIndex}
         handleChecked={this.handleChecked}
         handleClickAccordion={this.handleClickAccordion}
         handleClickEyeButton={this.handleClickEyeButton}

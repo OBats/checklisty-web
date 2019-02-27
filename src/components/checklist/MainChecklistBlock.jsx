@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
-import { Grid, Container } from 'semantic-ui-react';
+import { Grid } from 'semantic-ui-react';
 import ChecklistView from './ChecklistView';
-import style from './css/MainChecklistBlock.module.css';
 
 class MainChecklistBlock extends Component {
   constructor(props) {
@@ -17,8 +16,8 @@ class MainChecklistBlock extends Component {
       <Grid>
         <Grid.Column width={3} />
         <Grid.Column width={10}>
-          {data.sections_data.map(elem => (
-            <ChecklistView styleSectionDivider={style.sectionDivider} checkListData={elem} />
+          {data.sections_data.map((elem, index) => (
+            <ChecklistView key={index.toString()} checklistIndex={index} checkListData={elem} />
           ))}
         </Grid.Column>
         <Grid.Column width={3} />

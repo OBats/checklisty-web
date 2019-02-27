@@ -3,12 +3,13 @@ import { Formik, Form } from 'formik';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import Link from 'react-router-dom/Link';
-import { Input, Button, Grid, Segment, Message } from 'semantic-ui-react';
+import { Input, Button, Grid, Segment, Message, Header, Divider } from 'semantic-ui-react';
 import style from './auth.module.css';
 import { signUp } from '../../api/auth-api';
 import { SignupSchema } from './validationSchema';
 import { saveUserData } from '../../actions/user';
 import { ErrorHandling, ErrorContainer } from '../errors/ErrorsHandling';
+import SignInWithSocials from './SignInWithSocials';
 
 const SignUp = ({ loggedUser, saveUserData }) => {
   if (!loggedUser) {
@@ -16,7 +17,17 @@ const SignUp = ({ loggedUser, saveUserData }) => {
       <div>
         <Grid className={style.Auth} centered verticalAlign="middle">
           <Grid.Column className={style.Form} width={8}>
-            <Segment>
+            <Segment raised>
+              <Header textAlign="center" size="huge">
+                {'Sign Up'}
+                <Header.Subheader size="small" color="grey" className={style.subheader}>
+                  {'Become our member with:'}
+                </Header.Subheader>
+              </Header>
+              <SignInWithSocials />
+              <Divider horizontal>
+                <Header as="h4">or</Header>
+              </Divider>
               <Formik
                 initialValues={{
                   username: '', email: '', password: '',
