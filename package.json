@@ -2,7 +2,6 @@
   "name": "check-list",
   "version": "0.1.0",
   "private": true,
-  "proxy": "http://localhost:3030",
   "dependencies": {
     "axios": "^0.18.0",
     "firebase-cli": "^1.2.0",
