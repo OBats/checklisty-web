@@ -6,8 +6,6 @@ import http from '../../../api/http';
 import loaderStyle from '../../main/loader.module.css';
 import { ErrorHandling, ErrorContainer } from '../../errors/ErrorsHandling';
 
-import { ErrorHandling, ErrorContainer } from '../../errors/ErrorsHandling';
-
 
 const labelStyles = {
   fontSize: '1.25em',
@@ -38,7 +36,6 @@ class AvatarForProfile extends React.Component {
         loading: false,
       }));
     });
-    await updateUser();
   }
 
   handleAddPhoto = () => {
