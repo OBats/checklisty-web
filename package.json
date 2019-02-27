@@ -5,6 +5,7 @@
   "proxy": "http://localhost:3030",
   "dependencies": {
     "axios": "^0.18.0",
+    "firebase-cli": "^1.2.0",
     "formik": "^1.4.3",
     "prop-types": "^15.6.2",
     "react": "^16.7.0",
