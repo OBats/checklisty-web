@@ -4,9 +4,9 @@ import { Image, Modal, Button } from 'semantic-ui-react';
 import style from './Avatar.module.css';
 import http from '../../../api/http';
 import loaderStyle from '../../main/loader.module.css';
-import { validateUser } from '../../../api/auth-api';
-import { saveUserData } from '../../../actions/user';
-import updateUser from '../../../api/user';
+
+import { ErrorHandling, ErrorContainer } from '../../errors/ErrorsHandling';
+
 
 const labelStyles = {
   fontSize: '1.25em',
@@ -26,6 +26,7 @@ class AvatarForProfile extends React.Component {
       preview: null,
       modalOpen: false,
       loading: true,
+      err: false,
     };
   }
 
@@ -39,13 +40,6 @@ class AvatarForProfile extends React.Component {
     await updateUser();
   }
 
-  onBeforeFileLoad = (elem) => {
-    if (elem.target.files[0].size > 1000000) {
-      alert('File is too big!');
-      elem.target.value = '';
-    }
-  };
-
   handleAddPhoto = () => {
     http
       .post('/api/profile/avatar', {
@@ -56,7 +50,14 @@ class AvatarForProfile extends React.Component {
           modalOpen: false,
           avatarUrl: res.data,
           loading: false,
+          err: false,
         });
+      }).catch((err) => {
+        ErrorHandling('File is too big!');
+        this.setState(() => ({
+          modalOpen: false,
+          err: true,
+        }));
       });
   };
 
@@ -81,7 +82,7 @@ class AvatarForProfile extends React.Component {
   });
 
   render() {
-    const { modalOpen, loading } = this.state;
+    const { modalOpen, loading, err } = this.state;
     if (loading) {
       return (
         <div className={loaderStyle.loader}>Loading...</div>
@@ -112,7 +113,6 @@ class AvatarForProfile extends React.Component {
             open={modalOpen}
           >
             <AvatarEdit
-              onBeforeFileLoad={this.onBeforeFileLoad}
               labelStyle={labelStyles}
               class="avatar"
               width="100%"
@@ -129,6 +129,7 @@ class AvatarForProfile extends React.Component {
               </Button>
             </Modal.Actions>
           </Modal>
+          <ErrorContainer />
         </div>
       </div>
     );
