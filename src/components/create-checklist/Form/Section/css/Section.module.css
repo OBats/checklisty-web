@@ -1,0 +1,104 @@
+.container {
+  position: relative;
+}
+
+.container.container button.add_section,
+.items.items button.remove_section {
+  position: absolute;
+  left: 100%;
+  bottom: 0;
+  width: 50px;
+  height: 50px;
+  margin-left: 10px;
+  margin-right: 0;
+  border-radius: 50%;
+  background-color: #08a3a3;
+  transition: 0.4s ease-in-out;
+}
+
+.items.items button.remove_section {
+  bottom: 55px;
+  background-color: #db2828;
+  transition: 0.3s ease-in-out;
+}
+
+.container.container button.add_section i {
+  color: whitesmoke;
+}
+
+.container.container button.add_section:hover,
+.container.container button.add_section:focus {
+  background-color: #3399ff;
+  transform: rotate(180deg);
+  transition: 0.4s ease-in-out;
+}
+
+.container.container.container button.add_section i,
+.items.items.items button.remove_section i {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 25px;
+  height: 25px;
+  line-height: 25px;
+  font-size: 25px;
+  transform: translate(-50%, -50%);
+}
+
+.items.items.items button.remove_section:hover,
+.items.items.items button.remove_section:focus {
+  background-color: #b90000;
+}
+
+.items.items.items button.remove_section:hover i,
+.items.items.items button.remove_section:focus i {
+  font-size: 25px;
+  transition: 0.3s ease-in-out;
+}
+
+.items.items.items button.remove_section i {
+  font-size: 20px;
+}
+
+.items.items {
+  position: relative;
+  margin-bottom: 20px;
+  padding: 20px 15px;
+}
+
+.items.items:first-child {
+  margin-top: 20px;
+  padding-bottom: 15px;
+}
+
+.items.items.items input:focus,
+.items.items.items textarea:focus {
+  border-width: 2px;
+  border-color: #3399ff;
+}
+
+.item_wrapper {
+  position: relative;
+}
+
+.item_wrapper.item_wrapper button.add_item {
+  position: absolute;
+  left: 15px;
+  bottom: 18px;
+  margin: 0;
+}
+
+.item.item {
+  margin-bottom: 30px;
+}
+
+.item.item:last-of-type {
+  margin-bottom: 0;
+  padding-bottom: 60px;
+}
+
+.number {
+  font-size: 14px;
+  font-weight: 700;
+  color: rgb(138, 137, 137);
+}

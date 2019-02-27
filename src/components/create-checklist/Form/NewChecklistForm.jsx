@@ -1,12 +1,11 @@
 import React from 'react';
 import { Grid, Form, Button } from 'semantic-ui-react';
-import { Formik, FieldArray } from 'formik';
-import styles from './NewCheckListForm.module.css';
+import { Formik } from 'formik';
 import ChecklistSchema from './utils/ChecklistSchema';
 import createChecklistReq from '../../../api/checklist-api';
-import ChecklistItem from './CheckListItem/CheckListItem';
 import CheckListTitle from './CheckListTitle/CheckListTitle';
 import { ErrorHandling, ErrorContainer } from '../../errors/ErrorsHandling';
+import Section from './Section/Section';
 
 const NewChecklistForm = ({ history }) => (
   <Grid centered>
@@ -15,12 +14,15 @@ const NewChecklistForm = ({ history }) => (
         <Formik
           initialValues={{
             title: '',
-            items_data: [{
-              item_title: '',
-              description: '',
-              details: '',
-              tags: [],
-              priority: '',
+            sections_data: [{
+              section_title: '',
+              items_data: [{
+                item_title: '',
+                description: '',
+                details: '',
+                tags: [],
+                priority: '',
+              }],
             }],
           }}
 
@@ -52,49 +54,23 @@ const NewChecklistForm = ({ history }) => (
             isSubmitting,
           }) => (
             <Form onSubmit={handleSubmit}>
+
               <CheckListTitle
                 onBlur={handleBlur}
                 onChange={handleChange}
               />
 
-              <FieldArray
-                name="items_data"
-                render={arrayHelpers => (
-                  <div className={styles.section_container}>
-                    {values.items_data.map((el, index) => (
-                      <ChecklistItem
-                        key={index.toString()}
-                        index={index}
-                        arrayHelpers={arrayHelpers}
-                        setFieldValue={setFieldValue}
-                        setFieldTouched={setFieldTouched}
-                        onBlur={handleBlur}
-                        onChange={handleChange}
-                      />
-                    ))}
-
-                    <Button
-                      className={styles.add_section}
-                      icon="add"
-                      type="button"
-                      title="Add a New Section"
-                      onClick={() => arrayHelpers.push({
-                        items_data: [{
-                          item_title: '',
-                          description: '',
-                          details: '',
-                          tags: [],
-                          priority: '',
-                        }],
-                      })}
-                    />
-                  </div>
-                )}
+              <Section
+                values={values}
+                handleBlur={handleBlur}
+                handleChange={handleChange}
+                setFieldValue={setFieldValue}
+                setFieldTouched={setFieldTouched}
               />
-              <div>
-                <Button primary fluid type="submit" disabled={isSubmitting || !isValid}>Submit</Button>
-                <ErrorContainer />
-              </div>
+
+              <Button primary fluid type="submit" disabled={isSubmitting || !isValid}>Submit</Button>
+              <ErrorContainer />
+
             </Form>
           )}
         />

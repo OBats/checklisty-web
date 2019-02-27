@@ -1,0 +1,12 @@
+.error,
+.error_title {
+  position: relative;
+  top: -10px;
+  left: 0;
+  font-weight: bold;
+  color: red;
+}
+
+.error_title {
+  top: 0;
+}
