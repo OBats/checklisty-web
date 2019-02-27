@@ -68,6 +68,7 @@
         "consistent-return": 1,
         "no-param-reassign": 1,
         "import/no-unresolved": 0,
-        "no-shadow": 1
+        "no-shadow": 1,
+        "react/no-string-refs": 1
     }
 }

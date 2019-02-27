@@ -1,0 +1,118 @@
+.markdownSection {
+  padding-bottom: 40px;
+}
+
+.markdownWrapper {
+  display: flex;
+  background-color: rgb(247, 245, 245);
+  /* height: 70vh; */
+  min-height: 500px;
+  margin-bottom: 20px;
+}
+
+.markdownEditor,
+.markdownPreview {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 50%;
+  /* padding: 15px; */
+  border: 1px solid #000;
+}
+
+/* .markdownPreview {
+  overflow-y: scroll;
+} */
+
+.selectBtn.selectBtn {
+  margin-left: 30px;
+  margin-top: 10px;
+}
+
+.markdownButtons {
+  margin-left: 20px;
+}
+
+.btn.btn {
+  margin: 0px 5px;
+}
+
+input {
+  margin-left: 10px;
+}
+
+input[type="file"]::-webkit-file-upload-button {
+  cursor: pointer;
+  display: inline-block;
+  min-height: 1em;
+  outline: 0;
+  border: none;
+  vertical-align: baseline;
+  background: #e0e1e2 none;
+  color: rgba(0, 0, 0, .6);
+  font-family: Lato,
+    'Helvetica Neue',
+    Arial,
+    Helvetica,
+    sans-serif;
+  margin: 0 .25em 0 0;
+  padding: .78571429em 1.5em .78571429em;
+  text-transform: none;
+  text-shadow: none;
+  font-weight: 700;
+  line-height: 1em;
+  font-style: normal;
+  text-align: center;
+  text-decoration: none;
+  border-radius: .28571429rem;
+  box-shadow: 0 0 0 1px transparent inset,
+    0 0 0 0 rgba(34, 36, 38, .15) inset;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  -webkit-transition: opacity .1s ease,
+    background-color .1s ease,
+    color .1s ease,
+    background .1s ease,
+    -webkit-box-shadow .1s ease;
+  -webkit-transition: opacity .1s ease,
+    background-color .1s ease,
+    color .1s ease,
+    box-shadow .1s ease,
+    background .1s ease;
+  transition: opacity .1s ease,
+    background-color .1s ease,
+    color .1s ease,
+    box-shadow .1s ease,
+    background .1s ease;
+  will-change: '';
+  -webkit-tap-highlight-color: transparent;
+}
+
+input[type="file"]::-webkit-file-upload-button:hover {
+  background-color: #cacbcd;
+  background-image: none;
+  box-shadow: 0 0 0 1px transparent inset,
+    0 0 0 0 rgba(34, 36, 38, .15) inset;
+  color: rgba(0, 0, 0, .8);
+}
+
+input[type="file"]::-webkit-file-upload-button:active {
+  background-color: #babbbc;
+  background-image: '';
+  color: rgba(0, 0, 0, .9);
+  box-shadow: 0 0 0 1px transparent inset, none;
+}
+
+input[type="file"]::-webkit-file-upload-button:focus {
+  background-color: #cacbcd;
+  color: rgba(0, 0, 0, .8);
+  background-image: '' !important;
+  box-shadow: '' !important;
+}
+
+input:focus {
+  outline: none;
+}

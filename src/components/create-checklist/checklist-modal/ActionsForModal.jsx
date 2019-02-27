@@ -20,12 +20,14 @@ const ActionsForModal = (props) => {
               </Link>
             </Grid.Column>
             <Grid.Column textAlign="center">
-              <Button animated="vertical" color="blue" disabled>
-                <Button.Content visible>Markdown</Button.Content>
-                <Button.Content hidden>
-                  <Icon name="check" />
-                </Button.Content>
-              </Button>
+              <Link to="/create-checklist/markdown">
+                <Button animated="vertical" color="blue">
+                  <Button.Content visible>Markdown</Button.Content>
+                  <Button.Content hidden>
+                    <Icon name="check" />
+                  </Button.Content>
+                </Button>
+              </Link>
             </Grid.Column>
           </Grid.Row>
         </Grid>

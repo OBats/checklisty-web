@@ -10,6 +10,7 @@ import ShowCheckList from './components/main/ShowCheckList';
 import HomePage from './components/main/HomePage';
 import NewChecklistForm from './components/create-checklist/Form/NewChecklistForm';
 import ProtectedRoute from './ProtectedRoute';
+import NewChecklistMarkdown from './components/create-checklist/Markdown/NewChecklistMarkdown';
 import SignInWithSocialsRedirected from './components/auth/SignInWithSocialsRedirected';
 
 const Routes = () => (
@@ -25,6 +26,7 @@ const Routes = () => (
       <Route exact path="/home/:id" component={ShowCheckList} />
       <Route exact path="/redirect/" component={SignInWithSocialsRedirected} />
       <ProtectedRoute exact path="/create-checklist" component={NewChecklistForm} />
+      <ProtectedRoute exact path="/create-checklist/markdown" component={NewChecklistMarkdown} />
       <Redirect exact to="/" />
     </Switch>
   </React.Fragment>
