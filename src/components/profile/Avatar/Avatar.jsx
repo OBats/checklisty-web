@@ -4,6 +4,7 @@ import { Image, Modal, Button } from 'semantic-ui-react';
 import style from './Avatar.module.css';
 import http from '../../../api/http';
 import loaderStyle from '../../main/loader.module.css';
+import { ErrorHandling, ErrorContainer } from '../../errors/ErrorsHandling';
 
 import { ErrorHandling, ErrorContainer } from '../../errors/ErrorsHandling';
 
