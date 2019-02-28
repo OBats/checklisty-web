@@ -11,7 +11,6 @@ import HomePage from './components/main/HomePage';
 import NewChecklistForm from './components/create-checklist/Form/NewChecklistForm';
 import ProtectedRoute from './ProtectedRoute';
 import NewChecklistMarkdown from './components/create-checklist/Markdown/NewChecklistMarkdown';
-import SignInWithSocialsRedirected from './components/auth/SignInWithSocialsRedirected';
 
 const Routes = () => (
   <React.Fragment>
@@ -24,7 +23,6 @@ const Routes = () => (
       <ProtectedRoute exact path="/profile/mylists" component={ProfileLists} />
       <ProtectedRoute exact path="/profile/myteam" component={ProfileTeam} />
       <Route exact path="/home/:id" component={ShowCheckList} />
-      <Route exact path="/redirect/" component={SignInWithSocialsRedirected} />
       <ProtectedRoute exact path="/create-checklist" component={NewChecklistForm} />
       <ProtectedRoute exact path="/create-checklist/markdown" component={NewChecklistMarkdown} />
       <Redirect exact to="/" />

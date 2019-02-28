@@ -6,7 +6,6 @@ import Routes from './Routes';
 import loaderStyle from './components/main/loader.module.css';
 import { validateUser } from './api/auth-api';
 import { saveUserData } from './actions/user';
-import updateUser from './api/user';
 import './App.css';
 
 class App extends Component {
@@ -16,6 +15,15 @@ class App extends Component {
   }
 
   async componentDidMount() {
+    if (window.location.href.includes('?access-token=')) {
+      const index = window.location.href.indexOf('?access-token=');
+      let token = window.location.href.substring(index + 14);
+      if (token.includes('#_=_')) {
+        token = token.replace('#_=_', '');
+      }
+      window.location.href = window.location.href.slice(0, 21);
+      localStorage.setItem('access-token', token);
+    }
     if (!this.props.loggedUser && localStorage.getItem('access-token')) {
       try {
         const user = await validateUser();

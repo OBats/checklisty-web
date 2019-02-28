@@ -1,12 +1,28 @@
 import axios from './axios';
 
-const get = (url, params) => axios.get(url, params);
+const getToken = () => localStorage.getItem('access-token');
 
-const post = (url, params) => axios.post(url, params);
-
-const put = (url, params) => axios.put(url, params);
-
-const del = url => axios.delete(url);
+const get = (url, params) => axios.get(url, {
+  params,
+  headers: {
+    'access-token': getToken(),
+  },
+});
+const post = (url, params) => axios.post(url, params, {
+  headers: {
+    'access-token': getToken(),
+  },
+});
+const put = (url, params) => axios.put(url, params, {
+  headers: {
+    'access-token': getToken(),
+  },
+});
+const del = url => axios.delete(url, {
+  headers: {
+    'access-token': getToken(),
+  },
+});
 
 export default {
   get,
