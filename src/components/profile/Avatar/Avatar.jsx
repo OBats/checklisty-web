@@ -4,8 +4,7 @@ import { Image, Modal, Button } from 'semantic-ui-react';
 import style from './Avatar.module.css';
 import http from '../../../api/http';
 import loaderStyle from '../../main/loader.module.css';
-import { ErrorHandling, ErrorContainer } from '../../errors/ErrorsHandling';
-
+import { ErrorHandling } from '../../errors/ErrorsHandling';
 
 const labelStyles = {
   fontSize: '1.25em',
@@ -25,7 +24,6 @@ class AvatarForProfile extends React.Component {
       preview: null,
       modalOpen: false,
       loading: true,
-      err: false,
     };
   }
 
@@ -48,13 +46,11 @@ class AvatarForProfile extends React.Component {
           modalOpen: false,
           avatarUrl: res.data,
           loading: false,
-          err: false,
         });
       }).catch((err) => {
-        ErrorHandling('File is too big!');
+        ErrorHandling('File have to be less than 70kb!');
         this.setState(() => ({
           modalOpen: false,
-          err: true,
         }));
       });
   };
@@ -80,7 +76,7 @@ class AvatarForProfile extends React.Component {
   });
 
   render() {
-    const { modalOpen, loading, err } = this.state;
+    const { modalOpen, loading } = this.state;
     if (loading) {
       return (
         <div className={loaderStyle.loader}>Loading...</div>
@@ -111,6 +107,7 @@ class AvatarForProfile extends React.Component {
             open={modalOpen}
           >
             <AvatarEdit
+              label="Choose a photo..."
               labelStyle={labelStyles}
               class="avatar"
               width="100%"
@@ -127,7 +124,6 @@ class AvatarForProfile extends React.Component {
               </Button>
             </Modal.Actions>
           </Modal>
-          <ErrorContainer />
         </div>
       </div>
     );

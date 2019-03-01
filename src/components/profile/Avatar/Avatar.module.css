@@ -20,15 +20,15 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background:url('./plus.svg') center center;
-  opacity: 1;
+  background:url('./plusGreenSign.svg');
+  opacity: 0.65;
   border-radius: 100%;
   -webkit-transform: scale(0);
   transform: scale(0);
   -webkit-transition-property: transform;
   transition-property: transform;
-  -webkit-transition-duration: 0.4s;
-  transition-duration: 0.4s;
+  -webkit-transition-duration: 0.256712s;
+  transition-duration: 0.256712s;
   -webkit-transition-timing-function: ease-out;
   transition-timing-function: ease-out;
 }
@@ -43,7 +43,7 @@
 .hvrRadialOut:focus:before,
 .hvrRadialOut:active:before {
   -webkit-transform: scale(1.4);
-  transform: scale(1.2);
+  transform: scale(1);
   outline: none;
 }
 
