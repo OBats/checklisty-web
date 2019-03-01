@@ -4,11 +4,10 @@ import { connect } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
 import Routes from './Routes';
 import loaderStyle from './components/main/loader.module.css';
-import { validateUser } from './api/auth-api';
-import { saveUserData } from './actions/user';
+import { makingValidationOfUser } from './actions/user';
 import './App.css';
 
-class App extends Component {
+export class App extends Component {
   constructor(props) {
     super(props);
     this.state = { fetching: true };
@@ -25,12 +24,7 @@ class App extends Component {
       localStorage.setItem('access-token', token);
     }
     if (!this.props.loggedUser && localStorage.getItem('access-token')) {
-      try {
-        const user = await validateUser();
-        this.props.saveUserData(user);
-      } catch {
-        console.error('there is an error from request /api/auth/validate');
-      }
+      await this.props.makingValidationOfUser();
     }
     this.setState({ fetching: false });
   }
@@ -48,8 +42,8 @@ const mapStateToProps = ({ user }) => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  saveUserData: (data) => {
-    dispatch(saveUserData(data));
+  makingValidationOfUser: async () => {
+    await dispatch(makingValidationOfUser());
   },
 });
 
