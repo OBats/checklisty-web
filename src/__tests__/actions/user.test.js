@@ -10,10 +10,13 @@ describe('actions', () => {
 
     expect(actions.saveUserData(data)).toEqual(expectedAction);
   });
+
   it('should create an action to handle sign out', () => {
     const expectedAction = { type: 'HANDLE_SIGN_OUT' };
+
     expect(actions.handleSignOut()).toEqual(expectedAction);
   });
+
   it('should create an action for makingValidationOfUser', async () => {
     const expectedData = { id: 1 };
     http.post.mockImplementation(() => Promise.resolve({ data: expectedData }));
