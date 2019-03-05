@@ -19,19 +19,19 @@ class PasswordInput extends React.Component {
 
   render() {
     const { passwordIsMasked } = this.state;
-    const { id, className, handleChange, handleBlur, values } = this.props;
+    const { id, className, handleChange, handleBlur, name, placeholder, value } = this.props;
     return (
       <div className={styles.passwordWrapper}>
         <Input
           id={id}
           className={[className, styles.passwordInput].join(' ')}
-          value={values.password}
+          value={value}
           required
           icon="lock"
           iconPosition="left"
-          placeholder="Password"
+          placeholder={placeholder}
           type={passwordIsMasked ? 'password' : 'text'}
-          name="password"
+          name={name}
           onChange={handleChange}
           onBlur={handleBlur}
           fluid

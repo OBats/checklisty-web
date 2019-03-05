@@ -9,8 +9,8 @@ import { signUp } from '../../../api/auth-api';
 import { SignupSchema } from './validationSchema';
 import { saveUserData } from '../../../actions/user';
 import { ErrorHandling, ErrorContainer } from '../../errors/ErrorsHandling';
-import SignInWithSocials from '../SignInWithSocials';
 import PasswordInput from '../../showPassword/PasswordInput';
+import SocialAuthentiation from '../social-auth/SocialAuthentication';
 
 const SignUp = ({ loggedUser, saveUserData }) => {
   if (!loggedUser) {
@@ -25,7 +25,7 @@ const SignUp = ({ loggedUser, saveUserData }) => {
                   {'Become our member with:'}
                 </Header.Subheader>
               </Header>
-              <SignInWithSocials />
+              <SocialAuthentiation />
               <Divider horizontal>
                 <Header as="h4">or</Header>
               </Divider>
@@ -91,8 +91,10 @@ const SignUp = ({ loggedUser, saveUserData }) => {
                     <PasswordInput
                       className={touched.password && errors.password ? style.InputError : style.Input}
                       touched={touched}
+                      name="password"
+                      placeholder="Password"
                       errors={errors}
-                      values={values}
+                      value={values.password}
                       handleChange={handleChange}
                       handleBlur={handleBlur}
                     />

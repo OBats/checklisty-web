@@ -10,8 +10,8 @@ import { signIn } from '../../../api/auth-api';
 import { SigninSchema } from './validationSchema';
 import { saveUserData } from '../../../actions/user';
 import { ErrorHandling, ErrorContainer } from '../../errors/ErrorsHandling';
-import SignInWithSocials from '../SignInWithSocials';
 import PasswordInput from '../../showPassword/PasswordInput';
+import SocialAuthentiation from '../social-auth/SocialAuthentication';
 
 const SignIn = ({ loggedUser, saveUserData }) => {
   if (!loggedUser) {
@@ -26,7 +26,7 @@ const SignIn = ({ loggedUser, saveUserData }) => {
                   {'Connect our website using:'}
                 </Header.Subheader>
               </Header>
-              <SignInWithSocials />
+              <SocialAuthentiation />
               <Divider horizontal>
                 <Header as="h4">or</Header>
               </Divider>
@@ -78,8 +78,10 @@ const SignIn = ({ loggedUser, saveUserData }) => {
                     <PasswordInput
                       className={touched.password && errors.password ? style.InputError : style.Input}
                       touched={touched}
+                      name="password"
+                      placeholder="Password"
                       errors={errors}
-                      values={values}
+                      value={values.password}
                       handleChange={handleChange}
                       handleBlur={handleBlur}
                     />
@@ -95,12 +97,15 @@ const SignIn = ({ loggedUser, saveUserData }) => {
                     >
 										Sign In
                     </Button>
+                    <div className={style.forgotPassword}>
+                      <Link to="/auth/forgot-password/">Forgot Password?</Link>
+                    </div>
                   </Form>
                 )}
               </Formik>
             </Segment>
             <Message className={style.Message}>
-					New to us?
+              New to us?
               <Link to="/auth/signup/"> Sign Up</Link>
             </Message>
           </Grid.Column>

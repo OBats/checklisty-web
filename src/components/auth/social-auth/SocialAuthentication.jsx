@@ -1,8 +1,8 @@
 import React from 'react';
 import { Grid, Icon } from 'semantic-ui-react';
-import style from './socialButton.module.css';
+import style from './css/socialButton.module.css';
 
-const SignInWithSocials = () => (
+const SocialAuthentiation = () => (
   <Grid columns={3}>
     <Grid.Column>
       <a href="http://localhost:3030/api/auth/google">
@@ -31,4 +31,4 @@ const SignInWithSocials = () => (
   </Grid>
 );
 
-export default SignInWithSocials;
+export default SocialAuthentiation;

@@ -11,6 +11,8 @@ import HomePage from './components/main/HomePage';
 import NewChecklistForm from './components/create-checklist/Form/NewChecklistForm';
 import ProtectedRoute from './ProtectedRoute';
 import NewChecklistMarkdown from './components/create-checklist/Markdown/NewChecklistMarkdown';
+import ForgotPassword from './components/auth/forgot-password/ForgotPassword';
+import ResetPassword from './components/auth/forgot-password/ResetPassword';
 
 const Routes = () => (
   <React.Fragment>
@@ -19,6 +21,8 @@ const Routes = () => (
       <Route exact path="/" component={HomePage} />
       <Route exact path="/auth/signin/" component={SignIn} />
       <Route exact path="/auth/signup/" component={SignUp} />
+      <Route exact path="/auth/forgot-password/" component={ForgotPassword} />
+      <Route exact path="/auth/reset-password/" component={ResetPassword} />
       <ProtectedRoute exact path="/profile/maininfo" component={ProfileInfo} />
       <ProtectedRoute exact path="/profile/mylists" component={ProfileLists} />
       <ProtectedRoute exact path="/profile/myteam" component={ProfileTeam} />
