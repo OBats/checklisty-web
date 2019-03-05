@@ -1,8 +1,8 @@
 import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 import NavBar from './components/navbar/NavBar';
-import SignIn from './components/auth/SignIn';
-import SignUp from './components/auth/SignUp';
+import SignIn from './components/auth/form-based-auth/SignIn';
+import SignUp from './components/auth/form-based-auth/SignUp';
 import ProfileInfo from './components/profile/ProfileMainInfo';
 import ProfileLists from './components/profile/MyLists';
 import ProfileTeam from './components/profile/MyTeam';

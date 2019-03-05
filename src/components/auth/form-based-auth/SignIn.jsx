@@ -1,27 +1,29 @@
+/* eslint-disable no-tabs */
 import React from 'react';
-import { Formik, Form } from 'formik';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
-import Link from 'react-router-dom/Link';
+import { Formik, Form } from 'formik';
 import { Input, Button, Grid, Segment, Message, Header, Divider } from 'semantic-ui-react';
-import style from './auth.module.css';
-import { signUp } from '../../api/auth-api';
-import { SignupSchema } from './validationSchema';
-import { saveUserData } from '../../actions/user';
-import { ErrorHandling, ErrorContainer } from '../errors/ErrorsHandling';
-import SignInWithSocials from './SignInWithSocials';
+import Link from 'react-router-dom/Link';
+import style from './css/auth.module.css';
+import { signIn } from '../../../api/auth-api';
+import { SigninSchema } from './validationSchema';
+import { saveUserData } from '../../../actions/user';
+import { ErrorHandling, ErrorContainer } from '../../errors/ErrorsHandling';
+import SignInWithSocials from '../SignInWithSocials';
+import PasswordInput from '../../showPassword/PasswordInput';
 
-const SignUp = ({ loggedUser, saveUserData }) => {
+const SignIn = ({ loggedUser, saveUserData }) => {
   if (!loggedUser) {
     return (
       <div>
         <Grid className={style.Auth} centered verticalAlign="middle">
-          <Grid.Column className={style.Form} width={8}>
-            <Segment raised>
+          <Grid.Column className={style.Form} width={14}>
+            <Segment raised padded>
               <Header textAlign="center" size="huge">
-                {'Sign Up'}
+                {'Sign In'}
                 <Header.Subheader size="small" color="grey" className={style.subheader}>
-                  {'Become our member with:'}
+                  {'Connect our website using:'}
                 </Header.Subheader>
               </Header>
               <SignInWithSocials />
@@ -30,11 +32,11 @@ const SignUp = ({ loggedUser, saveUserData }) => {
               </Divider>
               <Formik
                 initialValues={{
-                  username: '', email: '', password: '',
+                  email: '', password: '',
                 }}
-                validationSchema={SignupSchema}
+                validationSchema={SigninSchema}
                 onSubmit={(values, actions) => {
-                  signUp(values)
+                  signIn(values)
                     .then((data) => {
                       saveUserData(data);
                     })
@@ -42,7 +44,7 @@ const SignUp = ({ loggedUser, saveUserData }) => {
                       if (error.response.status === 500) {
                         ErrorHandling('Server is down. Please try again later.');
                       } else {
-                        ErrorHandling(error.response.data.username || error.response.data.email);
+                        ErrorHandling(error.response.data.message);
                       }
                       actions.setSubmitting(false);
                     });
@@ -60,21 +62,7 @@ const SignUp = ({ loggedUser, saveUserData }) => {
                 }) => (
                   <Form onSubmit={handleSubmit}>
                     <Input
-                      className={touched.username && errors.username ? style.InputError : ''}
-                      required
-                      icon="user"
-                      iconPosition="left"
-                      fluid
-                      placeholder="Username"
-                      type="text"
-                      name="username"
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      value={values.username}
-                    />
-                    <div className={style.Error}>{touched.username && errors.username}</div>
-                    <Input
-                      className={touched.email && errors.email ? style.InputError : ''}
+                      className={touched.email && errors.email ? style.InputError : style.Input}
                       required
                       icon="mail"
                       iconPosition="left"
@@ -86,21 +74,16 @@ const SignUp = ({ loggedUser, saveUserData }) => {
                       onBlur={handleBlur}
                       value={values.email}
                     />
-                    <div className={style.Error}>{touched.email && errors.email}</div>
-                    <Input
-                      className={touched.password && errors.password ? style.InputError : ''}
-                      required
-                      icon="lock"
-                      iconPosition="left"
-                      fluid
-                      placeholder="Password"
-                      type="password"
-                      name="password"
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      value={values.password}
+                    {touched.email && errors.email && <div className={style.Error}>{touched.email && errors.email}</div>}
+                    <PasswordInput
+                      className={touched.password && errors.password ? style.InputError : style.Input}
+                      touched={touched}
+                      errors={errors}
+                      values={values}
+                      handleChange={handleChange}
+                      handleBlur={handleBlur}
                     />
-                    <div className={style.Error}>{touched.password && errors.password}</div>
+                    {touched.password && errors.password && <div className={style.Error}>{touched.password && errors.password}</div>}
                     <ErrorContainer />
                     <Button
                       className={style.AuthBtn}
@@ -110,15 +93,15 @@ const SignUp = ({ loggedUser, saveUserData }) => {
                       type="submit"
                       disabled={isSubmitting || !isValid}
                     >
-                    Sign Up
+										Sign In
                     </Button>
                   </Form>
                 )}
               </Formik>
             </Segment>
             <Message className={style.Message}>
-          Already Signed Up?
-              <Link to="/auth/signin/"> Login</Link>
+					New to us?
+              <Link to="/auth/signup/"> Sign Up</Link>
             </Message>
           </Grid.Column>
         </Grid>
@@ -138,4 +121,4 @@ const mapDispatchToProps = dispatch => ({
   },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(SignUp);
+export default connect(mapStateToProps, mapDispatchToProps)(SignIn);

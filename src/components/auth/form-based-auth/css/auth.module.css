@@ -21,9 +21,13 @@
 }
 
 .Error {
-  padding: 5px 0px 5px 5px;
+  padding: 5px 10px;
   color: red;
   font-weight: 600;
+}
+
+.Input {
+  margin-bottom: 10px;
 }
 
 .InputError>input {
@@ -41,6 +45,6 @@
   background-color: rgb(42, 51, 59);
 }
 
-.subheader{
+.subheader {
   margin: 10px 0 15px 0 !important;
 }
