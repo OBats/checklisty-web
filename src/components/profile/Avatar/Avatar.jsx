@@ -1,10 +1,12 @@
 import React from 'react';
 import AvatarEdit from 'react-avatar-edit';
 import { Image, Modal, Button } from 'semantic-ui-react';
+import { connect } from 'react-redux';
 import style from './Avatar.module.css';
 import http from '../../../api/http';
 import loaderStyle from '../../main/loader.module.css';
 import { ErrorHandling } from '../../errors/ErrorsHandling';
+import { saveUserData } from '../../../actions/user';
 
 const labelStyles = {
   fontSize: '1.25em',
@@ -20,20 +22,11 @@ class AvatarForProfile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      avatarUrl: null,
+      avatarUrl: props.userData.image,
       preview: null,
       modalOpen: false,
-      loading: true,
+      loading: false,
     };
-  }
-
-  async componentDidMount() {
-    http.get('/api/profile/avatar').then((res) => {
-      this.setState(() => ({
-        avatarUrl: res.data,
-        loading: false,
-      }));
-    });
   }
 
   handleAddPhoto = () => {
@@ -44,9 +37,10 @@ class AvatarForProfile extends React.Component {
       .then((res) => {
         this.setState({
           modalOpen: false,
-          avatarUrl: res.data,
+          avatarUrl: res.data.image,
           loading: false,
         });
+        this.props.saveUserData(res.data);
       }).catch((err) => {
         ErrorHandling('File have to be less than 70kb!');
         this.setState(() => ({
@@ -130,4 +124,14 @@ class AvatarForProfile extends React.Component {
   }
 }
 
-export default AvatarForProfile;
+const mapStateToProps = ({ user }) => ({
+  userData: user.userData,
+});
+
+const mapDispatchToProps = dispatch => ({
+  saveUserData: (data) => {
+    dispatch(saveUserData(data));
+  },
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(AvatarForProfile);

@@ -81,7 +81,7 @@ const SignUp = ({ loggedUser, saveUserData }) => {
                       iconPosition="left"
                       fluid
                       placeholder="Email"
-                      type="email"
+                      type="text"
                       name="email"
                       onChange={handleChange}
                       onBlur={handleBlur}

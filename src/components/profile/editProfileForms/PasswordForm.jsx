@@ -18,14 +18,18 @@ const PasswordForm = () => (
           http.put('/api/profile/updatePassword', {
             oldPassword: values.oldPassword,
             newPassword: values.newPassword,
-          }).catch((error) => {
-            if (error.response.status === 500) {
-              ErrorHandling('Server is down. Please try again later.');
-            } else {
-              ErrorHandling(error.response.data.message);
-            }
-            actions.setSubmitting(false);
-          });
+          })
+            .then((res) => {
+              actions.setSubmitting(false);
+            })
+            .catch((error) => {
+              if (error.response.status === 500) {
+                ErrorHandling('Server is down. Please try again later.');
+              } else {
+                ErrorHandling(error.response.data.message);
+              }
+              actions.setSubmitting(false);
+            });
         }}
       >
         {({
