@@ -20,3 +20,8 @@ export const validateUser = async () => {
 export const signOut = () => {
   localStorage.removeItem('access-token');
 };
+
+export const postAvatarUrl = async (imgUrl) => {
+  const response = await http.post('/api/profile/avatar', { img: imgUrl });
+  return response.data;
+};

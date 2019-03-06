@@ -3,8 +3,8 @@ import AvatarEdit from 'react-avatar-edit';
 import { Image, Modal, Button } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import style from './Avatar.module.css';
-import http from '../../../api/http';
 import loaderStyle from '../../main/loader.module.css';
+import { postAvatarUrl } from '../../../api/auth-api';
 import { ErrorHandling, SuccessHandling } from '../../toasters/MessagesHandling';
 import { saveUserData } from '../../../actions/user';
 
@@ -30,18 +30,17 @@ class AvatarForProfile extends React.Component {
   }
 
   handleAddPhoto = () => {
-    if (this.state.preview) {
-      http
-        .post('/api/profile/avatar', {
-          img: this.state.preview,
-        })
+    const { preview } = this.state;
+    if (preview) {
+      postAvatarUrl(preview)
         .then((res) => {
           this.setState({
             modalOpen: false,
-            avatarUrl: res.data.image,
+            avatarUrl: res.image,
             loading: false,
+            preview: null,
           });
-          this.props.saveUserData(res.data);
+          this.props.saveUserData(res);
           SuccessHandling('Image changed!');
         }).catch((err) => {
           ErrorHandling(err.message);
@@ -52,13 +51,13 @@ class AvatarForProfile extends React.Component {
     } else ErrorHandling('Please choose the image first!');
   };
 
-  close = () => this.setState({
-    modalOpen: false,
-  });
+  close = () => {
+    this.setState({ modalOpen: false });
+  }
 
-  onClose = () => this.setState({
-    preview: null,
-  });
+  onClose = () => {
+    this.setState({ preview: null });
+  }
 
   onCrop = preview => this.setState({
     preview,
