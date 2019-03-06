@@ -1,10 +1,12 @@
 import React from 'react';
 import AvatarEdit from 'react-avatar-edit';
 import { Image, Modal, Button } from 'semantic-ui-react';
+import { connect } from 'react-redux';
 import style from './Avatar.module.css';
-import http from '../../../api/http';
 import loaderStyle from '../../main/loader.module.css';
-import { ErrorHandling } from '../../errors/ErrorsHandling';
+import { postAvatarUrl } from '../../../api/auth-api';
+import { ErrorHandling, SuccessHandling } from '../../toasters/MessagesHandling';
+import { saveUserData } from '../../../actions/user';
 
 const labelStyles = {
   fontSize: '1.25em',
@@ -20,48 +22,42 @@ class AvatarForProfile extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      avatarUrl: null,
+      avatarUrl: props.userData.image,
       preview: null,
       modalOpen: false,
-      loading: true,
+      loading: false,
     };
   }
 
-  async componentDidMount() {
-    http.get('/api/profile/avatar').then((res) => {
-      this.setState(() => ({
-        avatarUrl: res.data,
-        loading: false,
-      }));
-    });
-  }
-
   handleAddPhoto = () => {
-    http
-      .post('/api/profile/avatar', {
-        img: this.state.preview,
-      })
-      .then((res) => {
-        this.setState({
-          modalOpen: false,
-          avatarUrl: res.data,
-          loading: false,
+    const { preview } = this.state;
+    if (preview) {
+      postAvatarUrl(preview)
+        .then((res) => {
+          this.setState({
+            modalOpen: false,
+            avatarUrl: res.data.image,
+            loading: false,
+            preview: null,
+          });
+          this.props.saveUserData(res.data);
+          SuccessHandling('Image changed!');
+        }).catch((err) => {
+          ErrorHandling(err.message);
+          this.setState(() => ({
+            modalOpen: false,
+          }));
         });
-      }).catch((err) => {
-        ErrorHandling('File have to be less than 70kb!');
-        this.setState(() => ({
-          modalOpen: false,
-        }));
-      });
+    } else ErrorHandling('Please choose the image first!');
   };
 
-  close = () => this.setState({
-    modalOpen: false,
-  });
+  close = () => {
+    this.setState({ modalOpen: false });
+  }
 
-  onClose = () => this.setState({
-    preview: null,
-  });
+  onClose = () => {
+    this.setState({ preview: null });
+  }
 
   onCrop = preview => this.setState({
     preview,
@@ -130,4 +126,14 @@ class AvatarForProfile extends React.Component {
   }
 }
 
-export default AvatarForProfile;
+const mapStateToProps = ({ user }) => ({
+  userData: user.userData,
+});
+
+const mapDispatchToProps = dispatch => ({
+  saveUserData: (data) => {
+    dispatch(saveUserData(data));
+  },
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(AvatarForProfile);
