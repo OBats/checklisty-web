@@ -74,9 +74,14 @@ const SignIn = ({ loggedUser, saveUserData }) => {
                       onBlur={handleBlur}
                       value={values.email}
                     />
-                    {touched.email && errors.email && <div className={style.Error}>{touched.email && errors.email}</div>}
+                    {touched.email && errors.email && (
+                      <div className={style.Error}>
+                        {touched.email && errors.email}
+                      </div>
+                    )}
                     <PasswordInput
-                      className={touched.password && errors.password ? style.InputError : style.Input}
+                      className={touched.password && errors.password
+                        ? style.InputError : style.Input}
                       touched={touched}
                       name="password"
                       placeholder="Password"
@@ -85,7 +90,11 @@ const SignIn = ({ loggedUser, saveUserData }) => {
                       handleChange={handleChange}
                       handleBlur={handleBlur}
                     />
-                    {touched.password && errors.password && <div className={style.Error}>{touched.password && errors.password}</div>}
+                    {touched.password && errors.password && (
+                      <div className={style.Error}>
+                        {touched.password && errors.password}
+                      </div>
+                    )}
                     <ErrorContainer />
                     <Button
                       className={style.AuthBtn}
@@ -95,7 +104,7 @@ const SignIn = ({ loggedUser, saveUserData }) => {
                       type="submit"
                       disabled={isSubmitting || !isValid}
                     >
-										Sign In
+                        Sign In
                     </Button>
                     <div className={style.forgotPassword}>
                       <Link to="/auth/forgot-password/">Forgot Password?</Link>

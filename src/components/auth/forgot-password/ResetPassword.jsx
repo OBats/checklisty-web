@@ -67,7 +67,8 @@ class ResetPassword extends Component {
                       </Header.Subheader>
                     </Header>
                     <PasswordInput
-                      className={touched.password && errors.password ? style.InputError : style.Input}
+                      className={touched.password && errors.password
+                        ? style.InputError : style.Input}
                       touched={touched}
                       name="password"
                       placeholder="Password"
@@ -78,7 +79,8 @@ class ResetPassword extends Component {
                     />
                     <div className={style.Error}>{touched.password && errors.password}</div>
                     <PasswordInput
-                      className={touched.password && errors.password ? style.InputError : style.Input}
+                      className={touched.confirmPassword && errors.confirmPassword
+                        ? style.InputError : style.Input}
                       touched={touched}
                       placeholder="Confirm your password"
                       name="confirmPassword"
@@ -87,7 +89,9 @@ class ResetPassword extends Component {
                       handleChange={handleChange}
                       handleBlur={handleBlur}
                     />
-                    <div className={style.Error}>{touched.confirmPassword && errors.confirmPassword}</div>
+                    <div className={style.Error}>
+                      {touched.confirmPassword && errors.confirmPassword}
+                    </div>
                     <ErrorContainer />
                     <Button
                       className={style.ForgotPasswordBtn}

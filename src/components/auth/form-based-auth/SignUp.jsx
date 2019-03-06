@@ -61,7 +61,8 @@ const SignUp = ({ loggedUser, saveUserData }) => {
                 }) => (
                   <Form onSubmit={handleSubmit}>
                     <Input
-                      className={touched.username && errors.username ? style.InputError : style.Input}
+                      className={touched.username && errors.username
+                        ? style.InputError : style.Input}
                       required
                       icon="user"
                       iconPosition="left"
@@ -73,7 +74,11 @@ const SignUp = ({ loggedUser, saveUserData }) => {
                       onBlur={handleBlur}
                       value={values.username}
                     />
-                    {touched.username && errors.username && <div className={style.Error}>{touched.username && errors.username}</div>}
+                    {touched.username && errors.username && (
+                      <div className={style.Error}>
+                        {touched.username && errors.username}
+                      </div>
+                    )}
                     <Input
                       className={touched.email && errors.email ? style.InputError : style.Input}
                       required
@@ -87,9 +92,14 @@ const SignUp = ({ loggedUser, saveUserData }) => {
                       onBlur={handleBlur}
                       value={values.email}
                     />
-                    {touched.email && errors.email && <div className={style.Error}>{touched.email && errors.email}</div>}
+                    {touched.email && errors.email && (
+                      <div className={style.Error}>
+                        {touched.email && errors.email}
+                      </div>
+                    )}
                     <PasswordInput
-                      className={touched.password && errors.password ? style.InputError : style.Input}
+                      className={touched.password && errors.password
+                        ? style.InputError : style.Input}
                       touched={touched}
                       name="password"
                       placeholder="Password"
@@ -98,7 +108,11 @@ const SignUp = ({ loggedUser, saveUserData }) => {
                       handleChange={handleChange}
                       handleBlur={handleBlur}
                     />
-                    {touched.password && errors.password && <div className={style.Error}>{touched.password && errors.password}</div>}
+                    {touched.password && errors.password && (
+                      <div className={style.Error}>
+                        {touched.password && errors.password}
+                      </div>
+                    )}
                     <ErrorContainer />
                     <Button
                       className={style.AuthBtn}
@@ -108,14 +122,14 @@ const SignUp = ({ loggedUser, saveUserData }) => {
                       type="submit"
                       disabled={isSubmitting || !isValid}
                     >
-                    Sign Up
+                        Sign Up
                     </Button>
                   </Form>
                 )}
               </Formik>
             </Segment>
             <Message className={style.Message}>
-          Already Signed Up?
+              Already Signed Up?
               <Link to="/auth/signin/"> Login</Link>
             </Message>
           </Grid.Column>
