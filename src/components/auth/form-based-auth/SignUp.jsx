@@ -4,12 +4,13 @@ import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import Link from 'react-router-dom/Link';
 import { Input, Button, Grid, Segment, Message, Header, Divider } from 'semantic-ui-react';
-import style from './auth.module.css';
-import { signUp } from '../../api/auth-api';
+import style from './css/auth.module.css';
+import { signUp } from '../../../api/auth-api';
 import { SignupSchema } from './validationSchema';
-import { saveUserData } from '../../actions/user';
-import { ErrorHandling, ErrorContainer } from '../errors/ErrorsHandling';
-import SignInWithSocials from './SignInWithSocials';
+import { saveUserData } from '../../../actions/user';
+import { ErrorHandling, MessageContainer } from '../../toasters/MessagesHandling';
+import PasswordInput from '../../showPassword/PasswordInput';
+import SocialAuthentiation from '../social-auth/SocialAuthentication';
 
 const SignUp = ({ loggedUser, saveUserData }) => {
   if (!loggedUser) {
@@ -24,7 +25,7 @@ const SignUp = ({ loggedUser, saveUserData }) => {
                   {'Become our member with:'}
                 </Header.Subheader>
               </Header>
-              <SignInWithSocials />
+              <SocialAuthentiation />
               <Divider horizontal>
                 <Header as="h4">or</Header>
               </Divider>
@@ -60,7 +61,8 @@ const SignUp = ({ loggedUser, saveUserData }) => {
                 }) => (
                   <Form onSubmit={handleSubmit}>
                     <Input
-                      className={touched.username && errors.username ? style.InputError : ''}
+                      className={touched.username && errors.username
+                        ? style.InputError : style.Input}
                       required
                       icon="user"
                       iconPosition="left"
@@ -72,36 +74,46 @@ const SignUp = ({ loggedUser, saveUserData }) => {
                       onBlur={handleBlur}
                       value={values.username}
                     />
-                    <div className={style.Error}>{touched.username && errors.username}</div>
+                    {touched.username && errors.username && (
+                      <div className={style.Error}>
+                        {touched.username && errors.username}
+                      </div>
+                    )}
                     <Input
-                      className={touched.email && errors.email ? style.InputError : ''}
+                      className={touched.email && errors.email ? style.InputError : style.Input}
                       required
                       icon="mail"
                       iconPosition="left"
                       fluid
                       placeholder="Email"
-                      type="email"
+                      type="text"
                       name="email"
                       onChange={handleChange}
                       onBlur={handleBlur}
                       value={values.email}
                     />
-                    <div className={style.Error}>{touched.email && errors.email}</div>
-                    <Input
-                      className={touched.password && errors.password ? style.InputError : ''}
-                      required
-                      icon="lock"
-                      iconPosition="left"
-                      fluid
-                      placeholder="Password"
-                      type="password"
+                    {touched.email && errors.email && (
+                      <div className={style.Error}>
+                        {touched.email && errors.email}
+                      </div>
+                    )}
+                    <PasswordInput
+                      className={touched.password && errors.password
+                        ? style.InputError : style.Input}
+                      touched={touched}
                       name="password"
-                      onChange={handleChange}
-                      onBlur={handleBlur}
+                      placeholder="Password"
+                      errors={errors}
                       value={values.password}
+                      handleChange={handleChange}
+                      handleBlur={handleBlur}
                     />
-                    <div className={style.Error}>{touched.password && errors.password}</div>
-                    <ErrorContainer />
+                    {touched.password && errors.password && (
+                      <div className={style.Error}>
+                        {touched.password && errors.password}
+                      </div>
+                    )}
+                    <MessageContainer />
                     <Button
                       className={style.AuthBtn}
                       fluid
@@ -110,14 +122,14 @@ const SignUp = ({ loggedUser, saveUserData }) => {
                       type="submit"
                       disabled={isSubmitting || !isValid}
                     >
-                    Sign Up
+                        Sign Up
                     </Button>
                   </Form>
                 )}
               </Formik>
             </Segment>
             <Message className={style.Message}>
-          Already Signed Up?
+              Already Signed Up?
               <Link to="/auth/signin/"> Login</Link>
             </Message>
           </Grid.Column>

@@ -4,7 +4,7 @@ import { Input, Button, Grid } from 'semantic-ui-react';
 import styles from './profileForms.module.css';
 import http from '../../../api/http';
 import { PasswordResetSchema } from './profileValidationSchema';
-import { ErrorHandling, ErrorContainer } from '../../errors/ErrorsHandling';
+import { ErrorHandling, SuccessHandling, MessageContainer } from '../../toasters/MessagesHandling';
 
 const PasswordForm = () => (
   <Grid centered verticalAlign="middle">
@@ -18,14 +18,19 @@ const PasswordForm = () => (
           http.put('/api/profile/updatePassword', {
             oldPassword: values.oldPassword,
             newPassword: values.newPassword,
-          }).catch((error) => {
-            if (error.response.status === 500) {
-              ErrorHandling('Server is down. Please try again later.');
-            } else {
-              ErrorHandling(error.response.data.message);
-            }
-            actions.setSubmitting(false);
-          });
+          })
+            .then((res) => {
+              SuccessHandling('Password changed!');
+              actions.setSubmitting(false);
+            })
+            .catch((error) => {
+              if (error.response.status === 500) {
+                ErrorHandling('Server is down. Please try again later.');
+              } else {
+                ErrorHandling(error.response.data.message);
+              }
+              actions.setSubmitting(false);
+            });
         }}
       >
         {({
@@ -80,7 +85,7 @@ const PasswordForm = () => (
             <div className={styles.Error}>
               {touched.repeatNewPassword && errors.repeatNewPassword}
             </div>
-            <ErrorContainer />
+            <MessageContainer />
             <Button
               className={styles.profileBtn}
               size="large"

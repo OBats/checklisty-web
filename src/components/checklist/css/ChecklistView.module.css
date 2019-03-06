@@ -31,12 +31,134 @@
     padding-bottom: 3%;
 }
 
-@media screen and (max-width: 992px) {
-    .toRightAlign{
-        padding-right: 1rem !important;
+.optionsBlock{
+    display: flex;
+    justify-content: space-around !important;
+    margin-bottom: 15px;
+}
+
+.checklistHeader{
+    display: flex;
+    width: 60%;
+}
+
+.checklistButtons{
+    display: flex;
+    justify-content: space-around !important;
+    align-items: flex-start;
+    width: 40%;
+}
+
+.progressbar{
+    display: flex;
+    width: 40%;
+    height: 24.5px;
+    margin: 0 5% !important;
+    min-width: 150px;
+}
+
+.checklistTitle{
+    width: 50%;
+}
+
+.sectionTitle{
+    font-weight: 600;
+    font-size: 1.8rem;
+    line-height: 25px;
+}
+
+.buttonStyle{
+    width: 36px !important;
+    height: 36px !important;
+    border: 0;
+    border-radius: 5px;
+    margin: 2px;
+}
+
+.buttonStyle:focus {
+    outline:0;
+}
+
+.tealButton{
+    background-color: #13ada5;
+    transition: 0.2s ease;
+}
+
+.tealButton:hover{
+    background-color: #168882;
+    transition: 0.2s ease;
+}
+
+.redButton{
+    background-color: #d42727;
+    transition: 0.2s ease;
+}
+
+.redButton:hover{
+    background-color: #b42929;
+    transition: 0.2s ease;
+}
+
+.grayButton{
+    background-color: #949daa;
+    transition: 0.2s ease;
+}
+
+.grayButton:hover{
+    background-color: #717883;
+    transition: 0.2s ease;
+}
+
+.buttonGroup{
+    display: flex;
+    justify-content: center;
+}
+
+.accordionStyle{
+    width: 100%;
+}
+
+@media screen and (max-width: 768px) {
+    .sectionTitle{
+        font-size: 1.7rem;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .buttonGroup{
+        display: flex;
+    }
+    .optionsBlock{
+        flex-direction: column;
+    }
+    .checklistHeader{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 100%;
+        margin-bottom: 12px;
     }
     
-    .toLeftAlign{
-        padding-left: 1rem !important;
+    .checklistButtons{
+        display: flex;
+        justify-content: center !important;
+        align-items: center;
+        width: 100%;
+        margin: 20px 0;
+    }
+
+    .checklistTitle{
+        width: 100%;
+        text-align: center;
+        margin-bottom: 10px;
+        line-height: 20px;
+    }
+
+    .buttonStyle{
+        margin: 0 10px;
+    }
+    .sectionDivider{
+        padding-top: 1%;
+        padding-bottom: 1%;
     }
 }

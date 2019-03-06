@@ -1,72 +1,102 @@
 import React from 'react';
-import { Accordion, Container, Grid, Progress, Button, Header, Icon, Divider } from 'semantic-ui-react';
+import { Accordion, Container, Progress, Icon, Divider } from 'semantic-ui-react';
 import SingleChecklistItem from './SingleChecklistItem';
 import style from './css/ChecklistView.module.css';
 
-const ChecklistViewComponents = props => (
-  <Container>
-    {props.checklistIndex !== 0 && (<Divider />)}
-    <div className={style.sectionDivider}>
-      <Grid container>
-        <Grid.Row>
-          <Grid.Column width={6}>
-            <Header size="large">{props.data.section_title}</Header>
-          </Grid.Column>
-          <Grid.Column width={4}>
-            <Progress percent={props.currentProgress} indicating size="medium">
-              {`Current progress: ${props.currentProgress}%`}
+const ChecklistViewComponents = (props) => {
+  const {
+    data, checklistIndex, currentProgress, handleSetAllCheckboxes,
+    handleResetAllCheckboxes, handleOpenAllAccordions, handleCloseAllAccordions,
+    handleClickEyeButton, isWholeChecklistHidden,
+  } = props;
+  return (
+    <Container>
+      {checklistIndex !== 0 && (<Divider />)}
+      <div className={style.sectionDivider}>
+        <div className={style.optionsBlock}>
+          <div className={style.checklistHeader}>
+            <div className={style.checklistTitle}>
+              <span className={style.sectionTitle}>
+                {data.section_title}
+              </span>
+            </div>
+            <Progress
+              percent={currentProgress}
+              indicating
+              size="medium"
+              className={style.progressbar}
+            >
+              {`Current progress: ${currentProgress}%`}
             </Progress>
-          </Grid.Column>
-          <Grid.Column width={1}></Grid.Column>
-          <Grid.Column width={1} className={style.toRightAlign}>
-            <Button size="medium" icon color="teal" onClick={props.handleSetAllCheckboxes}>
-              <Icon name="check" />
-            </Button>
-          </Grid.Column>
-          <Grid.Column width={1} className={style.toLeftAlign}>
-            <Button size="medium" icon color="red" onClick={props.handleResetAllCheckboxes}>
-              <Icon name="expand" />
-            </Button>
-          </Grid.Column>
-          <Grid.Column width={1} className={style.toRightAlign}>
-            <Button size="medium" icon color="teal" onClick={props.handleOpenAllAccordions}>
-              <Icon name="angle double down" />
-            </Button>
-          </Grid.Column>
-          <Grid.Column width={1} className={style.toLeftAlign}>
-            <Button size="medium" icon color="red" onClick={props.handleCloseAllAccordions}>
-              <Icon name="angle double up" />
-            </Button>
-          </Grid.Column>
-          <Grid.Column width={1}>
-            <Button size="medium" icon color={props.isWholeChecklistHidden ? 'red' : 'grey'} onClick={props.handleClickEyeButton}>
-              <Icon name={props.isWholeChecklistHidden ? 'eye' : 'eye slash'} />
-            </Button>
-          </Grid.Column>
-        </Grid.Row>
-        {!props.isWholeChecklistHidden && (
-          <Grid.Row>
-            <Accordion className={style.accordionStyle} fluid>
-              {
-                props.data.items_data.map((elem, index) => (
-                  <SingleChecklistItem
-                    key={index.toString()}
-                    propsData={elem}
-                    index={index}
-                    handleClickAccordion={props.handleClickAccordion}
-                    accordionIndex={props.accordionIndexArray[index]}
-                    handleChecked={props.handleChecked}
-                    checkedIndex={props.checkboxArray[index]}
-                    iconName={props.iconNameArray[index]}
-                    className={style.checklistItem}
-                  />
-                ))}
-            </Accordion>
-          </Grid.Row>
+          </div>
+          <div className={style.checklistButtons}>
+            <div className={style.buttonGroup}>
+              <button
+                type="button"
+                onClick={handleSetAllCheckboxes}
+                className={[style.buttonStyle, style.tealButton].join(' ')}
+              >
+                <Icon name="check" inverted fitted />
+              </button>
+              <button
+                type="button"
+                onClick={handleResetAllCheckboxes}
+                className={[style.buttonStyle, style.redButton].join(' ')}
+              >
+                <Icon name="expand" inverted fitted />
+              </button>
+            </div>
+            <div className={style.buttonGroup}>
+              <button
+                type="button"
+                onClick={handleOpenAllAccordions}
+                className={[style.buttonStyle, style.tealButton].join(' ')}
+              >
+                <Icon name="angle double down" inverted fitted />
+              </button>
+              <button
+                type="button"
+                onClick={handleCloseAllAccordions}
+                className={[style.buttonStyle, style.redButton].join(' ')}
+              >
+                <Icon name="angle double up" inverted fitted />
+              </button>
+            </div>
+            <div className={style.buttonGroup}>
+              <button
+                type="button"
+                onClick={handleClickEyeButton}
+                className={[
+                  style.buttonStyle,
+                  isWholeChecklistHidden ? style.redButton : style.grayButton,
+                ].join(' ')}
+              >
+                <Icon name={isWholeChecklistHidden ? 'eye' : 'eye slash'} fitted inverted />
+              </button>
+            </div>
+          </div>
+        </div>
+        {!isWholeChecklistHidden && (
+          <Accordion className={style.accordionStyle} fluid>
+            {
+              data.items_data.map((elem, index) => (
+                <SingleChecklistItem
+                  key={index.toString()}
+                  propsData={elem}
+                  index={index}
+                  handleClickAccordion={props.handleClickAccordion}
+                  accordionIndex={props.accordionIndexArray[index]}
+                  handleChecked={props.handleChecked}
+                  checkedIndex={props.checkboxArray[index]}
+                  iconName={props.iconNameArray[index]}
+                  className={style.checklistItem}
+                />
+              ))}
+          </Accordion>
         )}
-      </Grid>
-    </div>
-  </Container>
-);
+      </div>
+    </Container>
+  );
+};
 
 export default ChecklistViewComponents;

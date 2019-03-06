@@ -4,7 +4,7 @@ import { Formik } from 'formik';
 import ChecklistSchema from './utils/ChecklistSchema';
 import createChecklistReq from '../../../api/checklist-api';
 import CheckListTitle from './CheckListTitle/CheckListTitle';
-import { ErrorHandling, ErrorContainer } from '../../errors/ErrorsHandling';
+import { ErrorHandling, MessageContainer } from '../../toasters/MessagesHandling';
 import Section from './Section/Section';
 
 const NewChecklistForm = ({ history }) => (
@@ -69,7 +69,7 @@ const NewChecklistForm = ({ history }) => (
               />
 
               <Button primary fluid type="submit" disabled={isSubmitting || !isValid}>Submit</Button>
-              <ErrorContainer />
+              <MessageContainer />
 
             </Form>
           )}

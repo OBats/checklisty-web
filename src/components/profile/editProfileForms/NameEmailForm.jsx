@@ -1,12 +1,14 @@
 import React from 'react';
 import { Formik, Form } from 'formik';
 import { Input, Button, Grid } from 'semantic-ui-react';
+import { connect } from 'react-redux';
+import { saveUserData } from '../../../actions/user';
 import styles from './profileForms.module.css';
 import http from '../../../api/http';
 import { NameEmailSchema } from './profileValidationSchema';
-import { ErrorHandling, ErrorContainer } from '../../errors/ErrorsHandling';
+import { ErrorHandling, SuccessHandling, MessageContainer } from '../../toasters/MessagesHandling';
 
-const NameEmailForm = () => (
+const NameEmailForm = ({ saveUserData }) => (
   <Grid centered verticalAlign="middle">
     <Grid.Column>
       <Formik
@@ -16,6 +18,11 @@ const NameEmailForm = () => (
         validationSchema={NameEmailSchema}
         onSubmit={(values, actions) => {
           http.put('/api/profile', values)
+            .then((res) => {
+              saveUserData(res.data.updatedUser);
+              SuccessHandling('Profile data updated!');
+              actions.setSubmitting(false);
+            })
             .catch((error) => {
               if (error.response.status === 500) {
                 ErrorHandling('Server is down. Please try again later.');
@@ -43,7 +50,7 @@ const NameEmailForm = () => (
               id="username"
               fluid
               placeholder="Username"
-              type="username"
+              type="text"
               name="username"
               onChange={handleChange}
               onBlur={handleBlur}
@@ -53,18 +60,17 @@ const NameEmailForm = () => (
             <label htmlFor="email">New Email</label>
             <Input
               className={`${styles.inputWrapper} ${touched.email && errors.email ? styles.InputError : ''}`}
-              // label="New email"
               id="email"
               fluid
               placeholder="Email"
-              type="email"
+              type="text"
               name="email"
               onChange={handleChange}
               onBlur={handleBlur}
               value={values.email}
             />
             <div className={styles.Error}>{touched.email && errors.email}</div>
-            <ErrorContainer />
+            <MessageContainer />
             <Button
               className={styles.profileBtn}
               size="large"
@@ -81,4 +87,10 @@ const NameEmailForm = () => (
   </Grid>
 );
 
-export default NameEmailForm;
+const mapDispatchToProps = dispatch => ({
+  saveUserData: (data) => {
+    dispatch(saveUserData(data));
+  },
+});
+
+export default connect(null, mapDispatchToProps)(NameEmailForm);

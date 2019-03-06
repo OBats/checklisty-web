@@ -5,12 +5,13 @@ import { Redirect } from 'react-router-dom';
 import { Formik, Form } from 'formik';
 import { Input, Button, Grid, Segment, Message, Header, Divider } from 'semantic-ui-react';
 import Link from 'react-router-dom/Link';
-import style from './auth.module.css';
-import { signIn } from '../../api/auth-api';
+import style from './css/auth.module.css';
+import { signIn } from '../../../api/auth-api';
 import { SigninSchema } from './validationSchema';
-import { saveUserData } from '../../actions/user';
-import { ErrorHandling, ErrorContainer } from '../errors/ErrorsHandling';
-import SignInWithSocials from './SignInWithSocials';
+import { saveUserData } from '../../../actions/user';
+import { ErrorHandling, MessageContainer } from '../../toasters/MessagesHandling';
+import PasswordInput from '../../showPassword/PasswordInput';
+import SocialAuthentiation from '../social-auth/SocialAuthentication';
 
 const SignIn = ({ loggedUser, saveUserData }) => {
   if (!loggedUser) {
@@ -25,7 +26,7 @@ const SignIn = ({ loggedUser, saveUserData }) => {
                   {'Connect our website using:'}
                 </Header.Subheader>
               </Header>
-              <SignInWithSocials />
+              <SocialAuthentiation />
               <Divider horizontal>
                 <Header as="h4">or</Header>
               </Divider>
@@ -61,34 +62,40 @@ const SignIn = ({ loggedUser, saveUserData }) => {
                 }) => (
                   <Form onSubmit={handleSubmit}>
                     <Input
-                      className={touched.email && errors.email ? style.InputError : ''}
+                      className={touched.email && errors.email ? style.InputError : style.Input}
                       required
                       icon="mail"
                       iconPosition="left"
                       fluid
                       placeholder="Email"
-                      type="email"
+                      type="text"
                       name="email"
                       onChange={handleChange}
                       onBlur={handleBlur}
                       value={values.email}
                     />
-                    <div className={style.Error}>{touched.email && errors.email}</div>
-                    <Input
-                      className={touched.password && errors.password ? style.InputError : ''}
-                      required
-                      icon="lock"
-                      iconPosition="left"
-                      fluid
-                      placeholder="Password"
-                      type="password"
+                    {touched.email && errors.email && (
+                      <div className={style.Error}>
+                        {touched.email && errors.email}
+                      </div>
+                    )}
+                    <PasswordInput
+                      className={touched.password && errors.password
+                        ? style.InputError : style.Input}
+                      touched={touched}
                       name="password"
-                      onChange={handleChange}
-                      onBlur={handleBlur}
+                      placeholder="Password"
+                      errors={errors}
                       value={values.password}
+                      handleChange={handleChange}
+                      handleBlur={handleBlur}
                     />
-                    <div className={style.Error}>{touched.password && errors.password}</div>
-                    <ErrorContainer />
+                    {touched.password && errors.password && (
+                      <div className={style.Error}>
+                        {touched.password && errors.password}
+                      </div>
+                    )}
+                    <MessageContainer />
                     <Button
                       className={style.AuthBtn}
                       fluid
@@ -97,14 +104,17 @@ const SignIn = ({ loggedUser, saveUserData }) => {
                       type="submit"
                       disabled={isSubmitting || !isValid}
                     >
-										Sign In
+                        Sign In
                     </Button>
+                    <div className={style.forgotPassword}>
+                      <Link to="/auth/forgot-password/">Forgot Password?</Link>
+                    </div>
                   </Form>
                 )}
               </Formik>
             </Segment>
             <Message className={style.Message}>
-					New to us?
+              New to us?
               <Link to="/auth/signup/"> Sign Up</Link>
             </Message>
           </Grid.Column>

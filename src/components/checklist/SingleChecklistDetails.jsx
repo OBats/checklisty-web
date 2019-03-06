@@ -1,16 +1,17 @@
 import React from 'react';
-import { Accordion, Grid } from 'semantic-ui-react';
+import { Accordion } from 'semantic-ui-react';
 import ReactMarkdown from 'react-markdown';
+import style from './css/SingleChecklistItem.module.css';
 
-const SingleChecklistDetails = props => (
-  <Accordion.Content active={props.accordionIndex === 0}>
-    <Grid>
-      <Grid.Column width={2} />
-      <Grid.Column width={12}>
-        <ReactMarkdown source={props.propsData.details} />
-      </Grid.Column>
-    </Grid>
-  </Accordion.Content>
-);
+const SingleChecklistDetails = (props) => {
+  const { propsData, accordionIndex } = props;
+  return (
+    <Accordion.Content active={accordionIndex === 0}>
+      <div className={style.detailsStyle}>
+        <ReactMarkdown source={propsData.details} />
+      </div>
+    </Accordion.Content>
+  );
+};
 
 export default SingleChecklistDetails;

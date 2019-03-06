@@ -1,6 +1,6 @@
 .priorityCircle{
-    padding-left: 50%;
-    padding-bottom: 2vh;
+    display: flex !important;
+    margin: 6px !important;
 }
 
 .checklistTitle{
@@ -29,13 +29,65 @@
     font-size: 1.2rem;
 }
 
+.labelItemStyle{
+    display: flex;
+    flex-direction: row;
+    margin-left: 45px;
+    margin-bottom: 10px;
+}
+
 .labelStyle{
     text-transform: uppercase;
 }
-.labelStyleBottomPadding{
-    padding-bottom: 1vh;
+
+.itemHeader{
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    cursor: default;
 }
 
-.pointerStyle{
-    cursor: default;
+.subheaderStyle{
+    margin-left: 15px;
+    display: flex !important;
+}
+
+.checkboxStyle{
+    margin-left: 10px;
+}
+
+.accordionArrowPosition{
+    margin-right: 10px;
+}
+
+.accordionCursor{
+    cursor: default !important;
+}
+
+.detailsStyle{
+    margin-left: 70px;
+}
+
+.fullTitleItem{
+    line-height: 20px;
+}
+
+@media screen and (max-width: 576px) {
+    .checkboxStyle{
+        margin-left: 5px;
+    }   
+    .subheaderStyle{
+        margin-left: 5px;
+    }
+    .accordionArrowPosition{
+        margin-right: 3px;
+    }
+    .detailsStyle{
+        margin-left: 50px;
+    }
+    .labelItemStyle{
+        margin-left: 25px;
+        margin-bottom: 10px;
+    }
 }
