@@ -1,29 +1,17 @@
-import React, { Component } from 'react';
-import { Grid } from 'semantic-ui-react';
-import ChecklistView from './ChecklistView';
+import React from 'react';
+import style from './css/MainChecklistBlock.module.css';
+import ChecklistViewLogic from './ChecklistViewLogic';
 
-class MainChecklistBlock extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      data: props.checkListData,
-    };
-  }
-
-  render() {
-    const { data } = this.state;
-    return (
-      <Grid>
-        <Grid.Column width={3} />
-        <Grid.Column width={10}>
-          {data.sections_data.map((elem, index) => (
-            <ChecklistView key={index.toString()} checklistIndex={index} checkListData={elem} />
-          ))}
-        </Grid.Column>
-        <Grid.Column width={3} />
-      </Grid>
-    );
-  }
-}
+const MainChecklistBlock = ({ checkListData }) => (
+  <div className={style.checklistColumn}>
+    {checkListData && checkListData.sections_data.map((elem, index) => (
+      <ChecklistViewLogic
+        key={index.toString()}
+        checklistIndex={index}
+        checkListData={elem}
+      />
+    ))}
+  </div>
+);
 
 export default MainChecklistBlock;

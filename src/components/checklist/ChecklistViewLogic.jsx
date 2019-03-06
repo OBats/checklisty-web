@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import ChecklistViewComponents from './ChecklistViewComponents';
 
-class ChecklistView extends Component {
+class ChecklistViewLogic extends Component {
   constructor(props) {
     super(props);
     const { checkListData } = this.props;
@@ -120,4 +120,4 @@ class ChecklistView extends Component {
     );
   }
 }
-export default ChecklistView;
+export default ChecklistViewLogic;
