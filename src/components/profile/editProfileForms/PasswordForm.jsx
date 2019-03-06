@@ -4,7 +4,7 @@ import { Input, Button, Grid } from 'semantic-ui-react';
 import styles from './profileForms.module.css';
 import http from '../../../api/http';
 import { PasswordResetSchema } from './profileValidationSchema';
-import { ErrorHandling, ErrorContainer } from '../../errors/ErrorsHandling';
+import { ErrorHandling, SuccessHandling, MessageContainer } from '../../toasters/MessagesHandling';
 
 const PasswordForm = () => (
   <Grid centered verticalAlign="middle">
@@ -20,6 +20,7 @@ const PasswordForm = () => (
             newPassword: values.newPassword,
           })
             .then((res) => {
+              SuccessHandling('Password changed!');
               actions.setSubmitting(false);
             })
             .catch((error) => {
@@ -84,7 +85,7 @@ const PasswordForm = () => (
             <div className={styles.Error}>
               {touched.repeatNewPassword && errors.repeatNewPassword}
             </div>
-            <ErrorContainer />
+            <MessageContainer />
             <Button
               className={styles.profileBtn}
               size="large"

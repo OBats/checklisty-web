@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import style from './Avatar.module.css';
 import http from '../../../api/http';
 import loaderStyle from '../../main/loader.module.css';
-import { ErrorHandling } from '../../errors/ErrorsHandling';
+import { ErrorHandling, SuccessHandling } from '../../toasters/MessagesHandling';
 import { saveUserData } from '../../../actions/user';
 
 const labelStyles = {
@@ -30,23 +30,26 @@ class AvatarForProfile extends React.Component {
   }
 
   handleAddPhoto = () => {
-    http
-      .post('/api/profile/avatar', {
-        img: this.state.preview,
-      })
-      .then((res) => {
-        this.setState({
-          modalOpen: false,
-          avatarUrl: res.data.image,
-          loading: false,
+    if (this.state.preview) {
+      http
+        .post('/api/profile/avatar', {
+          img: this.state.preview,
+        })
+        .then((res) => {
+          this.setState({
+            modalOpen: false,
+            avatarUrl: res.data.image,
+            loading: false,
+          });
+          this.props.saveUserData(res.data);
+          SuccessHandling('Image changed!');
+        }).catch((err) => {
+          ErrorHandling(err.message);
+          this.setState(() => ({
+            modalOpen: false,
+          }));
         });
-        this.props.saveUserData(res.data);
-      }).catch((err) => {
-        ErrorHandling('File have to be less than 70kb!');
-        this.setState(() => ({
-          modalOpen: false,
-        }));
-      });
+    } else ErrorHandling('Please choose the image first!');
   };
 
   close = () => this.setState({

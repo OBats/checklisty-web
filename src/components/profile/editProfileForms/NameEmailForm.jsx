@@ -6,7 +6,7 @@ import { saveUserData } from '../../../actions/user';
 import styles from './profileForms.module.css';
 import http from '../../../api/http';
 import { NameEmailSchema } from './profileValidationSchema';
-import { ErrorHandling, ErrorContainer } from '../../errors/ErrorsHandling';
+import { ErrorHandling, SuccessHandling, MessageContainer } from '../../toasters/MessagesHandling';
 
 const NameEmailForm = ({ saveUserData }) => (
   <Grid centered verticalAlign="middle">
@@ -20,6 +20,7 @@ const NameEmailForm = ({ saveUserData }) => (
           http.put('/api/profile', values)
             .then((res) => {
               saveUserData(res.data.updatedUser);
+              SuccessHandling('Profile data updated!');
               actions.setSubmitting(false);
             })
             .catch((error) => {
@@ -69,7 +70,7 @@ const NameEmailForm = ({ saveUserData }) => (
               value={values.email}
             />
             <div className={styles.Error}>{touched.email && errors.email}</div>
-            <ErrorContainer />
+            <MessageContainer />
             <Button
               className={styles.profileBtn}
               size="large"
