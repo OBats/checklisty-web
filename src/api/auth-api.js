@@ -23,5 +23,5 @@ export const signOut = () => {
 
 export const postAvatarUrl = async (imgUrl) => {
   const response = await http.post('/api/profile/avatar', { img: imgUrl });
-  return response;
+  return response.data;
 };

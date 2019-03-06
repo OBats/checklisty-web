@@ -54,11 +54,11 @@ it('should remove access token in signOut', () => {
 });
 
 it('should return the same avatarUrl as passed in postAvatarUrl', async () => {
-  const avatarUrl = 'avatarUrl';
-  const response = { data: avatarUrl };
+  const image = 'avatarUrl';
+  const response = { data: { image } };
   mockPostRequest(response);
 
-  const result = await postAvatarUrl(avatarUrl);
+  const result = await postAvatarUrl(image);
 
-  expect(result).toEqual(avatarUrl);
+  expect(result).toEqual({ image });
 });

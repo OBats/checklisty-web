@@ -36,11 +36,11 @@ class AvatarForProfile extends React.Component {
         .then((res) => {
           this.setState({
             modalOpen: false,
-            avatarUrl: res.data.image,
+            avatarUrl: res.image,
             loading: false,
             preview: null,
           });
-          this.props.saveUserData(res.data);
+          this.props.saveUserData(res);
           SuccessHandling('Image changed!');
         }).catch((err) => {
           ErrorHandling(err.message);
