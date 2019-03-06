@@ -8,4 +8,5 @@ const MainContent = () => (
   </main>
 );
 
+
 export default MainContent;

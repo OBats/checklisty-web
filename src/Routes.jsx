@@ -11,6 +11,7 @@ import HomePage from './components/main/HomePage';
 import NewChecklistForm from './components/create-checklist/Form/NewChecklistForm';
 import ProtectedRoute from './ProtectedRoute';
 import NewChecklistMarkdown from './components/create-checklist/Markdown/NewChecklistMarkdown';
+import MainPage from './components/main/MainPage';
 import ForgotPassword from './components/auth/forgot-password/ForgotPassword';
 import ResetPassword from './components/auth/forgot-password/ResetPassword';
 
@@ -27,6 +28,7 @@ const Routes = () => (
       <ProtectedRoute exact path="/profile/mylists" component={ProfileLists} />
       <ProtectedRoute exact path="/profile/myteam" component={ProfileTeam} />
       <Route exact path="/home/:id" component={ShowCheckList} />
+      <Route exact path="/home/page=:number" component={MainPage} />
       <ProtectedRoute exact path="/create-checklist" component={NewChecklistForm} />
       <ProtectedRoute exact path="/create-checklist/markdown" component={NewChecklistMarkdown} />
       <Redirect exact to="/" />

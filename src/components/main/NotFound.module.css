@@ -1,0 +1,28 @@
+.notFoundContainer{
+    display: flex;
+    align-items: center;
+    width: 50%;
+}
+.notFoundIcon{
+    width: 15%;
+}
+.notFoundIcon img{
+    width: 100%;
+}
+.notFoundText{
+    font-weight: bolder;
+    display: block;
+    max-width: 350px;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.text{
+    max-width: 400px;
+    line-height: 30px;
+    font-size: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+}
