@@ -20,7 +20,7 @@ export class App extends Component {
       if (token.includes('#_=_')) {
         token = token.replace('#_=_', '');
       }
-      window.location.href = window.location.href.slice(0, 21);
+      window.location.href = window.location.href.substring(0, index - 10);
       localStorage.setItem('access-token', token);
     }
     if (!this.props.loggedUser && localStorage.getItem('access-token')) {
