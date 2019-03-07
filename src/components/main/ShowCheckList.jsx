@@ -19,9 +19,9 @@ class ShowCheckList extends Component {
 
   componentDidMount() {
     const { match } = this.props;
-    const getId = match.params.id;
+    const slug = match.params.id;
 
-    http.get(`/api/checklists/${getId}`)
+    http.get(`/api/checklists/${slug}`)
       .then((res) => {
         this.setState({
           checkList: res.data,

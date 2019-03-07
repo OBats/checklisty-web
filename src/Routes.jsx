@@ -27,7 +27,7 @@ const Routes = () => (
       <ProtectedRoute exact path="/profile/maininfo" component={ProfileInfo} />
       <ProtectedRoute exact path="/profile/mylists" component={ProfileLists} />
       <ProtectedRoute exact path="/profile/myteam" component={ProfileTeam} />
-      <Route exact path="/home/:id" component={ShowCheckList} />
+      <Route exact path="/checklist/:id" component={ShowCheckList} />
       <Route exact path="/home/page=:number" component={MainPage} />
       <ProtectedRoute exact path="/create-checklist" component={NewChecklistForm} />
       <ProtectedRoute exact path="/create-checklist/markdown" component={NewChecklistMarkdown} />

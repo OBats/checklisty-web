@@ -31,7 +31,7 @@ const NewChecklistForm = ({ history }) => (
           onSubmit={(values, actions) => {
             createChecklistReq(values)
               .then((res) => {
-                history.push(`/home/${res.data._id}`);
+                history.push(`/checklist/${res.data.slug}`);
               })
               .catch((error) => {
                 if (error.response.status === 500) {

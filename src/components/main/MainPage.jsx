@@ -94,10 +94,30 @@ class MainPage extends Component {
       <div className={styles.mainContent}>
         <div className={styles.infoContainer}>
           <div className={styles.searchBarContainer}>
-            <input type="text" className={styles.searchInput} placeholder="Search..." onChange={e => this.onChangeSearch(e.target.value)} onKeyPress={this.onKeyPressSearch} ref="searchValue" id="searchInput" />
+            <input
+              type="text"
+              className={styles.searchInput}
+              placeholder="Search..."
+              onChange={e => this.onChangeSearch(e.target.value)}
+              onKeyPress={this.onKeyPressSearch}
+              ref="searchValue"
+              id="searchInput"
+            />
             <div className={styles.resetIconContainer}>
-              <Icon name="close" className={[styles.searchIcon, styles.resetIcon].join(' ')} size="large" ref="resetIcon" onClick={this.resetInput} />
-              <Icon name="search" className={styles.searchIcon} size="large" onClick={this.onClickSearch} disabled={searchFilter === ''} />
+              <Icon
+                name="close"
+                className={[styles.searchIcon, styles.resetIcon].join(' ')}
+                size="large"
+                ref="resetIcon"
+                onClick={this.resetInput}
+              />
+              <Icon
+                name="search"
+                className={styles.searchIcon}
+                size="large"
+                onClick={this.onClickSearch}
+                disabled={searchFilter === ''}
+              />
             </div>
 
           </div>
@@ -105,7 +125,7 @@ class MainPage extends Component {
             <div className={styles.listContainer}>
               {showAllCheckList && showAllCheckList.map(currentCheckList => (
                 <Link
-                  to={`/home/${currentCheckList.id}`}
+                  to={`/checklist/${currentCheckList.slug}`}
                   className={styles.checkListLink}
                   key={currentCheckList.id}
                 >
