@@ -45,7 +45,7 @@ const Item = (props) => {
       <Form.Input
         required
         className={styles.field}
-        id={`item_title-${itemIndex}`}
+        id={`sections_data.${sectionIndex}.items_data.${itemIndex}.item_title`}
         name={`sections_data.${sectionIndex}.items_data.${itemIndex}.item_title`}
         label="Item title:"
         onBlur={handleBlur}
@@ -59,7 +59,7 @@ const Item = (props) => {
         required
         className={styles.field}
         rows="2"
-        id={`section_desc-${itemIndex}`}
+        id={`sections_data.${sectionIndex}.items_data.${itemIndex}.description`}
         label="Item description:"
         name={`sections_data.${sectionIndex}.items_data.${itemIndex}.description`}
         onBlur={handleBlur}

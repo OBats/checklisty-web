@@ -16,7 +16,7 @@ const Title = (props) => {
 
       <Form.Input
         required
-        id={`section_title-${sectionIndex}`}
+        id={`sections_data.${sectionIndex}.section_title`}
         name={`sections_data.${sectionIndex}.section_title`}
         label="Section title:"
         onBlur={handleBlur}
