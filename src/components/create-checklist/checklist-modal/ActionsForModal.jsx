@@ -1,36 +1,41 @@
 import React from 'react';
-import { Grid, Modal, Button, Icon } from 'semantic-ui-react';
+import { Modal, Button, Icon } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import Link from 'react-router-dom/Link';
+import style from './CreateChecklistModal.module.css';
 
 const ActionsForModal = (props) => {
   if (props.loggedUser) {
     return (
       <Modal.Actions>
-        <Grid>
-          <Grid.Row columns={2}>
-            <Grid.Column textAlign="center">
-              <Link to="/create-checklist">
-                <Button animated="vertical" color="teal">
-                  <Button.Content visible>Fields</Button.Content>
-                  <Button.Content hidden>
-                    <Icon name="check" />
-                  </Button.Content>
-                </Button>
-              </Link>
-            </Grid.Column>
-            <Grid.Column textAlign="center">
-              <Link to="/create-checklist/markdown">
-                <Button animated="vertical" color="blue">
-                  <Button.Content visible>Markdown</Button.Content>
-                  <Button.Content hidden>
-                    <Icon name="check" />
-                  </Button.Content>
-                </Button>
-              </Link>
-            </Grid.Column>
-          </Grid.Row>
-        </Grid>
+        <div className={style.buttonBlock}>
+          <div className={style.regularButton}>
+            <Link to="/create-checklist">
+              <Button animated="vertical" color="teal">
+                <Button.Content visible>Fields</Button.Content>
+                <Button.Content hidden>
+                  <Icon name="check" />
+                </Button.Content>
+              </Button>
+            </Link>
+          </div>
+          <div className={style.regularButton}>
+            <Link to="/create-checklist/markdown">
+              <Button animated="vertical" color="blue">
+                <Button.Content visible>Markdown</Button.Content>
+                <Button.Content hidden>
+                  <Icon name="check" />
+                </Button.Content>
+              </Button>
+            </Link>
+          </div>
+        </div>
+        <div className={style.alternativeBlock}>
+          <Button color="red" inverted onClick={props.close}>
+            <Icon name="remove" />
+            {'Close'}
+          </Button>
+        </div>
       </Modal.Actions>
     );
   }
@@ -43,7 +48,7 @@ const ActionsForModal = (props) => {
       <Link to="/auth/signin">
         <Button color="green" inverted>
           <Icon name="checkmark" />
-          {'Sign In now!'}
+          {'Sign In!'}
         </Button>
       </Link>
     </Modal.Actions>

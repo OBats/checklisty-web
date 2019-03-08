@@ -10,14 +10,14 @@ import { SignupSchema } from './validationSchema';
 import { saveUserData } from '../../../actions/user';
 import { ErrorHandling, MessageContainer } from '../../toasters/MessagesHandling';
 import PasswordInput from '../../showPassword/PasswordInput';
-import SocialAuthentiation from '../social-auth/SocialAuthentication';
+import SocialAuthentication from '../social-auth/SocialAuthentication';
 
 const SignUp = ({ loggedUser, saveUserData }) => {
   if (!loggedUser) {
     return (
       <div>
         <Grid className={style.Auth} centered verticalAlign="middle">
-          <Grid.Column className={style.Form} width={8}>
+          <Grid.Column className={style.Form} width={15}>
             <Segment raised>
               <Header textAlign="center" size="huge">
                 {'Sign Up'}
@@ -25,7 +25,7 @@ const SignUp = ({ loggedUser, saveUserData }) => {
                   {'Become our member with:'}
                 </Header.Subheader>
               </Header>
-              <SocialAuthentiation />
+              <SocialAuthentication />
               <Divider horizontal>
                 <Header as="h4">or</Header>
               </Divider>

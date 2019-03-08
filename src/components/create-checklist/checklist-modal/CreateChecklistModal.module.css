@@ -2,15 +2,10 @@
     text-align: center;
 }
 
-.segmentHoverDisabled{
-    opacity: 0.7;
-}
-
 .plusButtonStyle{
     background-color: #08a3a3 !important;
     transition: 0.4s ease-in-out !important;
     margin: 0 !important;
-    
 }
 
 .plusButtonStyle:hover{
@@ -22,8 +17,105 @@
 .iconPlusButtonStyle{
     color: whitesmoke;
 }
+
+.contentBlock{
+    display: flex;
+    justify-content: space-between;
+}
+
+.contentItem{
+    display: flex !important;
+    flex-direction: column;
+    min-height: 180px;
+}
+
+.descriptionText{
+    text-align: center;
+    text-decoration: none;
+    color: black;
+}
+
+.regularBlock{
+    margin: 0px 4px;
+}
+
+.buttonBlock{
+    display: flex;
+    flex-direction: row;
+}
+
+.regularButton{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.alternativeBlock{
+    display: none;
+}
+
+.bigScreenStyle{
+    display: flex;
+}
+
+.smallScreenStyle{
+    display: none;
+}
+
+.unsignedModal{
+    display: flex;
+    justify-content: center;
+}
+
 @media (max-width:520px){
     .plusButtonStyle{
         box-shadow: 4px 6px 42px -2px rgba(0,0,0,0.46) !important;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    .buttonBlock{
+        margin-bottom: 10px;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .contentItem{
+        min-height: 100px;
+        width: 100%;
+        transition: 0.2s ease;
+        background-color: white;
+    }
+    
+    .contentItem:focus, 
+    .contentItem:hover{
+        background-color: rgb(255, 255, 205);
+        transition: 0.2s ease;
+    }
+
+    .contentBlock{
+        display: flex;
+        flex-direction: column;
+    }
+
+    .regularBlock{
+        margin: 6px 0px;
+    }
+
+    .buttonBlock{
+        display: none;
+    }
+
+    .alternativeBlock{
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    .bigScreenStyle{
+        display: none;
+    }
+    
+    .smallScreenStyle{
+        display: flex;
     }
 }

@@ -24,6 +24,7 @@ class CreateChecklistModal extends Component {
           className={style.plusButtonStyle}
           icon
           circular
+          title="Add new Checklist"
         >
           <Icon name="plus" size="large" className={style.iconPlusButtonStyle} />
         </Button>

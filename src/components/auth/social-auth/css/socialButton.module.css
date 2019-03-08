@@ -2,9 +2,15 @@
     color: white;
 }
 
+.socialBlock{
+    display: flex;
+    justify-content: space-between;
+}
+
 .buttonBlock{
     width: 100%;
-    padding: 10% 5%;
+    min-width: 120px;
+    padding: 12px;
     border-radius: 5px;
     display: flex;
     justify-content: center;
@@ -40,4 +46,19 @@
 .githubButton:hover{
     background-color: #171a1d;
     transition: 0.3s ease;
+}
+
+@media screen and (max-width: 576px) {
+    .socialBlock{
+        display: flex;
+        flex-direction: column;
+    }   
+    .buttonBlock{
+        width: 100%;
+        padding: 10px;
+        border-radius: 5px;
+        color: white;
+        font-size: 1rem;
+        margin: 5px 0;
+    }
 }

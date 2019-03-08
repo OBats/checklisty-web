@@ -11,22 +11,22 @@ import { SigninSchema } from './validationSchema';
 import { saveUserData } from '../../../actions/user';
 import { ErrorHandling, MessageContainer } from '../../toasters/MessagesHandling';
 import PasswordInput from '../../showPassword/PasswordInput';
-import SocialAuthentiation from '../social-auth/SocialAuthentication';
+import SocialAuthentication from '../social-auth/SocialAuthentication';
 
 const SignIn = ({ loggedUser, saveUserData }) => {
   if (!loggedUser) {
     return (
       <div>
         <Grid className={style.Auth} centered verticalAlign="middle">
-          <Grid.Column className={style.Form} width={14}>
-            <Segment raised padded>
+          <Grid.Column className={style.Form} width={15}>
+            <Segment raised>
               <Header textAlign="center" size="huge">
                 {'Sign In'}
                 <Header.Subheader size="small" color="grey" className={style.subheader}>
                   {'Connect our website using:'}
                 </Header.Subheader>
               </Header>
-              <SocialAuthentiation />
+              <SocialAuthentication />
               <Divider horizontal>
                 <Header as="h4">or</Header>
               </Divider>
