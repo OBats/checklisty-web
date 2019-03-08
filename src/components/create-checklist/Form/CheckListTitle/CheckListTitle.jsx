@@ -1,21 +1,21 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { ErrorMessage } from 'formik';
-import styles from './CheckListTitle.module.css';
+import styles from './ChecklistTitle.module.css';
 
-const CheckListTitle = (props) => {
-  const { onBlur, onChange } = props;
+const ChecklistTitle = (props) => {
+  const { handleBlur, handleChange } = props;
 
   return (
     <div className={styles.title_container}>
       <input
-        required
-        autoComplete="off"
         className={styles.title}
         name="title"
         id="checklist_title"
         type="text"
-        onBlur={onBlur}
-        onChange={onChange}
+        onBlur={handleBlur}
+        onChange={handleChange}
+        required
       />
       <label className={styles.label} htmlFor="checklist_title">
         <span className={styles.span}>Checklist title...</span>
@@ -28,4 +28,9 @@ const CheckListTitle = (props) => {
   );
 };
 
-export default CheckListTitle;
+ChecklistTitle.propTypes = {
+  handleBlur: PropTypes.func.isRequired,
+  handleChange: PropTypes.func.isRequired,
+};
+
+export default ChecklistTitle;

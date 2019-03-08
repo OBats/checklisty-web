@@ -1,19 +1,15 @@
-.main_form {
-  margin-bottom: 100px;
+  .main_form.main_form {
+    max-width: 600px;
+    padding: 0 30px;
+  }
+
+.main_form_container {
+  margin: 50px 0;
 }
 
-.section_container {
-  display: flex;
-  flex-direction: column;
-  position: relative;
-}
-
-.title.title.title.title:focus {
-  border: none;
-}
-
-.title.title.title.title:focus,
-.title.title.title.title:valid {
-  padding-top: 30px;
-  background: inherit;
+@media (min-width: 480px) {
+  .main_form.main_form {
+    padding: 0 80px;
+    margin: 0 auto;
+  }
 }

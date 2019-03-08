@@ -38,6 +38,20 @@
             "error",
             "always"
         ],
+        "react/forbid-prop-types": [
+            "error",
+            {
+                "forbid": [
+                    "any"
+                ]
+            }
+        ],
+        "no-param-reassign": [
+            "warn",
+            {
+                "props": false
+            }
+        ],
         "object-curly-newline": [
             "error",
             {
@@ -51,24 +65,23 @@
                 }
             }
         ],
-        "no-underscore-dangle": 1,
-        "jsx-a11y/label-has-associated-control": 1,
-        "jsx-a11y/label-has-for": 1,
-        "no-unused-vars": 1,
-        "no-undef": 1,
+        "consistent-return": 1,
         "import/no-named-as-default": 0,
         "import/no-named-as-default-member": 0,
-        "react/destructuring-assignment": 1,
-        "react/no-access-state-in-setstate": 1,
+        "import/no-unresolved": 0,
         "jsx-a11y/anchor-is-valid": 1,
         "jsx-a11y/click-events-have-key-events": 1,
         "jsx-a11y/interactive-supports-focus": 1,
-        "react/prop-types": 1,
-        "react/no-unused-state": 1,
-        "consistent-return": 1,
-        "no-param-reassign": 1,
-        "import/no-unresolved": 0,
+        "jsx-a11y/label-has-associated-control": 1,
+        "jsx-a11y/label-has-for": 1,
         "no-shadow": 1,
-        "react/no-string-refs": 1
+        "no-undef": 1,
+        "no-underscore-dangle": 1,
+        "no-unused-vars": 1,
+        "react/destructuring-assignment": 1,
+        "react/no-access-state-in-setstate": 1,
+        "react/no-string-refs": 1,
+        "react/no-unused-state": 1,
+        "react/prop-types": 1
     }
 }

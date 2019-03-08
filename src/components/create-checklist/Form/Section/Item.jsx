@@ -1,11 +1,12 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Form, Button } from 'semantic-ui-react';
 import { ErrorMessage } from 'formik';
 import Select from 'react-select';
 import CreatableSelect from 'react-select/lib/Creatable';
 import makeAnimated from 'react-select/lib/animated';
 import Accordion from '../Accordion/Accordion';
-import { tagsOptions, priorityOptions } from '../utils/SelectOptions';
+import { tagsOptions, priorityOptions } from '../utils/selectOptions';
 import styles from './css/Item.module.css';
 
 const Item = (props) => {
@@ -43,6 +44,7 @@ const Item = (props) => {
 
       <Form.Input
         required
+        className={styles.field}
         id={`item_title-${itemIndex}`}
         name={`sections_data.${sectionIndex}.items_data.${itemIndex}.item_title`}
         label="Item title:"
@@ -55,6 +57,7 @@ const Item = (props) => {
 
       <Form.TextArea
         required
+        className={styles.field}
         rows="2"
         id={`section_desc-${itemIndex}`}
         label="Item description:"
@@ -98,12 +101,22 @@ const Item = (props) => {
 
       <Accordion
         name={`sections_data.${sectionIndex}.items_data.${itemIndex}.details`}
-        onBlur={handleBlur}
-        onChange={handleChange}
+        handleBlur={handleBlur}
+        handleChange={handleChange}
       />
 
     </div>
   );
+};
+
+Item.propTypes = {
+  sectionIndex: PropTypes.number.isRequired,
+  itemIndex: PropTypes.number.isRequired,
+  nestedArrayHelpers: PropTypes.object.isRequired,
+  handleBlur: PropTypes.func.isRequired,
+  handleChange: PropTypes.func.isRequired,
+  setFieldValue: PropTypes.func.isRequired,
+  setFieldTouched: PropTypes.func.isRequired,
 };
 
 export default Item;

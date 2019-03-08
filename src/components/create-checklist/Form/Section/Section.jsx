@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Button, Segment } from 'semantic-ui-react';
 import { FieldArray } from 'formik';
 import Title from './Title';
@@ -19,12 +20,11 @@ const Section = (props) => {
       name="sections_data"
       render={arrayHelpers => (
         <div className={styles.container}>
-          {values.sections_data.map((value, sectionIndex) => (
+          {values.sections_data.map((section, sectionIndex) => (
             <Segment
               className={styles.items}
-              key={sectionIndex.toString()}
+              key={section._id}
             >
-
               {!!sectionIndex && (
                 <p className={styles.number}>
                   Section #
@@ -34,12 +34,12 @@ const Section = (props) => {
 
               <Title
                 sectionIndex={sectionIndex}
-                onBlur={handleBlur}
-                onChange={handleChange}
+                handleBlur={handleBlur}
+                handleChange={handleChange}
               />
 
               <Items
-                value={value}
+                section={section}
                 sectionIndex={sectionIndex}
                 handleBlur={handleBlur}
                 handleChange={handleChange}
@@ -54,8 +54,7 @@ const Section = (props) => {
                   icon="trash alternate"
                   type="button"
                   title="Remove Section"
-                  onClick={() => arrayHelpers.remove(sectionIndex)
-                  }
+                  onClick={() => arrayHelpers.remove(sectionIndex)}
                 />
               )}
             </Segment>
@@ -68,8 +67,10 @@ const Section = (props) => {
             color="teal"
             title="Add New Section"
             onClick={() => arrayHelpers.push({
+              _id: Math.random(),
               section_title: '',
               items_data: [{
+                _id: Math.random(),
                 item_title: '',
                 description: '',
                 details: '',
@@ -82,6 +83,14 @@ const Section = (props) => {
       )}
     />
   );
+};
+
+Section.propTypes = {
+  values: PropTypes.object.isRequired,
+  handleBlur: PropTypes.func.isRequired,
+  handleChange: PropTypes.func.isRequired,
+  setFieldValue: PropTypes.func.isRequired,
+  setFieldTouched: PropTypes.func.isRequired,
 };
 
 export default Section;

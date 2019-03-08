@@ -5,21 +5,23 @@
 .container.container button.add_section,
 .items.items button.remove_section {
   position: absolute;
-  left: 100%;
-  bottom: 0;
-  width: 50px;
-  height: 50px;
-  margin-left: 10px;
-  margin-right: 0;
+  bottom: 10px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
+}
+
+.container.container button.add_section {
+  left: 0;
+  margin-left: 10px;
   background-color: #08a3a3;
   transition: 0.4s ease-in-out;
 }
 
 .items.items button.remove_section {
-  bottom: 55px;
+  right: 0;
+  margin-right: 10px;
   background-color: #db2828;
-  transition: 0.3s ease-in-out;
 }
 
 .container.container button.add_section i {
@@ -38,11 +40,15 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 25px;
-  height: 25px;
-  line-height: 25px;
-  font-size: 25px;
+  width: 20px;
+  height: 20px;
+  line-height: 20px;
+  font-size: 18px;
   transform: translate(-50%, -50%);
+}
+
+.items.items.items button.remove_section i {
+  transition: 0.3s ease-in-out;
 }
 
 .items.items.items button.remove_section:hover,
@@ -52,18 +58,14 @@
 
 .items.items.items button.remove_section:hover i,
 .items.items.items button.remove_section:focus i {
-  font-size: 25px;
+  font-size: 22px;
   transition: 0.3s ease-in-out;
-}
-
-.items.items.items button.remove_section i {
-  font-size: 20px;
 }
 
 .items.items {
   position: relative;
   margin-bottom: 20px;
-  padding: 20px 15px;
+  padding-bottom: 60px;
 }
 
 .items.items:first-child {
@@ -101,4 +103,37 @@
   font-size: 14px;
   font-weight: 700;
   color: rgb(138, 137, 137);
+}
+
+@media (min-width: 480px) {
+  .container.container button.add_section,
+  .items.items button.remove_section {
+    left: 100%;
+    width: 50px;
+    height: 50px;
+    margin-left: 10px;
+    margin-right: 0;
+    border-radius: 50%;
+  }
+
+  .container.container button.add_section {
+    bottom: 0;
+  }
+
+  .items.items button.remove_section {
+    bottom: 55px;
+  }
+
+  .container.container.container button.add_section i,
+  .items.items.items button.remove_section i {
+    width: 25px;
+    height: 25px;
+    line-height: 25px;
+    font-size: 25px;
+  }
+
+  .items.items {
+    margin-bottom: 20px;
+    padding: 20px 15px;
+  }
 }

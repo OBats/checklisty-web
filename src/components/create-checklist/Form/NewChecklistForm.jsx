@@ -1,82 +1,93 @@
 import React from 'react';
-import { Grid, Form, Button } from 'semantic-ui-react';
+import PropTypes from 'prop-types';
+import { Form, Button } from 'semantic-ui-react';
 import { Formik } from 'formik';
-import ChecklistSchema from './utils/ChecklistSchema';
+import checklistSchema from './utils/checklistSchema';
 import createChecklistReq from '../../../api/checklist-api';
-import CheckListTitle from './CheckListTitle/CheckListTitle';
+import ChecklistTitle from './ChecklistTitle/ChecklistTitle';
 import { ErrorHandling, MessageContainer } from '../../toasters/MessagesHandling';
 import Section from './Section/Section';
+import styles from './NewChecklistForm.module.css';
 
 const NewChecklistForm = ({ history }) => (
-  <Grid centered>
-    <Grid.Row as="section">
-      <Grid.Column width={6}>
-        <Formik
-          initialValues={{
-            title: '',
-            sections_data: [{
-              section_title: '',
-              items_data: [{
-                item_title: '',
-                description: '',
-                details: '',
-                tags: [],
-                priority: '',
-              }],
-            }],
-          }}
+  <div className={styles.main_form_container}>
+    <Formik
+      initialValues={{
+        title: '',
+        sections_data: [{
+          _id: Math.random(),
+          section_title: '',
+          items_data: [{
+            _id: Math.random(),
+            item_title: '',
+            description: '',
+            details: '',
+            tags: [],
+            priority: '',
+          }],
+        }],
+      }}
 
-          validationSchema={ChecklistSchema}
+      validationSchema={checklistSchema}
 
-          onSubmit={(values, actions) => {
-            createChecklistReq(values)
-              .then((res) => {
-                history.push(`/checklist/${res.data.slug}`);
-              })
-              .catch((error) => {
-                if (error.response.status === 500) {
-                  ErrorHandling('Server is down. Please try again later.');
-                } else {
-                  ErrorHandling(error.response.data.message);
-                }
-                actions.setSubmitting(false);
-              });
-          }}
+      onSubmit={(values, actions) => {
+        values.sections_data.map((section) => {
+          delete section._id;
+          return (
+            section.items_data.map(item => delete item._id)
+          );
+        });
+        createChecklistReq(values)
+          .then(res => history.push(`/checklist/${res.data.slug}`))
+          .catch((error) => {
+            if (error.response.status === 500) {
+              ErrorHandling('Server is down. Please try again later.');
+            } else {
+              ErrorHandling(error.response.data.message);
+            }
+            actions.setSubmitting(false);
+          });
+      }}
 
-          render={({
-            values,
-            handleChange,
-            setFieldValue,
-            setFieldTouched,
-            handleBlur,
-            handleSubmit,
-            isValid,
-            isSubmitting,
-          }) => (
-            <Form onSubmit={handleSubmit}>
+      render={({
+        values,
+        handleChange,
+        setFieldValue,
+        setFieldTouched,
+        handleBlur,
+        handleSubmit,
+        isValid,
+        isSubmitting,
+      }) => (
+        <Form
+          className={styles.main_form}
+          onSubmit={handleSubmit}
+        >
 
-              <CheckListTitle
-                onBlur={handleBlur}
-                onChange={handleChange}
-              />
+          <ChecklistTitle
+            handleBlur={handleBlur}
+            handleChange={handleChange}
+          />
 
-              <Section
-                values={values}
-                handleBlur={handleBlur}
-                handleChange={handleChange}
-                setFieldValue={setFieldValue}
-                setFieldTouched={setFieldTouched}
-              />
+          <Section
+            values={values}
+            handleBlur={handleBlur}
+            handleChange={handleChange}
+            setFieldValue={setFieldValue}
+            setFieldTouched={setFieldTouched}
+          />
 
-              <Button primary fluid type="submit" disabled={isSubmitting || !isValid}>Submit</Button>
-              <MessageContainer />
+          <Button primary fluid type="submit" disabled={isSubmitting || !isValid}>Submit</Button>
+          <MessageContainer />
 
-            </Form>
-          )}
-        />
-      </Grid.Column>
-    </Grid.Row>
-  </Grid>
+        </Form>
+      )}
+    />
+  </div>
 );
+
+NewChecklistForm.propTypes = {
+  history: PropTypes.object.isRequired,
+};
 
 export default NewChecklistForm;

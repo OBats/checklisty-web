@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Button, Segment } from 'semantic-ui-react';
 import { FieldArray } from 'formik';
 import Item from './Item';
@@ -6,7 +7,7 @@ import styles from './css/Section.module.css';
 
 const Items = (props) => {
   const {
-    value,
+    section,
     sectionIndex,
     handleBlur,
     handleChange,
@@ -19,10 +20,10 @@ const Items = (props) => {
       name={`sections_data.${sectionIndex}.items_data`}
       render={nestedArrayHelpers => (
         <div className={styles.item_wrapper}>
-          {value.items_data.map((el, itemIndex) => (
+          {section.items_data.map((item, itemIndex) => (
             <Segment
               className={styles.item}
-              key={itemIndex.toString()}
+              key={item._id}
             >
               <Item
                 sectionIndex={sectionIndex}
@@ -42,6 +43,7 @@ const Items = (props) => {
             color="green"
             type="button"
             onClick={() => nestedArrayHelpers.push({
+              _id: Math.random(),
               item_title: '',
               description: '',
               details: '',
@@ -55,6 +57,15 @@ const Items = (props) => {
       )}
     />
   );
+};
+
+Items.propTypes = {
+  section: PropTypes.object.isRequired,
+  sectionIndex: PropTypes.number.isRequired,
+  handleBlur: PropTypes.func.isRequired,
+  handleChange: PropTypes.func.isRequired,
+  setFieldValue: PropTypes.func.isRequired,
+  setFieldTouched: PropTypes.func.isRequired,
 };
 
 export default Items;
