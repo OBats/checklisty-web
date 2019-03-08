@@ -8,7 +8,7 @@ const getRandom = max => Math.floor(Math.random() * (max + 1));
 
 const showCreationData = data => `Created: ${data.slice(0, 10).split('-').reverse().join('/')}`;
 const showTags = (tags) => {
-  if (tags !== undefined && tags[0].length) {
+  if (tags !== undefined && tags[0] && tags[0].length) {
     return (
       <div style={{ marginLeft: '10px' }}>
         {tags.map(tag => (
@@ -21,16 +21,16 @@ const showTags = (tags) => {
   }
 };
 
-const ListItem = ({ lists }) => (
+const ListItem = ({ lists, del }) => (
   <List size="huge" divided link>
     {lists && lists.map(list => (
       <List.Item
         key={list.id}
         style={{ display: 'flex', alignItems: 'center' }}
       >
-        <List.Icon name="github" />
+        <List.Icon name="th list" />
         <List.Content>
-          <List.Header as="a" href={`/home/${list.id}`}>{list.title}</List.Header>
+          <List.Header as="a" href={`/checklist/${list.slug}`}>{list.title}</List.Header>
           <List.Description as="div" style={{ display: 'flex', alignItems: 'center' }}>
             {showCreationData(list.creation_date)}
             {showTags(list.tags[0])}
@@ -42,7 +42,7 @@ const ListItem = ({ lists }) => (
           </Button>
         </List.Content>
         <List.Content floated="right" style={{ margin: 0 }}>
-          <Button icon>
+          <Button icon onClick={() => del(list.id)}>
             <Icon name="remove" color="red" />
           </Button>
         </List.Content>
