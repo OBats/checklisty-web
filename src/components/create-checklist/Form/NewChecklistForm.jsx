@@ -2,12 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { Form, Button } from 'semantic-ui-react';
 import { Formik } from 'formik';
-import checklistSchema from './utils/checklistSchema';
+import checklistSchema from './utils/ChecklistSchema';
 import createChecklistReq from '../../../api/checklist-api';
-import ChecklistTitle from './ChecklistTitle/ChecklistTitle';
+import ChecklistTitle from './CheckListTitle/CheckListTitle';
 import { ErrorHandling, MessageContainer } from '../../toasters/MessagesHandling';
 import Section from './Section/Section';
-import styles from './NewChecklistForm.module.css';
+import styles from './NewCheckListForm.module.css';
 
 const NewChecklistForm = ({ history }) => (
   <div className={styles.main_form_container}>

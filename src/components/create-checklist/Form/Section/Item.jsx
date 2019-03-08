@@ -6,7 +6,7 @@ import Select from 'react-select';
 import CreatableSelect from 'react-select/lib/Creatable';
 import makeAnimated from 'react-select/lib/animated';
 import Accordion from '../Accordion/Accordion';
-import { tagsOptions, priorityOptions } from '../utils/selectOptions';
+import { tagsOptions, priorityOptions } from '../utils/SelectOptions';
 import styles from './css/Item.module.css';
 
 const Item = (props) => {

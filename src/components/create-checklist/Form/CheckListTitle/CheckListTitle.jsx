@@ -1,7 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { ErrorMessage } from 'formik';
-import styles from './ChecklistTitle.module.css';
+import styles from './CheckListTitle.module.css';
 
 const ChecklistTitle = (props) => {
   const { handleBlur, handleChange } = props;
