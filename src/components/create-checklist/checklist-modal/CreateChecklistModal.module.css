@@ -9,6 +9,8 @@
 .plusButtonStyle{
     background-color: #08a3a3 !important;
     transition: 0.4s ease-in-out !important;
+    margin: 0 !important;
+    
 }
 
 .plusButtonStyle:hover{
@@ -19,4 +21,9 @@
 
 .iconPlusButtonStyle{
     color: whitesmoke;
+}
+@media (max-width:520px){
+    .plusButtonStyle{
+        box-shadow: 4px 6px 42px -2px rgba(0,0,0,0.46) !important;
+    }
 }

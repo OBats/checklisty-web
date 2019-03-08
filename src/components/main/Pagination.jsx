@@ -1,46 +1,62 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
-import http from '../../api/http';
+import { Grid, Pagination, Icon } from 'semantic-ui-react';
+import { connect } from 'react-redux';
+import saveActivePage from '../../actions/paginationAction';
+import styles from './Pagination.module.css';
 
-class Pagination extends Component {
-  state = { getAll: null }
+class PaginationExampleControlled extends Component {
+  state = { totalPage: 1 }
 
   componentDidMount() {
-    http.get('/api/checklists/')
-      .then((res) => {
-        this.setState({
-          getAll: res.data,
-        });
-      });
+    this.setState({
+      totalPage: this.props.totalPage,
+    });
   }
 
-  loadCorrectPage = () => {
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.totalPage !== this.state.totalPage) {
+      this.setState({
+        totalPage: nextProps.totalPage,
+      });
+    }
+  }
 
+  handlePaginationChange = (e, { activePage }) => {
+    this.props.saveActivePage(activePage);
   }
 
   render() {
-    const { getAll } = this.state;
-    const howManyPage = getAll === null ? '' : Math.ceil(getAll.length / 5);
-    let counter = 0;
+    const { totalPage } = this.state;
+    const { activePage } = this.props;
+
     return (
-      <div>
-        {getAll && getAll.map(function (currentList, index) {
-          while (counter !== howManyPage) {
-            counter += 1;
-            return (
-              <Link
-                key={currentList.id}
-                to={`/home/page=${index + 1}`}
-                onClick={this.loadCorrectPage}
-              >
-                {counter}
-              </Link>
-            );
-          } return false;
-        })}
+      <div className={styles.paginationContainer}>
+        <Grid.Column>
+          <Pagination
+            activePage={activePage}
+            onPageChange={this.handlePaginationChange}
+            totalPages={totalPage}
+            nextItem={{ content: <Icon name="angle right" />, icon: true }}
+            firstItem={{ content: <Icon name="angle double left" />, icon: true }}
+            lastItem={{ content: <Icon name="angle double right" />, icon: true }}
+            prevItem={{ content: <Icon name="angle left" />, icon: true }}
+            pointing
+            secondary
+          />
+        </Grid.Column>
       </div>
     );
   }
 }
 
-export default Pagination;
+const mapStateToProps = ({ pagination }) => ({
+  activePage: pagination.activePage,
+});
+
+const mapDispatchToProps = dispatch => ({
+  saveActivePage: (activePage) => {
+    dispatch(saveActivePage(activePage));
+  },
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(PaginationExampleControlled);
