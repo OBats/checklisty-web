@@ -8,6 +8,11 @@ const reducer = (state = initialState, action) => {
       activePage: action.payload,
     };
   }
+  case 'RESET_ACTIVE_PAGE': {
+    return {
+      activePage: 1,
+    };
+  }
 
   default:
     return state;

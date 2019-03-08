@@ -1,15 +1,17 @@
 import React, { Component } from 'react';
 import { Grid, Pagination, Icon } from 'semantic-ui-react';
 import { connect } from 'react-redux';
-import saveActivePage from '../../actions/paginationAction';
+import { saveActivePage, resetActivePage } from '../../actions/paginationAction';
 import styles from './Pagination.module.css';
 
 class PaginationExampleControlled extends Component {
-  state = { totalPage: 1 }
+  state = { totalPage: 1, searchValue: '', isReset: null }
 
   componentDidMount() {
     this.setState({
       totalPage: this.props.totalPage,
+      searchValue: this.props.searchValue,
+      isReset: this.props.isReset,
     });
   }
 
@@ -18,6 +20,15 @@ class PaginationExampleControlled extends Component {
       this.setState({
         totalPage: nextProps.totalPage,
       });
+    }
+    if (nextProps.searchValue !== this.state.searchValue) {
+      this.props.resetActivePage();
+    }
+    if (nextProps.isReset !== this.state.isReset) {
+      this.setState({
+        isReset: nextProps.isReset,
+      });
+      this.props.resetActivePage();
     }
   }
 
@@ -56,6 +67,9 @@ const mapStateToProps = ({ pagination }) => ({
 const mapDispatchToProps = dispatch => ({
   saveActivePage: (activePage) => {
     dispatch(saveActivePage(activePage));
+  },
+  resetActivePage: () => {
+    dispatch(resetActivePage());
   },
 });
 

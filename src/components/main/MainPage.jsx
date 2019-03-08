@@ -20,6 +20,8 @@ class MainPage extends Component {
       loading: true,
       totalPage: 1,
       listsLoader: false,
+      defaultPage: 1,
+      isReset: false,
     };
   }
 
@@ -27,10 +29,10 @@ class MainPage extends Component {
     this.getAllChecklists();
   }
 
-  componentDidUpdate(prevProps, prevState) {
+  componentDidUpdate(prevProps) {
     const { activePage } = this.props;
     if (activePage !== prevProps.activePage) {
-      this.getAllChecklists();
+      this.getFiveChecklists();
     }
   }
 
@@ -60,7 +62,19 @@ class MainPage extends Component {
 
   resetInput = () => {
     this.refs.searchValue.value = '';
+    this.setState({
+      isReset: !this.state.isReset,
+    });
     this.getAllChecklists();
+  }
+
+  getFiveChecklists = () => {
+    const searchValue = this.refs.searchValue.value;
+    if (searchValue === '') {
+      this.getAllChecklists();
+    } else {
+      this.getSearchedChecklists(searchValue);
+    }
   }
 
   getAllChecklists = () => {
@@ -80,16 +94,21 @@ class MainPage extends Component {
       });
   }
 
- getSearchedChecklists = (search) => {
-   http.get(`/api/checklists/search=${search}`)
-     .then((res) => {
-       this.setState({
-         showAllCheckList: res.data.result,
-         searchFilter: search,
-         totalPage: res.data.totalItems,
-       });
-     });
- }
+    getSearchedChecklists = (search) => {
+      const { activePage } = this.props;
+      this.setState({
+        listsLoader: true,
+      });
+      http.get(`/api/checklists/search=${search}/page=${activePage}`)
+        .then((res) => {
+          this.setState({
+            showAllCheckList: res.data.result,
+            searchFilter: search,
+            totalPage: res.data.totalItems,
+            listsLoader: false,
+          });
+        });
+    }
 
   countingItems = (checklist) => {
     const howMuchItems = checklist.reduce((acc, current) => acc + current.items_data.length, 0);
@@ -100,7 +119,8 @@ class MainPage extends Component {
   showCreationData = data => `Created: ${data.slice(0, 10).split('-').reverse().join('/')}`;
 
   render() {
-    const { loading, showAllCheckList, searchFilter, totalPage, listsLoader } = this.state;
+    const { loading, showAllCheckList, searchFilter, totalPage, listsLoader, isReset } = this.state;
+    const { searchValue } = this.refs;
     const counter = 0;
     if (loading) {
       return (
@@ -140,7 +160,7 @@ class MainPage extends Component {
           </div>
           <div className={styles.checkListItems}>
             <div className={styles.listContainer}>
-              { listsLoader ? <div className={styles.loader}><Loader active inline="centered" size="large" content="Loading..." /></div> : (
+              { listsLoader ? <div className={styles.loader}><Loader active inline content="Loading..." size="large" /></div> : (
                 <>
                   {showAllCheckList && showAllCheckList.map(currentCheckList => (
                     <Link
@@ -185,7 +205,7 @@ class MainPage extends Component {
           </div>
         </div>
         {counter !== showAllCheckList.length
-          ? <PaginationExampleControlled totalPage={totalPage} /> : false}
+          ? <PaginationExampleControlled totalPage={totalPage} searchValue={searchValue === undefined ? '' : searchValue.value} isReset={isReset} /> : false}
       </div>
     );
   }
