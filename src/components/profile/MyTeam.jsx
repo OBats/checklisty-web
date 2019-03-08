@@ -1,10 +1,16 @@
 import React from 'react';
-import { Container, Header } from 'semantic-ui-react';
+import { Container, Header, Image } from 'semantic-ui-react';
 
 const MyTeam = () => (
   <Container>
-    <Header as="h2">Here is your Team</Header>
-    <h4>LvNodeJs-379</h4>
+    <Header as="h1">Your list will be here</Header>
+    <Image
+      src="http://www.joelnelsongroup.com/wp-content/uploads/2015/08/Coming-Soon.jpg"
+      as="a"
+      size="medium"
+      href="http://google.com"
+      target="_blank"
+    />
   </Container>
 );
 

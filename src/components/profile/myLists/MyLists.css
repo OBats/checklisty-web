@@ -1,0 +1,4 @@
+.listItem {
+  display: flex !important;
+  align-items: center !important;
+};
