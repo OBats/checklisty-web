@@ -22,6 +22,9 @@ class PaginationExampleControlled extends Component {
       });
     }
     if (nextProps.searchValue !== this.state.searchValue) {
+      this.setState({
+        searchValue: nextProps.searchValue,
+      });
       this.props.resetActivePage();
     }
     if (nextProps.isReset !== this.state.isReset) {
