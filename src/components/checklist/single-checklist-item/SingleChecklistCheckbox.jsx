@@ -1,6 +1,6 @@
 import React from 'react';
 import { Checkbox } from 'semantic-ui-react';
-import style from './css/SingleChecklistItem.module.css';
+import style from '../css/SingleChecklistItem.module.css';
 
 const SingleChecklistCheckbox = (props) => {
   const { checkedIndex, handleChecked, propsData } = props;

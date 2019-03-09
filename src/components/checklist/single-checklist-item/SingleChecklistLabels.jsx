@@ -1,6 +1,6 @@
 import React from 'react';
 import { Label } from 'semantic-ui-react';
-import style from './css/SingleChecklistItem.module.css';
+import style from '../css/SingleChecklistItem.module.css';
 
 const SingleChecklistLabels = (props) => {
   const { propsData } = props;

@@ -1,6 +1,6 @@
 import React from 'react';
 import style from './css/MainChecklistBlock.module.css';
-import ChecklistViewLogic from './ChecklistViewLogic';
+import ChecklistViewLogic from './checklist-view/ChecklistViewLogic';
 
 const MainChecklistBlock = ({ checkListData }) => (
   <div className={style.checklistColumn}>

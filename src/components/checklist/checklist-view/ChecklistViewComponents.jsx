@@ -1,7 +1,7 @@
 import React from 'react';
 import { Accordion, Container, Progress, Icon, Divider } from 'semantic-ui-react';
-import SingleChecklistItem from './SingleChecklistItem';
-import style from './css/ChecklistView.module.css';
+import SingleChecklistItem from '../single-checklist-item';
+import style from '../css/ChecklistView.module.css';
 
 const ChecklistViewComponents = (props) => {
   const {

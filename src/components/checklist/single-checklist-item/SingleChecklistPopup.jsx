@@ -1,6 +1,6 @@
 import React from 'react';
 import { Icon, Popup } from 'semantic-ui-react';
-import style from './css/SingleChecklistItem.module.css';
+import style from '../css/SingleChecklistItem.module.css';
 
 const priorities = [
   {

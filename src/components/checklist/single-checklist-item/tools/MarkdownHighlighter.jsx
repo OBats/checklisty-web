@@ -2,7 +2,7 @@ import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
 import SyntaxHighlighter from 'react-syntax-highlighter';
 import { docco } from 'react-syntax-highlighter/dist/styles/hljs';
-import style from './css/SingleChecklistItem.module.css';
+import style from '../../css/SingleChecklistItem.module.css';
 
 class MarkdownHighlighter extends PureComponent {
   static propTypes = {

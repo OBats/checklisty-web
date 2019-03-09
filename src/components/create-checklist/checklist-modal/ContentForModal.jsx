@@ -53,7 +53,7 @@ const ContentForModal = (props) => {
               <MarkdownSegment />
             </div>
             <div className={style.smallScreenStyle}>
-              <Link to="/create-checklist">
+              <Link to="/create-checklist/markdown">
                 <MarkdownSegment />
               </Link>
             </div>

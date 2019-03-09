@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Accordion } from 'semantic-ui-react';
-import style from './css/SingleChecklistItem.module.css';
+import style from '../css/SingleChecklistItem.module.css';
 import SingleChecklistDetails from './SingleChecklistDetails';
 import SingleChecklistLabels from './SingleChecklistLabels';
 import SingleChecklistCheckbox from './SingleChecklistCheckbox';
