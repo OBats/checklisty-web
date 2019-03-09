@@ -28,6 +28,10 @@ class ChecklistViewLogic extends Component {
     this.setState({ checkboxArray: checkboxArrayTemporal, accordionIndexArray, iconNameArray });
   }
 
+  componentWillReceiveProps({ checkListData }) {
+    this.setState({ data: checkListData });
+  }
+
   handleChecked = (index) => {
     const { checkboxArray } = this.state;
     const checkboxArrayTemporal = [...checkboxArray];

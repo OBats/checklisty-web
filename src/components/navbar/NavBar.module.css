@@ -9,6 +9,9 @@
   top: 0;
   left: 0;
   z-index: 100;
+  -webkit-box-shadow: 0px 10px 20px -10px rgba(58, 71, 83, 1);
+  -moz-box-shadow: 0px 10px 20px -10px rgba(58, 71, 83, 1);
+  box-shadow: 0px 10px 20px -10px rgba(58, 71, 83, 1);
 }
 
 .menu.menu.menu a {

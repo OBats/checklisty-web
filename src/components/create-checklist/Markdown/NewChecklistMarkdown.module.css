@@ -1,11 +1,10 @@
 .markdownSection {
-  padding-bottom: 40px;
+  margin-top: -10px;
 }
 
 .markdownWrapper {
   display: flex;
-  background-color: rgb(247, 245, 245);
-  /* height: 70vh; */
+  background-color: #EDEDED;
   min-height: 500px;
   margin-bottom: 20px;
 }
@@ -16,14 +15,18 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  width: 50%;
-  /* padding: 15px; */
-  border: 1px solid #000;
+  border-bottom: 3px solid #3A4753;
 }
 
-/* .markdownPreview {
-  overflow-y: scroll;
-} */
+.markdownEditor {
+  position: relative;
+  width: 40%;
+}
+
+.markdownPreview {
+  width: 60%;
+  padding: 10px;
+}
 
 .selectBtn.selectBtn {
   margin-left: 30px;
@@ -31,11 +34,17 @@
 }
 
 .markdownButtons {
+  padding-bottom: 40px;
   margin-left: 20px;
 }
 
 .btn.btn {
   margin: 0px 5px;
+}
+
+.btnWrapper {
+  padding-bottom: 50px;
+  margin-left: 50px;
 }
 
 input {
@@ -72,21 +81,21 @@ input[type="file"]::-webkit-file-upload-button {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
-  -webkit-transition: opacity .1s ease,
-    background-color .1s ease,
-    color .1s ease,
-    background .1s ease,
-    -webkit-box-shadow .1s ease;
-  -webkit-transition: opacity .1s ease,
-    background-color .1s ease,
-    color .1s ease,
-    box-shadow .1s ease,
-    background .1s ease;
-  transition: opacity .1s ease,
-    background-color .1s ease,
-    color .1s ease,
-    box-shadow .1s ease,
-    background .1s ease;
+  -webkit-transition: opacity .3s ease,
+    background-color .3s ease,
+    color .3s ease,
+    background .3s ease,
+    -webkit-box-shadow .3s ease;
+  -webkit-transition: opacity .3s ease,
+    background-color .3s ease,
+    color .3s ease,
+    box-shadow .3s ease,
+    background .3s ease;
+  transition: opacity .3s ease,
+    background-color .3s ease,
+    color .3s ease,
+    box-shadow .3s ease,
+    background .3s ease;
   will-change: '';
   -webkit-tap-highlight-color: transparent;
 }
@@ -115,4 +124,135 @@ input[type="file"]::-webkit-file-upload-button:focus {
 
 input:focus {
   outline: none;
+}
+
+.checklistTitle:first-child {
+  margin-top: 1rem;
+}
+
+.mdDescr {
+  font-size: 1rem;
+  background: #fff;
+  box-shadow: 0 1px 2px 0 rgba(34, 36, 38, .15);
+  margin: 0.5em 0;
+  padding: 1em 1em;
+  max-height: 280px;
+  width: 300px;
+  overflow-y: scroll;
+  border-radius: .28571429rem;
+  border: 1px solid rgba(34, 36, 38, .15);
+  z-index: 4;
+}
+
+.mdDescrHidden {
+  display: none;
+}
+
+.mdDescr,
+.mdDescrBtn {
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+.mdDescrBtn {
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 1em;
+  padding: 0;
+  outline: 0;
+  z-index: 5;
+  border: none;
+  background: #E8E8E8 none;
+  border-radius: 50px;
+  transition: all .3s ease,
+    background-color .3s ease,
+    color .3s ease,
+    box-shadow .3s ease,
+    background .3s ease;
+}
+
+.mdDescrBtn:hover {
+  background-color: #cacbcd;
+  background-image: none;
+  box-shadow: 0 0 0 1px transparent inset,
+    0 0 0 0 rgba(34, 36, 38, .15) inset;
+  color: rgba(0, 0, 0, .8);
+}
+
+.mdDescrBtn:focus {
+  background-color: #cacbcd;
+  color: rgba(0, 0, 0, .8);
+  background-image: '' !important;
+  box-shadow: '' !important;
+}
+
+.mdDescrBtn:active {
+  background-color: #babbbc;
+  background-image: '';
+  color: rgba(0, 0, 0, .9);
+  box-shadow: 0 0 0 1px transparent inset, none;
+}
+
+.mdDescrBtn>img {
+  max-width: 25px;
+}
+
+.mdDescrBtn>img:hover {
+  transform: scale(1.1)
+}
+
+.mdError {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 40px;
+  color: red;
+}
+
+.mdLineError {
+  position: absolute;
+  background: rgba(212, 39, 39, 0.571);
+}
+
+.mdDescrList {
+  padding: 0;
+  margin: 0;
+  margin-top: 15;
+  list-style: none;
+}
+
+.mdDescrList>li {
+  margin-bottom: 5px;
+}
+
+.priorityLow,
+.priorityMedium,
+.priorityHigh {
+  display: inline-block;
+  height: 7px;
+  width: 7px;
+  border-radius: 50%;
+  margin-bottom: 2px;
+  margin-right: 2px;
+}
+
+.priorityLow::before,
+.priorityMedium::before,
+.priorityHigh::before {
+  content: " ";
+}
+
+.priorityLow {
+  background: #21ba45;
+}
+
+.priorityMedium {
+  background: #fbbd08;
+}
+
+.priorityHigh {
+  background: #db2828;
 }

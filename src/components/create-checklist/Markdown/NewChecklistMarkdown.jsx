@@ -1,45 +1,20 @@
 import React from 'react';
 import { Button } from 'semantic-ui-react';
-import AceEditor from 'react-ace';
+import createChecklist from '../../../api/checklist-api';
+import { mdParse } from './MakdownParser';
+import { mdExample, previewExample } from './mdExample';
+import Markdown from './Markdown';
 import styles from './NewChecklistMarkdown.module.css';
-// import brace from 'brace';
-import 'brace/mode/markdown';
-import 'brace/theme/twilight';
-import 'brace/theme/textmate';
-import MainChecklistBlock from '../../checklist/MainChecklistBlock';
 
 class NewChecklistMarkdown extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      mdValue: '',
-      checkList: {
-        sections_data: [
-          {
-            section_title: 'Section title',
-            items_data: [
-              {
-                tags: [
-                  'css',
-                ],
-                item_title: 'Item title',
-                description: 'description',
-                details: 'details',
-                priority: 1,
-              },
-              {
-                tags: [
-                  'js',
-                ],
-                item_title: 'Item title',
-                description: 'description',
-                details: 'details',
-                priority: 2,
-              },
-            ],
-          },
-        ],
-      },
+      mdValue: mdExample,
+      mdError: '',
+      checkList: previewExample,
+      index: null,
+      isMdValid: false,
     };
   }
 
@@ -48,6 +23,8 @@ class NewChecklistMarkdown extends React.Component {
     this.setState({
       mdValue: content,
     });
+    const parsedData = mdParse(content);
+    this.setState({ checkList: parsedData.fullyParsedData });
   }
 
   handleFileChosen = (file) => {
@@ -62,6 +39,13 @@ class NewChecklistMarkdown extends React.Component {
 
   handleMarkdownChange = (newValue) => {
     this.setState({ mdValue: newValue });
+    const parsedData = mdParse(newValue);
+    this.setState({
+      mdError: parsedData.errorMsg,
+      checkList: parsedData.fullyParsedData,
+      index: parsedData.index,
+      isMdValid: parsedData.isMdValid,
+    });
   }
 
   handleInputReset = (e) => {
@@ -69,7 +53,9 @@ class NewChecklistMarkdown extends React.Component {
   }
 
   handleClear = () => {
-    this.setState({ mdValue: '' });
+    this.setState({ mdValue: mdExample });
+    const parsedData = mdParse(mdExample);
+    this.setState({ checkList: parsedData.fullyParsedData });
   }
 
   handleClick = () => {
@@ -77,38 +63,22 @@ class NewChecklistMarkdown extends React.Component {
     input.click();
   };
 
+  handleCreatingChecklist = (checkList) => {
+    createChecklist(checkList);
+  }
+
   render() {
-    const { mdValue, checkList } = this.state;
+    const { mdValue, mdError, checkList, index, isMdValid } = this.state;
     return (
-      <div className={styles.markdownSection}>
-        <div className={styles.markdownWrapper}>
-          <div className={styles.markdownEditor}>
-            <AceEditor
-              mode="markdown"
-              theme="textmate"
-              name="mdEditor"
-              height="100%"
-              width="100%"
-              onChange={this.handleMarkdownChange}
-              fontSize={18}
-              showPrintMargin
-              showGutter
-              highlightActiveLine
-              value={mdValue}
-              setOptions={{
-                enableBasicAutocompletion: true,
-                enableLiveAutocompletion: true,
-                enableSnippets: false,
-                showLineNumbers: false,
-                tabSize: 2,
-              }}
-            />
-          </div>
-          <div className={styles.markdownPreview}>
-            <MainChecklistBlock checkListData={checkList} />
-          </div>
-        </div>
-        <div className={styles.markdownButtons}>
+      <div>
+        <Markdown
+          mdValue={mdValue}
+          checkList={checkList}
+          handleMarkdownChange={this.handleMarkdownChange}
+          mdError={mdError}
+          index={index}
+        />
+        <div className={styles.btnWrapper}>
           <Button className={styles.btn} onClick={this.handleClick}>Upload markdown</Button>
           <input
             type="file"
@@ -119,7 +89,12 @@ class NewChecklistMarkdown extends React.Component {
             onChange={e => this.handleFileChosen(e.target.files[0])}
           />
           <Button className={styles.btn} onClick={this.handleClear}>Clear markdown</Button>
-          <Button className={styles.btn}>Preview</Button>
+          <Button
+            className={styles.btn}
+            onClick={() => this.handleCreatingChecklist(checkList)}
+          >
+            Create checklist
+          </Button>
         </div>
       </div>
     );
