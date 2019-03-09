@@ -1,8 +1,9 @@
 import React from 'react';
-import { Header, Container, Segment, Statistic } from 'semantic-ui-react';
+import { Header, Container, Segment, Statistic, Loader, Search } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { SuccessHandling, ErrorHandling, MessageContainer } from '../../toasters/MessagesHandling';
 import http from '../../../api/http';
+import CreateChecklistModal from '../../create-checklist/checklist-modal';
 import ListItem from './ListItem';
 
 class MyList extends React.Component {
@@ -43,8 +44,16 @@ class MyList extends React.Component {
     }
   };
 
+  countLists = lists => (lists.length > 1 ? 'lists' : ' list');
+
   render() {
-    const { checklists } = this.state;
+    const { checklists, loading } = this.state;
+
+    if (loading) {
+      return (
+        <Loader active inline="centered" size="large" content="Loading..." />
+      );
+    }
     return (
       <Container>
         <MessageContainer />
@@ -52,17 +61,17 @@ class MyList extends React.Component {
           <Header.Content>Your Lists</Header.Content>
         </Header>
         <Segment.Group horizontal>
-          <Segment>
+          <Segment basic>
             <Statistic>
-              <Statistic.Value>{checklists && checklists.length}</Statistic.Value>
-              <Statistic.Label>Lists</Statistic.Label>
+              <Statistic.Value>{checklists.length}</Statistic.Value>
+              <Statistic.Label>{this.countLists(checklists)}</Statistic.Label>
             </Statistic>
           </Segment>
-          <Segment>
-            <Statistic>
-              <Statistic.Value>31,200</Statistic.Value>
-              <Statistic.Label>Your favorite tags</Statistic.Label>
-            </Statistic>
+          <Segment basic style={{ margin: 'auto' }}>
+            <Search placeholder="Search lists..." />
+          </Segment>
+          <Segment basic textAlign="right" style={{ margin: 'auto', border: 'none' }}>
+            <CreateChecklistModal />
           </Segment>
         </Segment.Group>
         <Segment>

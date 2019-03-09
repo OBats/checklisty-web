@@ -29,7 +29,7 @@ const ListItem = ({ lists, del }) => (
         style={{ display: 'flex', alignItems: 'center' }}
       >
         <List.Icon name="th list" />
-        <List.Content>
+        <List.Content style={{ paddingLeft: '25px' }}>
           <List.Header as="a" href={`/checklist/${list.slug}`}>{list.title}</List.Header>
           <List.Description as="div" style={{ display: 'flex', alignItems: 'center' }}>
             {showCreationData(list.creation_date)}
