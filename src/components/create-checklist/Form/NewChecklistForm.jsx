@@ -31,16 +31,10 @@ const NewChecklistForm = ({ history }) => (
       validationSchema={checklistSchema}
 
       onSubmit={(values, actions) => {
-        values.sections_data.map((section) => {
-          delete section._id;
-          return (
-            section.items_data.map(item => delete item._id)
-          );
-        });
         createChecklistReq(values)
           .then(res => history.push(`/checklist/${res.data.slug}`))
           .catch((error) => {
-            if (error.response.status === 500) {
+            if (!error.response || error.response.status === 500) {
               ErrorHandling('Server is down. Please try again later.');
             } else {
               ErrorHandling(error.response.data.message);
@@ -78,6 +72,7 @@ const NewChecklistForm = ({ history }) => (
           />
 
           <Button primary fluid type="submit" disabled={isSubmitting || !isValid}>Submit</Button>
+
           <MessageContainer />
 
         </Form>

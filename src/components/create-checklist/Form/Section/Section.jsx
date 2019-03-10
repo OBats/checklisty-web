@@ -65,7 +65,7 @@ const Section = (props) => {
             icon="add"
             type="button"
             color="teal"
-            title="Add New Section"
+            title="Add Section"
             onClick={() => arrayHelpers.push({
               _id: Math.random(),
               section_title: '',
