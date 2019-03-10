@@ -40,7 +40,7 @@ const SignUp = ({ loggedUser, saveUserData }) => {
                       saveUserData(data);
                     })
                     .catch((error) => {
-                      if (error.response.status === 500) {
+                      if (!error.response || error.response.status === 500) {
                         ErrorHandling('Server is down. Please try again later.');
                       } else {
                         ErrorHandling(error.response.data.username || error.response.data.email);

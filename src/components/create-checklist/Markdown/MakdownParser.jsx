@@ -52,7 +52,7 @@ export function mdParse(data) {
             ].description = mdValue[index].slice(13).trim();
           }
           if (mdValue[index].startsWith('priority: ')) {
-            const priority = mdValue[index].slice(10);
+            const priority = mdValue[index].slice(10).trim();
             parsedData[sectionIndex].items_data[
               itemsDataIndex
             ].priority = priority && priority >= 0 && priority < 3 ? priority : 0;
@@ -87,7 +87,7 @@ export function mdParse(data) {
           fullyParsedData.sections_data = parsedData;
           index -= 1;
           return {
-            errorMsg: 'Main title can\'t be empty! Type some value after "# "', fullyParsedData, index, isMdValid,
+            errorMsg: 'Checklist title can\'t be empty! Type some value after "# "', fullyParsedData, index, isMdValid,
           };
         } if (parsedData[sectionIndex].section_title === '') {
           fullyParsedData.sections_data = parsedData;

@@ -64,7 +64,9 @@ class NewChecklistMarkdown extends React.Component {
   };
 
   handleCreatingChecklist = (checkList) => {
-    createChecklist(checkList);
+    createChecklist(checkList)
+      .then(this.setState({ isMdValid: false }))
+      .then(res => this.props.history.push(`/checklist/${res.data.slug}`));
   }
 
   render() {
@@ -92,6 +94,7 @@ class NewChecklistMarkdown extends React.Component {
           <Button
             className={styles.btn}
             onClick={() => this.handleCreatingChecklist(checkList)}
+            disabled={!isMdValid}
           >
             Create checklist
           </Button>

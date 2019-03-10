@@ -256,3 +256,7 @@ input:focus {
 .priorityHigh {
   background: #db2828;
 }
+
+.bold {
+  font-weight: bold;
+}

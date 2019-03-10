@@ -1,4 +1,3 @@
-/* eslint-disable no-tabs */
 import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
@@ -41,7 +40,7 @@ const SignIn = ({ loggedUser, saveUserData }) => {
                       saveUserData(data);
                     })
                     .catch((error) => {
-                      if (error.response.status === 500) {
+                      if (!error.response || error.response.status === 500) {
                         ErrorHandling('Server is down. Please try again later.');
                       } else {
                         ErrorHandling(error.response.data.message);
