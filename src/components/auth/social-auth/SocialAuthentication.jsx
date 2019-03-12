@@ -2,8 +2,7 @@ import React from 'react';
 import { Icon } from 'semantic-ui-react';
 import style from './css/socialButton.module.css';
 
-// const baseURL = process.env.REACT_APP_URL;
-const baseURL = 'http://localhost:3030';
+const baseURL = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_URL : 'http://localhost:3030';
 
 const SocialAuthentiation = () => (
   <div className={style.socialBlock}>

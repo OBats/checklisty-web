@@ -1,15 +1,21 @@
 language: node_js
 node_js:
-  - "lts/*"
+- lts/*
 
 cache:
   directories:
   - node_modules
 
+before_install:
+  - chmod +x deploy.sh
+
 script:
 - yarn install
 - yarn test
 - yarn lint
+
+after_success:
+  - ./deploy.sh
 
 notifications:
   email: false
