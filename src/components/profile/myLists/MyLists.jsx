@@ -1,22 +1,26 @@
 import React from 'react';
-import { Header, Container, Segment, Statistic, Loader, Search } from 'semantic-ui-react';
+import { Header, Container, Segment, Loader } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { SuccessHandling, ErrorHandling, MessageContainer } from '../../toasters/MessagesHandling';
 import http from '../../../api/http';
-import CreateChecklistModal from '../../create-checklist/checklist-modal';
 import ListItem from './ListItem';
+import ListStatistic from './ListsStatistic';
+import NoLists from './NoLists';
 
 class MyList extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       user: props.userData,
-      checklists: null,
+      checklists: [],
+      filtered: [],
       loading: true,
+      searching: false,
+      openModal: false,
     };
   }
 
-  componentDidMount() {
+  componentWillMount() {
     this.getLists();
   }
 
@@ -44,10 +48,12 @@ class MyList extends React.Component {
     }
   };
 
-  countLists = lists => (lists.length > 1 ? 'lists' : ' list');
+  update = (config) => {
+    this.setState(config);
+  };
 
   render() {
-    const { checklists, loading } = this.state;
+    const { checklists, loading, filtered, searching, openModal } = this.state;
 
     if (loading) {
       return (
@@ -55,30 +61,27 @@ class MyList extends React.Component {
       );
     }
     return (
-      <Container>
-        <MessageContainer />
-        <Header as="h1">
-          <Header.Content>Your Lists</Header.Content>
-        </Header>
-        <Segment.Group horizontal>
-          <Segment basic>
-            <Statistic>
-              <Statistic.Value>{checklists.length}</Statistic.Value>
-              <Statistic.Label>{this.countLists(checklists)}</Statistic.Label>
-            </Statistic>
-          </Segment>
-          <Segment basic style={{ margin: 'auto' }}>
-            <Search placeholder="Search lists..." />
-          </Segment>
-          <Segment basic textAlign="right" style={{ margin: 'auto', border: 'none' }}>
-            <CreateChecklistModal />
-          </Segment>
-        </Segment.Group>
-        <Segment>
-          <ListItem lists={checklists} del={this.deleteList} />
-        </Segment>
-      </Container>
-    );
+      !checklists.length
+        ? (
+          <NoLists />
+        )
+        : (
+          <Container>
+            <MessageContainer />
+            <Header as="h1">
+              <Header.Content>Your Lists</Header.Content>
+            </Header>
+            <ListStatistic update={this.update} lists={checklists} />
+            <Segment>
+              <ListItem
+                lists={searching ? filtered : checklists}
+                del={this.deleteList}
+                open={openModal}
+                update={this.update}
+              />
+            </Segment>
+          </Container>
+        ));
   }
 }
 
