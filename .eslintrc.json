@@ -83,6 +83,7 @@
         "react/no-string-refs": 1,
         "react/no-unused-state": 1,
         "react/prop-types": 1,
-        "no-loop-func": 1
+        "no-loop-func": 1,
+        "camelcase": 1
     }
 }

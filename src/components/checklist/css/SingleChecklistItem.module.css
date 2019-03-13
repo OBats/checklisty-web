@@ -80,6 +80,10 @@
     border-radius: 3px;
 }
 
+.blockMargin{
+    margin-top: 20px;
+}
+
 @media screen and (max-width: 576px) {
     .checkboxStyle{
         margin-left: 5px;

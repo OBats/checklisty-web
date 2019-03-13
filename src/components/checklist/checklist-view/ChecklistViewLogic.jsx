@@ -36,6 +36,7 @@ class ChecklistViewLogic extends Component {
     const { checkboxArray } = this.state;
     const checkboxArrayTemporal = [...checkboxArray];
     checkboxArrayTemporal[index] = !checkboxArrayTemporal[index];
+    const flag = checkboxArrayTemporal[index];
     let countOfCheckedItems = 0;
 
     for (let i = 0; i < checkboxArray.length; i += 1) {
@@ -46,6 +47,9 @@ class ChecklistViewLogic extends Component {
     const currentProgress = (
       (countOfCheckedItems / checkboxArray.length) * 100
     ).toFixed(0);
+
+    this.props.countProgressOnCheckboxClick(flag);
+
     this.setState({ checkboxArray: checkboxArrayTemporal, currentProgress });
   }
 
@@ -67,6 +71,9 @@ class ChecklistViewLogic extends Component {
   }
 
   handleSetAllCheckboxes = () => {
+    const difference = this.state.checkboxArray.length - this.state.checkboxArray
+      .filter(elem => elem === true).length;
+    this.props.countProgressOnAdditionalButton(difference);
     this.setState(({ checkboxArray }) => ({
       checkboxArray: checkboxArray.map(() => true),
       currentProgress: 100,
@@ -74,6 +81,9 @@ class ChecklistViewLogic extends Component {
   }
 
   handleResetAllCheckboxes = () => {
+    const difference = this.state.checkboxArray
+      .filter(elem => elem === false).length - this.state.checkboxArray.length;
+    this.props.countProgressOnAdditionalButton(difference);
     this.setState(({ checkboxArray }) => ({
       checkboxArray: checkboxArray.map(() => false),
       currentProgress: 0,

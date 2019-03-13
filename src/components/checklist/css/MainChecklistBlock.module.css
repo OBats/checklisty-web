@@ -1,7 +1,24 @@
 .checklistColumn{
     display: flex !important;
     flex-direction: column;
-    max-width: 800px;
+    max-width: 768px;
     width: 100%;
     margin: 0 auto;
+}
+
+.progressbarHeader{
+    text-align: center;
+    font-weight: 700;
+    font-size: 20px;
+    margin-bottom: 8px;
+}
+
+.progressBlock{
+    margin: 0 2px 25px;
+}
+
+@media screen and (max-width: 768px) {
+    .progressBlock{
+        margin: 0 10px 25px;
+    }
 }

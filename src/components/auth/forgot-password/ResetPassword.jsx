@@ -14,7 +14,7 @@ class ResetPassword extends Component {
   componentDidMount() {
     const { history } = this.props;
     if (history.location.search.includes('?recovery-token=')) {
-      const token = this.props.history.location.search.substring(16);
+      const token = history.location.search.substring(16);
       this.setState({ token });
     } else {
       history.push('/auth/signin');
@@ -53,6 +53,7 @@ class ResetPassword extends Component {
                         }
                       });
                   }
+                  return 0;
                 }}
               >
                 {({

@@ -14,6 +14,7 @@ const SingleChecklistDetails = (props) => {
           renderers={{ code: MarkdownHighlighter }}
         />
       </div>
+      {!(propsData.tags.length > 0) && <div className={style.blockMargin} />}
     </Accordion.Content>
   );
 };
