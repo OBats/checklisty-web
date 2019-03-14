@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { Form, Button } from 'semantic-ui-react';
+import { Form, Button, Icon, Segment, Checkbox } from 'semantic-ui-react';
 import { Formik } from 'formik';
 import checklistSchema from './utils/ChecklistSchema';
 import createChecklistReq from '../../../api/checklist-api';
@@ -14,6 +14,7 @@ const NewChecklistForm = ({ history }) => (
     <Formik
       initialValues={{
         title: '',
+        isPrivate: '',
         sections_data: [{
           _id: Math.random(),
           section_title: '',
@@ -70,6 +71,17 @@ const NewChecklistForm = ({ history }) => (
             setFieldValue={setFieldValue}
             setFieldTouched={setFieldTouched}
           />
+          <Segment color="blue">
+            <Icon color="green" className={styles.icon} name="lock" />
+            <Checkbox
+              fitted
+              label="Make list private"
+              name="isPrivate"
+              toggle
+              checked={!!values.isPrivate}
+              onChange={(e, { name, checked }) => setFieldValue(name, !!checked)}
+            />
+          </Segment>
 
           <Button primary fluid type="submit" disabled={isSubmitting || !isValid}>Submit</Button>
 

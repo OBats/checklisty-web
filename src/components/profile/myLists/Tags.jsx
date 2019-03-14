@@ -10,7 +10,7 @@ const getColor = (name, length, max) => {
 };
 
 const Tags = ({ tags }) => {
-  tags = tags.length > 6 ? tags.splice(0, 5) : tags;
+  tags = tags.length > 4 ? tags.splice(0, 4) : tags;
   return (
     <div style={{ marginLeft: '10px' }}>
       {tags.map(tag => (

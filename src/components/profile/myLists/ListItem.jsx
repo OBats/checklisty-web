@@ -16,7 +16,7 @@ const ListItem = ({ lists, del, open, update }) => {
 
   return (
     <List size="huge" divided link>
-      {lists && lists.map(list => (
+      {lists.length && lists.map(list => (
         <List.Item
           key={list.id}
           style={{ display: 'flex', alignItems: 'center' }}
