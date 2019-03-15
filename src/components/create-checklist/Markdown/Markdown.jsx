@@ -22,6 +22,7 @@ const Markdown = props => (
           fontSize={20}
           showPrintMargin
           showGutter
+          focus
           highlightActiveLine
           value={props.mdValue}
           setOptions={{
@@ -36,7 +37,7 @@ const Markdown = props => (
       </div>
       <div className={styles.markdownPreview}>
         <h1 className={styles.checklistTitle}>{props.checkList.title}</h1>
-        <MainChecklistBlock checkListData={props.checkList} />
+        <MainChecklistBlock checkListData={props.checkList} hideMainProgressbar />
       </div>
     </div>
   </div>

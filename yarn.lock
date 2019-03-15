@@ -10473,6 +10473,11 @@ react-collapsible@^2.5.0:
   resolved "https://registry.yarnpkg.com/react-collapsible/-/react-collapsible-2.5.0.tgz#7950ec4038c0b11f92f470ce17f596144044e42f"
   integrity sha512-6O9lGdQq/YJsWbEEf+geoTzv/vWFKUNrCHOUyrzIWV8eEgFT8xP3EB64/Xj232hEavDOb7SEKhcjeMUNAQFUvg==
 
+react-confirm-alert@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/react-confirm-alert/-/react-confirm-alert-2.3.0.tgz#c8a7282f06855235315840b72ed13374448161eb"
+  integrity sha512-4TWTzI0lx94eCJAnvFMF0ZUgCj680rxkL/0elIyB9uWXrrlKeZ4+84TMePKYWK9WZJIBKx5r87xfCk9c4Bx9Rg==
+
 react-dev-utils@^7.0.1:
   version "7.0.1"
   resolved "https://registry.yarnpkg.com/react-dev-utils/-/react-dev-utils-7.0.1.tgz#c53e759a22668ee2c0d146c24ce4bdec2b41e3c8"
@@ -10832,7 +10837,7 @@ readable-stream@1.0, readable-stream@~1.0.26:
     isarray "0.0.1"
     string_decoder "~0.10.x"
 
-readable-stream@^3.0.6, readable-stream@^3.1.1:
+readable-stream@^3.0.6:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/readable-stream/-/readable-stream-3.1.1.tgz#ed6bbc6c5ba58b090039ff18ce670515795aeb06"
   integrity sha512-DkN66hPyqDhnIQ6Jcsvx9bFjhw214O4poMBcIMgPVpQvNy9a0e0Uhg5SqySyDKAmUlwt8LonTBz1ezOnM8pUdA==

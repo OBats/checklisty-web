@@ -1,15 +1,3 @@
-export const mdExample = `# 
-## 
-### 
-description: 
-priority: 
-details: 
-
-|
-tags: 
-`;
-
-
 export const previewExample = {
   title: 'Movies',
   sections_data: [
@@ -27,3 +15,5 @@ export const previewExample = {
     },
   ],
 };
+
+export { previewExample as default };

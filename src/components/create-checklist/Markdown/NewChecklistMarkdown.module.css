@@ -5,7 +5,7 @@
 .markdownWrapper {
   display: flex;
   background-color: #EDEDED;
-  min-height: 500px;
+  height: 500px;
   margin-bottom: 20px;
 }
 
@@ -16,6 +16,7 @@
   justify-content: center;
   align-items: center;
   border-bottom: 3px solid #3A4753;
+  overflow-y: scroll;
 }
 
 .markdownEditor {
@@ -45,6 +46,16 @@
 .btnWrapper {
   padding-bottom: 50px;
   margin-left: 50px;
+}
+
+.createChecklistBtn.createChecklistBtn {
+  background-color: #3A4753;
+  color: #fff;
+}
+
+.createChecklistBtn.createChecklistBtn:hover {
+  background-color: rgb(42, 51, 59);
+  color: #fff;
 }
 
 input {
@@ -259,4 +270,20 @@ input:focus {
 
 .bold {
   font-weight: bold;
+}
+
+.ConfirmPopup {
+  font-family: Arial, Helvetica, sans-serif;
+  text-align: center;
+  width: 400px;
+  padding: 30px;
+  background: #fff;
+  border-radius: 10px;
+  box-shadow: 0 20px 75px rgba(0, 0, 0, 0.13);
+  color: #000;
+}
+
+.PopupBtn.PopupBtn {
+  padding: 10px 40px;
+  margin: 0 10px 0 0;
 }

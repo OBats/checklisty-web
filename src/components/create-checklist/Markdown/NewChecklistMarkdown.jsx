@@ -1,16 +1,18 @@
 import React from 'react';
 import { Button } from 'semantic-ui-react';
+import { confirmAlert } from 'react-confirm-alert';
 import createChecklist from '../../../api/checklist-api';
 import { mdParse } from './MakdownParser';
-import { mdExample, previewExample } from './mdExample';
+import previewExample from './mdExample';
 import Markdown from './Markdown';
 import styles from './NewChecklistMarkdown.module.css';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 
 class NewChecklistMarkdown extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      mdValue: mdExample,
+      mdValue: '',
       mdError: '',
       checkList: previewExample,
       index: null,
@@ -20,27 +22,26 @@ class NewChecklistMarkdown extends React.Component {
 
   handleFileRead = (e) => {
     const content = e.target.result;
-    this.setState({
-      mdValue: content,
-    });
     const parsedData = mdParse(content);
-    this.setState({ checkList: parsedData.fullyParsedData });
+    this.setState({ mdValue: content, checkList: parsedData.fullyParsedData });
   }
 
   handleFileChosen = (file) => {
-    const { handleFileRead } = this;
-    let { fileReader } = this;
-    fileReader = new FileReader();
-    fileReader.onloadend = handleFileRead;
+    this.fileReader = new FileReader();
+    this.fileReader.onloadend = this.handleFileRead;
     if (file) {
-      fileReader.readAsText(file);
+      this.fileReader.readAsText(file);
     }
   }
 
+  handleInputReset = (e) => {
+    e.target.value = null;
+  }
+
   handleMarkdownChange = (newValue) => {
-    this.setState({ mdValue: newValue });
     const parsedData = mdParse(newValue);
     this.setState({
+      mdValue: newValue,
       mdError: parsedData.errorMsg,
       checkList: parsedData.fullyParsedData,
       index: parsedData.index,
@@ -48,14 +49,26 @@ class NewChecklistMarkdown extends React.Component {
     });
   }
 
-  handleInputReset = (e) => {
-    e.target.value = null;
-  }
-
-  handleClear = () => {
-    this.setState({ mdValue: mdExample });
-    const parsedData = mdParse(mdExample);
-    this.setState({ checkList: parsedData.fullyParsedData });
+  handleConfirmClear = () => {
+    confirmAlert({
+      customUI: ({ onClose }) => (
+        <div className={styles.ConfirmPopup}>
+          <h1>Are you sure?</h1>
+          <p>You want to clear markdown to starting template?</p>
+          <Button negative className={styles.PopupBtn} onClick={onClose}>No</Button>
+          <Button
+            positive
+            className={styles.PopupBtn}
+            onClick={() => {
+              this.setState({ mdValue: '', checkList: '' });
+              onClose();
+            }}
+          >
+Yes
+          </Button>
+        </div>
+      ),
+    });
   }
 
   handleClick = () => {
@@ -81,7 +94,7 @@ class NewChecklistMarkdown extends React.Component {
           index={index}
         />
         <div className={styles.btnWrapper}>
-          <Button className={styles.btn} onClick={this.handleClick}>Upload markdown</Button>
+          <Button className={styles.btn} onClick={this.handleClick}>Upload markdown...</Button>
           <input
             type="file"
             ref="input_reader"
@@ -90,13 +103,13 @@ class NewChecklistMarkdown extends React.Component {
             onClick={this.handleInputReset}
             onChange={e => this.handleFileChosen(e.target.files[0])}
           />
-          <Button className={styles.btn} onClick={this.handleClear}>Clear markdown</Button>
+          <Button className={styles.btn} onClick={this.handleConfirmClear}>Clear markdown</Button>
           <Button
-            className={styles.btn}
+            className={[styles.btn, styles.createChecklistBtn].join(' ')}
             onClick={() => this.handleCreatingChecklist(checkList)}
             disabled={!isMdValid}
           >
-            Create checklist
+            Save and close
           </Button>
         </div>
       </div>

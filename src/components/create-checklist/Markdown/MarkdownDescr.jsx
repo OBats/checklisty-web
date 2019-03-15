@@ -7,7 +7,7 @@ class MarkdownDescr extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      showDescr: true,
+      showDescr: false,
     };
   }
 
@@ -25,7 +25,8 @@ class MarkdownDescr extends React.Component {
         <div className={showDescr ? styles.mdDescr : styles.mdDescrHidden}>
           <ul className={styles.mdDescrList}>
             <li style={{ fontWeight: 'bold', fontSize: '1.2em' }}>To create a new checklist:</li>
-            <li>
+            <li>...</li>
+            {/* <li>
 1. Type
               <span className={styles.bold}> &quot;# &quot; </span>
               {' '}
@@ -119,7 +120,7 @@ from the new line.
               <span className={styles.bold}>&quot;Create checklist&quot; </span>
               below markdown editor.
             </li>
-            <li>Now you can use your checklist from the home page.</li>
+            <li>Now you can use your checklist from the home page.</li> */}
           </ul>
         </div>
       </div>
