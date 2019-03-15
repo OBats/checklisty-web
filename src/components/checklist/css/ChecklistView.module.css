@@ -1,55 +1,55 @@
-.checklistItem{
+.checklistItem {
     border: 1px solid lightgray;
 }
 
-.checklistItem:nth-child(odd){
+.checklistItem:nth-child(odd) {
     background-color: #ffffff;
 }
 
-.checklistItem:nth-child(even){
+.checklistItem:nth-child(even) {
     background-color: #f8f7f6;
 }
 
-.checklistItem:nth-child(odd):hover{
+.checklistItem:nth-child(odd):hover {
     background-color: #f1f1f1;
 }
 
-.checklistItem:nth-child(even):hover{
+.checklistItem:nth-child(even):hover {
     background-color: rgb(241, 240, 237)
 }
 
-.toRightAlign{
+.toRightAlign {
     padding-right: 0rem !important;
 }
 
-.toLeftAlign{
+.toLeftAlign {
     padding-left: 0rem !important;
 }
 
-.sectionDivider{
+.sectionDivider {
     padding-top: 3%;
     padding-bottom: 3%;
 }
 
-.optionsBlock{
+.optionsBlock {
     display: flex;
     justify-content: space-around !important;
     margin-bottom: 15px;
 }
 
-.checklistHeader{
+.checklistHeader {
     display: flex;
     width: 60%;
 }
 
-.checklistButtons{
+.checklistButtons {
     display: flex;
     justify-content: space-around !important;
     align-items: flex-start;
     width: 40%;
 }
 
-.progressbar{
+.progressbar {
     display: flex;
     width: 40%;
     height: 24.5px;
@@ -57,18 +57,20 @@
     min-width: 150px;
 }
 
-.checklistTitle{
+.checklistTitle {
     width: 50%;
     padding-left: 5px;
 }
 
-.sectionTitle{
+.sectionTitle {
     font-weight: 600;
     font-size: 1.8rem;
     line-height: 25px;
 }
 
-.buttonStyle{
+.buttonStyle {
+    display: flex;
+    justify-content: center;
     width: 36px !important;
     height: 36px !important;
     border: 0;
@@ -77,88 +79,85 @@
 }
 
 .buttonStyle:focus {
-    outline:0;
+    outline: 0;
 }
 
-.tealButton{
+.tealButton {
     background-color: #13ada5;
     transition: 0.2s ease;
 }
 
-.tealButton:hover{
+.tealButton:hover {
     background-color: #168882;
     transition: 0.2s ease;
 }
 
-.redButton{
+.redButton {
     background-color: #d42727;
     transition: 0.2s ease;
 }
 
-.redButton:hover{
+.redButton:hover {
     background-color: #b42929;
     transition: 0.2s ease;
 }
 
-.grayButton{
+.grayButton {
     background-color: #949daa;
     transition: 0.2s ease;
 }
 
-.grayButton:hover{
+.grayButton:hover {
     background-color: #717883;
     transition: 0.2s ease;
 }
 
-.buttonGroup{
+.buttonGroup {
     display: flex;
     justify-content: center;
 }
 
-.accordionStyle{
+.accordionStyle {
     width: 100%;
 }
 
 @media screen and (max-width: 768px) {
-    .sectionTitle{
+    .sectionTitle {
         font-size: 1.7rem;
     }
 }
 
 @media screen and (max-width: 576px) {
-    .buttonGroup{
+    .buttonGroup {
         display: flex;
     }
-    .optionsBlock{
+    .optionsBlock {
         flex-direction: column;
     }
-    .checklistHeader{
+    .checklistHeader {
         display: flex;
         flex-direction: column;
         align-items: center;
         width: 100%;
         margin-bottom: 12px;
     }
-    
-    .checklistButtons{
+    .checklistButtons {
         display: flex;
         justify-content: center !important;
         align-items: center;
         width: 100%;
         margin: 20px 0;
     }
-
-    .checklistTitle{
+    .checklistTitle {
         width: 100%;
         text-align: center;
         margin-bottom: 10px;
         line-height: 20px;
     }
-
-    .buttonStyle{
+    .buttonStyle {
         margin: 0 10px;
     }
-    .sectionDivider{
+    .sectionDivider {
         padding-top: 1%;
         padding-bottom: 1%;
     }

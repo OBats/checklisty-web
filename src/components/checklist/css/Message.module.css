@@ -1,0 +1,50 @@
+.messageSegment {
+    bottom: 0 !important;
+    position: fixed !important;
+    right: 0 !important;
+    z-index: 1000;
+    max-width: 320px !important;
+    margin: 6px !important;
+    background-color: #f7f7eb !important;
+    animation-name: appearing;
+    animation-duration: 2s;
+}
+
+@keyframes appearing {
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 100;
+    }
+}
+
+.headerRow {
+    display: flex;
+    flex-direction: row;
+    align-items: center !important;
+}
+
+.closeButton {
+    display: flex;
+    width: 30px;
+    height: 30px;
+    justify-content: center;
+    background-color: transparent;
+    border: 0;
+    outline: none;
+    transition: 0.5s ease;
+    cursor: pointer;
+}
+
+.header {
+    display: flex;
+    margin: 0 !important;
+    width: 100%;
+    padding-left: 37%;
+    text-align: center;
+}
+
+.signinButton {
+    margin-top: 10px;
+}
