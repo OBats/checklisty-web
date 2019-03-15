@@ -4,10 +4,10 @@ import Tags from './Tags';
 
 const showCreationData = data => `Created: ${data.slice(0, 10).split('-').reverse().join('/')}`;
 
-const ListItem = ({ lists, del, open, update }) => {
-  const show = () => update({ openModal: true });
+const ListItem = ({ lists, del, open, update, id }) => {
+  const show = id => update({ openModal: true, currentChecklistId: id });
 
-  const handleConfirm = (id) => {
+  const handleConfirm = () => {
     del(id);
     update({ openModal: false });
   };
@@ -35,14 +35,14 @@ const ListItem = ({ lists, del, open, update }) => {
             </Button>
           </List.Content>
           <List.Content floated="right" style={{ margin: 0 }}>
-            <Button icon onClick={show}>
+            <Button icon onClick={() => show(list.id)}>
               <Icon name="remove" color="red" />
             </Button>
             <Confirm
               open={open}
               content="Are you realy want to delete list"
               onCancel={handleCancel}
-              onConfirm={() => handleConfirm(list.id)}
+              onConfirm={handleConfirm}
             />
           </List.Content>
         </List.Item>

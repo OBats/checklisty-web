@@ -10,7 +10,7 @@
     "firebase-cli": "^1.2.0",
     "formik": "^1.4.3",
     "prop-types": "^15.6.2",
-    "react": "^16.7.0",
+    "react": "^16.8.4",
     "react-ace": "^6.4.0",
     "react-avatar-edit": "^0.7.1",
     "react-collapsible": "^2.5.0",

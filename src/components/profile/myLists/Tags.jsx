@@ -5,7 +5,9 @@ const colors = ['red', 'orange', 'yellow', 'olive', 'green', 'teal',
   'blue', 'violet', 'purple', 'pink', 'brown', 'grey', 'black'];
 
 const getColor = (name, length, max) => {
-  const min = (name, c, max) => Math.min(Math.round((name.charCodeAt(c) - 98) / 2), max);
+  const min = (name, c, max) => Math.min(
+    Math.round((name.toLowerCase().charCodeAt(c) - 98) / 2), max,
+  );
   return Math.min(min(name, 0, 6) + min(name, name.length - 1, 6) - name.length, max);
 };
 

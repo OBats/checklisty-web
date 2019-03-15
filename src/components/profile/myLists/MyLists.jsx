@@ -1,3 +1,5 @@
+/* eslint-disable no-underscore-dangle */
+/* eslint-disable react/prop-types */
 import React from 'react';
 import { Header, Container, Segment, Loader } from 'semantic-ui-react';
 import { connect } from 'react-redux';
@@ -6,6 +8,7 @@ import http from '../../../api/http';
 import ListItem from './ListItem';
 import ListStatistic from './ListsStatistic';
 import NoLists from './NoLists';
+import Pagination from './PaginationPage';
 
 class MyList extends React.Component {
   constructor(props) {
@@ -13,6 +16,8 @@ class MyList extends React.Component {
     this.state = {
       user: props.userData,
       checklists: [],
+      currentChecklists: [],
+      currentChecklistId: null,
       filtered: [],
       loading: true,
       searching: false,
@@ -26,7 +31,8 @@ class MyList extends React.Component {
 
   getLists = () => {
     try {
-      http.get(`/api/checklists/author=${this.state.user._id}`)
+      const { user } = this.state;
+      http.get(`/api/checklists/author=${user._id}`)
         .then((res) => {
           this.setState({ loading: false, checklists: res.data });
         });
@@ -39,7 +45,8 @@ class MyList extends React.Component {
     try {
       http.delete(`/api/checklists/${id}`)
         .then((res) => {
-          const checklists = this.state.checklists.filter(list => id !== list.id);
+          let { checklists } = this.state;
+          checklists = checklists.filter(list => id !== list.id);
           this.setState({ checklists });
           SuccessHandling(res.data.message);
         });
@@ -52,8 +59,25 @@ class MyList extends React.Component {
     this.setState(config);
   };
 
+  onPageChanged = (data) => {
+    const { checklists } = this.state;
+    const { currentPage, pageLimit } = data;
+
+    const offset = (currentPage - 1) * pageLimit;
+    const currentChecklists = checklists.slice(offset, offset + pageLimit);
+
+    this.setState({ currentChecklists });
+  };
+
   render() {
-    const { checklists, loading, filtered, searching, openModal } = this.state;
+    const {
+      checklists, loading, filtered, searching, currentChecklistId,
+      openModal, currentChecklists,
+    } = this.state;
+
+    const totalChecklists = checklists.length;
+
+    if (totalChecklists === null) return null;
 
     if (loading) {
       return (
@@ -74,12 +98,20 @@ class MyList extends React.Component {
             <ListStatistic update={this.update} lists={checklists} />
             <Segment>
               <ListItem
-                lists={searching ? filtered : checklists}
+                lists={searching ? filtered : currentChecklists}
+                id={currentChecklistId}
                 del={this.deleteList}
                 open={openModal}
                 update={this.update}
               />
             </Segment>
+            <Segment.Inline style={{ textAlign: 'center' }}>
+              <Pagination
+                totalRecords={totalChecklists}
+                pageLimit={5}
+                onPageChanged={this.onPageChanged}
+              />
+            </Segment.Inline>
           </Container>
         ));
   }
