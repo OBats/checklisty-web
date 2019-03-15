@@ -3,7 +3,7 @@ import { Button } from 'semantic-ui-react';
 import { confirmAlert } from 'react-confirm-alert';
 import createChecklist from '../../../api/checklist-api';
 import { mdParse } from './MakdownParser';
-import previewExample from './mdExample';
+import { previewExample, mdExample } from './mdExample';
 import Markdown from './Markdown';
 import styles from './NewChecklistMarkdown.module.css';
 import 'react-confirm-alert/src/react-confirm-alert.css';
@@ -12,8 +12,8 @@ class NewChecklistMarkdown extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      mdValue: '',
-      mdError: '',
+      mdValue: mdExample,
+      errorArr: [],
       checkList: previewExample,
       index: null,
       isMdValid: false,
@@ -40,9 +40,10 @@ class NewChecklistMarkdown extends React.Component {
 
   handleMarkdownChange = (newValue) => {
     const parsedData = mdParse(newValue);
+    // console.log(parsedData.index);
     this.setState({
       mdValue: newValue,
-      mdError: parsedData.errorMsg,
+      errorArr: parsedData.errorArr,
       checkList: parsedData.fullyParsedData,
       index: parsedData.index,
       isMdValid: parsedData.isMdValid,
@@ -83,16 +84,19 @@ Yes
   }
 
   render() {
-    const { mdValue, mdError, checkList, index, isMdValid } = this.state;
+    const { mdValue, errorArr, checkList, index, isMdValid } = this.state;
     return (
       <div>
+
         <Markdown
           mdValue={mdValue}
           checkList={checkList}
           handleMarkdownChange={this.handleMarkdownChange}
-          mdError={mdError}
+          errorArr={errorArr}
           index={index}
         />
+
+
         <div className={styles.btnWrapper}>
           <Button className={styles.btn} onClick={this.handleClick}>Upload markdown...</Button>
           <input
