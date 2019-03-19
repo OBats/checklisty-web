@@ -1,13 +1,3 @@
-export const mdExample = `# gbyh
-## gbh
-### dsa
-description: ads
-priority: 2
-tags: das
-
-`;
-
-
 export const previewExample = {
   title: 'Movies',
   sections_data: [
@@ -23,7 +13,6 @@ export const previewExample = {
         },
       ],
     },
-
   ],
 };
 

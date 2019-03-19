@@ -1,7 +1,7 @@
 import React from 'react';
 import iconInfo from './info.svg';
 import iconClose from './close.svg';
-import styles from './NewChecklistMarkdown.module.css';
+import styles from './css/NewChecklistMarkdown.module.css';
 
 class MarkdownDescr extends React.Component {
   constructor(props) {

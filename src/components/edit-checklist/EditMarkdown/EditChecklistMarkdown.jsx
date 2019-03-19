@@ -1,23 +1,39 @@
 import React from 'react';
 import { Button, Segment, Icon, Checkbox } from 'semantic-ui-react';
 import { confirmAlert } from 'react-confirm-alert';
-import createChecklist from '../../../api/checklist-api';
-import { mdParse } from './MakdownParser';
-import { previewExample } from './mdExample';
-import Markdown from './Markdown';
-import styles from './css/NewChecklistMarkdown.module.css';
+import { getChecklist, updateChecklist } from '../../../api/checklist-api';
+import { mdParse } from '../../create-checklist/Markdown/MakdownParser';
+import Markdown from '../../create-checklist/Markdown/Markdown';
+import styles from '../../create-checklist/Markdown/css/NewChecklistMarkdown.module.css';
 import 'react-confirm-alert/src/react-confirm-alert.css';
+import previewExample from '../../create-checklist/Markdown/mdExample';
+import jsonToMd from '../../create-checklist/Markdown/JsonToMdParser';
 
-class NewChecklistMarkdown extends React.Component {
+class EditChecklistMarkdown extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       mdValue: '',
       errorArr: [],
-      checkList: previewExample,
-      isPrivate: false,
+      checklistData: previewExample,
       isMdValid: false,
+      isPrivate: false,
     };
+  }
+
+  componentDidMount() {
+    const { match } = this.props;
+    const checklistSlug = match.params.slug;
+
+    getChecklist(checklistSlug)
+      .then((res) => {
+        const parsedJson = jsonToMd(res.data);
+        this.setState({
+          checklistData: res.data,
+          mdValue: parsedJson,
+          isPrivate: res.data.isPrivate,
+        });
+      });
   }
 
   handleFileRead = (e) => {
@@ -43,7 +59,7 @@ class NewChecklistMarkdown extends React.Component {
     this.setState({
       mdValue: newValue,
       errorArr: parsedData.errorArr,
-      checkList: parsedData.fullyParsedData,
+      checklistData: parsedData.fullyParsedData,
       isMdValid: parsedData.isMdValid,
     });
   }
@@ -59,7 +75,7 @@ class NewChecklistMarkdown extends React.Component {
             positive
             className={styles.PopupBtn}
             onClick={() => {
-              this.setState({ mdValue: '', checkList: '' });
+              this.setState({ mdValue: '', checklistData: '' });
               onClose();
             }}
           >
@@ -75,23 +91,28 @@ class NewChecklistMarkdown extends React.Component {
     input.click();
   };
 
-  handleCreatingChecklist = (checkList) => {
-    createChecklist(checkList)
+  handleUpdateChecklist = (checklistData) => {
+    const { match, history } = this.props;
+    const checklistSlug = match.params.slug;
+
+    updateChecklist(checklistSlug, checklistData)
       .then((res) => {
-        this.props.history.push(`/checklist/${res.data.slug}`);
         this.setState({ isMdValid: false });
+        history.push(`/checklist/${res.data.list.slug}`);
       });
   }
 
   render() {
-    const { mdValue, errorArr, checkList, isMdValid, isPrivate } = this.state;
+    const { mdValue, errorArr, checklistData, index, isMdValid, isPrivate } = this.state;
+
     return (
       <div className={styles.md}>
         <Markdown
           mdValue={mdValue}
-          checkList={checkList}
+          checkList={checklistData}
           handleMarkdownChange={newValue => this.handleMarkdownChange(newValue, isPrivate)}
           errorArr={errorArr}
+          index={index}
         />
         <div className={styles.btnWrapper}>
           <Segment color="blue" compact>
@@ -121,7 +142,7 @@ class NewChecklistMarkdown extends React.Component {
             </div>
             <Button
               className={[styles.btn, styles.createChecklistBtn].join(' ')}
-              onClick={() => this.handleCreatingChecklist(checkList)}
+              onClick={() => this.handleUpdateChecklist(checklistData)}
               disabled={!isMdValid}
             >
               Save and close
@@ -133,4 +154,4 @@ class NewChecklistMarkdown extends React.Component {
   }
 }
 
-export default NewChecklistMarkdown;
+export default EditChecklistMarkdown;

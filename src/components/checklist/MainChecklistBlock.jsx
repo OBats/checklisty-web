@@ -111,6 +111,7 @@ class MainChecklistBlock extends Component {
   render() {
     return (
       <MainBlockComponents
+        hideMainProgressbar={this.props.hideMainProgressbar}
         arrayOfCheckboxArray={this.state.arrayOfCheckboxArray}
         checkListData={this.props.checkListData}
         amountOfCheckedCheckboxes={this.state.amountOfCheckedCheckboxes}

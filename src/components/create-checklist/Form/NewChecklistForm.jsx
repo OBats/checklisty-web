@@ -14,7 +14,7 @@ const NewChecklistForm = ({ history }) => (
     <Formik
       initialValues={{
         title: '',
-        isPrivate: '',
+        isPrivate: false,
         sections_data: [{
           _id: Math.random(),
           section_title: '',

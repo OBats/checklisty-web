@@ -1,11 +1,16 @@
+.md {
+  height: calc(100vh - 94px);
+}
+
 .markdownSection {
+  height: 80%;
   margin-top: -10px;
 }
 
 .markdownWrapper {
   display: flex;
   background-color: #EDEDED;
-  height: 500px;
+  height: 100%;
   margin-bottom: 20px;
 }
 
@@ -40,12 +45,11 @@
 }
 
 .btn.btn {
-  margin: 0px 5px;
+  margin: 0px 5px 10px;
 }
 
 .btnWrapper {
-  padding-bottom: 50px;
-  margin-left: 50px;
+  padding: 20px 50px;
 }
 
 .createChecklistBtn.createChecklistBtn {

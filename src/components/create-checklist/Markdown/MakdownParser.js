@@ -1,7 +1,7 @@
-export function mdParse(data) {
+export function mdParse(data, isPrivate) {
   const mdValue = data.split('\n');
   const parsedData = [];
-  const fullyParsedData = { title: '', sections_data: [] };
+  const fullyParsedData = { title: '', isPrivate, sections_data: [] };
   let sectionIndex = -1;
   let itemsDataIndex = -1;
   let isMdValid = false;
@@ -46,7 +46,7 @@ export function mdParse(data) {
           parsedData[sectionIndex].items_data[itemsDataIndex] = {
             item_title:
               mdValue[index].slice(4).trim() !== ''
-                ? `${mdValue[index].slice(4).trim()}:`
+                ? `${mdValue[index].slice(4).trim()}`
                 : mdValue[index].slice(4).trim(),
             tags: [],
             priority: 0,

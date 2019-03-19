@@ -1,25 +1,27 @@
 export function jsonToMd(data) {
-  let json = `# ${data.title}\n`;
+  let md = `# ${data.title}\n`;
   data.sections_data.map((section) => {
-    json += `## ${section.section_title}\n`;
+    md += `## ${section.section_title}\n`;
     section.items_data.map((item) => {
-      json += `### ${item.item_title}\n`;
+      md += `### ${item.item_title}\n`;
       if (item.description) {
-        json += `description: ${item.description}\n`;
+        md += `description: ${item.description}\n`;
       }
-      if (item.priority) {
-        json += `priority: ${item.priority}\n`;
+      if (item.priority || item.priority === 0) {
+        md += `priority: ${item.priority}\n`;
       }
-      if (item.tags) {
-        json += `tags: ${item.tags.join(', ')}\n`;
+      if (item.tags && item.tags.length > 0) {
+        md += `tags: ${item.tags.join(', ')}\n`;
       }
       if (item.details) {
-        json += `${item.details}\n`;
+        md += `${item.details}\n`;
       }
+      return md;
     });
+    return md;
   });
 
-  return json;
+  return md;
 }
 
 export { jsonToMd as default };
