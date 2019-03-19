@@ -18,7 +18,7 @@ const ListStatistic = ({ lists, update }) => {
   return (
     <Segment.Group horizontal>
       <Segment basic>
-        <Statistic>
+        <Statistic style={{ paddingRight: '1em' }}>
           <Statistic.Value>{lists.length}</Statistic.Value>
           <Statistic.Label>{countLists(lists)}</Statistic.Label>
         </Statistic>

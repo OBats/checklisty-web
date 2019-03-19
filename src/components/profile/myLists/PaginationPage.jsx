@@ -41,6 +41,8 @@ class PaginationPage extends React.Component {
 
     return (
       <Pagination
+        secondary
+        pointing
         defaultActivePage={1}
         firstItem={{ content: <Icon name="angle double left" />, icon: true }}
         lastItem={{ content: <Icon name="angle double right" />, icon: true }}
