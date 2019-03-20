@@ -1,10 +1,9 @@
 import React from 'react';
 import AceEditor from 'react-ace';
-import MainChecklistBlock from '../../checklist/MainChecklistBlock';
+import ChecklistPreviewForMarkodwn from '../../checklist/ChecklistPreviewForMarkodwn';
 import styles from './css/NewChecklistMarkdown.module.css';
 import 'brace/mode/markdown';
 import 'brace/theme/textmate';
-import MarkdownDescr from './MarkdownDescr';
 
 const Markdown = ({ errorArr, ...props }) => {
   const errors = errorArr.map(err => ({ row: err.indexError, type: 'error', text: err.msg }));
@@ -40,7 +39,7 @@ const Markdown = ({ errorArr, ...props }) => {
         </div>
         <div className={styles.markdownPreview}>
           <h1 className={styles.checklistTitle}>{props.checkList.title}</h1>
-          <MainChecklistBlock checkListData={props.checkList} hideMainProgressbar />
+          <ChecklistPreviewForMarkodwn checkListData={props.checkList} />
         </div>
       </div>
     </div>
