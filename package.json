@@ -15,7 +15,7 @@
     "react-avatar-edit": "^0.7.1",
     "react-collapsible": "^2.5.0",
     "react-confirm-alert": "^2.3.0",
-    "react-dom": "^16.7.0",
+    "react-dom": "^16.8.4",
     "react-markdown": "^4.0.6",
     "react-places-autocomplete": "^7.2.0",
     "react-redux": "^6.0.0",

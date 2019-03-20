@@ -1,6 +1,6 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable react/prop-types */
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Header, Container, Segment, Loader } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { SuccessHandling, ErrorHandling, MessageContainer } from '../../toasters/MessagesHandling';
@@ -8,114 +8,105 @@ import http from '../../../api/http';
 import ListItem from './ListItem';
 import ListStatistic from './ListsStatistic';
 import NoLists from './NoLists';
-import Pagination from './PaginationPage';
+import PaginationPage from './PaginationPage';
 
-class MyList extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      user: props.userData,
-      checklists: [],
-      currentChecklists: [],
-      currentChecklistId: null,
-      filtered: [],
-      loading: true,
-      searching: false,
-      openModal: false,
+const MyList = (props) => {
+  const user = props.userData;
+  const pageLimit = 5;
+  let totalRecords = 0;
+  let totalPages = 1;
+  // let currentPage = 0;
+  // console.log(currentPage);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [checklists, setChecklists] = useState(null);
+  const [currentChecklists, setCurrentChecklists] = useState(null);
+  const [filtered, setFiltered] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [searching, setSearching] = useState(false);
+
+  useEffect(() => {
+    const getLists = async () => {
+      try {
+        const { data } = await http.get(`/api/checklists/author=${user._id}`);
+
+        setChecklists(data);
+        setLoading(false);
+      } catch {
+        ErrorHandling('Something go wrong!');
+      }
     };
+
+    getLists();
+  }, []);
+
+  if (checklists && checklists.length) {
+    totalRecords = checklists.length;
+    totalPages = Math.ceil(totalRecords / pageLimit);
   }
 
-  componentWillMount() {
-    this.getLists();
-  }
+  const changePage = (page, currentList) => {
+    const lists = currentList || checklists;
 
-  getLists = () => {
-    try {
-      const { user } = this.state;
-      http.get(`/api/checklists/author=${user._id}`)
-        .then((res) => {
-          this.setState({ loading: false, checklists: res.data });
-        });
-    } catch {
-      ErrorHandling('Somethin go wrong!');
+    if (Math.ceil(lists.length / pageLimit) < page) {
+      const offset = (page - 2) * pageLimit;
+      const paginatedLists = lists.slice(offset, offset + pageLimit);
+
+      setCurrentChecklists(paginatedLists);
+    } else {
+      const offset = (page - 1) * pageLimit;
+      const paginatedLists = lists.slice(offset, offset + pageLimit);
+
+      setCurrentChecklists(paginatedLists);
     }
   };
 
-  deleteList = (id) => {
+  const deleteList = (id) => {
     try {
       http.delete(`/api/checklists/${id}`)
         .then((res) => {
-          let { checklists } = this.state;
-          checklists = checklists.filter(list => id !== list.id);
-          this.setState({ checklists });
+          const updatedChecklists = checklists.filter(list => id !== list.id);
+          setChecklists(updatedChecklists);
+          changePage(currentPage, updatedChecklists);
           SuccessHandling(res.data.message);
         });
     } catch {
-      ErrorHandling('Somethin go wrong!');
+      ErrorHandling('Something go wrong!');
     }
   };
 
-  update = (config) => {
-    this.setState(config);
-  };
-
-  onPageChanged = (data) => {
-    const { checklists } = this.state;
-    const { currentPage, pageLimit } = data;
-
-    const offset = (currentPage - 1) * pageLimit;
-    const currentChecklists = checklists.slice(offset, offset + pageLimit);
-
-    this.setState({ currentChecklists });
-  };
-
-  render() {
-    const {
-      checklists, loading, filtered, searching, currentChecklistId,
-      openModal, currentChecklists,
-    } = this.state;
-
-    const totalChecklists = checklists.length;
-
-    if (totalChecklists === null) return null;
-
-    if (loading) {
-      return (
-        <Loader active inline="centered" size="large" content="Loading..." />
-      );
-    }
+  if (loading) {
     return (
-      !checklists.length
-        ? (
-          <NoLists />
-        )
-        : (
-          <Container>
-            <MessageContainer />
-            <Header as="h1">
-              <Header.Content>Your Lists</Header.Content>
-            </Header>
-            <ListStatistic update={this.update} lists={checklists} />
-            <Segment>
-              <ListItem
-                lists={searching ? filtered : currentChecklists}
-                id={currentChecklistId}
-                del={this.deleteList}
-                open={openModal}
-                update={this.update}
-              />
-            </Segment>
-            <Segment.Inline style={{ textAlign: 'center' }}>
-              <Pagination
-                totalRecords={totalChecklists}
-                pageLimit={5}
-                onPageChanged={this.onPageChanged}
-              />
-            </Segment.Inline>
-          </Container>
-        ));
+      <Loader active inline="centered" size="large" content="Loading..." />
+    );
   }
-}
+  return (
+    !checklists
+      ? (
+        <NoLists />
+      )
+      : (
+        <Container>
+          <MessageContainer />
+          <Header as="h1">
+            <Header.Content>Your Lists</Header.Content>
+          </Header>
+          <ListStatistic setFiltered={setFiltered} setSearching={setSearching} lists={checklists} />
+          <Segment>
+            <ListItem
+              lists={searching ? filtered : currentChecklists}
+              del={deleteList}
+            />
+          </Segment>
+          <Segment.Inline style={{ textAlign: 'center' }}>
+            <PaginationPage
+              setCurrentPage={setCurrentPage}
+              totalPages={totalPages}
+              changePage={changePage}
+            />
+          </Segment.Inline>
+        </Container>
+      ));
+};
 
 const mapStateToProps = ({ user }) => ({
   userData: user.userData,

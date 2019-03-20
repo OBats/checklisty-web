@@ -1,23 +1,29 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { List, Icon, Button, Confirm, Popup } from 'semantic-ui-react';
 import Link from 'react-router-dom/Link';
 import Tags from './Tags';
 
 const showCreationData = data => `Created: ${data.slice(0, 10).split('-').reverse().join('/')}`;
 
-const ListItem = ({ lists, del, open, update, id }) => {
-  const show = id => update({ openModal: true, currentChecklistId: id });
+const ListItem = ({ lists, del }) => {
+  const [openModal, setOpenModal] = useState(false);
+  const [currentId, setId] = useState(null);
 
-  const handleConfirm = () => {
-    del(id);
-    update({ openModal: false });
+  const show = (id) => {
+    setOpenModal(true);
+    setId(id);
   };
 
-  const handleCancel = () => update({ openModal: false });
+  const handleConfirm = () => {
+    del(currentId);
+    setOpenModal(false);
+  };
+
+  const handleCancel = () => setOpenModal(false);
 
   return (
     <List size="huge" divided link>
-      {lists.length && lists.map(list => (
+      {lists && lists.map(list => (
         <List.Item
           key={list.id}
           style={{ display: 'flex', alignItems: 'center' }}
@@ -56,16 +62,16 @@ const ListItem = ({ lists, del, open, update, id }) => {
             inverted
             content="Remove checklist"
             trigger={(
-              <Button icon onClick={show}>
+              <Button icon onClick={() => show(list.id)}>
                 <Icon name="remove" color="red" />
               </Button>
             )}
           />
           <Confirm
-            open={open}
+            open={openModal}
             content="Are you realy want to delete list"
             onCancel={handleCancel}
-            onConfirm={() => handleConfirm(list.id)}
+            onConfirm={() => handleConfirm()}
           />
         </List.Item>
       ))}

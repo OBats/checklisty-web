@@ -1,57 +1,33 @@
 /* eslint-disable react/prop-types */
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Pagination, Icon } from 'semantic-ui-react';
 
-class PaginationPage extends React.Component {
-  constructor(props) {
-    super(props);
-    const { totalRecords = null, pageLimit = 30 } = props;
-
-    this.pageLimit = typeof pageLimit === 'number' ? pageLimit : 30;
-    this.totalRecords = typeof totalRecords === 'number' ? totalRecords : 0;
-
-    this.totalPages = Math.ceil(this.totalRecords / this.pageLimit);
-  }
-
-  componentDidMount() {
-    this.gotoPage(1);
-  }
-
-  gotoPage = (page) => {
-    const { onPageChanged = f => f } = this.props;
-
-    const currentPage = Math.max(0, Math.min(page, this.totalPages));
-
-    const paginationData = {
-      currentPage,
-      pageLimit: this.pageLimit,
-    };
-
-    onPageChanged(paginationData);
+const PaginationPage = ({ totalPages, changePage, setCurrentPage }) => {
+  const handleClick = (page) => {
+    setCurrentPage(page);
+    changePage(page);
   };
 
-  handleClick = (page) => {
-    this.gotoPage(page);
-  };
+  useEffect(() => {
+    changePage(1);
+  }, [1]);
 
-  render() {
-    if (!this.totalRecords) return null;
+  if (totalPages === 1) return null;
 
-    if (this.totalPages === 1) return null;
-
-    return (
-      <Pagination
-        secondary
-        pointing
-        defaultActivePage={1}
-        firstItem={{ content: <Icon name="angle double left" />, icon: true }}
-        lastItem={{ content: <Icon name="angle double right" />, icon: true }}
-        siblingRange={1}
-        onPageChange={(e, data) => this.handleClick(data.activePage)}
-        totalPages={this.totalPages}
-      />
-    );
-  }
-}
+  return (
+    <Pagination
+      secondary
+      pointing
+      defaultActivePage={1}
+      firstItem={{ content: <Icon name="angle double left" />, icon: true }}
+      lastItem={{ content: <Icon name="angle double right" />, icon: true }}
+      prevItem={{ content: <Icon name="angle left" />, icon: true }}
+      nextItem={{ content: <Icon name="angle right" />, icon: true }}
+      siblingRange={1}
+      onPageChange={(e, data) => handleClick(data.activePage)}
+      totalPages={totalPages}
+    />
+  );
+};
 
 export default PaginationPage;
