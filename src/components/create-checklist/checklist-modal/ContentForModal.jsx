@@ -43,7 +43,7 @@ const ContentForModal = (props) => {
               <FormSegment />
             </div>
             <div className={style.smallScreenStyle}>
-              <Link to="/create-checklist">
+              <Link to="/create-checklist/form">
                 <FormSegment />
               </Link>
             </div>

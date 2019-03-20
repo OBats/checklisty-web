@@ -16,7 +16,6 @@ import ResetPassword from './components/auth/forgot-password/ResetPassword';
 import EditChecklistForm from './components/edit-checklist/EditForm/EditChecklistForm';
 import EditChecklistMarkdown from './components/edit-checklist/EditMarkdown/EditChecklistMarkdown';
 
-
 const Routes = () => (
   <React.Fragment>
     <NavBar />
@@ -29,8 +28,8 @@ const Routes = () => (
       <ProtectedRoute exact path="/profile/maininfo" component={ProfileInfo} />
       <ProtectedRoute exact path="/profile/mylists" component={ProfileLists} />
       <ProtectedRoute exact path="/profile/myteam" component={ProfileTeam} />
-      <Route exact path="/checklist/:id" component={ShowCheckList} />
-      <ProtectedRoute exact path="/create-checklist" component={NewChecklistForm} />
+      <Route exact path="/:id" component={ShowCheckList} />
+      <ProtectedRoute exact path="/create-checklist/form" component={NewChecklistForm} />
       <ProtectedRoute exact path="/create-checklist/markdown" component={NewChecklistMarkdown} />
       <ProtectedRoute exact path="/edit-checklist/:slug" component={EditChecklistForm} />
       <ProtectedRoute exact path="/edit-checklist-markdown/:slug" component={EditChecklistMarkdown} />

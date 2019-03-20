@@ -34,7 +34,7 @@ const ViewedListsItems = (
                         <div className={style.itemDetails}>
                           <Icon name="list" color="teal" size="large" />
                           <div className={style.dateWithTitle}>
-                            <Link to={`/checklist/${elem.slug}`} className={style.linkStyle}>
+                            <Link to={`/${elem.slug}`} className={style.linkStyle}>
                               {elem.title}
                             </Link>
                             <span className={style.date}>

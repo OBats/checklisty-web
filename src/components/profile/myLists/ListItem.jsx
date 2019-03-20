@@ -30,7 +30,7 @@ const ListItem = ({ lists, del }) => {
         >
           <List.Icon name="th list" />
           <List.Content style={{ paddingLeft: '25px' }}>
-            <List.Header as="a" href={`/checklist/${list.slug}`}>{list.title}</List.Header>
+            <List.Header as="a" href={`/${list.slug}`}>{list.title}</List.Header>
             <List.Description as="div" style={{ display: 'flex', alignItems: 'center' }}>
               {showCreationData(list.creation_date)}
               {<Tags tags={list.tags[0]} />}

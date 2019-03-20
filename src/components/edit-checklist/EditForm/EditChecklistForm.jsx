@@ -1,7 +1,7 @@
 import React from 'react';
 import { Form, Button, Icon, Segment, Checkbox } from 'semantic-ui-react';
 import { Formik } from 'formik';
-import checklistSchema from '../../create-checklist/Form/utils/ChecklistSchema';
+import { checklistSchema } from '../../create-checklist/Form/utils/ChecklistSchema';
 import { getChecklist, updateChecklist } from '../../../api/checklist-api';
 import ChecklistTitle from './ChecklistTitle';
 import { ErrorHandling, MessageContainer } from '../../toasters/MessagesHandling';
@@ -47,7 +47,7 @@ class EditCheckListForm extends React.Component {
           validationSchema={checklistSchema}
           onSubmit={(values, actions) => {
             updateChecklist(checklistSlug, values)
-              .then(res => history.push(`/checklist/${res.data.list.slug}`))
+              .then(res => history.push(`/${res.data.list.slug}`))
               .catch((error) => {
                 if (!error.response) {
                   ErrorHandling('Can\'t connect to server. Please try again later.');

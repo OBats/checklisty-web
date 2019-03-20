@@ -164,7 +164,7 @@ class MainPage extends Component {
                 <>
                   {showAllCheckList && showAllCheckList.map(currentCheckList => (
                     <Link
-                      to={`/checklist/${currentCheckList.slug}`}
+                      to={`/${currentCheckList.slug}`}
                       className={styles.checkListLink}
                       key={currentCheckList.id}
                     >

@@ -4,7 +4,7 @@ const minLength = 1;
 const maxLength = 256;
 const maxDescLength = 1024;
 
-const checklistSchema = Yup.object().shape({
+export const checklistSchema = Yup.object().shape({
   title: Yup.string()
     .min(minLength, `Checklist title should be at least ${minLength} symbols long`)
     .max(maxLength, `Checklist title should be max ${maxLength} symbols long`)
@@ -33,4 +33,10 @@ const checklistSchema = Yup.object().shape({
     ),
 });
 
-export default checklistSchema;
+export const customUrlSchema = Yup.object().shape({
+  custom_url: Yup.string()
+    .min(minLength, `Url should be at least ${minLength} symbols long`)
+    .max(maxLength, `Url should be max ${minLength} symbols long`)
+    .matches(/^[-a-z0-9]+$/, 'Url should contain only lowercase alphabetical characters, integers or en dashes (-)')
+    .required('Url is required'),
+});

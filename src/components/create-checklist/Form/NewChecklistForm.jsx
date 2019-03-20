@@ -1,100 +1,108 @@
-import React from 'react';
-import PropTypes from 'prop-types';
-import { Form, Button, Icon, Segment, Checkbox } from 'semantic-ui-react';
+import React, { useState } from 'react';
+import { Form, Icon, Segment, Checkbox } from 'semantic-ui-react';
 import { Formik } from 'formik';
-import checklistSchema from './utils/ChecklistSchema';
-import createChecklistReq from '../../../api/checklist-api';
+import { checklistSchema, customUrlSchema } from './utils/ChecklistSchema';
+import initialValues from './utils/initialValues';
+import { createChecklist } from '../../../api/checklist-api';
 import ChecklistTitle from './CheckListTitle/CheckListTitle';
 import { ErrorHandling, MessageContainer } from '../../toasters/MessagesHandling';
 import Section from './Section/Section';
+import CustomUrlModal from './CustomUrlModal/CustomUrlModal';
 import styles from './NewCheckListForm.module.css';
 
-const NewChecklistForm = ({ history }) => (
-  <div className={styles.main_form_container}>
+const NewChecklistForm = () => {
+  const [slug, setSlug] = useState('');
+  const [checklistId, setChecklistId] = useState('');
+  const [isOpen, openModal] = useState(false);
+  const [defaultSchema, setSchema] = useState(true);
+
+  const onSubmitClick = (values, actions) => {
+    setSchema(false);
+    createChecklist(values)
+      .then((res) => {
+        setChecklistId(res.data._id);
+        setSlug(res.data.slug);
+        openModal(true);
+      })
+      .catch((error) => {
+        if (error.response) {
+          ErrorHandling(error.response.data.message);
+        } else {
+          ErrorHandling('Server is down. Please try again later.');
+        }
+
+        actions.setSubmitting(false);
+      });
+  };
+
+  const checklistForm = (props) => {
+    const {
+      values,
+      handleChange,
+      setFieldValue,
+      setFieldTouched,
+      handleBlur,
+      handleSubmit,
+      isValid,
+      isSubmitting,
+    } = props;
+
+    return (
+      <Form
+        className={styles.main_form}
+        onSubmit={handleSubmit}
+      >
+
+        <ChecklistTitle
+          handleBlur={handleBlur}
+          handleChange={handleChange}
+        />
+
+        <Section
+          values={values}
+          handleBlur={handleBlur}
+          handleChange={handleChange}
+          setFieldValue={setFieldValue}
+          setFieldTouched={setFieldTouched}
+        />
+
+        <Segment color="blue">
+          <Icon color="green" className={styles.icon} name="lock" />
+          <Checkbox
+            fitted
+            label="Make list private"
+            name="isPrivate"
+            toggle
+            checked={!!values.isPrivate}
+            onChange={(e, { name, checked }) => setFieldValue(name, !!checked)}
+          />
+        </Segment>
+
+        <CustomUrlModal
+          isSubmitting={isSubmitting}
+          isValid={isValid}
+          isOpen={isOpen}
+          slug={slug}
+          checklistId={checklistId}
+          setSlug={setSlug}
+          handleChange={handleChange}
+          handleBlur={handleBlur}
+        />
+
+        <MessageContainer />
+
+      </Form>
+    );
+  };
+
+  return (
     <Formik
-      initialValues={{
-        title: '',
-        isPrivate: false,
-        sections_data: [{
-          _id: Math.random(),
-          section_title: '',
-          items_data: [{
-            _id: Math.random(),
-            item_title: '',
-            description: '',
-            details: '',
-            tags: [],
-            priority: '',
-          }],
-        }],
-      }}
-
-      validationSchema={checklistSchema}
-
-      onSubmit={(values, actions) => {
-        createChecklistReq(values)
-          .then(res => history.push(`/checklist/${res.data.slug}`))
-          .catch((error) => {
-            if (!error.response || error.response.status === 500) {
-              ErrorHandling('Server is down. Please try again later.');
-            } else {
-              ErrorHandling(error.response.data.message);
-            }
-            actions.setSubmitting(false);
-          });
-      }}
-
-      render={({
-        values,
-        handleChange,
-        setFieldValue,
-        setFieldTouched,
-        handleBlur,
-        handleSubmit,
-        isValid,
-        isSubmitting,
-      }) => (
-        <Form
-          className={styles.main_form}
-          onSubmit={handleSubmit}
-        >
-
-          <ChecklistTitle
-            handleBlur={handleBlur}
-            handleChange={handleChange}
-          />
-
-          <Section
-            values={values}
-            handleBlur={handleBlur}
-            handleChange={handleChange}
-            setFieldValue={setFieldValue}
-            setFieldTouched={setFieldTouched}
-          />
-          <Segment color="blue">
-            <Icon color="green" className={styles.icon} name="lock" />
-            <Checkbox
-              fitted
-              label="Make list private"
-              name="isPrivate"
-              toggle
-              checked={!!values.isPrivate}
-              onChange={(e, { name, checked }) => setFieldValue(name, !!checked)}
-            />
-          </Segment>
-
-          <Button primary fluid type="submit" disabled={isSubmitting || !isValid}>Submit</Button>
-
-          <MessageContainer />
-
-        </Form>
-      )}
+      initialValues={initialValues}
+      validationSchema={defaultSchema ? checklistSchema : customUrlSchema}
+      onSubmit={onSubmitClick}
+      render={checklistForm}
     />
-  </div>
-);
-
-NewChecklistForm.propTypes = {
-  history: PropTypes.object.isRequired,
+  );
 };
 
 export default NewChecklistForm;

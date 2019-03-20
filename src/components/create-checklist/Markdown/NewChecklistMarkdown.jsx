@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Segment, Icon, Checkbox } from 'semantic-ui-react';
 import { confirmAlert } from 'react-confirm-alert';
-import createChecklist from '../../../api/checklist-api';
+import { createChecklist } from '../../../api/checklist-api';
 import { mdParse } from './MakdownParser';
 import { previewExample } from './mdExample';
 import Markdown from './Markdown';
@@ -78,7 +78,7 @@ class NewChecklistMarkdown extends React.Component {
   handleCreatingChecklist = (checkList) => {
     createChecklist(checkList)
       .then((res) => {
-        this.props.history.push(`/checklist/${res.data.slug}`);
+        this.props.history.push(`/${res.data.slug}`);
         this.setState({ isMdValid: false });
       });
   }

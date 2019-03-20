@@ -89,6 +89,7 @@ const Item = (props) => {
 
       <Select
         className={styles.select}
+        defaultValue={[{ value: 0, label: 'Low' }]}
         name={`sections_data.${sectionIndex}.items_data.${itemIndex}.priority`}
         options={priorityOptions}
         placeholder="Choose priority..."

@@ -20,20 +20,13 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  width: 25px;
-  height: 25px;
-  line-height: 25px;
-  font-size: 25px;
-  transform: translate(-50%, -50%);
-}
-
-.section.section.section button.remove_item i {
   width: 20px;
   height: 20px;
   line-height: 20px;
   font-size: 20px;
   color: red;
   transition: font-size 0.2s ease;
+  transform: translate(-50%, -50%);
 }
 
 .section.section.section button.remove_item:hover i,

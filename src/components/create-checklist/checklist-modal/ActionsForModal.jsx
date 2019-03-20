@@ -10,7 +10,7 @@ const ActionsForModal = (props) => {
       <Modal.Actions>
         <div className={style.buttonBlock}>
           <div className={style.regularButton}>
-            <Link to="/create-checklist">
+            <Link to="/create-checklist/form">
               <Button animated="vertical" color="teal">
                 <Button.Content visible>Fields</Button.Content>
                 <Button.Content hidden>

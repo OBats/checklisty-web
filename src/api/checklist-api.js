@@ -1,6 +1,6 @@
 import http from './http';
 
-const createChecklist = values => (
+export const createChecklist = values => (
   http.post('/api/checklists/create', values)
 );
 
@@ -12,4 +12,6 @@ export const updateChecklist = (id, values) => (
   http.put(`/api/checklists/${id}`, values)
 );
 
-export default createChecklist;
+export const updateSlug = (id, newSlug) => (
+  http.patch('/api/checklists/new-slug', { id, newSlug })
+);

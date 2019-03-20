@@ -98,7 +98,7 @@ class EditChecklistMarkdown extends React.Component {
     updateChecklist(checklistSlug, checklistData)
       .then((res) => {
         this.setState({ isMdValid: false });
-        history.push(`/checklist/${res.data.list.slug}`);
+        history.push(`/${res.data.list.slug}`);
       });
   }
 
