@@ -4,7 +4,7 @@ import NavBar from './components/navbar/NavBar';
 import SignIn from './components/auth/form-based-auth/SignIn';
 import SignUp from './components/auth/form-based-auth/SignUp';
 import ProfileInfo from './components/profile/ProfileMainInfo';
-import ProfileLists from './components/profile/myLists/MyLists';
+import ProfileLists from './components/profile/myLists';
 import ProfileTeam from './components/profile/MyTeam';
 import ShowCheckList from './components/main/ShowCheckList';
 import HomePage from './components/main/HomePage';

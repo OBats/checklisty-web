@@ -36,6 +36,7 @@ class MainChecklistBlock extends Component {
     const response = await http.post('/api/checklists/create-users-checklists', {
       userID: userData._id,
       checklistID: checkListData.id,
+      checklistData: checkListData.id,
       checkboxes_data: arrayOfCheckboxArray,
     });
     if (response.data.checkboxes_data.length < 1) {

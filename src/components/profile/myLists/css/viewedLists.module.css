@@ -1,0 +1,189 @@
+.statsBlock {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+
+.container {
+    margin-bottom: 20px;
+}
+
+.loaderBlock{
+    display: flex;
+    align-items: center;
+    min-height: 550px;
+}
+
+.groupStatsSearch {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.amountBlock {
+    margin-right: 40px;
+}
+
+.search {
+    display: flex;
+}
+
+.itemsDiv {
+    height: auto;
+    min-height: 350px;
+}
+
+.viewedItem {
+    display: flex;
+    align-items: center;
+    height: 28px;
+}
+
+.itemDetails {
+    display: flex;
+    align-items: center;
+    width: 40%;
+}
+
+.linkStyle {
+    font-weight: 600;
+    font-size: 20px;
+    width: auto;
+}
+
+.dateWithTitle {
+    display: flex;
+    flex-direction: column;
+    padding-left: 15px;
+    width: 300px;
+}
+
+.date {
+    padding-top: 5px;
+    font-size: 15px;
+    font-style: italic;
+    color: rgb(145, 150, 153);
+    font-weight: bolder;
+}
+
+.progressBlock {
+    display: flex;
+    width: 100%;
+    flex-direction: row-reverse;
+}
+
+.progress {
+    width: 350px;
+    padding-top: 25px;
+    margin-right: 10px;
+}
+
+.pagination {
+    display: flex;
+    justify-content: center;
+    padding-top: 10px;
+}
+
+.loaderPosition{
+    display: flex;
+    align-items: center;
+    height: 350px;
+}
+
+.noLists{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 400px;
+    align-items: center;
+}
+
+.homeButton{
+    margin-top: 20px !important;
+}
+
+.select{
+    background-color: #fff;
+    border: 1px solid rgb(206, 198, 198);
+    border-radius: 10px;
+    width: 50px;
+    height: 30px;
+    margin-left: 50px;
+ }
+ .select:focus{
+    outline: none;
+ }
+
+.paginationWithSelect{
+    display: flex;
+    align-items: center;
+}
+
+@media screen and (max-width: 768px) {
+    .progress {
+        width: 240px;
+        padding-top: 25px;
+        margin-right: 5px;
+    }
+    .linkStyle{
+        font-size: 18px;
+        width: 210px;
+    }
+    .progress{
+        width: 200px;
+    }
+}
+
+@media screen and (max-width: 576px) {
+    .viewedItem {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+        height: 70px;
+    }
+    .itemDetails {
+        display: flex;
+        flex-direction: row;
+    }
+    .clearHistoryButton {
+        display: none;
+    }
+    .progressBlock {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .progress {
+        width: 250px;
+        padding-bottom: 20px;
+    }
+    .itemsDiv{
+        height: auto;
+    }
+    .dateWithTitle {
+        width: 320px;
+    }
+    .linkStyle{
+        font-size: 16px;
+        width: 250px;
+    }
+    .date{
+        font-size: 14px
+    }
+    .paginationWithSelect{
+        display: flex;
+        flex-direction: column-reverse;
+    }
+    .select{
+        margin-left: 0;
+    }
+}
+
+@media screen and (max-width: 400px) {
+    .progress {
+        width: 200px;
+    }
+}
