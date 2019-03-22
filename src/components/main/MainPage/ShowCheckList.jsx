@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import http from '../../api/http';
-import loaderStyle from './loader.module.css';
-import Header from './Header';
+import http from '../../../api/http';
+import loaderStyle from '../loader.module.css';
+import Header from '../Header';
 import styles from './ShowCheckList.module.css';
-import Footer from './Footer';
-import MainChecklistBlock from '../checklist/MainChecklistBlock';
+import Footer from '../Footer';
+import MainChecklistBlock from '../../checklist/MainChecklistBlock';
 
 class ShowCheckList extends Component {
   constructor(props) {

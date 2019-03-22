@@ -1,0 +1,19 @@
+.selectContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.select{
+    background-color: #fff;
+    border: 1px solid rgb(206, 198, 198);
+    border-radius: 10px;
+    width: 50px;
+    height: 30px;
+    padding-left: 10%;
+}
+.select:focus{
+    outline: none;
+}
+.perPageText{
+    margin-right: 5px;
+}

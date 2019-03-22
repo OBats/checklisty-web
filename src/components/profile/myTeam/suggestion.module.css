@@ -1,0 +1,41 @@
+.suggestionContainer{
+    border-left: 1px solid #adadad;
+    border-right: 1px solid #adadad;
+    border-bottom: 1px solid #adadad;
+    width: 100%;
+    border-radius: 5px;
+    box-shadow: 0px 12px 31px -13px rgba(0,0,0,0.75);
+    max-height: 320px;
+    overflow-y: scroll;
+}
+.listOfSuggestion{
+    list-style-type: none;
+}
+.userContainer{
+    display: flex;
+    cursor: pointer;
+    padding-bottom: 2%;
+}
+.userAvatar{
+    width: 10%;
+}
+.userAvatar img{
+    width: 50px;
+    border-radius: 50px;
+}
+.userInfo{
+    display: flex;
+    flex-direction: column;
+    margin-left: 5%;
+    color: #6b737e;
+}
+.userContainer:hover{
+    background-color: #73d6cf;
+}
+.currentUser{
+    padding-top: 2%;
+    display: flex;
+    align-items: center;
+    padding-left: 5%;
+    width: 100%;
+}

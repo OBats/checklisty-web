@@ -1,13 +1,15 @@
 
 import { combineReducers } from 'redux';
 import user from './user';
-import pagination from './pagination';
+import checklists from './mainPage/checklists';
 import progressbar from './progressbar';
+import selectedUsers from './createTeam/selectedUsers';
 import historyPagination from './historyPagination';
 
 export default combineReducers({
   user,
-  pagination,
+  checklists,
   progressbar,
+  selectedUsers,
   historyPagination,
 });

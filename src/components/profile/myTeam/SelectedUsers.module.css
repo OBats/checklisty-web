@@ -1,0 +1,42 @@
+.invitedContainer{
+    width: 100%;    
+}
+.container{
+    width: 90%;
+}
+.invitedUser{
+    min-height: 60px;
+    display: flex;
+    justify-content: space-between;
+    padding-bottom: 2%;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+}
+.userAvatar{
+    width: 10%
+}
+.userAvatar img{
+    width: 50px;
+    border-radius: 50px;
+}
+.userInfo{
+    display: flex;
+    flex-direction: column;
+    margin-left: 5%;
+    color: #6b737e;
+}
+.userProfile{
+    padding-top: 2%;
+    display: flex;
+    align-items: center;
+    padding-left: 5%;
+    width: 100%;
+}
+.cancelInvite{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-top: 2%;
+    padding-right: 3%;
+    transition: 0.5s ease;
+    cursor: pointer;
+}
