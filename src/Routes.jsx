@@ -1,5 +1,6 @@
 import React from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
+import { MessageContainer } from './components/toasters/MessagesHandling';
 import NavBar from './components/navbar/NavBar';
 import SignIn from './components/auth/form-based-auth/SignIn';
 import SignUp from './components/auth/form-based-auth/SignUp';
@@ -35,6 +36,7 @@ const Routes = () => (
       <ProtectedRoute exact path="/edit-checklist-markdown/:slug" component={EditChecklistMarkdown} />
       <Redirect exact to="/" />
     </Switch>
+    <MessageContainer />
   </React.Fragment>
 );
 

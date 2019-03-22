@@ -1,10 +1,10 @@
 import React from 'react';
 import { Form, Button, Icon, Segment, Checkbox } from 'semantic-ui-react';
 import { Formik } from 'formik';
-import { checklistSchema } from '../../create-checklist/Form/utils/ChecklistSchema';
+import { checklistSchema } from '../../create-checklist/Form/utils/validationSchemas';
 import { getChecklist, updateChecklist } from '../../../api/checklist-api';
 import ChecklistTitle from './ChecklistTitle';
-import { ErrorHandling, MessageContainer } from '../../toasters/MessagesHandling';
+import { ErrorHandling } from '../../toasters/MessagesHandling';
 import styles from './css/EditChecklistForm.module.css';
 import ChecklistSectionData from './ChecklistSectionData';
 import loader from '../../main/loader.module.css';
@@ -98,7 +98,6 @@ class EditCheckListForm extends React.Component {
               <Button primary fluid type="submit" disabled={isSubmitting || !isValid}>
                   Submit
               </Button>
-              <MessageContainer />
             </Form>
           )}
         />

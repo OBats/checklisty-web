@@ -3,7 +3,7 @@
 import React, { useState, useEffect } from 'react';
 import { Header, Container, Segment, Loader } from 'semantic-ui-react';
 import { connect } from 'react-redux';
-import { SuccessHandling, ErrorHandling, MessageContainer } from '../../toasters/MessagesHandling';
+import { SuccessHandling, ErrorHandling } from '../../toasters/MessagesHandling';
 import http from '../../../api/http';
 import ListItem from './ListItem';
 import ListStatistic from './ListsStatistic';
@@ -86,7 +86,6 @@ const MyList = (props) => {
       )
       : (
         <Container>
-          <MessageContainer />
           <Header as="h1">
             <Header.Content>Your Lists</Header.Content>
           </Header>

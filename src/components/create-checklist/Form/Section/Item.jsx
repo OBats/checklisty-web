@@ -56,7 +56,6 @@ const Item = (props) => {
       </span>
 
       <Form.TextArea
-        required
         className={styles.field}
         rows="2"
         id={`sections_data.${sectionIndex}.items_data.${itemIndex}.description`}

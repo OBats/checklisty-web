@@ -10,7 +10,7 @@ const initiaalValues = {
       description: '',
       details: '',
       tags: [],
-      priority: '',
+      priority: 0,
     }],
   }],
 };

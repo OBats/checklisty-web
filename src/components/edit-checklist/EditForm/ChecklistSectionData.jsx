@@ -77,7 +77,7 @@ const ChecklistSectionData = (props) => {
                 description: '',
                 details: '',
                 tags: [],
-                priority: '',
+                priority: 0,
               }],
             })}
           />

@@ -48,7 +48,7 @@ const Items = (props) => {
               description: '',
               details: '',
               tags: [],
-              priority: '',
+              priority: 0,
             })}
           >
             Add Item

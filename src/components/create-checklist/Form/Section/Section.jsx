@@ -75,7 +75,7 @@ const Section = (props) => {
                 description: '',
                 details: '',
                 tags: [],
-                priority: '',
+                priority: 0,
               }],
             })}
           />

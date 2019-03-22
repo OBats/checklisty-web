@@ -1,11 +1,11 @@
 import React, { useState } from 'react';
 import { Form, Icon, Segment, Checkbox } from 'semantic-ui-react';
 import { Formik } from 'formik';
-import { checklistSchema, customUrlSchema } from './utils/ChecklistSchema';
+import { checklistSchema, customUrlSchema } from './utils/validationSchemas';
 import initialValues from './utils/initialValues';
 import { createChecklist } from '../../../api/checklist-api';
 import ChecklistTitle from './CheckListTitle/CheckListTitle';
-import { ErrorHandling, MessageContainer } from '../../toasters/MessagesHandling';
+import { ErrorHandling } from '../../toasters/MessagesHandling';
 import Section from './Section/Section';
 import CustomUrlModal from './CustomUrlModal/CustomUrlModal';
 import styles from './NewCheckListForm.module.css';
@@ -17,9 +17,9 @@ const NewChecklistForm = () => {
   const [defaultSchema, setSchema] = useState(true);
 
   const onSubmitClick = (values, actions) => {
-    setSchema(false);
     createChecklist(values)
       .then((res) => {
+        setSchema(false);
         setChecklistId(res.data._id);
         setSlug(res.data.slug);
         openModal(true);
@@ -88,9 +88,6 @@ const NewChecklistForm = () => {
           handleChange={handleChange}
           handleBlur={handleBlur}
         />
-
-        <MessageContainer />
-
       </Form>
     );
   };

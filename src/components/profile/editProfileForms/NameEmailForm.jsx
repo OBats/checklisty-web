@@ -6,7 +6,7 @@ import { saveUserData } from '../../../actions/user';
 import styles from './profileForms.module.css';
 import http from '../../../api/http';
 import { NameEmailSchema } from './profileValidationSchema';
-import { ErrorHandling, SuccessHandling, MessageContainer } from '../../toasters/MessagesHandling';
+import { ErrorHandling, SuccessHandling } from '../../toasters/MessagesHandling';
 
 const NameEmailForm = ({ saveUserData }) => (
   <Grid centered verticalAlign="middle">
@@ -70,7 +70,6 @@ const NameEmailForm = ({ saveUserData }) => (
               value={values.email}
             />
             <div className={styles.Error}>{touched.email && errors.email}</div>
-            <MessageContainer />
             <Button
               className={styles.profileBtn}
               size="large"

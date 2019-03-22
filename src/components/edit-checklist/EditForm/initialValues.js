@@ -10,7 +10,7 @@ const initialValues = {
       description: '',
       details: '',
       tags: [],
-      priority: '',
+      priority: 0,
     }],
   }],
 };

@@ -3,7 +3,7 @@ import { Formik, Form } from 'formik';
 import { Button, Grid, Segment, Header } from 'semantic-ui-react';
 import style from './css/forgotPassword.module.css';
 import { ResetPasswordSchema } from './validationSchema';
-import { ErrorHandling, MessageContainer } from '../../toasters/MessagesHandling';
+import { ErrorHandling } from '../../toasters/MessagesHandling';
 import http from '../../../api/http';
 import ResetPasswordSuccess from './ResetPasswordSuccess';
 import PasswordInput from '../../showPassword/PasswordInput';
@@ -93,7 +93,6 @@ class ResetPassword extends Component {
                     <div className={style.Error}>
                       {touched.confirmPassword && errors.confirmPassword}
                     </div>
-                    <MessageContainer />
                     <Button
                       className={style.ForgotPasswordBtn}
                       fluid

@@ -8,7 +8,7 @@ import style from './css/auth.module.css';
 import { signIn } from '../../../api/auth-api';
 import { SigninSchema } from './validationSchema';
 import { saveUserData } from '../../../actions/user';
-import { ErrorHandling, MessageContainer } from '../../toasters/MessagesHandling';
+import { ErrorHandling } from '../../toasters/MessagesHandling';
 import PasswordInput from '../../showPassword/PasswordInput';
 import SocialAuthentication from '../social-auth/SocialAuthentication';
 
@@ -94,7 +94,6 @@ const SignIn = ({ loggedUser, saveUserData }) => {
                         {touched.password && errors.password}
                       </div>
                     )}
-                    <MessageContainer />
                     <Button
                       className={style.AuthBtn}
                       fluid
