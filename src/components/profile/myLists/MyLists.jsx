@@ -29,7 +29,7 @@ const MyList = (props) => {
       try {
         const { data } = await http.get(`/api/checklists/author=${user._id}`);
 
-        setChecklists(data);
+        if (data.length) setChecklists(data);
         setLoading(false);
       } catch {
         ErrorHandling('Something go wrong!');
