@@ -40,12 +40,18 @@
     text-transform: uppercase;
 }
 
+.checkboxLabelStyle {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
 .itemHeader {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    align-items: center;
     cursor: default;
+    padding: 8px 0;
 }
 
 .subheaderStyle {
@@ -57,12 +63,23 @@
     margin-left: 10px;
 }
 
+.accordionArrowOpened {
+    transform: rotate(180deg);
+    transition: 0.3s ease;
+}
+
+.accordionArrowClosed {
+    transition: 0.3s ease;
+}
+
 .accordionArrowPosition {
-    margin-right: 10px;
+    margin: 0px 4px;
 }
 
 .accordionCursor {
-    cursor: default !important;
+    margin-right: 10px;
+    margin-top: 4px;
+    cursor: pointer;
 }
 
 .detailsStyle {
@@ -70,8 +87,52 @@
     margin-right: 50px;
 }
 
+.animatedDetailsOpened {
+    animation: fadeIn 0.5s;
+    padding: 10px 0px;
+}
+
+.animatedDetailsClosed {
+    animation: fadeOut 0.5s;
+    opacity: 0;
+    height: 0px;
+    overflow: hidden;
+}
+
+@keyframes fadeIn {
+    0% {
+        max-height: 0px;
+        opacity: 0;
+    }
+    40% {
+        opacity: 0;
+    }
+    60% {
+        max-height: 1000px;
+        opacity: 0.5;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+@keyframes fadeOut {
+    0% {
+        max-height: 1000px;
+        opacity: 1;
+    }
+    100% {
+        height: 0px;
+        opacity: 0;
+    }
+}
+
 .fullTitleItem {
     line-height: 20px;
+}
+
+.labelItem {
+    padding-left: 10px;
 }
 
 .highlighter {
@@ -82,6 +143,12 @@
 
 .blockMargin {
     margin-top: 20px;
+}
+
+.checkboxItem {
+    display: flex;
+    align-self: flex-start;
+    padding-top: 2px;
 }
 
 @media screen and (max-width: 576px) {

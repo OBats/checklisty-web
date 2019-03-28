@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { Accordion } from 'semantic-ui-react';
 import style from '../css/SingleChecklistItem.module.css';
 import SingleChecklistDetails from './SingleChecklistDetails';
 import SingleChecklistLabels from './SingleChecklistLabels';
@@ -19,33 +18,32 @@ class SingleChecklistItem extends Component {
   }
 
   render() {
-    const { propsData, className, checkedIndex, accordionIndex, iconName } = this.props;
+    const { propsData, className, checkedIndex, accordionIndex } = this.props;
     return (
       <div className={className}>
-        <Accordion.Title className={style.accordionCursor}>
-          <div className={style.itemHeader}>
-            <div className={style.subheaderStyle}>
-              <SingleChecklistPopup propsData={propsData} />
-              <div className={style.checkboxStyle}>
-                <SingleChecklistCheckbox
-                  checkedIndex={checkedIndex}
-                  propsData={propsData}
-                  handleChecked={this.handleChecked}
-                />
-              </div>
+        <div className={style.itemHeader}>
+          <div className={style.subheaderStyle}>
+            <SingleChecklistPopup propsData={propsData} />
+            <div className={style.checkboxStyle}>
+              <SingleChecklistCheckbox
+                checkedIndex={checkedIndex}
+                propsData={propsData}
+                handleChecked={this.handleChecked}
+              />
             </div>
-            <div className={style.accordionArrowPosition}>
-              {propsData.details && (
+          </div>
+          <div className={style.accordionArrowPosition}>
+            {propsData.details && (
+              <div className={style.accordionCursor}>
                 <SingleChecklistAccordionArrow
-                  iconName={iconName}
                   checkedIndex={checkedIndex}
                   handleClickAccordion={this.handleClickAccordion}
                   accordionIndex={accordionIndex}
                 />
-              )}
-            </div>
+              </div>
+            )}
           </div>
-        </Accordion.Title>
+        </div>
         {(!checkedIndex && propsData.details !== '') && (
           <SingleChecklistDetails propsData={propsData} accordionIndex={accordionIndex} />
         )

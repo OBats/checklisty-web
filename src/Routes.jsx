@@ -6,7 +6,7 @@ import SignIn from './components/auth/form-based-auth/SignIn';
 import SignUp from './components/auth/form-based-auth/SignUp';
 import ProfileInfo from './components/profile/ProfileMainInfo';
 import ProfileLists from './components/profile/myLists';
-import ProfileTeam from './components/profile/myTeam';
+import ProfileTeam from './components/profile/myTeam/index';
 import ShowCheckList from './components/main/MainPage/ShowCheckList';
 import HomePage from './components/main/HomePage';
 import NewChecklistForm from './components/create-checklist/Form/NewChecklistForm';

@@ -1,5 +1,5 @@
 import React from 'react';
-import { Accordion, Container, Progress, Icon, Divider } from 'semantic-ui-react';
+import { Container, Progress, Icon, Divider } from 'semantic-ui-react';
 import SingleChecklistItem from '../single-checklist-item';
 import style from '../css/ChecklistView.module.css';
 
@@ -77,7 +77,7 @@ const ChecklistViewComponents = (props) => {
           </div>
         </div>
         {!isWholeChecklistHidden && (
-          <Accordion className={style.accordionStyle} fluid>
+          <div className={style.accordionStyle}>
             {
               data.items_data.map((elem, index) => (
                 <SingleChecklistItem
@@ -88,11 +88,10 @@ const ChecklistViewComponents = (props) => {
                   accordionIndex={props.accordionIndexArray[index]}
                   handleChecked={props.handleChecked}
                   checkedIndex={props.checkboxArray[index]}
-                  iconName={props.iconNameArray[index]}
                   className={style.checklistItem}
                 />
               ))}
-          </Accordion>
+          </div>
         )}
       </div>
     </Container>
