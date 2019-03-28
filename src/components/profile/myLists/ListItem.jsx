@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { List, Icon, Button, Confirm, Popup } from 'semantic-ui-react';
+import { List, Icon, Button, Confirm, Popup, Header, Progress } from 'semantic-ui-react';
 import Link from 'react-router-dom/Link';
 import Tags from './Tags';
 
@@ -21,21 +21,35 @@ const ListItem = ({ lists, del }) => {
 
   const handleCancel = () => setOpenModal(false);
 
+  if (lists.length === 0) {
+    return (
+      <Header as="h2" textAlign="center">
+        List not found
+      </Header>
+    );
+  }
+
   return (
     <List size="huge" divided link>
-      {lists && lists.map(list => (
+      {lists.map(list => (
         <List.Item
           key={list.id}
           style={{ display: 'flex', alignItems: 'center' }}
         >
-          <List.Icon name="th list" />
+          <List.Icon name={list.isPrivate ? 'lock' : 'unlock'} color={list.isPrivate ? 'red' : 'green'} />
           <List.Content style={{ paddingLeft: '25px' }}>
             <List.Header as="a" href={`/${list.slug}`}>{list.title}</List.Header>
             <List.Description as="div" style={{ display: 'flex', alignItems: 'center' }}>
               {showCreationData(list.creation_date)}
-              {<Tags tags={list.tags[0]} />}
+              {<Tags tags={list.tags} />}
             </List.Description>
           </List.Content>
+          <Progress
+            progress
+            percent={list.progress}
+            color="green"
+            style={{ margin: '0 1em', width: '10em' }}
+          />
           <Popup
             inverted
             content="Edit via form"

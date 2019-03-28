@@ -1,20 +1,23 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Segment, Statistic, Search } from 'semantic-ui-react';
 import CreateChecklistModal from '../../create-checklist/checklist-modal';
 
 const ListStatistic = ({ lists, setSearching, setFiltered }) => {
+  const [value, setValue] = useState('');
   const countLists = number => (number.length > 1 ? 'lists' : ' list');
 
-  const search = (e) => {
-    const value = e.target.value.toLowerCase();
-
+  const search = (e, { value }) => {
+    setValue(value);
     const searching = value === '';
-
     const filter = lists.filter(list => list.title.toLowerCase().includes(value));
 
     setFiltered(filter);
     setSearching(!searching);
   };
+
+  useEffect(() => {
+    setValue('');
+  }, [lists]);
 
   return (
     <Segment.Group horizontal>
@@ -26,6 +29,7 @@ const ListStatistic = ({ lists, setSearching, setFiltered }) => {
       </Segment>
       <Segment basic style={{ margin: 'auto' }}>
         <Search
+          value={value}
           showNoResults={false}
           placeholder="Search lists..."
           onSearchChange={search}
