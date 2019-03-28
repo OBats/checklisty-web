@@ -6,7 +6,7 @@ import SignIn from './components/auth/form-based-auth/SignIn';
 import SignUp from './components/auth/form-based-auth/SignUp';
 import ProfileInfo from './components/profile/ProfileMainInfo';
 import ProfileLists from './components/profile/myLists';
-import ProfileTeam from './components/profile/myTeam';
+import ProfileTeam from './components/profile/MyTeam';
 import ShowCheckList from './components/main/MainPage/ShowCheckList';
 import HomePage from './components/main/HomePage';
 import NewChecklistForm from './components/create-checklist/Form/NewChecklistForm';
@@ -16,6 +16,7 @@ import ForgotPassword from './components/auth/forgot-password/ForgotPassword';
 import ResetPassword from './components/auth/forgot-password/ResetPassword';
 import EditChecklistForm from './components/edit-checklist/EditForm/EditChecklistForm';
 import EditChecklistMarkdown from './components/edit-checklist/EditMarkdown/EditChecklistMarkdown';
+import AdminBoard from './components/admin/AdminBoard';
 
 const Routes = () => (
   <React.Fragment>
@@ -29,6 +30,7 @@ const Routes = () => (
       <ProtectedRoute exact path="/profile/maininfo" component={ProfileInfo} />
       <ProtectedRoute exact path="/profile/mylists" component={ProfileLists} />
       <ProtectedRoute exact path="/profile/myteam" component={ProfileTeam} />
+      <ProtectedRoute exact path="/admin" component={AdminBoard} />
       <Route exact path="/:id" component={ShowCheckList} />
       <ProtectedRoute exact path="/create-checklist/form" component={NewChecklistForm} />
       <ProtectedRoute exact path="/create-checklist/markdown" component={NewChecklistMarkdown} />
