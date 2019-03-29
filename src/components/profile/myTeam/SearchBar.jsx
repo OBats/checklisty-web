@@ -1,44 +1,45 @@
 import React, { useState } from 'react';
+import { connect } from 'react-redux';
 import { Icon } from 'semantic-ui-react';
 import { debounce } from 'throttle-debounce';
-import { connect } from 'react-redux';
-import styles from './MainPage.module.css';
-import { resetActivePage, saveSearchValue, changeListsLoading } from '../../../actions/checklistsAction';
+import styles from '../../main/MainPage/MainPage.module.css';
+import { saveSearchTeamValue, resetActivePage } from '../../../actions/selectUserAction';
+
 
 function SearchBar(props) {
-  const [isReset, setReset] = useState(false);
+  const [resetTeamSearch, setResetTeam] = useState(false);
   const textInput = React.createRef();
-  const { saveSearchValue, searchFilter } = props;
+  const { saveSearchTeamValue, searchTeamValue } = props;
 
   const onChangeSearch = debounce(500, (text) => {
     if (text === '') {
-      saveSearchValue('');
+      saveSearchTeamValue('');
     }
-    saveSearchValue(text);
+    saveSearchTeamValue(text);
     props.resetActivePage();
   });
   const onKeyPressSearch = debounce(500, (keyPressed) => {
     if (keyPressed === 'Enter') {
-      if (searchFilter === '') {
-        saveSearchValue('');
+      if (searchTeamValue === '') {
+        saveSearchTeamValue('');
       }
 
-      saveSearchValue(searchFilter);
+      saveSearchTeamValue(searchTeamValue);
     }
   });
   const onClickSearch = () => {
-    if (searchFilter === '') {
-      saveSearchValue('');
+    if (searchTeamValue === '') {
+      saveSearchTeamValue('');
     }
-    saveSearchValue(searchFilter);
+    saveSearchTeamValue(searchTeamValue);
     props.resetActivePage();
   };
 
   const resetInput = () => {
     props.resetActivePage();
     textInput.current.value = '';
-    saveSearchValue('');
-    setReset(!isReset);
+    saveSearchTeamValue('');
+    setResetTeam(!resetTeamSearch);
   };
   return (
     <div className={styles.searchBarContainer}>
@@ -68,19 +69,14 @@ function SearchBar(props) {
   );
 }
 
-const mapStateToProps = ({ checklists }) => (
+const mapStateToProps = ({ selectedUsers }) => (
   {
-    searchFilter: checklists.searchFilter,
-    activePage: checklists.activePage,
-    listsLoader: checklists.listsLoader,
+    searchTeamValue: selectedUsers.searchTeamValue,
   });
 
 const mapDispatchToProps = dispatch => ({
-  saveSearchValue: (searchFilter) => {
-    dispatch(saveSearchValue(searchFilter));
-  },
-  changeListsLoading: (listsLoader) => {
-    dispatch(changeListsLoading(listsLoader));
+  saveSearchTeamValue: (searchTeamValue) => {
+    dispatch(saveSearchTeamValue(searchTeamValue));
   },
   resetActivePage: () => {
     dispatch(resetActivePage());

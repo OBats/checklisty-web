@@ -1,0 +1,68 @@
+@keyframes appering{
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
+}
+@keyframes disappear{
+    from {
+        opacity: 1;
+    }
+    to {
+        opacity: 0;
+    }
+}
+.invitedContainer{
+    width: 100%;    
+}
+.selectedContainer{
+    width: 100%;
+    margin-right: 0 !important;
+    margin-top: 2%;
+    display: flex;
+    justify-content: center;
+}
+.main{
+    width: 90%;
+}
+.invitedUser{
+    min-height: 60px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    padding-bottom: 2%;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.2);
+    animation-name: appering;
+    animation-duration: 1s;
+    transition: 0.5s ease;
+}
+.userAvatar{
+    width: 10%
+}
+.userAvatar img{
+    width: 50px;
+    border-radius: 50px;
+}
+.userInfo{
+    display: flex;
+    flex-direction: column;
+    margin-left: 5%;
+    color: #6b737e;
+}
+.userProfile{
+    padding-top: 2%;
+    display: flex;
+    align-items: center;
+    padding-left: 5%;
+    width: 100%;
+}
+.cancelInvite{
+    display: flex;
+    justify-content: center;
+    padding-top: 2%;
+    align-items: center;
+    transition: 0.5s ease;
+    cursor: pointer;
+}

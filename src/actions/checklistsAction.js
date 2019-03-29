@@ -14,11 +14,11 @@ export function saveActivePage(activePage) {
 export function resetActivePage() {
   return { type: 'RESET_ACTIVE_PAGE' };
 }
-export function saveSearchValue(searchFilter) {
-  return { type: 'SAVE_SEARCH_VALUE', payload: searchFilter };
-}
 export function changeTotalPageValue(totalPage) {
   return { type: 'CHANGE_TOTAL_PAGE_VALUE', payload: totalPage };
+}
+export function saveSearchValue(searchFilter) {
+  return { type: 'SAVE_SEARCH_VALUE', payload: searchFilter };
 }
 export function saveSelectValue(selectItems) {
   return { type: 'CHANGE_VALUE_SELECT', payload: selectItems };

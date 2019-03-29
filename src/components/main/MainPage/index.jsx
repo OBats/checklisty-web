@@ -9,6 +9,7 @@ import ShowListOfCheckList from './ShowListOfCheckList';
 import SearchBar from './SearchBar';
 import SelectPage from './SelectHowManyCheclists';
 import fetchData from '../../../actions/fetchData';
+import { changeComponentLoading } from '../../../actions/checklistsAction';
 
 const MainPage = (props) => {
   const {
@@ -19,9 +20,18 @@ const MainPage = (props) => {
     listsLoader,
     checklists,
     fetchData,
+    changeComponentLoading,
   } = props;
 
+  useEffect(() => () => {
+    changeComponentLoading(true);
+    return () => {
+      changeComponentLoading(true);
+    };
+  }, []);
+
   useEffect(() => {
+    changeComponentLoading(true);
     fetchData(activePage, searchFilter, selectItems);
   }, [activePage, searchFilter, selectItems]);
 
@@ -39,21 +49,21 @@ const MainPage = (props) => {
           <div className={styles.listContainer}>
             { listsLoader ? <div className={loaderStyle.loader}>Loading...</div> : (
               <>
-                {checklists.length !== 0
+                {checklists !== null && checklists.length !== 0
                   ? <ShowListOfCheckList data={checklists} />
                   : <NotFound notFound={searchFilter} />}
               </>
             )}
             <div className={styles.modalWindow}>
-              {checklists.length !== 0 && !listsLoader
+              {checklists !== null && checklists.length !== 0 && !listsLoader
                 ? <CreateChecklistModal /> : false}
             </div>
           </div>
           <div className={styles.selectItemsContainer}>
-            {checklists.length !== 0 && <SelectPage />}
+            {checklists !== null && checklists.length !== 0 && <SelectPage />}
           </div>
         </div>
-        {checklists.length !== 0
+        {checklists !== null && checklists.length !== 0
           ? <PaginationControlled searchValue={searchFilter === undefined ? '' : searchFilter} />
           : null}
       </div>
@@ -78,6 +88,9 @@ const mapStateToProps = (
 const mapDispatchToProps = dispatch => ({
   fetchData: (activePage, searchFilter, selectItems) => {
     dispatch(fetchData(activePage, searchFilter, selectItems));
+  },
+  changeComponentLoading: (componentLoader) => {
+    dispatch(changeComponentLoading(componentLoader));
   },
 });
 

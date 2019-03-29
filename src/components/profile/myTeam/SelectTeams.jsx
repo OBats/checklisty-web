@@ -1,14 +1,14 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import styles from './SelectPage.module.css';
-import { resetActivePage, saveSelectValue } from '../../../actions/checklistsAction';
+import styles from '../../main/MainPage/SelectPage.module.css';
+import { resetActivePage, saveTeamsAmount } from '../../../actions/selectUserAction';
 
 
 function SelectPage(props) {
-  const { saveSelectValue, resetActivePage, selectItems } = props;
+  const { saveTeamsAmount, resetActivePage, selectTeams } = props;
   const getSelectValue = (value) => {
     resetActivePage();
-    saveSelectValue(value);
+    saveTeamsAmount(value);
   };
   return (
     <div className={styles.selectContainer}>
@@ -16,7 +16,7 @@ function SelectPage(props) {
       <select
         className={styles.select}
         onChange={e => getSelectValue(e.target.value)}
-        value={selectItems}
+        value={selectTeams}
       >
         <option value="5">5</option>
         <option value="15">15</option>
@@ -26,14 +26,14 @@ function SelectPage(props) {
   );
 }
 
-const mapStateToProps = ({ checklists }) => (
+const mapStateToProps = ({ selectedUsers }) => (
   {
-    selectItems: checklists.selectItems,
+    selectTeams: selectedUsers.selectTeams,
   });
 
 const mapDispatchToProps = dispatch => ({
-  saveSelectValue: (selectItems) => {
-    dispatch(saveSelectValue(selectItems));
+  saveTeamsAmount: (selectItems) => {
+    dispatch(saveTeamsAmount(selectItems));
   },
   resetActivePage: () => {
     dispatch(resetActivePage());

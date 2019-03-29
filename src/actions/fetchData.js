@@ -4,7 +4,7 @@ import http from '../api/http';
 export default function fetchData(activePage, searchFilter, selectItems) {
   return function (dispatch) {
     dispatch({ type: 'CHANGE_LISTS_LOADING', payload: true });
-    http.get(`api/checklists/page=${activePage}/search=${searchFilter}/limit=${selectItems}`)
+    http.get(`api/checklists/?page=${activePage}&search=${searchFilter}&limit=${selectItems}`)
       .then((res) => {
         dispatch({ type: 'FETCH_CHECKLISTS', payload: res.data.result });
         dispatch({ type: 'SAVE_SEARCH_VALUE', payload: searchFilter });

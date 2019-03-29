@@ -1,0 +1,70 @@
+.nameContainer{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 2%;
+}
+.formContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.errorInput{
+    border: 2px solid #d31f1f !important;
+    border-radius: .28571429rem;
+    width: 100%;
+
+}
+.validError{
+    color: #d31f1f !important;
+}
+.nameLabel{
+    width: 90%;
+}
+.nameInput{
+    width: 100%;
+} 
+.searchUserContainer{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.findMembersContainer{
+    width: 90%;
+}
+.searchUserInput{
+    width: 100%;
+    border: 1px solid rgba(34, 36, 38, .15);
+    border-right: none;
+    padding: .67857143em 1em;
+    border-top-left-radius: .28571429rem;
+    border-bottom-left-radius: .28571429rem;
+    margin: 0;
+    color: rgba(0, 0, 0, .87);
+}
+.searchContainer{
+    display: flex;
+    align-items: center;
+}
+.searchIcon{
+    border: 1px solid rgba(34, 36, 38, .15);
+    border-left: none;    
+    height: 37px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-top-right-radius: .28571429rem;
+    border-bottom-right-radius: .28571429rem;
+    padding-right: 10px;
+}
+.buttonContainer{
+    display: flex;
+    width: 90%;
+    justify-content: center;
+    margin-top: 2%;
+}
+.modalHeader{
+    text-align: center;
+}

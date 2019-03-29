@@ -3,14 +3,27 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    height: 600px;
+    min-height: 600px;
+}
+.mainContent{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    margin-top: 1%;
+}
+.content{
+    min-height: 380px;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
 }
 .noTeamContainer{
     display: flex;
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    width: 80%;
+    width: 100%;
 }
 .btnTeam{
     width: 100%;
@@ -34,3 +47,112 @@
 .goBackText{
     margin-top: 7%;
 }
+.teamBlock{
+    border-top: 2px solid #A2C9C7;
+    width: 50%;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    height: 70px;
+    transition: all 0.5s;
+}
+.teamBlock:hover{
+    background-color: rgb(221, 231, 241);
+}
+.teamBlock:first-child{
+    border-top: none;
+}
+.createNewTeam{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+.selectContainer{
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 13%;
+}
+.selectTeams{
+    display: flex;
+    justify-content: flex-end;
+}
+.teamLogo{
+    width: 5%;
+    margin: 1%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.teamLogo img{
+    width: 100%;
+}
+.teamContainer{
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+    padding-top: 2%;
+
+}
+.teamInfo{
+    margin-left: 5%;
+    color: #000;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+.teamName{
+    font-size: 23px;
+}
+.teamName:hover {
+    text-decoration: underline;
+}
+.mainTeamInfo{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.myTeamContent{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 64vh;
+    justify-content: flex-start;
+    padding-top: 1%;
+    background-color: #ededed;
+}
+.myTeamList{
+    width: 100%;
+}
+.teamCreationDate{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.additionalInfo{
+    margin-right: 5%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.teamCreator{
+    font-style: italic;
+    color: rgb(145, 150, 153);
+    font-size: 15px;
+    font-weight: bolder;
+    padding-top: 10px;
+
+}
+.footerContainer{
+    display: flex;
+    justify-content: center;
+}
+.loaderContainer{
+    height: 380px;
+    display: flex;
+    align-items: center;
+}
+

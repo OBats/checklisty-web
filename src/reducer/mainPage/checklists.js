@@ -7,7 +7,7 @@ const initialState = {
   totalPage: 1,
   listsLoader: false,
   activePage: 1,
-  searchFilter: 'undefined',
+  searchFilter: '',
   selectItems: 5,
 };
 
@@ -25,18 +25,18 @@ const reducer = (state = initialState, action) => {
               componentLoader: action.payload,
             };
           }
-        case 'CHANGE_TOTAL_PAGE_VALUE': {
-            return {
-              ...state,
-              totalPage: action.payload,
-            };
-          }
         case 'CHANGE_LISTS_LOADING': {
             return {
                 ...state,
                 listsLoader: action.payload,
             };
         }
+        case 'CHANGE_TOTAL_PAGE_VALUE': {
+            return {
+              ...state,
+              totalPage: action.payload,
+            };
+          }
         case 'SAVE_ACTIVE_PAGE': {
             return {
               ...state,
