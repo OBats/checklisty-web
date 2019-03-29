@@ -39,7 +39,7 @@ const MyTeam = (props) => {
       <div className={loaderStyle.loader}>Loading...</div>
     );
   }
-  if (teams.length !== 0) {
+  if (teams && teams.length !== 0) {
     return (
       <div className={styles.myTeamList}>
         <Header title="My Teams" />
