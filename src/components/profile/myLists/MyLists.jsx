@@ -15,8 +15,6 @@ const MyList = (props) => {
   const pageLimit = 5;
   let totalRecords = 0;
   let totalPages = 1;
-  // let currentPage = 0;
-  // console.log(currentPage);
   const [currentPage, setCurrentPage] = useState(1);
   const [checklists, setChecklists] = useState(null);
   const [currentChecklists, setCurrentChecklists] = useState(null);
@@ -28,8 +26,8 @@ const MyList = (props) => {
     const getLists = async () => {
       try {
         const { data } = await http.get(`/api/checklists/author=${user._id}`);
-
         if (data.length) setChecklists(data);
+        console.log(data);
         setLoading(false);
       } catch {
         ErrorHandling('Something go wrong!');
@@ -40,12 +38,12 @@ const MyList = (props) => {
   }, []);
 
   if (checklists && checklists.length) {
-    totalRecords = checklists.length;
+    totalRecords = searching ? filtered.length : checklists.length;
     totalPages = Math.ceil(totalRecords / pageLimit);
   }
 
   const changePage = (page, currentList) => {
-    const lists = currentList || checklists;
+    const lists = searching ? currentList || filtered : currentList || checklists;
 
     if (Math.ceil(lists.length / pageLimit) < page) {
       const offset = (page - 2) * pageLimit;
@@ -59,6 +57,10 @@ const MyList = (props) => {
       setCurrentChecklists(paginatedLists);
     }
   };
+
+  useEffect(() => {
+    changePage(currentPage, filtered);
+  }, [filtered]);
 
   const deleteList = (id) => {
     try {
@@ -92,7 +94,7 @@ const MyList = (props) => {
           <ListStatistic setFiltered={setFiltered} setSearching={setSearching} lists={checklists} />
           <Segment>
             <ListItem
-              lists={searching ? filtered : currentChecklists}
+              lists={currentChecklists}
               del={deleteList}
             />
           </Segment>

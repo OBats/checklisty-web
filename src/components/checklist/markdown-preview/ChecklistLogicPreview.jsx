@@ -9,7 +9,6 @@ class ChecklistLogicPreview extends Component {
       data: checkListData,
       checkboxArray: null,
       accordionIndexArray: [],
-      iconNameArray: [],
       isWholeChecklistHidden: false,
       currentProgress: 0,
     };
@@ -21,19 +20,17 @@ class ChecklistLogicPreview extends Component {
 
   startInitializing = (onMount, checkListData) => {
     const accordionIndexArray = [];
-    const iconNameArray = [];
     const checkboxArray = [];
     const { data } = this.state;
     for (let i = 0; i < data.items_data.length; i += 1) {
       accordionIndexArray.push(-1);
-      iconNameArray.push('chevron down');
       checkboxArray.push(false);
     }
     if (onMount) {
-      return this.setState({ checkboxArray, accordionIndexArray, iconNameArray });
+      return this.setState({ checkboxArray, accordionIndexArray });
     }
     return this.setState({
-      data: checkListData, checkboxArray, accordionIndexArray, iconNameArray,
+      data: checkListData, checkboxArray, accordionIndexArray,
     });
   }
 
@@ -56,14 +53,11 @@ class ChecklistLogicPreview extends Component {
   }
 
   handleClickAccordion = (index) => {
-    const { accordionIndexArray, iconNameArray } = this.state;
+    const { accordionIndexArray } = this.state;
     const accordionIndexArrayTemporal = [...accordionIndexArray];
     accordionIndexArrayTemporal[index] = accordionIndexArrayTemporal[index] === 0 ? -1 : 0;
-    const iconNameArrayTemporal = [...iconNameArray];
-    iconNameArrayTemporal[index] = accordionIndexArrayTemporal[index] === 0 ? 'chevron up' : 'chevron down';
     this.setState({
       accordionIndexArray: accordionIndexArrayTemporal,
-      iconNameArray: iconNameArrayTemporal,
     });
   }
 
@@ -87,16 +81,14 @@ class ChecklistLogicPreview extends Component {
   }
 
   handleOpenAllAccordions = () => {
-    this.setState(({ accordionIndexArray, iconNameArray }) => ({
+    this.setState(({ accordionIndexArray }) => ({
       accordionIndexArray: accordionIndexArray.map(() => 0),
-      iconNameArray: iconNameArray.map(() => 'chevron up'),
     }));
   }
 
   handleCloseAllAccordions = () => {
-    this.setState(({ accordionIndexArray, iconNameArray }) => ({
+    this.setState(({ accordionIndexArray }) => ({
       accordionIndexArray: accordionIndexArray.map(() => -1),
-      iconNameArray: iconNameArray.map(() => 'chevron down'),
     }));
   }
 
@@ -107,7 +99,6 @@ class ChecklistLogicPreview extends Component {
       isWholeChecklistHidden,
       accordionIndexArray,
       checkboxArray,
-      iconNameArray,
     } = this.state;
     const { checklistIndex } = this.props;
     if (checkboxArray) {
@@ -118,7 +109,6 @@ class ChecklistLogicPreview extends Component {
           isWholeChecklistHidden={isWholeChecklistHidden}
           accordionIndexArray={accordionIndexArray}
           checkboxArray={checkboxArray}
-          iconNameArray={iconNameArray}
           checklistIndex={checklistIndex}
           handleChecked={this.handleChecked}
           handleClickAccordion={this.handleClickAccordion}

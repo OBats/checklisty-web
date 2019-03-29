@@ -12,7 +12,7 @@ const PaginationPage = ({ totalPages, changePage, setCurrentPage }) => {
     changePage(1);
   }, [1]);
 
-  if (totalPages === 1) return null;
+  if (totalPages === 1 || totalPages === 0) return null;
 
   return (
     <Pagination
