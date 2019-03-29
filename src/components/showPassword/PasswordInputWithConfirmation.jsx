@@ -1,8 +1,8 @@
 import React from 'react';
 import { Button, Icon, Input } from 'semantic-ui-react';
-import styles from './PasswordInput.module.css';
+import styles from './PasswordInputWithConfirmation.module.css';
 
-class PasswordInput extends React.Component {
+class PasswordInputWithConfirmation extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -24,22 +24,29 @@ class PasswordInput extends React.Component {
       handleChange,
       handleBlur,
       name,
+      confirmName,
       placeholder,
+      placeholderForConfirm,
       value,
-      touched,
       errors,
+      errorsConfirm,
+      touched,
+      touchedConfirm,
+      valueForConfirm,
     } = this.props;
     return (
       <div className={styles.passwordWrapper}>
         <Input
-          id={id}
-          className={
-            touched && errors ? styles.passwordInputError : styles.passwordInput
-          }
+          id="maskInput"
           value={value}
           required
           icon="lock"
           iconPosition="left"
+          className={
+            touched && errors
+              ? styles.passwordConfirmInputError
+              : styles.passwordInput
+          }
           placeholder={placeholder}
           type={passwordIsMasked ? 'password' : 'text'}
           name={name}
@@ -47,11 +54,31 @@ class PasswordInput extends React.Component {
           onBlur={handleBlur}
           fluid
         />
+
+        <Input
+          id={id}
+          className={
+            touchedConfirm && errorsConfirm
+              ? styles.passwordConfirmInputError
+              : styles.passwordConfirmInput
+          }
+          value={valueForConfirm}
+          required
+          icon="lock"
+          iconPosition="left"
+          placeholder={placeholderForConfirm}
+          type={passwordIsMasked ? 'password' : 'text'}
+          name={confirmName}
+          onChange={handleChange}
+          onBlur={handleBlur}
+          fluid
+        />
+
         <Button
           basic
           onClick={this.togglePasswordMask}
           size="big"
-          className={styles.passwordMask}
+          className={styles.passwordConfirmMask}
           type="button"
         >
           <Icon
@@ -64,4 +91,4 @@ class PasswordInput extends React.Component {
   }
 }
 
-export default PasswordInput;
+export default PasswordInputWithConfirmation;

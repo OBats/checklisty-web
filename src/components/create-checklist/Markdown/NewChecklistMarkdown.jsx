@@ -4,7 +4,8 @@ import { mdParse } from './MakdownParser';
 import previewExample from './mdExample';
 import Markdown from './Markdown';
 import styles from './css/NewChecklistMarkdown.module.css';
-import { ErrorHandling, SuccessHandling } from '../../toasters/MessagesHandling';
+import { ErrorHandling,
+  SuccessHandling } from '../../toasters/MessagesHandling';
 import MarkdownButtons from './MarkdownButtons';
 
 const NewChecklistMarkdown = (props) => {
@@ -23,7 +24,12 @@ const NewChecklistMarkdown = (props) => {
   const handleFileRead = (e) => {
     const content = e.target.result;
     const parsedData = mdParse(content);
-    setMdValue([...mdValue, content].toString().split(',').join(''));
+    setMdValue(
+      [...mdValue, content]
+        .toString()
+        .split(',')
+        .join(''),
+    );
     setCheckList(parsedData.fullyParsedData);
   };
 
@@ -127,17 +133,24 @@ const NewChecklistMarkdown = (props) => {
       <Markdown
         mdValue={mdValue}
         checkList={checkList}
-        handleMarkdownChange={newValue => handleMarkdownChange(newValue, isPrivate)}
+        handleMarkdownChange={newValue => handleMarkdownChange(newValue, isPrivate)
+        }
         errorArr={errorArr}
       />
       <div className={styles.btnWrapper}>
         <input
           type="file"
-          ref={(input) => { inputFile = input; }}
+          ref={(input) => {
+            inputFile = input;
+          }}
           accept=".md"
           style={{ display: 'none' }}
-          onClick={(e) => { e.target.value = null; }}
-          onChange={(e) => { handleFileChosen(e); }}
+          onClick={(e) => {
+            e.target.value = null;
+          }}
+          onChange={(e) => {
+            handleFileChosen(e);
+          }}
         />
         <MarkdownButtons
           isSaving={isSaving}

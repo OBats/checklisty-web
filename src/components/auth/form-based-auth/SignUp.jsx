@@ -3,12 +3,20 @@ import { Formik, Form } from 'formik';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import Link from 'react-router-dom/Link';
-import { Input, Button, Grid, Segment, Message, Header, Divider } from 'semantic-ui-react';
+import { Input,
+  Button,
+  Grid,
+  Segment,
+  Message,
+  Header,
+  Divider } from 'semantic-ui-react';
 import style from './css/auth.module.css';
+import styleBlocks from './css/twoBlockFields.module.css';
 import { signUp } from '../../../api/auth-api';
 import { SignupSchema } from './validationSchema';
 import { saveUserData } from '../../../actions/user';
-import { ErrorHandling } from '../../toasters/MessagesHandling';
+import { ErrorHandling,
+  MessageContainer } from '../../toasters/MessagesHandling';
 import PasswordInput from '../../showPassword/PasswordInput';
 import SocialAuthentication from '../social-auth/SocialAuthentication';
 
@@ -21,7 +29,11 @@ const SignUp = ({ loggedUser, saveUserData }) => {
             <Segment raised>
               <Header textAlign="center" size="huge">
                 {'Sign Up'}
-                <Header.Subheader size="small" color="grey" className={style.subheader}>
+                <Header.Subheader
+                  size="small"
+                  color="grey"
+                  className={style.subheader}
+                >
                   {'Become our member with:'}
                 </Header.Subheader>
               </Header>
@@ -31,19 +43,33 @@ const SignUp = ({ loggedUser, saveUserData }) => {
               </Divider>
               <Formik
                 initialValues={{
-                  username: '', email: '', password: '',
+                  firstname: '',
+                  lastname: '',
+                  username: '',
+                  email: '',
+                  password: '',
+                  confirmPassword: '',
                 }}
                 validationSchema={SignupSchema}
                 onSubmit={(values, actions) => {
-                  signUp(values)
+                  const obj = values;
+                  delete obj.confirmPassword;
+                  signUp(obj)
                     .then((data) => {
                       saveUserData(data);
                     })
                     .catch((error) => {
+                      values.password = '';
+                      values.confirmPassword = '';
                       if (!error.response || error.response.status === 500) {
-                        ErrorHandling('Server is down. Please try again later.');
+                        ErrorHandling(
+                          'Server is down. Please try again later.',
+                        );
                       } else {
-                        ErrorHandling(error.response.data.username || error.response.data.email);
+                        ErrorHandling(
+                          error.response.data.username
+                            || error.response.data.email,
+                        );
                       }
                       actions.setSubmitting(false);
                     });
@@ -60,9 +86,60 @@ const SignUp = ({ loggedUser, saveUserData }) => {
                   isSubmitting,
                 }) => (
                   <Form onSubmit={handleSubmit}>
+                    <div className={styleBlocks.fullBlock}>
+                      <div className={styleBlocks.leftBlock}>
+                        <Input
+                          className={
+                            touched.firstname && errors.firstname
+                              ? style.InputError
+                              : style.Input
+                          }
+                          required
+                          fluid
+                          placeholder="Firstname"
+                          type="text"
+                          name="firstname"
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          value={values.firstname}
+                        />
+                        {touched.firstname && errors.firstname && (
+                          <div className={style.Error}>
+                            {touched.firstname && errors.firstname}
+                          </div>
+                        )}
+                      </div>
+
+                      <div className={styleBlocks.rightBlock}>
+                        <Input
+                          className={
+                            touched.lastname && errors.lastname
+                              ? style.InputError
+                              : style.Input
+                          }
+                          required
+                          fluid
+                          placeholder="Lastname"
+                          type="text"
+                          name="lastname"
+                          onChange={handleChange}
+                          onBlur={handleBlur}
+                          value={values.lastname}
+                        />
+                        {touched.lastname && errors.lastname && (
+                          <div className={style.Error}>
+                            {touched.lastname && errors.lastname}
+                          </div>
+                        )}
+                      </div>
+                    </div>
+
                     <Input
-                      className={touched.username && errors.username
-                        ? style.InputError : style.Input}
+                      className={
+                        touched.username && errors.username
+                          ? style.InputError
+                          : style.Input
+                      }
                       required
                       icon="user"
                       iconPosition="left"
@@ -80,7 +157,13 @@ const SignUp = ({ loggedUser, saveUserData }) => {
                       </div>
                     )}
                     <Input
-                      className={touched.email && errors.email ? style.InputError : style.Input}
+                      className={
+                        touched.email && errors.email
+                          ? style.InputError
+                          : style.Input
+                      }
+                      touched={touched}
+                      errors={errors}
                       required
                       icon="mail"
                       iconPosition="left"
@@ -97,13 +180,12 @@ const SignUp = ({ loggedUser, saveUserData }) => {
                         {touched.email && errors.email}
                       </div>
                     )}
+
                     <PasswordInput
-                      className={touched.password && errors.password
-                        ? style.InputError : style.Input}
-                      touched={touched}
+                      touched={touched.password}
+                      errors={errors.password}
                       name="password"
                       placeholder="Password"
-                      errors={errors}
                       value={values.password}
                       handleChange={handleChange}
                       handleBlur={handleBlur}
@@ -113,6 +195,22 @@ const SignUp = ({ loggedUser, saveUserData }) => {
                         {touched.password && errors.password}
                       </div>
                     )}
+                    <PasswordInput
+                      touched={touched.confirmPassword}
+                      errors={errors.confirmPassword}
+                      name="confirmPassword"
+                      placeholder="Confirm password"
+                      value={values.confirmPassword}
+                      handleChange={handleChange}
+                      handleBlur={handleBlur}
+                    />
+                    {touched.confirmPassword && errors.confirmPassword && (
+                      <div className={style.Error}>
+                        {touched.confirmPassword && errors.confirmPassword}
+                      </div>
+                    )}
+
+                    <MessageContainer />
                     <Button
                       className={style.AuthBtn}
                       fluid
@@ -121,7 +219,7 @@ const SignUp = ({ loggedUser, saveUserData }) => {
                       type="submit"
                       disabled={isSubmitting || !isValid}
                     >
-                        Sign Up
+                      Sign Up
                     </Button>
                   </Form>
                 )}
@@ -149,4 +247,7 @@ const mapDispatchToProps = dispatch => ({
   },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(SignUp);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(SignUp);

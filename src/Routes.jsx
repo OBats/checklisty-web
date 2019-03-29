@@ -32,10 +32,26 @@ const Routes = () => (
       <ProtectedRoute exact path="/profile/myteam" component={ProfileTeam} />
       <ProtectedRoute exact path="/admin" component={AdminBoard} />
       <Route exact path="/:id" component={ShowCheckList} />
-      <ProtectedRoute exact path="/create-checklist/form" component={NewChecklistForm} />
-      <ProtectedRoute exact path="/create-checklist/markdown" component={NewChecklistMarkdown} />
-      <ProtectedRoute exact path="/edit-checklist/:slug" component={EditChecklistForm} />
-      <ProtectedRoute exact path="/edit-checklist-markdown/:slug" component={EditChecklistMarkdown} />
+      <ProtectedRoute
+        exact
+        path="/create-checklist/form"
+        component={NewChecklistForm}
+      />
+      <ProtectedRoute
+        exact
+        path="/create-checklist/markdown"
+        component={NewChecklistMarkdown}
+      />
+      <ProtectedRoute
+        exact
+        path="/edit-checklist/:slug"
+        component={EditChecklistForm}
+      />
+      <ProtectedRoute
+        exact
+        path="/edit-checklist-markdown/:slug"
+        component={EditChecklistMarkdown}
+      />
       <Redirect exact to="/" />
     </Switch>
     <MessageContainer />

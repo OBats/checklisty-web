@@ -6,7 +6,11 @@ import 'brace/mode/markdown';
 import 'brace/theme/textmate';
 
 const Markdown = ({ errorArr, ...props }) => {
-  const errors = errorArr.map(err => ({ row: err.indexError, type: 'error', text: err.msg }));
+  const errors = errorArr.map(err => ({
+    row: err.indexError,
+    type: 'error',
+    text: err.msg,
+  }));
 
   return (
     <div className={styles.markdownSection}>

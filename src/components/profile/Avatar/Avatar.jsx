@@ -5,7 +5,8 @@ import { connect } from 'react-redux';
 import style from './Avatar.module.css';
 import loaderStyle from '../../main/loader.module.css';
 import { postAvatarUrl } from '../../../api/auth-api';
-import { ErrorHandling, SuccessHandling } from '../../toasters/MessagesHandling';
+import { ErrorHandling,
+  SuccessHandling } from '../../toasters/MessagesHandling';
 import { saveUserData } from '../../../actions/user';
 import avatar from './avatar.png';
 
@@ -43,7 +44,8 @@ class AvatarForProfile extends React.Component {
           });
           this.props.saveUserData(res);
           SuccessHandling('Image changed!');
-        }).catch((err) => {
+        })
+        .catch((err) => {
           ErrorHandling(err.message);
           this.setState(() => ({
             modalOpen: false,
@@ -54,11 +56,11 @@ class AvatarForProfile extends React.Component {
 
   close = () => {
     this.setState({ modalOpen: false });
-  }
+  };
 
   onClose = () => {
     this.setState({ preview: null });
-  }
+  };
 
   onCrop = preview => this.setState({
     preview,
@@ -75,9 +77,7 @@ class AvatarForProfile extends React.Component {
   render() {
     const { modalOpen, loading } = this.state;
     if (loading) {
-      return (
-        <div className={loaderStyle.loader}>Loading...</div>
-      );
+      return <div className={loaderStyle.loader}>Loading...</div>;
     }
     return (
       <div>
@@ -90,6 +90,7 @@ class AvatarForProfile extends React.Component {
                 className={style.hvrRadialOut}
               >
                 <Image
+                  className={style.avatarFixBox}
                   src={
                     this.state.avatarUrl
                     || avatar
@@ -137,4 +138,7 @@ const mapDispatchToProps = dispatch => ({
   },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(AvatarForProfile);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(AvatarForProfile);

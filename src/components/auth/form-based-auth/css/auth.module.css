@@ -1,6 +1,6 @@
 .Auth.Auth {
   height: calc(100vh - 80px);
-  background-color: #EDEDED;
+  background-color: #ededed;
   margin: -14px 0 0 0;
 }
 
@@ -31,7 +31,7 @@
   margin-bottom: 10px;
 }
 
-.InputError>input {
+.InputError > input {
   background-color: #fff6f6 !important;
   border-color: #eb5656 !important;
   color: #9f3a38 !important;
@@ -39,7 +39,7 @@
 }
 
 .AuthBtn.AuthBtn.AuthBtn.AuthBtn {
-  background-color: #3A4753;
+  background-color: #3a4753;
 }
 
 .AuthBtn.AuthBtn.AuthBtn.AuthBtn:hover {
@@ -49,8 +49,8 @@
 .subheader {
   margin: 10px 0 15px 0 !important;
 }
-  
-.forgotPassword{
+
+.forgotPassword {
   display: flex;
   justify-content: flex-end;
   font-weight: 600;

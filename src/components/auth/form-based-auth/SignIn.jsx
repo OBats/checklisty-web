@@ -2,7 +2,13 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { Formik, Form } from 'formik';
-import { Input, Button, Grid, Segment, Message, Header, Divider } from 'semantic-ui-react';
+import { Input,
+  Button,
+  Grid,
+  Segment,
+  Message,
+  Header,
+  Divider } from 'semantic-ui-react';
 import Link from 'react-router-dom/Link';
 import style from './css/auth.module.css';
 import { signIn } from '../../../api/auth-api';
@@ -21,7 +27,11 @@ const SignIn = ({ loggedUser, saveUserData }) => {
             <Segment raised>
               <Header textAlign="center" size="huge">
                 {'Sign In'}
-                <Header.Subheader size="small" color="grey" className={style.subheader}>
+                <Header.Subheader
+                  size="small"
+                  color="grey"
+                  className={style.subheader}
+                >
                   {'Connect our website using:'}
                 </Header.Subheader>
               </Header>
@@ -31,7 +41,8 @@ const SignIn = ({ loggedUser, saveUserData }) => {
               </Divider>
               <Formik
                 initialValues={{
-                  email: '', password: '',
+                  email: '',
+                  password: '',
                 }}
                 validationSchema={SigninSchema}
                 onSubmit={(values, actions) => {
@@ -41,7 +52,9 @@ const SignIn = ({ loggedUser, saveUserData }) => {
                     })
                     .catch((error) => {
                       if (!error.response || error.response.status === 500) {
-                        ErrorHandling('Server is down. Please try again later.');
+                        ErrorHandling(
+                          'Server is down. Please try again later.',
+                        );
                       } else {
                         ErrorHandling(error.response.data.message);
                       }
@@ -61,7 +74,11 @@ const SignIn = ({ loggedUser, saveUserData }) => {
                 }) => (
                   <Form onSubmit={handleSubmit}>
                     <Input
-                      className={touched.email && errors.email ? style.InputError : style.Input}
+                      className={
+                        touched.email && errors.email
+                          ? style.InputError
+                          : style.Input
+                      }
                       required
                       icon="mail"
                       iconPosition="left"
@@ -79,12 +96,10 @@ const SignIn = ({ loggedUser, saveUserData }) => {
                       </div>
                     )}
                     <PasswordInput
-                      className={touched.password && errors.password
-                        ? style.InputError : style.Input}
-                      touched={touched}
+                      touched={touched.password}
+                      errors={errors.password}
                       name="password"
                       placeholder="Password"
-                      errors={errors}
                       value={values.password}
                       handleChange={handleChange}
                       handleBlur={handleBlur}
@@ -102,7 +117,7 @@ const SignIn = ({ loggedUser, saveUserData }) => {
                       type="submit"
                       disabled={isSubmitting || !isValid}
                     >
-                        Sign In
+                      Sign In
                     </Button>
                     <div className={style.forgotPassword}>
                       <Link to="/auth/forgot-password/">Forgot Password?</Link>
@@ -133,4 +148,7 @@ const mapDispatchToProps = dispatch => ({
   },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(SignIn);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(SignIn);
