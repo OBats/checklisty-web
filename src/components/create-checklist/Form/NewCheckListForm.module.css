@@ -4,6 +4,10 @@
   padding: 0 30px;
 }
 
+.icon {
+  transition: all .3s;
+}
+
 @media screen and (min-width: 480px) {
   .main_form.main_form {
     padding: 0 70px;

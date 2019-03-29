@@ -4,7 +4,7 @@ import logo from './logo.svg';
 
 const Banner = props => (
   <div className={styles.BannerWrapper}>
-    <img src={logo} alt="logo" width={140} />
+    <img src={logo} alt="logo" className={styles.logo} />
     <h1 className={styles.banner}>{props.title ? props.title : 'Checklisty'}</h1>
   </div>
 );

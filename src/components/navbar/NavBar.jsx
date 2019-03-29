@@ -7,6 +7,7 @@ import { signOut } from '../../api/auth-api';
 import style from './NavBar.module.css';
 import home from './logo.png';
 import { handleSignOut } from '../../actions/user';
+import avatar from '../profile/Avatar/avatar.png';
 
 
 const NavBar = ({ userData, handleSignOut }) => (
@@ -100,7 +101,7 @@ const NavBar = ({ userData, handleSignOut }) => (
           </Dropdown>
           <Menu.Item className={style.NavBarAvatarWrapper}>
             <Image
-              src={userData.image || 'https://uniandes.hcmifactum.com/resources/images/no-image.jpg'}
+              src={userData.image || avatar}
               style={{ width: '60px' }}
               size="tiny"
               avatar

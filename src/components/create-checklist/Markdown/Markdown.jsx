@@ -11,7 +11,6 @@ const Markdown = ({ errorArr, ...props }) => {
   return (
     <div className={styles.markdownSection}>
       <div className={styles.markdownWrapper}>
-        <div>{props.index}</div>
         <div className={styles.markdownEditor}>
           <AceEditor
             className={styles.aceEditor}

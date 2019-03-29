@@ -4,12 +4,12 @@ export const createChecklist = values => (
   http.post('/api/checklists/create', values)
 );
 
-export const getChecklist = async id => (
-  http.get(`/api/checklists/${id}`)
+export const getChecklist = slug => (
+  http.get(`/api/checklists/${slug}`)
 );
 
-export const updateChecklist = (id, values) => (
-  http.put(`/api/checklists/${id}`, values)
+export const updateChecklist = (slug, values) => (
+  http.put(`/api/checklists/${slug}`, values)
 );
 
 export const updateSlug = (id, newSlug) => (

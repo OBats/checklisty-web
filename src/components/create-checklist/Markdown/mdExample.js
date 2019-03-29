@@ -1,4 +1,4 @@
-export const previewExample = {
+const previewExample = {
   title: 'Movies',
   sections_data: [
     {
@@ -16,4 +16,4 @@ export const previewExample = {
   ],
 };
 
-export { previewExample as default };
+export default previewExample;

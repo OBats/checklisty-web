@@ -10,9 +10,17 @@
   margin: 0;
   margin-left: 20px;
 }
-@media (max-width: 530px){
+
+.logo {
+  max-width: 140px;
+}
+
+@media (max-width: 670px){
   .BannerWrapper{
     flex-direction: column;
     align-items: center;
+  }
+  .banner {
+    font-size: 60px;
   }
 }

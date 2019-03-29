@@ -1,7 +1,7 @@
 export function jsonToMd(data) {
   let md = `# ${data.title}\n`;
   data.sections_data.map((section) => {
-    md += `## ${section.section_title}\n`;
+    md += `\n## ${section.section_title}\n`;
     section.items_data.map((item) => {
       md += `### ${item.item_title}\n`;
       if (item.description) {

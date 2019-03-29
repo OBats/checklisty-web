@@ -67,10 +67,15 @@ const NewChecklistForm = () => {
         />
 
         <Segment color="blue">
-          <Icon color="green" className={styles.icon} name="lock" />
+          <Icon
+            color={values.isPrivate ? 'red' : 'green'}
+            name={values.isPrivate ? 'lock' : 'unlock'}
+            size="large"
+            className={styles.icon}
+          />
           <Checkbox
             fitted
-            label="Make list private"
+            label={values.isPrivate ? 'Private' : 'Public'}
             name="isPrivate"
             toggle
             checked={!!values.isPrivate}

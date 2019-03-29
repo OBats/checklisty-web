@@ -5,7 +5,7 @@ import Textarea from 'react-textarea-autosize';
 import accordionStyles from './Accordion.module.css';
 
 const Accordion = (props) => {
-  const { name, handleBlur, handleChange } = props;
+  const { name, handleBlur, handleChange, details } = props;
 
   return (
     <Collapsible
@@ -15,6 +15,7 @@ const Accordion = (props) => {
       trigger="Click to add additional details in MarkDown"
     >
       <Textarea
+        defaultValue={details}
         minRows={3}
         name={name}
         onBlur={handleBlur}

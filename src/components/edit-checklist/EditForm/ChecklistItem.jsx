@@ -8,6 +8,7 @@ import makeAnimated from 'react-select/lib/animated';
 import Accordion from '../../create-checklist/Form/Accordion/Accordion';
 import { tagsOptions, priorityOptions } from '../../create-checklist/Form/utils/SelectOptions';
 import styles from '../../create-checklist/Form/Section/css/Item.module.css';
+import setLabel from './setLabel';
 
 const ChecklistItem = (props) => {
   const {
@@ -20,17 +21,6 @@ const ChecklistItem = (props) => {
     setFieldValue,
     setFieldTouched,
   } = props;
-
-  const label = function () {
-    if (values.priority === 0) {
-      return 'Low';
-    } if (values.priority === 1) {
-      return 'Medium';
-    } if (values.priority === 2) {
-      return 'High';
-    }
-    return '';
-  };
 
   return (
     <div className={styles.section}>
@@ -101,7 +91,7 @@ const ChecklistItem = (props) => {
       <Select
         defaultValue={{
           value: values.priority,
-          label: label(),
+          label: setLabel(values),
         }}
         className={styles.select}
         name={`sections_data.${sectionIndex}.items_data.${itemIndex}.priority`}
@@ -116,6 +106,7 @@ const ChecklistItem = (props) => {
 
       <Accordion
         value={values.details}
+        details={values.details}
         name={`sections_data.${sectionIndex}.items_data.${itemIndex}.details`}
         handleBlur={handleBlur}
         handleChange={handleChange}

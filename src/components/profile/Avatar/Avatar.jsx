@@ -7,6 +7,7 @@ import loaderStyle from '../../main/loader.module.css';
 import { postAvatarUrl } from '../../../api/auth-api';
 import { ErrorHandling, SuccessHandling } from '../../toasters/MessagesHandling';
 import { saveUserData } from '../../../actions/user';
+import avatar from './avatar.png';
 
 const labelStyles = {
   fontSize: '1.25em',
@@ -91,7 +92,7 @@ class AvatarForProfile extends React.Component {
                 <Image
                   src={
                     this.state.avatarUrl
-                    || 'https://react.semantic-ui.com/images/avatar/large/matthew.png'
+                    || avatar
                   }
                   size="medium"
                   circular

@@ -1,136 +1,165 @@
-import React from 'react';
-import { Button, Segment, Icon, Checkbox } from 'semantic-ui-react';
-import { confirmAlert } from 'react-confirm-alert';
-import { createChecklist } from '../../../api/checklist-api';
+import React, { useState } from 'react';
+import { createChecklist, updateChecklist } from '../../../api/checklist-api';
 import { mdParse } from './MakdownParser';
-import { previewExample } from './mdExample';
+import previewExample from './mdExample';
 import Markdown from './Markdown';
 import styles from './css/NewChecklistMarkdown.module.css';
-import 'react-confirm-alert/src/react-confirm-alert.css';
+import { ErrorHandling, SuccessHandling } from '../../toasters/MessagesHandling';
+import MarkdownButtons from './MarkdownButtons';
 
-class NewChecklistMarkdown extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      mdValue: '',
-      errorArr: [],
-      checkList: previewExample,
-      isPrivate: false,
-      isMdValid: false,
-    };
-  }
+const NewChecklistMarkdown = (props) => {
+  const [mdValue, setMdValue] = useState('');
+  const [errorArr, setErrorArr] = useState([]);
+  const [checkList, setCheckList] = useState(previewExample);
+  const [isPrivate, setIsPrivate] = useState(false);
+  const [isMdValid, setIsMdValid] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
+  const [isConfirmOpen, setIsConfirmOpen] = useState(false);
+  const [isSaved, setIsSaved] = useState(false);
+  const [slug, setSlug] = useState(null);
+  const [isSaving, setIsSaving] = useState(false);
+  let inputFile;
 
-  handleFileRead = (e) => {
+  const handleFileRead = (e) => {
     const content = e.target.result;
     const parsedData = mdParse(content);
-    this.setState({ mdValue: content, checkList: parsedData.fullyParsedData });
-  }
-
-  handleFileChosen = (file) => {
-    this.fileReader = new FileReader();
-    this.fileReader.onloadend = this.handleFileRead;
-    if (file) {
-      this.fileReader.readAsText(file);
-    }
-  }
-
-  handleInputReset = (e) => {
-    e.target.value = null;
-  }
-
-  handleMarkdownChange = (newValue, isPrivate) => {
-    const parsedData = mdParse(newValue, isPrivate);
-    this.setState({
-      mdValue: newValue,
-      errorArr: parsedData.errorArr,
-      checkList: parsedData.fullyParsedData,
-      isMdValid: parsedData.isMdValid,
-    });
-  }
-
-  handleConfirmClear = () => {
-    confirmAlert({
-      customUI: ({ onClose }) => (
-        <div className={styles.ConfirmPopup}>
-          <h1>Are you sure?</h1>
-          <p>You want to clear markdown to starting template?</p>
-          <Button negative className={styles.PopupBtn} onClick={onClose}>No</Button>
-          <Button
-            positive
-            className={styles.PopupBtn}
-            onClick={() => {
-              this.setState({ mdValue: '', checkList: '' });
-              onClose();
-            }}
-          >
-            Yes
-          </Button>
-        </div>
-      ),
-    });
-  }
-
-  handleClick = () => {
-    const input = this.refs.input_reader;
-    input.click();
+    setMdValue([...mdValue, content].toString().split(',').join(''));
+    setCheckList(parsedData.fullyParsedData);
   };
 
-  handleCreatingChecklist = (checkList) => {
-    createChecklist(checkList)
-      .then((res) => {
-        this.props.history.push(`/${res.data.slug}`);
-        this.setState({ isMdValid: false });
-      });
-  }
+  const handleFileChosen = (e) => {
+    const file = e.target.files[0];
+    const fileReader = new FileReader();
+    fileReader.onloadend = handleFileRead;
+    if (file) {
+      fileReader.readAsText(file);
+    }
+  };
 
-  render() {
-    const { mdValue, errorArr, checkList, isMdValid, isPrivate } = this.state;
-    return (
-      <div className={styles.md}>
-        <Markdown
-          mdValue={mdValue}
-          checkList={checkList}
-          handleMarkdownChange={newValue => this.handleMarkdownChange(newValue, isPrivate)}
-          errorArr={errorArr}
+  const handleMarkdownChange = (newValue, isPrivate) => {
+    const parsedData = mdParse(newValue, isPrivate);
+    const { errorArr, fullyParsedData, isMdValid } = parsedData;
+    setMdValue(newValue);
+    setErrorArr(errorArr);
+    setCheckList(fullyParsedData);
+    setIsMdValid(isMdValid);
+  };
+
+  const handleClick = () => {
+    inputFile.click();
+  };
+
+  const handleClear = () => {
+    setMdValue('');
+    setCheckList('');
+    setIsOpen(false);
+  };
+
+  const handleSaveChecklist = (checkList) => {
+    setIsSaving(true);
+    if (!isSaved) {
+      createChecklist(checkList)
+        .then((res) => {
+          setIsSaved(true);
+          setIsSaving(false);
+          setSlug(res.data.slug);
+          SuccessHandling('Your checklist has been saved successfully');
+        })
+        .catch((error) => {
+          setIsSaving(false);
+          if (error) {
+            ErrorHandling('Server is down. Please try again later.');
+          }
+        });
+    } else {
+      updateChecklist(slug, checkList)
+        .then((res) => {
+          setIsSaving(false);
+          setSlug(res.data.list.slug);
+          SuccessHandling('Your checklist has been saved successfully');
+        })
+        .catch((error) => {
+          setIsSaving(false);
+          if (error) {
+            ErrorHandling('Server is down. Please try again later.');
+          }
+        });
+    }
+  };
+
+  const handleAccept = (checkList) => {
+    if (!isSaved) {
+      createChecklist(checkList)
+        .then(() => {
+          props.history.push('/profile/mylists');
+          SuccessHandling('Your checklist has been saved successfully');
+        })
+        .catch((error) => {
+          if (error.response) {
+            ErrorHandling(error.response.data.message);
+          } else {
+            ErrorHandling('Server is down. Please try again later.');
+          }
+        });
+    } else {
+      updateChecklist(slug, checkList)
+        .then(() => {
+          props.history.push('/profile/mylists');
+          SuccessHandling('Your checklist has been saved successfully');
+        })
+        .catch((error) => {
+          if (error.response) {
+            ErrorHandling(error.response.data.message);
+          } else {
+            ErrorHandling('Server is down. Please try again later.');
+          }
+        });
+    }
+  };
+
+  const handleReject = () => {
+    setIsConfirmOpen(false);
+    props.history.push('/profile/mylists');
+  };
+
+  return (
+    <div className={styles.md}>
+      <Markdown
+        mdValue={mdValue}
+        checkList={checkList}
+        handleMarkdownChange={newValue => handleMarkdownChange(newValue, isPrivate)}
+        errorArr={errorArr}
+      />
+      <div className={styles.btnWrapper}>
+        <input
+          type="file"
+          ref={(input) => { inputFile = input; }}
+          accept=".md"
+          style={{ display: 'none' }}
+          onClick={(e) => { e.target.value = null; }}
+          onChange={(e) => { handleFileChosen(e); }}
         />
-        <div className={styles.btnWrapper}>
-          <Segment color="blue" compact>
-            <Button className={styles.btn} onClick={this.handleClick}>Upload markdown...</Button>
-            <input
-              type="file"
-              ref="input_reader"
-              accept=".md"
-              style={{ display: 'none' }}
-              onClick={this.handleInputReset}
-              onChange={e => this.handleFileChosen(e.target.files[0])}
-            />
-            <Button className={styles.btn} onClick={this.handleConfirmClear}>Clear markdown</Button>
-            <div style={{ display: 'inline-block', width: 150, marginBottom: 10 }}>
-              <Icon color="green" name="lock" size="large" />
-              <Checkbox
-                fitted
-                label={isPrivate ? 'Priviate' : 'Public'}
-                name="isPrivate"
-                toggle
-                checked={isPrivate}
-                onChange={() => {
-                  this.setState({ isPrivate: !isPrivate });
-                  this.handleMarkdownChange(mdValue, !isPrivate);
-                }}
-              />
-            </div>
-            <Button
-              className={[styles.btn, styles.createChecklistBtn].join(' ')}
-              onClick={() => this.handleCreatingChecklist(checkList)}
-              disabled={!isMdValid}
-            >
-              Save and close
-            </Button>
-          </Segment>
-        </div>
+        <MarkdownButtons
+          isSaving={isSaving}
+          isPrivate={isPrivate}
+          isOpen={isOpen}
+          isMdValid={!isMdValid}
+          isConfirmOpen={isConfirmOpen}
+          checkList={checkList}
+          mdValue={mdValue}
+          handleClick={handleClick}
+          setIsOpen={setIsOpen}
+          setIsPrivate={setIsPrivate}
+          handleMarkdownChange={handleMarkdownChange}
+          handleSaveChecklist={handleSaveChecklist}
+          setIsConfirmOpen={setIsConfirmOpen}
+          handleClear={handleClear}
+          handleReject={handleReject}
+          handleAccept={handleAccept}
+        />
       </div>
-    );
-  }
-}
+    </div>
+  );
+};
 
 export default NewChecklistMarkdown;
