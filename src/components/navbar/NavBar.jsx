@@ -43,20 +43,49 @@ const NavBar = ({ userData, handleSignOut }) => (
     {userData && (
       <React.Fragment>
         <Menu.Menu>
-          <Dropdown item text={userData.username} className={style.NavBarUsername}>
+          <Dropdown
+            item
+            text={userData.username}
+            className={style.NavBarUsername}
+          >
             <Dropdown.Menu className={style.NavBarMenu}>
-              <Dropdown.Item as={NavLink} to="/profile/maininfo" className={style.MenuItem}>
+              <Dropdown.Item
+                as={NavLink}
+                to="/profile/maininfo"
+                className={style.MenuItem}
+              >
                 <Icon name="edit" className={style.MenuItemIcon} />
                 <span className={style.MenuItemText}>Edit Profile</span>
               </Dropdown.Item>
-              <Dropdown.Item as={NavLink} to="/profile/mylists" className={style.MenuItem}>
+              <Dropdown.Item
+                as={NavLink}
+                to="/profile/mylists"
+                className={style.MenuItem}
+              >
                 <Icon name="list" className={style.MenuItemIcon} />
                 <span className={style.MenuItemText}>My Lists</span>
               </Dropdown.Item>
-              <Dropdown.Item as={NavLink} to="/profile/myteam" className={style.MenuItem}>
+              <Dropdown.Item
+                as={NavLink}
+                to="/profile/myteam"
+                className={style.MenuItem}
+              >
                 <Icon name="group" className={style.MenuItemIcon} />
                 <span className={style.MenuItemText}>Team</span>
               </Dropdown.Item>
+              {userData.role !== 'user'
+                && (
+                <>
+                  <Dropdown.Item
+                    as={NavLink}
+                    to="/admin"
+                    className={style.MenuItem}
+                  >
+                    <Icon name="group" className={style.MenuItemIcon} />
+                    <span className={style.MenuItemText}>Admin tools</span>
+                  </Dropdown.Item>
+                </>
+                )}
               <Dropdown.Item
                 className={style.MenuItem}
                 onClick={() => {

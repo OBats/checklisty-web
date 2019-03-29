@@ -1,0 +1,9 @@
+.paginationContainer{
+    display: flex;
+    justify-content: center;
+}
+@media (max-width: 410px){
+    .paginationContainer .column{
+        width: 50% !important;
+    }
+}
