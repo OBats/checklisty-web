@@ -31,7 +31,6 @@ const MainPage = (props) => {
   }, []);
 
   useEffect(() => {
-    changeComponentLoading(true);
     fetchData(activePage, searchFilter, selectItems);
   }, [activePage, searchFilter, selectItems]);
 
