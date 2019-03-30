@@ -12,6 +12,7 @@ const initialState = {
     activePage: 1,
     totalPage: 1,
     selectTeams: '5',
+    teamsAmount: null,
 };
 
 const reducer = (state = initialState, action) => {
@@ -88,6 +89,12 @@ const reducer = (state = initialState, action) => {
               ...state,
               selectTeams: action.payload,
             };
+          }
+          case 'SAVE_TEAMS_AMOUNT': {
+              return {
+                  ...state,
+                  teamsAmount: action.payload,
+              };
           }
         default:
         return state;

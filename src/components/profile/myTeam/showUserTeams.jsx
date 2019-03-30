@@ -2,6 +2,7 @@ import React from 'react';
 import Link from 'react-router-dom/Link';
 import styles from './index.module.css';
 import logo from './team.svg';
+import CreateTeamBtn from './createTeam/CreateTeamBtn';
 
 const countMembers = (members) => {
   if (members <= 1) {
@@ -24,7 +25,7 @@ const ShowUserTeams = (props) => {
         <Link
           key={currentTeam._id}
           className={styles.teamBlock}
-          to={`/${currentTeam._id}`}
+          to={`/profile/myteam/${currentTeam._id}`}
         >
           <div className={styles.teamLogo}>
             <img src={logo} alt="team-logo" />
@@ -49,6 +50,9 @@ const ShowUserTeams = (props) => {
           </div>
         </Link>
       ))}
+      <div className={styles.createNewTeam}>
+        <CreateTeamBtn history={props.history} />
+      </div>
     </div>
   );
 };

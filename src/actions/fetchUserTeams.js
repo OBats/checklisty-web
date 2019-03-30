@@ -11,6 +11,7 @@ export default function fetchUserTeams(activePage, searchTeamValue, selectTeams)
         dispatch({ type: 'CHANGE_COMPONENT_LOADING', payload: false });
         dispatch({ type: 'CHANGE_LISTS_LOADING', payload: false });
         dispatch({ type: 'CHANGE_TEAM_TOTAL_PAGE_VALUE', payload: Math.ceil((res.data.totalTeams) / selectTeams) });
+        dispatch({ type: 'SAVE_TEAMS_AMOUNT', payload: res.data.teamsAmount });
       });
   };
 }

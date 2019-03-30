@@ -16,7 +16,7 @@
     min-height: 380px;
     display: flex;
     justify-content: center;
-    align-items: flex-end;
+    align-items: flex-start;
 }
 .noTeamContainer{
     display: flex;
@@ -49,7 +49,7 @@
 }
 .teamBlock{
     border-top: 2px solid #A2C9C7;
-    width: 55%;
+    width: 100%;
     display: flex;
     justify-content: flex-start;
     align-items: center;
@@ -65,7 +65,10 @@
 .createNewTeam{
     display: flex;
     justify-content: flex-start;
-    width: 45%;
+    align-items: flex-end;
+    position: absolute;
+    right: -100px;
+    bottom: 40px;
 }
 .selectContainer{
     display: flex;
@@ -91,10 +94,11 @@
     display: flex;
     justify-content: flex-start;
     flex-direction: column;
-    align-items: flex-end;
+    align-items: center;
     width: 100%;
-    padding-top: 2%;
     min-height: 380px;
+    margin: 2% 25% 0;
+    position: relative;
 }
 .teamInfo{
     margin-left: 5%;

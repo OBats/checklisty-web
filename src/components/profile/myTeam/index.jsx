@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import loaderStyle from '../../main/loader.module.css';
 import styles from './index.module.css';
-import CreateTeamBtn from './createTeam/CreateTeamBtn';
 import Header from '../../main/Header';
 import NoTeam from './NoTeam';
 import Pagination from './Pagination';
@@ -24,6 +23,7 @@ const MyTeam = (props) => {
     searchTeamValue,
     selectTeams,
     listsLoader,
+    teamsAmount,
   } = props;
 
   useEffect(() => () => {
@@ -39,7 +39,12 @@ const MyTeam = (props) => {
       <div className={loaderStyle.loader}>Loading...</div>
     );
   }
-  if (teams && teams.length !== 0) {
+  if (teamsAmount === 0) {
+    return (
+      <NoTeam />
+    );
+  }
+  if (teams) {
     return (
       <div className={styles.myTeamList}>
         <Header title="My Teams" />
@@ -60,11 +65,7 @@ const MyTeam = (props) => {
                       ? (
                         <>
                           <ShowUserTeams teams={teams} />
-
-                          <div className={styles.createNewTeam}>
-                            <CreateTeamBtn history={props.history} />
-                          </div>
-              )
+                        )
                         </>
                       )
                       : (
@@ -95,9 +96,7 @@ const MyTeam = (props) => {
       </div>
     );
   }
-  return (
-    <NoTeam />
-  );
+  return null;
 };
 
 const mapStateToProps = ({ checklists, selectedUsers }) => (
@@ -109,6 +108,7 @@ const mapStateToProps = ({ checklists, selectedUsers }) => (
     totalPage: selectedUsers.totalPage,
     listsLoader: checklists.listsLoader,
     teams: selectedUsers.teams,
+    teamsAmount: selectedUsers.teamsAmount,
   }
 );
 
