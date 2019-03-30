@@ -2,23 +2,35 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import { Formik, Form } from 'formik';
-import { Input,
-  Button,
-  Grid,
-  Segment,
-  Message,
-  Header,
-  Divider } from 'semantic-ui-react';
+import { Button, Grid, Segment, Message, Header, Divider } from 'semantic-ui-react';
 import Link from 'react-router-dom/Link';
 import style from './css/auth.module.css';
 import { signIn } from '../../../api/auth-api';
 import { SigninSchema } from './validationSchema';
 import { saveUserData } from '../../../actions/user';
 import { ErrorHandling } from '../../toasters/MessagesHandling';
-import PasswordInput from '../../showPassword/PasswordInput';
 import SocialAuthentication from '../social-auth/SocialAuthentication';
+import SignInInputs from './SignInInputs';
+import { SignInInitial } from './initialValues';
 
 const SignIn = ({ loggedUser, saveUserData }) => {
+  const handleSubmiting = (values, actions) => {
+    signIn(values)
+      .then((data) => {
+        saveUserData(data);
+        actions.setSubmitting(false);
+      })
+      .catch((error) => {
+        values.password = '';
+        if (error.response) {
+          ErrorHandling(error.response.data.message);
+        } else {
+          ErrorHandling('Server is down. Please try again later.');
+        }
+        actions.setSubmitting(false);
+      });
+  };
+
   if (!loggedUser) {
     return (
       <div>
@@ -40,27 +52,9 @@ const SignIn = ({ loggedUser, saveUserData }) => {
                 <Header as="h4">or</Header>
               </Divider>
               <Formik
-                initialValues={{
-                  email: '',
-                  password: '',
-                }}
+                initialValues={SignInInitial}
                 validationSchema={SigninSchema}
-                onSubmit={(values, actions) => {
-                  signIn(values)
-                    .then((data) => {
-                      saveUserData(data);
-                    })
-                    .catch((error) => {
-                      if (!error.response || error.response.status === 500) {
-                        ErrorHandling(
-                          'Server is down. Please try again later.',
-                        );
-                      } else {
-                        ErrorHandling(error.response.data.message);
-                      }
-                      actions.setSubmitting(false);
-                    });
-                }}
+                onSubmit={(values, actions) => handleSubmiting(values, actions)}
               >
                 {({
                   values,
@@ -73,52 +67,26 @@ const SignIn = ({ loggedUser, saveUserData }) => {
                   isSubmitting,
                 }) => (
                   <Form onSubmit={handleSubmit}>
-                    <Input
-                      className={
-                        touched.email && errors.email
-                          ? style.InputError
-                          : style.Input
-                      }
-                      required
-                      icon="mail"
-                      iconPosition="left"
-                      fluid
-                      placeholder="Email"
-                      type="text"
-                      name="email"
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      value={values.email}
-                    />
-                    {touched.email && errors.email && (
-                      <div className={style.Error}>
-                        {touched.email && errors.email}
-                      </div>
-                    )}
-                    <PasswordInput
-                      touched={touched.password}
-                      errors={errors.password}
-                      name="password"
-                      placeholder="Password"
-                      value={values.password}
+                    <SignInInputs
+                      values={values}
                       handleChange={handleChange}
                       handleBlur={handleBlur}
+                      handleSubmit={handleSubmit}
+                      errors={errors}
+                      touched={touched}
+                      isValid={isValid}
+                      isSubmitting={isSubmitting}
                     />
-                    {touched.password && errors.password && (
-                      <div className={style.Error}>
-                        {touched.password && errors.password}
-                      </div>
-                    )}
                     <Button
+                      loading={isSubmitting}
                       className={style.AuthBtn}
+                      content="Sign In"
                       fluid
                       size="large"
                       color="black"
                       type="submit"
                       disabled={isSubmitting || !isValid}
-                    >
-                      Sign In
-                    </Button>
+                    />
                     <div className={style.forgotPassword}>
                       <Link to="/auth/forgot-password/">Forgot Password?</Link>
                     </div>
