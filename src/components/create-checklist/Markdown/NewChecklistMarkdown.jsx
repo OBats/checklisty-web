@@ -19,7 +19,10 @@ const NewChecklistMarkdown = (props) => {
   const [isSaved, setIsSaved] = useState(false);
   const [slug, setSlug] = useState(null);
   const [isSaving, setIsSaving] = useState(false);
-  let inputFile;
+  let inputFile; let
+    teamId;
+
+  if (props.location.query) teamId = props.location.query.teamId;
 
   const handleFileRead = (e) => {
     const content = e.target.result;
@@ -62,6 +65,8 @@ const NewChecklistMarkdown = (props) => {
   };
 
   const handleSaveChecklist = (checkList) => {
+    if (teamId) checkList.teamId = teamId;
+
     setIsSaving(true);
     if (!isSaved) {
       createChecklist(checkList)
@@ -94,10 +99,12 @@ const NewChecklistMarkdown = (props) => {
   };
 
   const handleAccept = (checkList) => {
+    if (teamId) checkList.teamId = teamId;
+
     if (!isSaved) {
       createChecklist(checkList)
-        .then(() => {
-          props.history.push('/profile/mylists');
+        .then((res) => {
+          teamId ? props.history.push(`/profile/myteam/${teamId}/${res.data.list.slug}`) : props.history.push('/profile/mylists');
           SuccessHandling('Your checklist has been saved successfully');
         })
         .catch((error) => {
@@ -109,8 +116,8 @@ const NewChecklistMarkdown = (props) => {
         });
     } else {
       updateChecklist(slug, checkList)
-        .then(() => {
-          props.history.push('/profile/mylists');
+        .then((res) => {
+          teamId ? props.history.push(`/profile/myteam/${teamId}/${res.data.list.slug}`) : props.history.push('/profile/mylists');
           SuccessHandling('Your checklist has been saved successfully');
         })
         .catch((error) => {
@@ -125,7 +132,7 @@ const NewChecklistMarkdown = (props) => {
 
   const handleReject = () => {
     setIsConfirmOpen(false);
-    props.history.push('/profile/mylists');
+    teamId ? props.history.push(`/profile/myteam/${teamId}`) : props.history.push('/profile/mylists');
   };
 
   return (
@@ -169,6 +176,7 @@ const NewChecklistMarkdown = (props) => {
           handleClear={handleClear}
           handleReject={handleReject}
           handleAccept={handleAccept}
+          teamId={teamId}
         />
       </div>
     </div>

@@ -26,7 +26,12 @@ const CustomUrlModal = (props) => {
     setSlug,
     handleChange,
     handleBlur,
+    query,
   } = props;
+
+  let teamId;
+
+  if (query) teamId = query.teamId;
 
   const onSlugChange = (e) => {
     setNewSlug(e.target.value);
@@ -64,7 +69,8 @@ const CustomUrlModal = (props) => {
       </header>
 
       <p className={modalStyles.link}>
-        <Link to={`/${slug}`}>{`${url}/${slug}`}</Link>
+        { teamId ? <Link to={`profile/myteam/${teamId}/${slug}`}>{`${url}/profile/myteam/${teamId}/${slug}`}</Link>
+          : <Link to={`/${slug}`}>{`${url}/${slug}`}</Link> }
       </p>
 
       <div className={modalStyles.slug}>
@@ -95,9 +101,17 @@ const CustomUrlModal = (props) => {
           <ErrorMessage name="custom_url" />
         </p>
       </div>
-      <Link className={modalStyles.close_link} to={`/${slug}`}>
-        <img src={closeIcon} alt="close modal" />
-      </Link>
+      { teamId
+        ? (
+          <Link className={modalStyles.close_link} to={`/profile/myteam/${teamId}/${slug}`}>
+            <img src={closeIcon} alt="close modal" />
+          </Link>
+        )
+        : (
+          <Link className={modalStyles.close_link} to={`/${slug}`}>
+            <img src={closeIcon} alt="close modal" />
+          </Link>
+        ) }
     </Modal>
   );
 };

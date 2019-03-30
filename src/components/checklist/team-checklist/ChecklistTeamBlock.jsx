@@ -25,10 +25,10 @@ class ChecklistTeamBlock extends Component {
 
   async componentDidMount() {
     const { sections_data } = this.props.checkListData;
-    const { saveCurrentProgress, checkListData } = this.props;
+    const { saveCurrentProgress, checkListData, teamId } = this.props;
     let arrayOfCheckboxArray = [];
     const response = await http.post('/api/checklists/create-teams-checklists', {
-      teamID: '5c9e2c37caaba166a4650d34',
+      teamID: teamId || window.location.href.split('/')[5],
       checklistID: checkListData.id,
       checklistData: checkListData.id,
       checkboxes_data: arrayOfCheckboxArray,
@@ -151,6 +151,8 @@ class ChecklistTeamBlock extends Component {
   }
 
   render() {
+    const { teamId } = this.props;
+
     if (this.state.arrayOfCheckboxArray) {
       return (
         <React.Fragment>

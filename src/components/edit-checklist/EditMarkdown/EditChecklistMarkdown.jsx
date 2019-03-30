@@ -20,7 +20,10 @@ const NewChecklistMarkdown = (props) => {
   const [slug, setSlug] = useState(null);
   const [isSaving, setIsSaving] = useState(false);
   const [loading, setLoading] = useState(true);
-  let inputFile;
+  let inputFile; let
+    teamId;
+
+  if (props.location.query) teamId = props.location.query.teamId;
 
   useEffect(() => {
     const checklistSlug = props.match.params.slug;
@@ -36,7 +39,7 @@ const NewChecklistMarkdown = (props) => {
       .catch((error) => {
         if (error.response.status === 404) {
           ErrorHandling('Checklist not found');
-          props.history.push('/');
+          teamId ? props.history.push(`/profile/myteam/${teamId}`) : props.history.push('/');
         } else {
           ErrorHandling('Server is down. Please try again later.');
         }
@@ -79,6 +82,8 @@ const NewChecklistMarkdown = (props) => {
   };
 
   const handleSaveChecklist = (checkList, slug) => {
+    if (teamId) checkList.teamId = teamId;
+
     setIsSaving(true);
     updateChecklist(slug, checkList)
       .then((res) => {
@@ -97,9 +102,11 @@ const NewChecklistMarkdown = (props) => {
   };
 
   const handleAccept = (checkList, slug) => {
+    if (teamId) checkList.teamId = teamId;
+
     updateChecklist(slug, checkList)
-      .then(() => {
-        props.history.push('/profile/mylists');
+      .then((res) => {
+        teamId ? props.history.push(`/profile/myteam/${teamId}/${res.data.list.slug}`) : props.history.push('/profile/mylists');
         SuccessHandling('Your checklist has been saved successfully');
       })
       .catch((error) => {
@@ -113,7 +120,7 @@ const NewChecklistMarkdown = (props) => {
 
   const handleReject = () => {
     setIsConfirmOpen(false);
-    props.history.push('/profile/mylists');
+    teamId ? props.history.push(`/profile/myteam/${teamId}`) : props.history.push('/profile/mylists');
   };
 
   if (loading) {
@@ -157,6 +164,7 @@ const NewChecklistMarkdown = (props) => {
           handleClear={handleClear}
           handleReject={handleReject}
           handleAccept={handleAccept}
+          teamId={teamId}
         />
       </div>
     </div>

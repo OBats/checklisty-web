@@ -15,14 +15,14 @@ const getCurrentMonth = (index) => {
 
 const getDateString = (obj) => {
   let stringToReturn = '';
-  if (new Date().getDate().toString() === obj.day && new Date().getMonth() === parseInt(obj.month) - 1 && new Date().getFullYear().toString() === obj.year) {
+  if (new Date().getDate().toString() === obj.day && new Date().getMonth() === parseInt(obj.month, 10) - 1 && new Date().getFullYear().toString() === obj.year) {
     stringToReturn += ('Today');
   }
-  if (new Date().getDate() === (parseInt(obj.day) + 1) && new Date().getMonth() === parseInt(obj.month) - 1 && new Date().getFullYear().toString() === obj.year) {
+  if (new Date().getDate() === (parseInt(obj.day, 10) + 1) && new Date().getMonth() === parseInt(obj.month, 10) - 1 && new Date().getFullYear().toString() === obj.year) {
     stringToReturn += ('Yesterday');
   }
-  if (new Date().getDate().toString() !== obj.day && new Date().getDate() !== (parseInt(obj.day) + 1)) {
-    stringToReturn += (`${obj.day} ${getCurrentMonth(parseInt(obj.month) - 1)}`);
+  if (new Date().getDate().toString() !== obj.day && new Date().getDate() !== (parseInt(obj.day, 10) + 1)) {
+    stringToReturn += (`${obj.day} ${getCurrentMonth(parseInt(obj.month, 10) - 1)}`);
   }
   if (new Date().getFullYear().toString() !== obj.year) {
     stringToReturn += (` ${obj.year},`);
@@ -37,9 +37,9 @@ const timeChecker = (inputDate) => {
   stringToReturn += getDateString(obj);
 
   const minutes = obj.minute;
-  stringToReturn += ` ${parseInt(obj.hour) + 2}:${minutes}`;
+  stringToReturn += ` ${parseInt(obj.hour, 10) + 2}:${minutes}`;
 
   return stringToReturn;
 };
 
-export { timeChecker };
+export default { timeChecker };

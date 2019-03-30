@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { Segment, Header, Icon, Popup } from 'semantic-ui-react';
 import style from '../css/TeamChecklistBlock.module.css';
 import PopupContent from './LogPopup';
-import { timeChecker } from './functions';
+import timeChecker from './functions';
 
 const Log = ({ messages, userData }) => {
   const isMyMessage = (username) => {

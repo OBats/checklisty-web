@@ -3,7 +3,6 @@ import http from '../../../api/http';
 import loaderStyle from '../loader.module.css';
 import Header from '../Header';
 import styles from './ShowCheckList.module.css';
-import Footer from '../Footer';
 import ChecklistTeamBlock from '../../checklist/team-checklist/ChecklistTeamBlock';
 
 class ShowTeamChecklist extends Component {
@@ -17,9 +16,9 @@ class ShowTeamChecklist extends Component {
 
   componentDidMount() {
     const { match } = this.props;
-    const slug = match.params.id;
+    const slug = match.params.slug;
 
-    http.get(`/api/checklists/${slug}`)
+    http.get(`/api/checklists/${slug || window.location.href.split('/')[6]}`)
       .then((res) => {
         this.setState({
           checkList: res.data,
@@ -30,6 +29,8 @@ class ShowTeamChecklist extends Component {
 
   render() {
     const { loading, checkList } = this.state;
+    const teamId = this.props.match.params.id;
+
     if (loading) {
       return (
         <div className={loaderStyle.loader}>Loading...</div>
@@ -43,9 +44,8 @@ class ShowTeamChecklist extends Component {
       <div>
         <Header title={checkList.title} />
         <div className={styles.checkListContainer}>
-          <ChecklistTeamBlock checkListData={checkList} />
+          <ChecklistTeamBlock checkListData={checkList} teamId={teamId} />
         </div>
-        <Footer />
       </div>
     );
   }

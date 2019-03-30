@@ -13,6 +13,9 @@ import initialValues from './initialValues';
 const EditCheckListForm = (props) => {
   const [loading, setLoading] = useState(true);
   const [checklistData, setChecklistData] = useState(initialValues);
+  let teamId;
+
+  if (props.location.query) teamId = props.location.query.teamId;
 
   useEffect(() => {
     const slugOfChecklist = props.match.params.slug;
@@ -25,8 +28,9 @@ const EditCheckListForm = (props) => {
 
   const handleSubmiting = (values, actions) => {
     const checklistSlug = props.match.params.slug;
+    values.teamId = teamId;
     updateChecklist(checklistSlug, values)
-      .then(() => props.history.push('/profile/mylists'))
+      .then(res => (values.teamId ? props.history.push(`/profile/myteam/${values.teamId}/${res.data.list.slug}`) : props.history.push('/profile/mylists')))
       .catch((error) => {
         if (!error.response) {
           ErrorHandling('Can\'t connect to server. Please try again later.');
@@ -46,10 +50,11 @@ const EditCheckListForm = (props) => {
       </div>
     );
   }
+
   return (
     <div className={styles.main_form_container}>
       <Formik
-        initialValues={{ title, isPrivate, sections_data }}
+        initialValues={{ title, isPrivate: teamId ? true : isPrivate, sections_data }}
         validationSchema={checklistSchema}
         onSubmit={(values, actions) => handleSubmiting(values, actions)}
         render={({
@@ -93,6 +98,7 @@ const EditCheckListForm = (props) => {
                 toggle
                 checked={!!values.isPrivate}
                 onChange={(e, { name, checked }) => setFieldValue(name, !!checked)}
+                disabled={!!teamId}
               />
             </Segment>
             <Button primary fluid type="submit" disabled={isSubmitting || !isValid}>

@@ -21,7 +21,12 @@ const MarkdownButtons = (props) => {
     handleClick,
     setIsOpen,
     handleAccept,
+    teamId,
   } = props;
+
+  let isPrivateTeam = isPrivate;
+
+  if (teamId) isPrivateTeam = true;
 
   return (
     <div className={styles.btnWrapper}>
@@ -32,20 +37,21 @@ const MarkdownButtons = (props) => {
           <div className={styles.isPrivateWrapper}>
             <Icon
               className={styles.transition}
-              color={isPrivate ? 'red' : 'green'}
-              name={isPrivate ? 'lock' : 'unlock'}
+              color={isPrivateTeam ? 'red' : 'green'}
+              name={isPrivateTeam ? 'lock' : 'unlock'}
               size="large"
             />
             <Checkbox
               fitted
-              label={isPrivate ? 'Private' : 'Public'}
+              label={isPrivateTeam ? 'Private' : 'Public'}
               name="isPrivate"
               toggle
-              checked={isPrivate}
+              checked={teamId ? true : isPrivateTeam}
               onChange={() => {
-                setIsPrivate(!isPrivate);
-                handleMarkdownChange(mdValue, !isPrivate);
+                setIsPrivate(!isPrivateTeam);
+                handleMarkdownChange(mdValue, !isPrivateTeam);
               }}
+              disabled={!!teamId}
             />
           </div>
           <Button
