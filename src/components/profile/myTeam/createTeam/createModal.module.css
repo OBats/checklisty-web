@@ -11,9 +11,11 @@
     align-items: center;
 }
 .errorInput{
+    width: 100%;
+}
+.errorInput>input{
     border: 2px solid #d31f1f !important;
     border-radius: .28571429rem;
-    width: 100%;
 
 }
 .validError{
@@ -67,4 +69,33 @@
 }
 .modalHeader{
     text-align: center;
+}
+.plusBtn{
+    display: flex !important;
+    justify-content: center !important;
+    align-items: center !important;
+    background-color: #08a3a3 !important;
+    transition: 0.4s ease-in-out !important;
+    margin-right: 50px !important;
+    border-radius: 60px !important;
+    margin-bottom: 10px !important;
+    width: 40px;
+    
+}
+.plusBtn:hover{
+    background-color: #118dbf !important;
+    transform: rotate(180deg);
+    transition: 0.4s ease-in-out !important; 
+}
+.iconPlusButtonStyle{
+    color: whitesmoke;
+    margin-left: 10px !important;
+}
+.createBtnGreen{
+    background-color: #21ba45 !important;
+    color: #fff !important;
+}
+.createBtnGreen:hover{
+    background-color: #21963d !important;
+
 }

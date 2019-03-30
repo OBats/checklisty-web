@@ -30,9 +30,9 @@ const SearchUser = (props) => {
 
   return (
     <div className={styles.findMembersContainer}>
-      <h2>Find your team mates</h2>
+      <h2>Find your teammates</h2>
       <div className={styles.searchContainer}>
-        <input placeholder="Search for mebmers..." className={styles.searchUserInput} onChange={e => onChangeUser(e.target.value)} />
+        <input placeholder="Search for members..." className={styles.searchUserInput} onChange={e => onChangeUser(e.target.value)} />
         <div className={styles.searchIcon}>
           <Icon name="search" size="large" />
         </div>

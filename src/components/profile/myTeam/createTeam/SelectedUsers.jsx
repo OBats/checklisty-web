@@ -19,7 +19,7 @@ const selectedUsers = (props) => {
   return (
     <div className={styles.selectedContainer}>
       <div className={styles.main}>
-        <h2>Your future team mates:</h2>
+        <h2>Your future teammates:</h2>
         <div className={styles.invitedContainer}>
           {arrayOfSelectedUsers.map(currentUser => (
             <div key={currentUser._id} className={styles.invitedUser}>

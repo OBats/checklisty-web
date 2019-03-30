@@ -46,14 +46,7 @@ const MyTeam = (props) => {
         <div className={styles.myTeamContent}>
           <div className={styles.mainContent}>
             <SearchBar />
-            {teams.length !== 0
-              ? (
-                <div className={styles.createNewTeam}>
-                  <CreateTeamBtn history={props.history} />
-                </div>
-              )
-              : null
-            }
+
             <div className={styles.content}>
               {listsLoader
                 ? (
@@ -64,7 +57,16 @@ const MyTeam = (props) => {
                 : (
                   <>
                     {teams.length !== 0
-                      ? <ShowUserTeams teams={teams} />
+                      ? (
+                        <>
+                          <ShowUserTeams teams={teams} />
+
+                          <div className={styles.createNewTeam}>
+                            <CreateTeamBtn history={props.history} />
+                          </div>
+              )
+                        </>
+                      )
                       : (
                         <div className={styles.notFoundContainer}>
                           <NotFound notFound={searchTeamValue} />
@@ -83,6 +85,7 @@ const MyTeam = (props) => {
                 </div>
               )
               : null}
+
             {teams.length !== 0
               ? <Pagination />
               : null}

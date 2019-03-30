@@ -36,7 +36,7 @@
     width: 10%;
 }
 .userAvatar img{
-    width: 50px;
+    width: 60px;
     border-radius: 50px;
 }
 .userInfo{
@@ -67,3 +67,8 @@
     color: #aaaaaa;
     font-style: italic;
 }
+.fullName {
+    font-weight: bolder;
+    font-size: 17px;
+}
+

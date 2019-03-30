@@ -14,7 +14,15 @@ const CreateTeamBtn = (props) => {
     addSelectedUser([]);
   };
   return (
-    <Modal trigger={<Button color="green" onClick={resetPreviousData}>Create new team...</Button>}>
+    <Modal trigger={(
+      <Button
+        color="green"
+        onClick={resetPreviousData}
+      >
+Create new team...
+      </Button>
+    )}
+    >
       <Modal.Header>Create your own team!</Modal.Header>
       <Modal.Content>
         <Modal.Description>

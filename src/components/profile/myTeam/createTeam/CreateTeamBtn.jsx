@@ -1,6 +1,6 @@
 import React from 'react';
 import { Formik, Form } from 'formik';
-import { Button, Modal, Input } from 'semantic-ui-react';
+import { Button, Modal, Input, Icon } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import http from '../../../../api/http';
 import styles from './createModal.module.css';
@@ -11,7 +11,7 @@ import customNameSchema from './validationSchema';
 
 
 const CreateTeamBtn = (props) => {
-  const { addSelectedUser, arrayOfSelectedUsers, history } = props;
+  const { addSelectedUser, arrayOfSelectedUsers, history, teams } = props;
 
   const createTeam = async (values) => {
     const { data } = await http.post('/api/team', values);
@@ -22,7 +22,21 @@ const CreateTeamBtn = (props) => {
     addSelectedUser([]);
   };
   return (
-    <Modal trigger={<Button color="green" onClick={resetPreviousData}>Create new team...</Button>} closeIcon>
+    <Modal
+      trigger={(
+        <Button
+          onClick={resetPreviousData}
+          className={teams.length !== 0 ? styles.plusBtn : styles.createBtnGreen}
+          title="Create new team"
+        >
+          {teams.length !== 0
+            ? <Icon name="plus" size="large" className={styles.iconPlusButtonStyle} />
+            : <span>Create new team...</span>
+          }
+        </Button>
+      )}
+      closeIcon
+    >
       <Modal.Header className={styles.modalHeader}>Create your own team!</Modal.Header>
       <Modal.Content>
         <Modal.Description>
@@ -96,6 +110,7 @@ Create team...
 const mapStateToProps = ({ selectedUsers }) => (
   {
     arrayOfSelectedUsers: selectedUsers.arrayOfSelectedUsers,
+    teams: selectedUsers.teams,
   });
 
 const mapDispatchToProps = dispatch => ({

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import styles from './suggestion.module.css';
 import avatar from './User_Avatar.png';
-import { addSelectedUser, changeSuggestionState, changeAnimationState } from '../../../../actions/selectUserAction';
+import { addSelectedUser, changeSuggestionState } from '../../../../actions/selectUserAction';
 
 
 const SuggestionSearch = (props) => {
@@ -36,7 +36,6 @@ const SuggestionSearch = (props) => {
 
 
   const chosenUser = (user) => {
-    changeAnimationState(true);
     if (arrayOfSelectedUsers.length === 0) {
       addSelectedUser([...arrayOfSelectedUsers, user]);
       return null;
@@ -84,6 +83,11 @@ const SuggestionSearch = (props) => {
                       <img src={item.image === undefined ? avatar : item.image} alt="user avatar" />
                     </div>
                     <div className={styles.userInfo}>
+                      <div>
+                        <span className={styles.fullName}>
+                          {item.firstname && item.lastname ? `${item.firstname} ${item.lastname}` : null}
+                        </span>
+                      </div>
                       <span>
                         Username:
                         {item.username}
