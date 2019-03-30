@@ -42,4 +42,4 @@ const timeChecker = (inputDate) => {
   return stringToReturn;
 };
 
-export default { timeChecker };
+export default timeChecker;

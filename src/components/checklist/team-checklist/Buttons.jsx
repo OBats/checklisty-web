@@ -1,9 +1,9 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Button, Icon } from 'semantic-ui-react';
 import { Link } from 'react-router-dom';
 import styles from '../css/TeamChecklistBlock.module.css';
 
-const Buttons = props => (
+const Buttons = ({ onLogButton }) => (
   <div className={styles.headerStyle}>
     <div>
       <Link to={`/profile/myteam/${window.location.href.split('/')[5]}`}>
@@ -14,7 +14,7 @@ const Buttons = props => (
       </Link>
     </div>
     <div>
-      <Button onClick={props.onLogButton} secondary>
+      <Button onClick={onLogButton} secondary>
         <Icon name="history" />
         {'Show team log'}
       </Button>
