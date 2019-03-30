@@ -18,7 +18,7 @@ const countChecklists = (checklists) => {
 };
 
 const ShowUserTeams = (props) => {
-  const { teams } = props;
+  const { teams, history } = props;
   return (
     <div className={styles.teamContainer}>
       {teams.map(currentTeam => (
@@ -51,7 +51,7 @@ const ShowUserTeams = (props) => {
         </Link>
       ))}
       <div className={styles.createNewTeam}>
-        <CreateTeamBtn history={props.history} />
+        <CreateTeamBtn history={history} />
       </div>
     </div>
   );
