@@ -8,6 +8,7 @@ import ProfileInfo from './components/profile/ProfileMainInfo';
 import ProfileLists from './components/profile/myLists';
 import ProfileTeam from './components/profile/myTeam';
 import ShowCheckList from './components/main/MainPage/ShowCheckList';
+import ShowTeamChecklist from './components/main/MainPage/ShowTeamChecklist';
 import HomePage from './components/main/HomePage';
 import NewChecklistForm from './components/create-checklist/Form/NewChecklistForm';
 import ProtectedRoute from './ProtectedRoute';
@@ -32,6 +33,7 @@ const Routes = () => (
       <ProtectedRoute exact path="/profile/myteam" component={ProfileTeam} />
       <ProtectedRoute exact path="/admin" component={AdminBoard} />
       <Route exact path="/:id" component={ShowCheckList} />
+      <Route exact path="/team-checklist/:id" component={ShowTeamChecklist} />
       <ProtectedRoute
         exact
         path="/create-checklist/form"

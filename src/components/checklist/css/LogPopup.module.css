@@ -1,0 +1,56 @@
+.mainBlock {
+    display: flex;
+    flex-direction: row;
+    width: 350px;
+}
+
+.popupPhoto {
+    padding: 5px;
+    width: 100px;
+    height: 100px;
+}
+
+.photoBlock {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.infoBlock {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-left: 10px;
+    width: 100%;
+}
+
+.givenname {
+    font-size: 18px;
+    font-weight: 600;
+    padding: 2px;
+}
+
+.usernameField {
+    font-size: 16px;
+    padding: 2px;
+}
+
+.username {
+    font-size: 16px;
+    font-weight: 550;
+    color: rgb(83, 83, 83);
+    font-style: italic;
+}
+
+.emailField {
+    font-size: 16px;
+    padding: 2px;
+}
+
+.email {
+    font-size: 16px;
+    font-weight: 550;
+    color: rgb(83, 83, 83);
+    font-style: italic;
+}

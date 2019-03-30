@@ -35,7 +35,7 @@ class ChecklistViewLogic extends Component {
   }
 
   handleChecked = (index) => {
-    const { checkboxArray } = this.state;
+    const checkboxArray = this.props.arrayOfArrays;
     const checkboxArrayTemporal = [...checkboxArray];
     checkboxArrayTemporal[index] = !checkboxArrayTemporal[index];
     const flag = checkboxArrayTemporal[index];
@@ -52,7 +52,7 @@ class ChecklistViewLogic extends Component {
 
     this.props.countProgressOnCheckboxClick(flag, index, this.props.checklistIndex);
 
-    this.setState({ checkboxArray: checkboxArrayTemporal, currentProgress });
+    this.setState({ checkboxArray, currentProgress });
   }
 
   handleClickAccordion = (index) => {
