@@ -9,10 +9,12 @@ import styles from './css/EditChecklistForm.module.css';
 import ChecklistSectionData from './ChecklistSectionData';
 import loader from '../../main/loader.module.css';
 import initialValues from './initialValues';
+import NotFound404 from '../../utils/404-page';
 
 const EditCheckListForm = (props) => {
   const [loading, setLoading] = useState(true);
   const [checklistData, setChecklistData] = useState(initialValues);
+  const [fetchError, setFetchError] = useState(false);
   let teamId;
 
   if (props.location.query) teamId = props.location.query.teamId;
@@ -23,6 +25,14 @@ const EditCheckListForm = (props) => {
       .then((res) => {
         setChecklistData(res.data);
         setLoading(false);
+      })
+      .catch((error) => {
+        if (error.response.status === 404) {
+          setFetchError(true);
+          setLoading(false);
+        } else {
+          ErrorHandling('Server is down. Please try again later.');
+        }
       });
   }, []);
 
@@ -49,6 +59,10 @@ const EditCheckListForm = (props) => {
         {'Loading...'}
       </div>
     );
+  }
+
+  if (fetchError) {
+    return <NotFound404 />;
   }
 
   return (

@@ -8,6 +8,7 @@ import styles from '../../create-checklist/Markdown/css/NewChecklistMarkdown.mod
 import jsonToMd from '../../create-checklist/Markdown/JsonToMdParser';
 import MarkdownButtons from '../../create-checklist/Markdown/MarkdownButtons';
 import loaderStyle from '../../main/loader.module.css';
+import NotFound404 from '../../utils/404-page';
 
 const NewChecklistMarkdown = (props) => {
   const [mdValue, setMdValue] = useState('');
@@ -20,8 +21,8 @@ const NewChecklistMarkdown = (props) => {
   const [slug, setSlug] = useState(null);
   const [isSaving, setIsSaving] = useState(false);
   const [loading, setLoading] = useState(true);
-  let inputFile; let
-    teamId;
+  let inputFile;
+  let teamId;
 
   if (props.location.query) teamId = props.location.query.teamId;
 
@@ -38,8 +39,8 @@ const NewChecklistMarkdown = (props) => {
       })
       .catch((error) => {
         if (error.response.status === 404) {
-          ErrorHandling('Checklist not found');
-          teamId ? props.history.push(`/profile/myteam/${teamId}`) : props.history.push('/');
+          setCheckList(null);
+          setLoading(false);
         } else {
           ErrorHandling('Server is down. Please try again later.');
         }
@@ -127,6 +128,10 @@ const NewChecklistMarkdown = (props) => {
     return (
       <div className={loaderStyle.loader}>Loading...</div>
     );
+  }
+
+  if (!checkList) {
+    return <NotFound404 />;
   }
 
   return (

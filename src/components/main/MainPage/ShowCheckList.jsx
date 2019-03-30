@@ -6,7 +6,7 @@ import Header from '../Header';
 import styles from './ShowCheckList.module.css';
 import Footer from '../Footer';
 import MainChecklistBlock from '../../checklist/MainChecklistBlock';
-import { ErrorHandling } from '../../toasters/MessagesHandling';
+import NotFound404 from '../../utils/404-page';
 
 class ShowCheckList extends Component {
   constructor(props) {
@@ -30,10 +30,7 @@ class ShowCheckList extends Component {
         });
       })
       .catch((error) => {
-        if (error.response.status === 404) {
-          this.props.history.push('/');
-          ErrorHandling('Page not found');
-        }
+        this.setState({ loading: false });
       });
   }
 
@@ -44,9 +41,7 @@ class ShowCheckList extends Component {
         <div className={loaderStyle.loader}>Loading...</div>
       );
     } if (!checkList) {
-      return (
-        <div>Check list not found</div>
-      );
+      return <NotFound404 />;
     }
     return (
       <div>
