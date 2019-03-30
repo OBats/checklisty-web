@@ -10,13 +10,18 @@ import Section from './Section/Section';
 import CustomUrlModal from './CustomUrlModal/CustomUrlModal';
 import styles from './NewCheckListForm.module.css';
 
-const NewChecklistForm = () => {
+const NewChecklistForm = ({ location }) => {
   const [slug, setSlug] = useState('');
   const [checklistId, setChecklistId] = useState('');
   const [isOpen, openModal] = useState(false);
   const [defaultSchema, setSchema] = useState(true);
 
+  let teamId;
+  if (location.query) teamId = location.query.teamId;
+
   const onSubmitClick = (values, actions) => {
+    if (teamId) values.teamId = teamId;
+
     createChecklist(values)
       .then((res) => {
         setSchema(false);
@@ -30,7 +35,6 @@ const NewChecklistForm = () => {
         } else {
           ErrorHandling('Server is down. Please try again later.');
         }
-
         actions.setSubmitting(false);
       });
   };
@@ -46,6 +50,8 @@ const NewChecklistForm = () => {
       isValid,
       isSubmitting,
     } = props;
+
+    if (teamId) values.isPrivate = true;
 
     return (
       <Form
@@ -67,14 +73,20 @@ const NewChecklistForm = () => {
         />
 
         <Segment color="blue">
-          <Icon color="green" className={styles.icon} name="lock" />
+          <Icon
+            color={values.isPrivate ? 'red' : 'green'}
+            name={values.isPrivate ? 'lock' : 'unlock'}
+            size="large"
+            className={styles.icon}
+          />
           <Checkbox
             fitted
-            label="Make list private"
+            label={values.isPrivate ? 'Private' : 'Public'}
             name="isPrivate"
             toggle
             checked={!!values.isPrivate}
             onChange={(e, { name, checked }) => setFieldValue(name, !!checked)}
+            disabled={!!teamId}
           />
         </Segment>
 
@@ -87,6 +99,7 @@ const NewChecklistForm = () => {
           setSlug={setSlug}
           handleChange={handleChange}
           handleBlur={handleBlur}
+          query={location.query}
         />
       </Form>
     );

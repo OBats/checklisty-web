@@ -3,7 +3,8 @@
 import React, { useState, useEffect } from 'react';
 import { Header, Container, Segment, Loader } from 'semantic-ui-react';
 import { connect } from 'react-redux';
-import { SuccessHandling, ErrorHandling } from '../../toasters/MessagesHandling';
+import { SuccessHandling,
+  ErrorHandling } from '../../toasters/MessagesHandling';
 import http from '../../../api/http';
 import ListItem from './ListItem';
 import ListStatistic from './ListsStatistic';
@@ -27,7 +28,6 @@ const MyList = (props) => {
       try {
         const { data } = await http.get(`/api/checklists/author=${user._id}`);
         if (data.length) setChecklists(data);
-        console.log(data);
         setLoading(false);
       } catch {
         ErrorHandling('Something go wrong!');
@@ -43,7 +43,9 @@ const MyList = (props) => {
   }
 
   const changePage = (page, currentList) => {
-    const lists = searching ? currentList || filtered : currentList || checklists;
+    const lists = searching
+      ? currentList || filtered
+      : currentList || checklists;
 
     if (Math.ceil(lists.length / pageLimit) < page) {
       const offset = (page - 2) * pageLimit;
@@ -64,13 +66,12 @@ const MyList = (props) => {
 
   const deleteList = (id) => {
     try {
-      http.delete(`/api/checklists/${id}`)
-        .then((res) => {
-          const updatedChecklists = checklists.filter(list => id !== list.id);
-          setChecklists(updatedChecklists);
-          changePage(currentPage, updatedChecklists);
-          SuccessHandling(res.data.message);
-        });
+      http.delete(`/api/checklists/${id}`).then((res) => {
+        const updatedChecklists = checklists.filter(list => id !== list.id);
+        setChecklists(updatedChecklists);
+        changePage(currentPage, updatedChecklists);
+        SuccessHandling(res.data.message);
+      });
     } catch {
       ErrorHandling('Something go wrong!');
     }
@@ -81,32 +82,30 @@ const MyList = (props) => {
       <Loader active inline="centered" size="large" content="Loading..." />
     );
   }
-  return (
-    !checklists
-      ? (
-        <NoLists />
-      )
-      : (
-        <Container>
-          <Header as="h1">
-            <Header.Content>Your Lists</Header.Content>
-          </Header>
-          <ListStatistic setFiltered={setFiltered} setSearching={setSearching} lists={checklists} />
-          <Segment>
-            <ListItem
-              lists={currentChecklists}
-              del={deleteList}
-            />
-          </Segment>
-          <Segment.Inline style={{ textAlign: 'center' }}>
-            <PaginationPage
-              setCurrentPage={setCurrentPage}
-              totalPages={totalPages}
-              changePage={changePage}
-            />
-          </Segment.Inline>
-        </Container>
-      ));
+  return !checklists ? (
+    <NoLists />
+  ) : (
+    <Container>
+      <Header as="h1">
+        <Header.Content>Your Lists</Header.Content>
+      </Header>
+      <ListStatistic
+        setFiltered={setFiltered}
+        setSearching={setSearching}
+        lists={checklists}
+      />
+      <Segment>
+        <ListItem lists={currentChecklists} del={deleteList} />
+      </Segment>
+      <Segment.Inline style={{ textAlign: 'center' }}>
+        <PaginationPage
+          setCurrentPage={setCurrentPage}
+          totalPages={totalPages}
+          changePage={changePage}
+        />
+      </Segment.Inline>
+    </Container>
+  );
 };
 
 const mapStateToProps = ({ user }) => ({

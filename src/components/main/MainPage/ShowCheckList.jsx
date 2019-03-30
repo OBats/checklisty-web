@@ -6,6 +6,7 @@ import Header from '../Header';
 import styles from './ShowCheckList.module.css';
 import Footer from '../Footer';
 import MainChecklistBlock from '../../checklist/MainChecklistBlock';
+import { ErrorHandling } from '../../toasters/MessagesHandling';
 
 class ShowCheckList extends Component {
   constructor(props) {
@@ -27,6 +28,12 @@ class ShowCheckList extends Component {
           checkList: res.data,
           loading: false,
         });
+      })
+      .catch((error) => {
+        if (error.response.status === 404) {
+          this.props.history.push('/');
+          ErrorHandling('Page not found');
+        }
       });
   }
 

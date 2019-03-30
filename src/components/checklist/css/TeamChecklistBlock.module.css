@@ -1,0 +1,116 @@
+.container {
+    display: flex !important;
+    flex-direction: column;
+    max-width: 768px;
+    width: 100%;
+    margin: 20px auto;
+}
+
+.headerStyle {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 50px;
+}
+
+.logsegment {
+    height: 300px !important;
+    overflow: auto;
+    padding: 5px;
+    border-radius: 10px;
+}
+
+.usernameLog {
+    color: black;
+    font-weight: 800;
+    padding-left: 5px;
+}
+
+.textInfo {
+    padding-left: 5px;
+}
+
+.wholeMessage {
+    display: flex;
+    flex-direction: row;
+    margin-bottom: 7px;
+}
+
+.wholeMessageAlternative {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+    margin-bottom: 7px;
+}
+
+.valueLog {
+    color: rgb(63, 63, 63);
+    font-weight: 700;
+}
+
+.titleLog {
+    color: black;
+    font-weight: 700;
+}
+
+.emptyMessage {
+    display: flex;
+    align-items: center;
+    height: 200px !important;
+    overflow: auto;
+    padding: 5px;
+    border-radius: 10px;
+}
+
+.photo {
+    display: flex;
+    align-self: flex-end;
+    margin-right: 5px;
+}
+
+.userPhoto {
+    border-radius: 100%;
+    height: 25px;
+    width: 25px;
+}
+
+.dateBlockStyle {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.dateStyle {
+    font-size: 12px;
+    font-style: italic;
+    color: rgb(116, 116, 116);
+    padding-right: 5px;
+}
+
+.dateStyleAlternative {
+    font-size: 12px;
+    font-style: italic;
+    color: #1db905;
+    padding-right: 5px;
+}
+
+.logItem {
+    display: flex;
+    flex-direction: column;
+    min-height: 25px;
+    padding: 3px;
+    width: 75%;
+    border: 1px rgb(206, 197, 197) solid;
+    background-color: rgb(253, 251, 251);
+    border-radius: 15px;
+}
+
+.logItemAlternative {
+    display: flex;
+    flex-direction: column;
+    min-height: 25px;
+    padding: 3px;
+    width: 75%;
+    border: 1px #96bd7b solid;
+    background-color: #e5ffd2;
+    border-radius: 15px;
+}

@@ -5,7 +5,7 @@ import { resetActivePage, saveSelectValue } from '../../../actions/checklistsAct
 
 
 function SelectPage(props) {
-  const { saveSelectValue, resetActivePage } = props;
+  const { saveSelectValue, resetActivePage, selectItems } = props;
   const getSelectValue = (value) => {
     resetActivePage();
     saveSelectValue(value);
@@ -13,7 +13,11 @@ function SelectPage(props) {
   return (
     <div className={styles.selectContainer}>
       <span className={styles.perPageText}>Per page:</span>
-      <select className={styles.select} onClick={e => getSelectValue(e.target.value)}>
+      <select
+        className={styles.select}
+        onChange={e => getSelectValue(e.target.value)}
+        value={selectItems}
+      >
         <option value="5">5</option>
         <option value="15">15</option>
         <option value="25">25</option>

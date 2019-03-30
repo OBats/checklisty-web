@@ -1,0 +1,74 @@
+.suggestionContainer{
+    border:1px solid #adadad;
+    border-top: none;
+    width: 100%;
+    border-radius: 5px;
+    box-shadow: 0px 12px 31px -13px rgba(0,0,0,0.75);
+    max-height: 350px;
+    overflow-y: scroll;
+    animation-name: appering;
+    animation-duration: 0.65s;
+}
+.hideSuggestion{
+    height: 0;
+}
+@keyframes appering{
+    0%{
+        opacity: 0;
+        max-height: 0px;
+    }
+    100%{
+        opacity: 1;
+        max-height: 350px;
+    }
+}
+.listOfSuggestion{
+    list-style-type: none;
+}
+.userContainer{
+    display: flex;
+    cursor: pointer;
+    padding-bottom: 2%;
+    animation-name: appering;
+    animation-duration: 1.5s;
+}
+.userAvatar{
+    width: 10%;
+}
+.userAvatar img{
+    width: 60px;
+    border-radius: 50px;
+}
+.userInfo{
+    display: flex;
+    flex-direction: column;
+    margin-left: 5%;
+    color: #6b737e;
+}
+.userContainer:hover{
+    background-color: #73d6cf;
+}
+.currentUser{
+    padding-top: 2%;
+    display: flex;
+    align-items: center;
+    padding-left: 5%;
+    width: 100%;
+}
+.notFound{
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border:1px solid rgba(34, 36, 38, .15);
+    border-top: none;
+}
+.notFound h3{
+    color: #aaaaaa;
+    font-style: italic;
+}
+.fullName {
+    font-weight: bolder;
+    font-size: 17px;
+}
+

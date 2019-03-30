@@ -1,9 +1,11 @@
 import React, { useState } from 'react';
 import { connect } from 'react-redux';
+import { Redirect } from 'react-router-dom';
 import { Grid, Menu } from 'semantic-ui-react';
 import CheckListsBoard from './CheckListsBoard';
 import UsersBoard from './UsersBoard';
 import MenuItemContent from './MenuItemContent';
+import { ErrorHandling } from '../toasters/MessagesHandling';
 
 import style from './AdminBoard.module.css';
 
@@ -30,59 +32,63 @@ const handleUsersResponse = response => (
 const removeUser = id => http.delete(`api/admin/users/${id}`);
 
 const AdminBoard = ({ userData }) => {
-  const activePage = (userData.role === 'moderator') ? 'checklists' : 'users';
-  const [activeItem, setActiveItem] = useState(activePage);
+  if (userData.role !== 'user') {
+    const activePage = (userData.role === 'moderator') ? 'checklists' : 'users';
+    const [activeItem, setActiveItem] = useState(activePage);
 
-  const handleItemClick = (e, { name }) => {
-    setActiveItem(name);
-  };
+    const handleItemClick = (e, { name }) => {
+      setActiveItem(name);
+    };
 
-  return (
-    <Grid className={style.grid}>
-      <Grid.Column width={4} className={style.columnMenuBar}>
-        <Menu fluid vertical tabular>
-          {userData.role === 'admin'
-          && (
-            <Menu.Item
-              name="users"
-              active={activeItem === 'users'}
-              onClick={handleItemClick}
-            />
-          )
-          }
-          <Menu.Item
-            name="checklists"
-            active={activeItem === 'checklists'}
-            onClick={handleItemClick}
-          />
-        </Menu>
-      </Grid.Column>
-
-      <Grid.Column stretched width={12} className={style.columnContent}>
-        {activeItem === 'checklists'
+    return (
+      <Grid className={style.grid}>
+        <Grid.Column width={4} className={style.columnMenuBar}>
+          <Menu fluid vertical tabular>
+            {userData.role === 'admin'
             && (
-              <MenuItemContent
-                fetchData={getChecklists}
-                handleResponse={handleChecklistsResponse}
-                removeData={removeChecklist}
-                component={CheckListsBoard}
-                intialSearchText="undefined"
+              <Menu.Item
+                name="users"
+                active={activeItem === 'users'}
+                onClick={handleItemClick}
               />
             )
-        }
-        {userData.role === 'admin' && activeItem === 'users'
-          && (
-            <MenuItemContent
-              fetchData={getUsers}
-              handleResponse={handleUsersResponse}
-              removeData={removeUser}
-              component={UsersBoard}
-              intialSearchText=""
+            }
+            <Menu.Item
+              name="checklists"
+              active={activeItem === 'checklists'}
+              onClick={handleItemClick}
             />
-          )}
-      </Grid.Column>
-    </Grid>
-  );
+          </Menu>
+        </Grid.Column>
+
+        <Grid.Column stretched width={12} className={style.columnContent}>
+          {activeItem === 'checklists'
+              && (
+                <MenuItemContent
+                  fetchData={getChecklists}
+                  handleResponse={handleChecklistsResponse}
+                  removeData={removeChecklist}
+                  component={CheckListsBoard}
+                  intialSearchText="undefined"
+                />
+              )
+          }
+          {userData.role === 'admin' && activeItem === 'users'
+            && (
+              <MenuItemContent
+                fetchData={getUsers}
+                handleResponse={handleUsersResponse}
+                removeData={removeUser}
+                component={UsersBoard}
+                intialSearchText=""
+              />
+            )}
+        </Grid.Column>
+      </Grid>
+    );
+  }
+  ErrorHandling('You have no permission to admin tools!');
+  return <Redirect to={{ pathname: '/' }} />;
 };
 
 const mapStateToProps = ({ user }) => ({

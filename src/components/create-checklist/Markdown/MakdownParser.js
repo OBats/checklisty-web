@@ -75,11 +75,15 @@ export function mdParse(data, isPrivate) {
             ].description = mdValue[index].slice(13).trim();
           }
           if (mdValue[index].startsWith('priority: ')) {
-            const priority = mdValue[index].slice(10).trim()[0] >= '0'
+            let priority = mdValue[index].slice(10).trim() === 'low' ? 0 : 0;
+            priority = mdValue[index].slice(10).trim() === 'medium' ? 1 : priority;
+            priority = mdValue[index].slice(10).trim() === 'high' ? 2 : priority;
+            priority = mdValue[index].slice(10).trim()[0] >= '0'
               && mdValue[index].slice(10).trim()[0] < '3'
               && !mdValue[index].slice(10).trim()[1]
               ? mdValue[index].slice(10).trim()[0]
-              : 0;
+              : priority;
+
             parsedData[sectionIndex].items_data[
               itemsDataIndex
             ].priority = priority;

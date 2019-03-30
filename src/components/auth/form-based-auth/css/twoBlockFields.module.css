@@ -1,0 +1,14 @@
+.leftBlock {
+  width: 50%;
+  margin-right: 6px;
+  flex-direction: column;
+}
+
+.rightBlock {
+  width: 50%;
+  flex-direction: column;
+}
+
+.fullBlock {
+  display: flex;
+}

@@ -32,7 +32,7 @@ class CreateChecklistModal extends Component {
         <Modal open={isModalOpened} onClose={this.close} closeIcon>
           <HeaderForModal />
           <ContentForModal />
-          <ActionsForModal close={this.close} />
+          <ActionsForModal close={this.close} teamId={this.props.teamId} />
         </Modal>
 
       </Container>

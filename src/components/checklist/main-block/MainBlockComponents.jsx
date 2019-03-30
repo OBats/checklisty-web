@@ -12,6 +12,7 @@ const MainBlockComponents = (props) => {
     amountOfCheckedCheckboxes,
     amountOfAllCheckboxes,
     wholeChecklistProgress,
+    updateViewOfComponent,
   } = props;
 
   const currentProgress = props.loggedUser ? props.currentProgress : wholeChecklistProgress;
@@ -53,6 +54,7 @@ const MainBlockComponents = (props) => {
             arrayOfArrays={props.arrayOfCheckboxArray[index]}
             countProgressOnAdditionalButton={props.countProgressOnAdditionalButton}
             countProgressOnCheckboxClick={props.countProgressOnCheckboxClick}
+            updateViewOfComponent={updateViewOfComponent}
           />
         ),
       )}

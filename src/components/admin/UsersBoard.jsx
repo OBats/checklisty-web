@@ -5,8 +5,6 @@ import User from './User';
 const UsersBoard = ({
   data,
   deleteData,
-  openModal,
-  updateStatusOfModal,
   deletedId,
   updateDeletedId,
 }) => (
@@ -25,8 +23,6 @@ const UsersBoard = ({
           key={user._id}
           user={user}
           deleteUser={deleteData}
-          openModal={openModal}
-          updateStatusOfModal={updateStatusOfModal}
           deletedId={deletedId}
           updateDeletedId={updateDeletedId}
         />

@@ -10,7 +10,7 @@ const ActionsForModal = (props) => {
       <Modal.Actions>
         <div className={style.buttonBlock}>
           <div className={style.regularButton}>
-            <Link to="/create-checklist/form">
+            <Link to={{ pathname: '/create-checklist/form', query: { teamId: props.teamId } }}>
               <Button animated="vertical" color="teal">
                 <Button.Content visible>Fields</Button.Content>
                 <Button.Content hidden>
@@ -20,7 +20,7 @@ const ActionsForModal = (props) => {
             </Link>
           </div>
           <div className={style.regularButton}>
-            <Link to="/create-checklist/markdown">
+            <Link to={{ pathname: '/create-checklist/markdown', query: { teamId: props.teamId } }}>
               <Button animated="vertical" color="blue">
                 <Button.Content visible>Markdown</Button.Content>
                 <Button.Content hidden>

@@ -11,6 +11,8 @@
   transition-property: color;
   -webkit-transition-duration: 0.3s;
   transition-duration: 0.3s;
+  max-width: 300px;
+  height: 300px;
 }
 .hvrRadialOut:before {
   content: '';
@@ -20,7 +22,7 @@
   left: 0;
   right: 0;
   bottom: 0;
-  background:url('./plusGreenSign.svg');
+  background: url('./plusGreenSign.svg') no-repeat no-repeat;
   opacity: 0.65;
   border-radius: 100%;
   -webkit-transform: scale(0);
@@ -42,11 +44,16 @@
 .hvrRadialOut:hover:before,
 .hvrRadialOut:focus:before,
 .hvrRadialOut:active:before {
-  -webkit-transform: scale(1.4);
+  -webkit-transform: scale(1);
   transform: scale(1);
   outline: none;
 }
 
 .hidden {
   display: none;
+}
+
+.hvrRadialOut > img {
+  height: 300px !important;
+  object-fit: cover;
 }

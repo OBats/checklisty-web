@@ -1,20 +1,37 @@
+.gridColum.gridColum.gridColum {
+    max-width: 40px;
+    text-align: center;
+}
+.userContent.userContent.userContent {
+    width: 40%;
+}
 /*styles for role selector*/
 .roleSelector {
+    width: 100%;
     display: flex;
     justify-content: center;
 }
 .roleSelector>div {
-    width: 70%;
+    width: 80%;
     border: none;
 }
 .roleSelector>div>div {
     justify-content: center;
 }
+.roleSelector div:hover {
+    box-shadow: none;
+}
+.roleSelector div:focus {
+    box-shadow: none;
+}
+.roleSelector div:focus-within {
+    box-shadow: none;
+}
 .roleSelector div div>span {
     display: none;
 }
 
-/*styles for status selector*/
+/*styles for status active*/
 .statusSelector {
     display: flex;
     justify-content: center;
@@ -23,28 +40,58 @@
     width: 70%;
     border: none;
 }
+.statusSelector div:hover {
+    box-shadow: none;
+}
+.statusSelector div:focus {
+    box-shadow: none;
+}
+.statusSelector div:focus-within {
+    box-shadow: none;
+}
 .statusSelector>div>div {
     justify-content: center;
 }
 .statusSelector div div>span {
     display: none;
 }
-.active {
-    padding: 4%;
-    border-radius: 5%;
-    text-align: center;
-}
-
-.active i:before {
+.statusSelector div div div>svg {
     color: #13ada5;
-}  
-
-.blocked {
-    padding: 4%;
-    border-radius: 5%;
-    text-align: center;
+}
+/*----------------------------*/
+/*styles for status active*/
+.statusBlocked {
+    display: flex;
+    justify-content: center;
+}
+.statusBlocked>div {
+    width: 70%;
+    border: none;
+}
+.statusBlocked div:hover {
+    box-shadow: none;
+}
+.statusBlocked div:focus {
+    box-shadow: none;
+}
+.statusBlocked div:focus-within {
+    box-shadow: none;
+}
+.statusBlocked>div>div {
+    justify-content: center;
+}
+.statusBlocked div div>span {
+    display: none;
+}
+.statusBlocked div div div>svg {
+    color: #aa2727;;
 }
 
-.blocked i:before {
-    color: #aa2727;
-}  
+.deleteButton.deleteButton {
+    width: 7%;
+}
+.confirmModal.confirmModal {
+    text-align: center;
+    font-size: 1.3em;
+    font-weight: bold;
+}

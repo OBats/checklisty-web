@@ -3,16 +3,37 @@ import { Formik, Form } from 'formik';
 import { connect } from 'react-redux';
 import { Redirect } from 'react-router-dom';
 import Link from 'react-router-dom/Link';
-import { Input, Button, Grid, Segment, Message, Header, Divider } from 'semantic-ui-react';
+import { Button, Grid, Segment, Message, Header, Divider } from 'semantic-ui-react';
 import style from './css/auth.module.css';
 import { signUp } from '../../../api/auth-api';
 import { SignupSchema } from './validationSchema';
 import { saveUserData } from '../../../actions/user';
-import { ErrorHandling } from '../../toasters/MessagesHandling';
-import PasswordInput from '../../showPassword/PasswordInput';
+import { ErrorHandling, MessageContainer } from '../../toasters/MessagesHandling';
 import SocialAuthentication from '../social-auth/SocialAuthentication';
+import SignUpInputs from './SignUpInputs';
+import { SignUpInitial } from './initialValues';
 
 const SignUp = ({ loggedUser, saveUserData }) => {
+  const handleSubmiting = (values, actions) => {
+    const obj = values;
+    delete obj.confirmPassword;
+    signUp(obj)
+      .then((data) => {
+        saveUserData(data);
+        actions.setSubmitting(false);
+      })
+      .catch((error) => {
+        values.password = '';
+        values.confirmPassword = '';
+        if (error.response) {
+          ErrorHandling(error.response.data.message);
+        } else {
+          ErrorHandling('Server is down. Please try again later.');
+        }
+        actions.setSubmitting(false);
+      });
+  };
+
   if (!loggedUser) {
     return (
       <div>
@@ -21,7 +42,11 @@ const SignUp = ({ loggedUser, saveUserData }) => {
             <Segment raised>
               <Header textAlign="center" size="huge">
                 {'Sign Up'}
-                <Header.Subheader size="small" color="grey" className={style.subheader}>
+                <Header.Subheader
+                  size="small"
+                  color="grey"
+                  className={style.subheader}
+                >
                   {'Become our member with:'}
                 </Header.Subheader>
               </Header>
@@ -30,24 +55,9 @@ const SignUp = ({ loggedUser, saveUserData }) => {
                 <Header as="h4">or</Header>
               </Divider>
               <Formik
-                initialValues={{
-                  username: '', email: '', password: '',
-                }}
+                initialValues={SignUpInitial}
                 validationSchema={SignupSchema}
-                onSubmit={(values, actions) => {
-                  signUp(values)
-                    .then((data) => {
-                      saveUserData(data);
-                    })
-                    .catch((error) => {
-                      if (!error.response || error.response.status === 500) {
-                        ErrorHandling('Server is down. Please try again later.');
-                      } else {
-                        ErrorHandling(error.response.data.username || error.response.data.email);
-                      }
-                      actions.setSubmitting(false);
-                    });
-                }}
+                onSubmit={(values, actions) => handleSubmiting(values, actions)}
               >
                 {({
                   values,
@@ -60,76 +70,34 @@ const SignUp = ({ loggedUser, saveUserData }) => {
                   isSubmitting,
                 }) => (
                   <Form onSubmit={handleSubmit}>
-                    <Input
-                      className={touched.username && errors.username
-                        ? style.InputError : style.Input}
-                      required
-                      icon="user"
-                      iconPosition="left"
-                      fluid
-                      placeholder="Username"
-                      type="text"
-                      name="username"
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      value={values.username}
-                    />
-                    {touched.username && errors.username && (
-                      <div className={style.Error}>
-                        {touched.username && errors.username}
-                      </div>
-                    )}
-                    <Input
-                      className={touched.email && errors.email ? style.InputError : style.Input}
-                      required
-                      icon="mail"
-                      iconPosition="left"
-                      fluid
-                      placeholder="Email"
-                      type="text"
-                      name="email"
-                      onChange={handleChange}
-                      onBlur={handleBlur}
-                      value={values.email}
-                    />
-                    {touched.email && errors.email && (
-                      <div className={style.Error}>
-                        {touched.email && errors.email}
-                      </div>
-                    )}
-                    <PasswordInput
-                      className={touched.password && errors.password
-                        ? style.InputError : style.Input}
-                      touched={touched}
-                      name="password"
-                      placeholder="Password"
-                      errors={errors}
-                      value={values.password}
+                    <SignUpInputs
+                      values={values}
                       handleChange={handleChange}
                       handleBlur={handleBlur}
+                      handleSubmit={handleSubmit}
+                      errors={errors}
+                      touched={touched}
+                      isValid={isValid}
+                      isSubmitting={isSubmitting}
                     />
-                    {touched.password && errors.password && (
-                      <div className={style.Error}>
-                        {touched.password && errors.password}
-                      </div>
-                    )}
+                    <MessageContainer />
                     <Button
+                      loading={isSubmitting}
                       className={style.AuthBtn}
                       fluid
+                      content="Sign Up"
                       size="large"
                       color="black"
                       type="submit"
                       disabled={isSubmitting || !isValid}
-                    >
-                        Sign Up
-                    </Button>
+                    />
                   </Form>
                 )}
               </Formik>
             </Segment>
             <Message className={style.Message}>
               Already Signed Up?
-              <Link to="/auth/signin/"> Login</Link>
+              <Link to="/auth/signin/"> Sign In</Link>
             </Message>
           </Grid.Column>
         </Grid>

@@ -1,31 +1,26 @@
 .md {
-  height: calc(100vh - 94px);
+  min-height: calc(100vh - 85px);
 }
 
 .markdownSection {
-  height: 80%;
+  min-height: calc(100vh - 250px);
   margin-top: -10px;
 }
 
 .markdownWrapper {
   display: flex;
+  min-height: calc(100vh - 250px);
   background-color: #EDEDED;
-  height: 100%;
-  margin-bottom: 20px;
 }
 
 .markdownEditor,
 .markdownPreview {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  max-height: calc(100vh - 230px);
   border-bottom: 3px solid #3A4753;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 
 .markdownEditor {
-  position: relative;
   width: 40%;
 }
 
@@ -49,17 +44,7 @@
 }
 
 .btnWrapper {
-  padding: 20px 50px;
-}
-
-.createChecklistBtn.createChecklistBtn {
-  background-color: #3A4753;
-  color: #fff;
-}
-
-.createChecklistBtn.createChecklistBtn:hover {
-  background-color: rgb(42, 51, 59);
-  color: #fff;
+  padding: 20px 2%;
 }
 
 input {
@@ -141,8 +126,9 @@ input:focus {
   outline: none;
 }
 
-.checklistTitle:first-child {
-  margin-top: 1rem;
+.checklistTitle {
+  text-align: center;
+  margin-top: 2rem !important;
 }
 
 .mdDescr {
@@ -153,7 +139,7 @@ input:focus {
   padding: 1em 1em;
   max-height: 280px;
   width: 300px;
-  overflow-y: scroll;
+  overflow-y: auto;
   border-radius: .28571429rem;
   border: 1px solid rgba(34, 36, 38, .15);
   z-index: 4;
@@ -290,4 +276,59 @@ input:focus {
 .PopupBtn.PopupBtn {
   padding: 10px 40px;
   margin: 0 10px 0 0;
+}
+
+.isPrivateWrapper {
+  display: inline-block;
+  width: 150px;
+  margin-bottom: 10px;
+}
+
+.transition {
+  transition: all .3s ease;
+}
+
+.confirmModal.confirmModal {
+  text-align: center;
+  font-size: 1.3em;
+  font-weight: bold;
+}
+
+@media screen and (max-width: 991px) {
+  .markdownWrapper {
+    flex-direction: column-reverse;  
+  }
+
+  .markdownEditor,
+  .markdownPreview {
+    width: 100%;
+    height: 32vh;
+  }
+  
+  .btnWrapper {
+    display: flex;
+    justify-content: center;
+    padding-top: 8px;
+    padding-bottom: 10px;
+  }
+  
+  .saveCloseWrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .isPrivateWrapper {
+    margin: 0;
+  }
+}
+
+@media screen and (max-width: 360px) {
+  .btnWrapper {
+    padding: 0;
+  }
+
+  .btnWrapper.btnWrapper>div {
+    padding: 8px 0;
+  }
 }

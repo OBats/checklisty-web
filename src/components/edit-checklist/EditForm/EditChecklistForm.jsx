@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Form, Button, Icon, Segment, Checkbox } from 'semantic-ui-react';
 import { Formik } from 'formik';
 import { checklistSchema } from '../../create-checklist/Form/utils/validationSchemas';
@@ -10,100 +10,105 @@ import ChecklistSectionData from './ChecklistSectionData';
 import loader from '../../main/loader.module.css';
 import initialValues from './initialValues';
 
-class EditCheckListForm extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      loading: true,
-      checklistData: initialValues,
-    };
-  }
+const EditCheckListForm = (props) => {
+  const [loading, setLoading] = useState(true);
+  const [checklistData, setChecklistData] = useState(initialValues);
+  let teamId;
 
-  componentDidMount() {
-    const { match } = this.props;
-    const slugOfChecklist = match.params.slug;
+  if (props.location.query) teamId = props.location.query.teamId;
 
+  useEffect(() => {
+    const slugOfChecklist = props.match.params.slug;
     getChecklist(slugOfChecklist)
-      .then(res => this.setState({ checklistData: res.data, loading: false }));
-  }
+      .then((res) => {
+        setChecklistData(res.data);
+        setLoading(false);
+      });
+  }, []);
 
-  render() {
-    const { loading, checklistData } = this.state;
-    const { history, match } = this.props;
-    const { title, isPrivate, sections_data } = checklistData;
-    const checklistSlug = match.params.slug;
+  const handleSubmiting = (values, actions) => {
+    const checklistSlug = props.match.params.slug;
+    values.teamId = teamId;
+    updateChecklist(checklistSlug, values)
+      .then(res => (values.teamId ? props.history.push(`/profile/myteam/${values.teamId}/${res.data.list.slug}`) : props.history.push('/profile/mylists')))
+      .catch((error) => {
+        if (!error.response) {
+          ErrorHandling('Can\'t connect to server. Please try again later.');
+        } else {
+          ErrorHandling(error.response.data.message);
+        }
+        actions.setSubmitting(false);
+      });
+  };
 
-    if (loading) {
-      return (
-        <div className={loader.loader}>
-          {'Loading...'}
-        </div>
-      );
-    }
+  const { title, isPrivate, sections_data } = checklistData;
+
+  if (loading) {
     return (
-      <div className={styles.main_form_container}>
-        <Formik
-          initialValues={{ title, isPrivate, sections_data }}
-          validationSchema={checklistSchema}
-          onSubmit={(values, actions) => {
-            updateChecklist(checklistSlug, values)
-              .then(res => history.push(`/${res.data.list.slug}`))
-              .catch((error) => {
-                if (!error.response) {
-                  ErrorHandling('Can\'t connect to server. Please try again later.');
-                } else {
-                  ErrorHandling(error.response.data.message);
-                }
-                actions.setSubmitting(false);
-              });
-          }}
-          render={({
-            values,
-            handleChange,
-            setFieldValue,
-            setFieldTouched,
-            handleBlur,
-            handleSubmit,
-            isValid,
-            isSubmitting,
-          }) => (
-            <Form
-              className={styles.main_form}
-              onSubmit={handleSubmit}
-            >
-              <ChecklistTitle
-                values={values}
-                handleBlur={handleBlur}
-                handleChange={handleChange}
-                titleValue={checklistData.title}
-              />
-              <ChecklistSectionData
-                values={values}
-                handleBlur={handleBlur}
-                handleChange={handleChange}
-                setFieldValue={setFieldValue}
-                setFieldTouched={setFieldTouched}
-              />
-              <Segment color="blue">
-                <Icon color="green" className={styles.icon} name="lock" />
-                <Checkbox
-                  fitted
-                  label="Make list private"
-                  name="isPrivate"
-                  toggle
-                  checked={!!values.isPrivate}
-                  onChange={(e, { name, checked }) => setFieldValue(name, !!checked)}
-                />
-              </Segment>
-              <Button primary fluid type="submit" disabled={isSubmitting || !isValid}>
-                  Submit
-              </Button>
-            </Form>
-          )}
-        />
+      <div className={loader.loader}>
+        {'Loading...'}
       </div>
     );
   }
-}
+
+  return (
+    <div className={styles.main_form_container}>
+      <Formik
+        initialValues={{ title, isPrivate: teamId ? true : isPrivate, sections_data }}
+        validationSchema={checklistSchema}
+        onSubmit={(values, actions) => handleSubmiting(values, actions)}
+        render={({
+          values,
+          handleChange,
+          setFieldValue,
+          setFieldTouched,
+          handleBlur,
+          handleSubmit,
+          isValid,
+          isSubmitting,
+        }) => (
+          <Form
+            className={styles.main_form}
+            onSubmit={handleSubmit}
+          >
+            <ChecklistTitle
+              values={values}
+              handleBlur={handleBlur}
+              handleChange={handleChange}
+              titleValue={checklistData.title}
+            />
+            <ChecklistSectionData
+              values={values}
+              handleBlur={handleBlur}
+              handleChange={handleChange}
+              setFieldValue={setFieldValue}
+              setFieldTouched={setFieldTouched}
+            />
+            <Segment color="blue">
+              <Icon
+                color={values.isPrivate ? 'red' : 'green'}
+                name={values.isPrivate ? 'lock' : 'unlock'}
+                size="large"
+                className={styles.icon}
+              />
+              <Checkbox
+                fitted
+                label={values.isPrivate ? 'Private' : 'Public'}
+                name="isPrivate"
+                toggle
+                checked={!!values.isPrivate}
+                onChange={(e, { name, checked }) => setFieldValue(name, !!checked)}
+                disabled={!!teamId}
+              />
+            </Segment>
+            <Button primary fluid type="submit" disabled={isSubmitting || !isValid}>
+                Submit
+            </Button>
+          </Form>
+        )}
+      />
+    </div>
+  );
+};
 
 export default EditCheckListForm;

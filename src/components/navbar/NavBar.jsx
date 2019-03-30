@@ -7,26 +7,16 @@ import { signOut } from '../../api/auth-api';
 import style from './NavBar.module.css';
 import home from './logo.png';
 import { handleSignOut } from '../../actions/user';
-
+import avatar from '../profile/Avatar/avatar.png';
 
 const NavBar = ({ userData, handleSignOut }) => (
   <Menu className={style.menu} inverted borderless>
-    <Menu.Item
-      name="main"
-      position="left"
-      as={Link}
-      to="/"
-    >
+    <Menu.Item name="main" position="left" as={Link} to="/">
       <img src={home} alt="home" />
       <span className={style.home}>Checklisty</span>
     </Menu.Item>
     {!userData && (
-      <Menu.Item
-        name="signIn"
-        position="right"
-        as={NavLink}
-        to="/auth/signin/"
-      >
+      <Menu.Item name="signIn" position="right" as={NavLink} to="/auth/signin/">
         Sign In
       </Menu.Item>
     )}
@@ -45,7 +35,7 @@ const NavBar = ({ userData, handleSignOut }) => (
         <Menu.Menu>
           <Dropdown
             item
-            text={userData.username}
+            text={`${userData.firstname} ${userData.lastname}`}
             className={style.NavBarUsername}
           >
             <Dropdown.Menu className={style.NavBarMenu}>
@@ -73,19 +63,18 @@ const NavBar = ({ userData, handleSignOut }) => (
                 <Icon name="group" className={style.MenuItemIcon} />
                 <span className={style.MenuItemText}>Team</span>
               </Dropdown.Item>
-              {userData.role !== 'user'
-                && (
+              {userData.role !== 'user' && (
                 <>
                   <Dropdown.Item
                     as={NavLink}
                     to="/admin"
                     className={style.MenuItem}
                   >
-                    <Icon name="group" className={style.MenuItemIcon} />
+                    <Icon name="user secret" className={style.MenuItemIcon} />
                     <span className={style.MenuItemText}>Admin tools</span>
                   </Dropdown.Item>
                 </>
-                )}
+              )}
               <Dropdown.Item
                 className={style.MenuItem}
                 onClick={() => {
@@ -100,7 +89,7 @@ const NavBar = ({ userData, handleSignOut }) => (
           </Dropdown>
           <Menu.Item className={style.NavBarAvatarWrapper}>
             <Image
-              src={userData.image || 'https://uniandes.hcmifactum.com/resources/images/no-image.jpg'}
+              src={userData.image || avatar}
               style={{ width: '60px' }}
               size="tiny"
               avatar
@@ -122,4 +111,7 @@ const mapDispatchToProps = dispatch => ({
   },
 });
 
-export default connect(mapStateToProps, mapDispatchToProps)(NavBar);
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(NavBar);

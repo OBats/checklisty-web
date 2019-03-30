@@ -4,23 +4,30 @@ import { Input, Button, Grid } from 'semantic-ui-react';
 import styles from './profileForms.module.css';
 import http from '../../../api/http';
 import { PasswordResetSchema } from './profileValidationSchema';
-import { ErrorHandling, SuccessHandling } from '../../toasters/MessagesHandling';
+import { ErrorHandling,
+  SuccessHandling } from '../../toasters/MessagesHandling';
 
 const PasswordForm = () => (
   <Grid centered verticalAlign="middle">
     <Grid.Column>
       <Formik
         initialValues={{
-          oldPassword: '', newPassword: '', repeatNewPassword: '',
+          oldPassword: '',
+          newPassword: '',
+          repeatNewPassword: '',
         }}
         validationSchema={PasswordResetSchema}
         onSubmit={(values, actions) => {
-          http.put('/api/profile/updatePassword', {
-            oldPassword: values.oldPassword,
-            newPassword: values.newPassword,
-          })
+          http
+            .put('/api/profile/updatePassword', {
+              oldPassword: values.oldPassword,
+              newPassword: values.newPassword,
+            })
             .then((res) => {
               SuccessHandling('Password changed!');
+              values.oldPassword = '';
+              values.newPassword = '';
+              values.repeatNewPassword = '';
               actions.setSubmitting(false);
             })
             .catch((error) => {
@@ -29,6 +36,9 @@ const PasswordForm = () => (
               } else {
                 ErrorHandling(error.response.data.message);
               }
+              values.oldPassword = '';
+              values.newPassword = '';
+              values.repeatNewPassword = '';
               actions.setSubmitting(false);
             });
         }}
@@ -46,7 +56,11 @@ const PasswordForm = () => (
           <Form onSubmit={handleSubmit}>
             <label htmlFor="OldPassword">Old password</label>
             <Input
-              className={`${styles.inputWrapper} ${touched.oldPassword && errors.oldPassword ? styles.InputError : ''}`}
+              className={`${styles.inputWrapper} ${
+                touched.oldPassword && errors.oldPassword
+                  ? styles.InputError
+                  : ''
+              }`}
               id="OldPassword"
               fluid
               placeholder="Old password"
@@ -56,10 +70,16 @@ const PasswordForm = () => (
               onBlur={handleBlur}
               value={values.oldPassword}
             />
-            <div className={styles.Error}>{touched.oldPassword && errors.oldPassword}</div>
+            <div className={styles.Error}>
+              {touched.oldPassword && errors.oldPassword}
+            </div>
             <label htmlFor="NewPassword">New password</label>
             <Input
-              className={`${styles.inputWrapper} ${touched.newPassword && errors.newPassword ? styles.InputError : ''}`}
+              className={`${styles.inputWrapper} ${
+                touched.newPassword && errors.newPassword
+                  ? styles.InputError
+                  : ''
+              }`}
               id="NewPassword"
               fluid
               placeholder="New password"
@@ -69,10 +89,16 @@ const PasswordForm = () => (
               onBlur={handleBlur}
               value={values.newPassword}
             />
-            <div className={styles.Error}>{touched.newPassword && errors.newPassword}</div>
+            <div className={styles.Error}>
+              {touched.newPassword && errors.newPassword}
+            </div>
             <label htmlFor="RepeatNewPassword">Repeat new password</label>
             <Input
-              className={`${styles.inputWrapper} ${touched.repeatNewPassword && errors.repeatNewPassword ? styles.InputError : ''}`}
+              className={`${styles.inputWrapper} ${
+                touched.repeatNewPassword && errors.repeatNewPassword
+                  ? styles.InputError
+                  : ''
+              }`}
               id="RepeatNewPassword"
               fluid
               placeholder="Repeat new password"

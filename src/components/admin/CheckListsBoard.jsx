@@ -5,8 +5,6 @@ import Checklist from './Checklist';
 const CheckListsBoard = ({
   data,
   deleteData,
-  openModal,
-  updateStatusOfModal,
   deletedId,
   updateDeletedId,
 }) => (
@@ -23,8 +21,6 @@ const CheckListsBoard = ({
           key={list.id}
           list={list}
           deleteList={deleteData}
-          openModal={openModal}
-          updateStatusOfModal={updateStatusOfModal}
           deletedId={deletedId}
           updateDeletedId={updateDeletedId}
         />

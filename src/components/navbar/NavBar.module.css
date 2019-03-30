@@ -75,3 +75,32 @@
   border-radius: 50px;
   font-size: 18px;
 }
+
+@media screen and (max-width: 480px) {
+  .menu.menu.menu {
+    padding: 0px 5px;
+    
+  }
+
+  /* .menu.menu.menu>a {
+    padding-left: 40px;
+  } */
+
+  .menu.menu.menu>div {
+    padding-right: 10px;
+  }
+
+  .NavBarAvatarWrapper.NavBarAvatarWrapper.NavBarAvatarWrapper.NavBarAvatarWrapper {
+    display: none;
+  }
+
+  .NavBarMenu.NavBarMenu.NavBarMenu.NavBarMenu.NavBarMenu {
+    left: -15px;
+  }
+}
+
+@media screen and (max-width: 380px) {
+  .home {
+    display: none;
+  }
+}

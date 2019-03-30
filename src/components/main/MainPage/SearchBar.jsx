@@ -11,23 +11,24 @@ function SearchBar(props) {
   const { saveSearchValue, searchFilter } = props;
 
   const onChangeSearch = debounce(500, (text) => {
-    saveSearchValue(text);
     if (text === '') {
-      saveSearchValue(undefined);
+      saveSearchValue('');
     }
+    saveSearchValue(text);
     props.resetActivePage();
   });
   const onKeyPressSearch = debounce(500, (keyPressed) => {
     if (keyPressed === 'Enter') {
       if (searchFilter === '') {
-        saveSearchValue(undefined);
+        saveSearchValue('');
       }
+
       saveSearchValue(searchFilter);
     }
   });
   const onClickSearch = () => {
     if (searchFilter === '') {
-      saveSearchValue(undefined);
+      saveSearchValue('');
     }
     saveSearchValue(searchFilter);
     props.resetActivePage();
@@ -36,7 +37,7 @@ function SearchBar(props) {
   const resetInput = () => {
     props.resetActivePage();
     textInput.current.value = '';
-    saveSearchValue(undefined);
+    saveSearchValue('');
     setReset(!isReset);
   };
   return (

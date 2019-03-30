@@ -1,15 +1,13 @@
 import React, { useState } from 'react';
-import { Icon, Button, Confirm, Image, Table, Header } from 'semantic-ui-react';
+import { Icon, Button, Image, Table, Header, Modal } from 'semantic-ui-react';
 import Select from 'react-select';
 import http from '../../api/http';
-import { SuccessHandling, ErrorHandling } from '../toasters/MessagesHandling';
+import { ErrorHandling, InfoToaster } from '../toasters/MessagesHandling';
 import styles from './User.module.css';
 
 const User = ({
   user,
   deleteUser,
-  openModal,
-  updateStatusOfModal,
   deletedId,
   updateDeletedId,
 }) => {
@@ -29,30 +27,33 @@ const User = ({
   const [status, setIsBlocked] = useState(userStatus);
   const [loadingOnStatus, setLoadingOnStatus] = useState(false);
   const [loadingOnRole, setLoadingOnRole] = useState(false);
+  const [openModal, setOpenModal] = useState(false);
 
   const showModal = (id) => {
-    updateStatusOfModal(true);
+    setOpenModal(true);
     updateDeletedId(id);
   };
 
   const handleConfirm = () => {
+    setOpenModal(false);
     deleteUser(deletedId);
-    updateStatusOfModal(false);
   };
 
-  const handleCancel = () => updateStatusOfModal(false);
+  const handleCancel = () => setOpenModal(false);
 
   const handleChangeOfRole = async (role) => {
-    if (role.value === valueOfRole.value) return SuccessHandling(`The role is already: ${role.value}`);
+    if (role.value === valueOfRole.value) return InfoToaster(`The role is already: ${role.value}`);
     if (status.value === 'blocked' && role.value === 'moderator') {
       return ErrorHandling('You can not give moderator rights to blocked user!');
     }
     try {
+      console.log('before', loadingOnRole);
       setLoadingOnRole(true);
       const response = await http.put(`api/admin/users/${user._id}/role?userRole=${role.value}`);
       setValueOfRole(role);
+      console.log('after', loadingOnRole);
+      InfoToaster(response.data);
       setLoadingOnRole(false);
-      SuccessHandling(response.data);
     } catch {
       ErrorHandling('The request failed, please try again!');
     }
@@ -63,8 +64,8 @@ const User = ({
       setLoadingOnStatus(true);
       const response = await http.put(`api/admin/users/${user._id}/status?userStatus=${status.value}`);
       setIsBlocked(status);
+      InfoToaster(response.data.message);
       setLoadingOnStatus(false);
-      SuccessHandling(response.data.message);
     } catch {
       ErrorHandling('The request failed, please try again!');
     }
@@ -72,7 +73,7 @@ const User = ({
 
   return (
     <Table.Row>
-      <Table.Cell>
+      <Table.Cell className={styles.userContent}>
         <Header as="h4" image>
           <Image avatar rounded src={user.image} />
           <Header.Content>
@@ -80,39 +81,59 @@ const User = ({
           </Header.Content>
         </Header>
       </Table.Cell>
-      <Table.Cell textAlign="center">
+      <Table.Cell className={styles.gridColum}>
         <Select
           className={styles.roleSelector}
-          value={valueOfRole}
           isLoading={loadingOnRole}
+          value={valueOfRole}
+          isSearchable={false}
           onChange={value => handleChangeOfRole(value)}
           options={roles}
         />
       </Table.Cell>
-      <Table.Cell textAlign="center">
+      <Table.Cell className={styles.gridColum}>
         <Select
-          className={styles.statusSelector}
+          className={(user.isBlocked ? styles.statusSelector : styles.statusBlocked)}
           value={status}
+          isSearchable={false}
           isLoading={loadingOnStatus}
           onChange={value => handleChangeOfStatus(value)}
           options={statuses}
         />
       </Table.Cell>
-      <Table.Cell>
+      <Table.Cell className={styles.deleteButton}>
         <Button
-          floated="right"
           icon
           onClick={() => showModal(user._id)}
         >
           <Icon name="remove" color="red" />
         </Button>
       </Table.Cell>
-      <Confirm
+      <Modal
+        size="mini"
+        className={styles.confirmModal}
         open={openModal}
-        content="Are you realy want to delete list"
-        onCancel={handleCancel}
-        onConfirm={() => handleConfirm()}
-      />
+        closeOnEscape
+        closeOnDimmerClick
+        onClose={() => setOpenModal(false)}
+      >
+        <Modal.Content>
+          <p>
+            Are you sure want to delete
+            {' '}
+            {user.username}
+            ?
+          </p>
+        </Modal.Content>
+        <Modal.Actions>
+          <Button negative content="No" onClick={() => handleCancel()} />
+          <Button
+            positive
+            content="Yes"
+            onClick={() => handleConfirm()}
+          />
+        </Modal.Actions>
+      </Modal>
     </Table.Row>
   );
 };

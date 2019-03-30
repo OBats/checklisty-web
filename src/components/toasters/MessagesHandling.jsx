@@ -1,8 +1,26 @@
 import React from 'react';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer, toast, Zoom } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-export const ErrorHandling = msg => toast.error(msg, {
+let toastId;
+
+export const ErrorHandling = (msg) => {
+  if (!toast.isActive(toastId)) {
+    toastId = toast.error(msg, {
+      toastId,
+      position: 'bottom-center',
+      autoClose: 2000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+      preventDuplicates: true,
+    });
+  }
+};
+
+
+export const SuccessHandling = msg => toast.success(msg, {
   position: 'bottom-center',
   autoClose: 4000,
   hideProgressBar: false,
@@ -11,7 +29,7 @@ export const ErrorHandling = msg => toast.error(msg, {
   draggable: true,
 });
 
-export const SuccessHandling = msg => toast.success(msg, {
+export const InfoToaster = msg => toast.info(msg, {
   position: 'bottom-center',
   autoClose: 4000,
   hideProgressBar: false,
@@ -30,5 +48,7 @@ export const MessageContainer = () => (
     rtl={false}
     pauseOnVisibilityChange
     draggable
+    transition={Zoom}
+    preventDuplicates
   />
 );

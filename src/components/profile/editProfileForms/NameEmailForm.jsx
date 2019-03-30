@@ -6,20 +6,29 @@ import { saveUserData } from '../../../actions/user';
 import styles from './profileForms.module.css';
 import http from '../../../api/http';
 import { NameEmailSchema } from './profileValidationSchema';
-import { ErrorHandling, SuccessHandling } from '../../toasters/MessagesHandling';
+import { ErrorHandling,
+  SuccessHandling } from '../../toasters/MessagesHandling';
 
 const NameEmailForm = ({ saveUserData }) => (
   <Grid centered verticalAlign="middle">
     <Grid.Column>
       <Formik
         initialValues={{
-          username: '', email: '',
+          firstname: '',
+          lastname: '',
+          username: '',
+          email: '',
         }}
         validationSchema={NameEmailSchema}
         onSubmit={(values, actions) => {
-          http.put('/api/profile', values)
+          http
+            .put('/api/profile', values)
             .then((res) => {
               saveUserData(res.data.updatedUser);
+              values.firstname = '';
+              values.lastname = '';
+              values.username = '';
+              values.email = '';
               SuccessHandling('Profile data updated!');
               actions.setSubmitting(false);
             })
@@ -29,6 +38,10 @@ const NameEmailForm = ({ saveUserData }) => (
               } else {
                 ErrorHandling(error.response.data.message);
               }
+              values.firstname = '';
+              values.lastname = '';
+              values.username = '';
+              values.email = '';
               actions.setSubmitting(false);
             });
         }}
@@ -44,9 +57,45 @@ const NameEmailForm = ({ saveUserData }) => (
           isSubmitting,
         }) => (
           <Form onSubmit={handleSubmit} className={styles.profileForm}>
+            <label htmlFor="firstname">New Firstname</label>
+            <Input
+              className={`${styles.inputWrapper} ${
+                touched.firstname && errors.firstname ? styles.InputError : ''
+              }`}
+              id="firstname"
+              fluid
+              placeholder="Firstname"
+              type="text"
+              name="firstname"
+              onChange={handleChange}
+              onBlur={handleBlur}
+              value={values.firstname}
+            />
+            <div className={styles.Error}>
+              {touched.firstname && errors.firstname}
+            </div>
+            <label htmlFor="lastname">New Lastname</label>
+            <Input
+              className={`${styles.inputWrapper} ${
+                touched.lastname && errors.lastname ? styles.InputError : ''
+              }`}
+              id="lastname"
+              fluid
+              placeholder="Lastname"
+              type="text"
+              name="lastname"
+              onChange={handleChange}
+              onBlur={handleBlur}
+              value={values.lastname}
+            />
+            <div className={styles.Error}>
+              {touched.lastname && errors.lastname}
+            </div>
             <label htmlFor="username">New Username</label>
             <Input
-              className={`${styles.inputWrapper} ${touched.username && errors.username ? styles.InputError : ''}`}
+              className={`${styles.inputWrapper} ${
+                touched.username && errors.username ? styles.InputError : ''
+              }`}
               id="username"
               fluid
               placeholder="Username"
@@ -56,10 +105,14 @@ const NameEmailForm = ({ saveUserData }) => (
               onBlur={handleBlur}
               value={values.username}
             />
-            <div className={styles.Error}>{touched.username && errors.username}</div>
+            <div className={styles.Error}>
+              {touched.username && errors.username}
+            </div>
             <label htmlFor="email">New Email</label>
             <Input
-              className={`${styles.inputWrapper} ${touched.email && errors.email ? styles.InputError : ''}`}
+              className={`${styles.inputWrapper} ${
+                touched.email && errors.email ? styles.InputError : ''
+              }`}
               id="email"
               fluid
               placeholder="Email"
@@ -92,4 +145,7 @@ const mapDispatchToProps = dispatch => ({
   },
 });
 
-export default connect(null, mapDispatchToProps)(NameEmailForm);
+export default connect(
+  null,
+  mapDispatchToProps,
+)(NameEmailForm);
