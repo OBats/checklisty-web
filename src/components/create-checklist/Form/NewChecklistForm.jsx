@@ -16,8 +16,7 @@ const NewChecklistForm = ({ location }) => {
   const [isOpen, openModal] = useState(false);
   const [defaultSchema, setSchema] = useState(true);
 
-  let teamId;
-  if (location.query) teamId = location.query.teamId;
+  const teamId = location.query ? location.query.teamId : undefined;
 
   const onSubmitClick = (values, actions) => {
     if (teamId) values.teamId = teamId;
@@ -51,7 +50,7 @@ const NewChecklistForm = ({ location }) => {
       isSubmitting,
     } = props;
 
-    if (teamId) values.isPrivate = true;
+    values.isPrivate = teamId ? true : values.isPrivate;
 
     return (
       <Form
