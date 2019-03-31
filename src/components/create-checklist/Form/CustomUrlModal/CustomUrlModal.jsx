@@ -69,7 +69,7 @@ const CustomUrlModal = (props) => {
       </header>
 
       <p className={modalStyles.link}>
-        { teamId ? <Link to={`profile/myteam/${teamId}/${slug}`}>{`${url}/profile/myteam/${teamId}/${slug}`}</Link>
+        { teamId ? <Link to={`/profile/myteam/${teamId}/${slug}`}>{`${url}/profile/myteam/${teamId}/${slug}`}</Link>
           : <Link to={`/${slug}`}>{`${url}/${slug}`}</Link> }
       </p>
 

@@ -38,7 +38,10 @@ const EditCheckListForm = (props) => {
 
   const handleSubmiting = (values, actions) => {
     const checklistSlug = props.match.params.slug;
-    values.teamId = teamId;
+    if (teamId) {
+      values.teamId = teamId;
+      values.isPrivate = true;
+    }
     updateChecklist(checklistSlug, values)
       .then(res => (values.teamId ? props.history.push(`/profile/myteam/${values.teamId}/${res.data.list.slug}`) : props.history.push('/profile/mylists')))
       .catch((error) => {

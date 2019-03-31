@@ -84,7 +84,10 @@ const NewChecklistMarkdown = (props) => {
   };
 
   const handleSaveChecklist = (checkList, slug) => {
-    if (teamId) checkList.teamId = teamId;
+    if (teamId) {
+      checkList.isPrivate = true;
+      checkList.teamId = teamId;
+    }
 
     setIsSaving(true);
     updateChecklist(slug, checkList)
@@ -104,7 +107,10 @@ const NewChecklistMarkdown = (props) => {
   };
 
   const handleAccept = (checkList, slug) => {
-    if (teamId) checkList.teamId = teamId;
+    if (teamId) {
+      checkList.isPrivate = true;
+      checkList.teamId = teamId;
+    }
 
     updateChecklist(slug, checkList)
       .then((res) => {

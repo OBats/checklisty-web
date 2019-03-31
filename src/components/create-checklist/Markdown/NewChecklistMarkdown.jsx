@@ -66,7 +66,10 @@ const NewChecklistMarkdown = (props) => {
   };
 
   const handleSaveChecklist = (checkList) => {
-    if (teamId) checkList.teamId = teamId;
+    if (teamId) {
+      checkList.teamId = teamId;
+      checkList.isPrivate = true;
+    }
 
     setIsSaving(true);
     if (!isSaved) {
@@ -100,12 +103,15 @@ const NewChecklistMarkdown = (props) => {
   };
 
   const handleAccept = (checkList) => {
-    if (teamId) checkList.teamId = teamId;
+    if (teamId) {
+      checkList.teamId = teamId;
+      checkList.isPrivate = true;
+    }
 
     if (!isSaved) {
       createChecklist(checkList)
         .then((res) => {
-          teamId ? props.history.push(`/profile/myteam/${teamId}/${res.data.list.slug}`) : props.history.push('/profile/mylists');
+          teamId ? props.history.push(`/profile/myteam/${teamId}/${res.data.slug}`) : props.history.push('/profile/mylists');
           SuccessHandling('Your checklist has been saved successfully');
         })
         .catch((error) => {

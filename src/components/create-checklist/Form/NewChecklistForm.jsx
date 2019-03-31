@@ -19,7 +19,10 @@ const NewChecklistForm = ({ location }) => {
   const teamId = location.query ? location.query.teamId : undefined;
 
   const onSubmitClick = (values, actions) => {
-    if (teamId) values.teamId = teamId;
+    if (teamId) {
+      values.teamId = teamId;
+      values.isPrivate = true;
+    }
 
     createChecklist(values)
       .then((res) => {

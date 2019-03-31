@@ -1,11 +1,11 @@
 import React from 'react';
 import { Tab, Container } from 'semantic-ui-react';
 import TeamListsContainer from './TeamListsContainer';
-import Chat from '../chat/Chat';
+import ChatContainer from '../chat/ChatContainer';
 
 const panes = [
   { menuItem: 'Team checklists', render: props => <Tab.Pane><TeamListsContainer id={props.id} /></Tab.Pane> },
-  { menuItem: 'Chat', render: props => <Tab.Pane><Chat teamId={props.id} /></Tab.Pane> },
+  { menuItem: 'Chat', render: props => <Tab.Pane><ChatContainer teamId={props.id} /></Tab.Pane> },
 ];
 
 const TeamView = props => (
