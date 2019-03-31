@@ -20,7 +20,6 @@ const get = (url, params) => {
       localStorage.removeItem('access-token');
     }
     ErrorHandling(error.response.data.message);
-    // throw new Error(error.response.data.message);
   });
 
   return request;
