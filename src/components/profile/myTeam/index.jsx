@@ -12,6 +12,7 @@ import fetchUserTeams from '../../../actions/fetchUserTeams';
 import Loader from './Loader';
 import ShowUserTeams from './showUserTeams';
 import NotFound from '../../main/MainPage/NotFound';
+import Footer from '../../main/Footer';
 
 
 const MyTeam = (props) => {
@@ -66,7 +67,6 @@ const MyTeam = (props) => {
                       ? (
                         <>
                           <ShowUserTeams teams={teams} history={history} />
-                        )
                         </>
                       )
                       : (
@@ -94,6 +94,7 @@ const MyTeam = (props) => {
           </div>
 
         </div>
+        <Footer />
       </div>
     );
   }

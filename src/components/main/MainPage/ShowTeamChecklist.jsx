@@ -4,6 +4,7 @@ import loaderStyle from '../loader.module.css';
 import Header from '../Header';
 import styles from './ShowCheckList.module.css';
 import ChecklistTeamBlock from '../../checklist/team-checklist/ChecklistTeamBlock';
+import NotFound404 from '../../utils/404-page';
 
 class ShowTeamChecklist extends Component {
   constructor(props) {
@@ -24,7 +25,8 @@ class ShowTeamChecklist extends Component {
           checkList: res.data,
           loading: false,
         });
-      });
+      })
+      .catch(() => { this.setState({ loading: false }); });
   }
 
   render() {
@@ -37,7 +39,7 @@ class ShowTeamChecklist extends Component {
       );
     } if (!checkList) {
       return (
-        <div>Check list not found</div>
+        <NotFound404 />
       );
     }
     return (

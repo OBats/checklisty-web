@@ -41,9 +41,9 @@ const Routes = () => (
       <ProtectedRoute exact path="/create-checklist/markdown" component={NewChecklistMarkdown} />
       <ProtectedRoute exact path="/edit-checklist/:slug" component={EditChecklistForm} />
       <ProtectedRoute exact path="/edit-checklist-markdown/:slug" component={EditChecklistMarkdown} />
-      <Route component={NotFound404} />
       <ProtectedRoute exact path="/profile/myteam/chat" component={Chat} />
       <ProtectedRoute exact path="/profile/myteam/:id/:slug" component={ShowTeamChecklist} />
+      <Route component={NotFound404} />
     </Switch>
     <MessageContainer />
   </React.Fragment>

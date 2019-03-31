@@ -70,10 +70,10 @@ class ResetPassword extends Component {
                     <PasswordInput
                       className={touched.password && errors.password
                         ? style.InputError : style.Input}
-                      touched={touched}
+                      touched={touched.password}
                       name="password"
                       placeholder="Password"
-                      errors={errors}
+                      errors={errors.password}
                       value={values.password}
                       handleChange={handleChange}
                       handleBlur={handleBlur}
@@ -82,10 +82,10 @@ class ResetPassword extends Component {
                     <PasswordInput
                       className={touched.confirmPassword && errors.confirmPassword
                         ? style.InputError : style.Input}
-                      touched={touched}
+                      touched={touched.confirmPassword}
                       placeholder="Confirm your password"
                       name="confirmPassword"
-                      errors={errors}
+                      errors={errors.confirmPassword}
                       value={values.confirmPassword}
                       handleChange={handleChange}
                       handleBlur={handleBlur}

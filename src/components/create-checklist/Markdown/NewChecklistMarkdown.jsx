@@ -7,6 +7,7 @@ import styles from './css/NewChecklistMarkdown.module.css';
 import { ErrorHandling,
   SuccessHandling } from '../../toasters/MessagesHandling';
 import MarkdownButtons from './MarkdownButtons';
+import Footer from '../../main/Footer';
 
 const NewChecklistMarkdown = (props) => {
   const [mdValue, setMdValue] = useState('');
@@ -179,6 +180,7 @@ const NewChecklistMarkdown = (props) => {
           teamId={teamId}
         />
       </div>
+      <Footer />
     </div>
   );
 };
