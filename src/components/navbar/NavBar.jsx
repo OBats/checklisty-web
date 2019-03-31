@@ -70,7 +70,7 @@ const NavBar = ({ userData, handleSignOut }) => (
                     to="/admin"
                     className={style.MenuItem}
                   >
-                    <Icon name="group" className={style.MenuItemIcon} />
+                    <Icon name="user secret" className={style.MenuItemIcon} />
                     <span className={style.MenuItemText}>Admin tools</span>
                   </Dropdown.Item>
                 </>

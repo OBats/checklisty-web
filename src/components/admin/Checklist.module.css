@@ -11,3 +11,9 @@
     display: block;
     padding: 1%;
 }
+
+.confirmModal.confirmModal {
+    text-align: center;
+    font-size: 1.3em;
+    font-weight: bold;
+  }

@@ -1,33 +1,31 @@
-import React from 'react';
-import { Icon, Button, Confirm, Popup, Table, Header } from 'semantic-ui-react';
+import React, { useState } from 'react';
+import { Icon, Button, Popup, Table, Header, Modal } from 'semantic-ui-react';
 import Link from 'react-router-dom/Link';
+import styles from './Checklist.module.css';
 
 const Checklist = ({
   list,
   deleteList,
-  openModal,
-  updateStatusOfModal,
   deletedId,
   updateDeletedId,
 }) => {
-  const { author } = list;
-
+  const [openModal, setOpenModal] = useState(false);
   const showCreationData = data => data.slice(0, 10).split('-').reverse().join('/');
   const showAuthorName = (author) => {
     if (!author) return 'unknown';
     return author.username;
   };
   const showModal = (id) => {
-    updateStatusOfModal(true);
+    setOpenModal(true);
     updateDeletedId(id);
   };
 
   const handleConfirm = () => {
     deleteList(deletedId);
-    updateStatusOfModal(false);
+    setOpenModal(false);
   };
 
-  const handleCancel = () => updateStatusOfModal(false);
+  const handleCancel = () => setOpenModal(false);
 
   return (
     <Table.Row>
@@ -75,12 +73,26 @@ const Checklist = ({
             </Button>
           )}
         />
-        <Confirm
+        <Modal
+          size="mini"
+          className={styles.confirmModal}
           open={openModal}
-          content="Are you realy want to delete list"
-          onCancel={handleCancel}
-          onConfirm={() => handleConfirm()}
-        />
+          closeOnEscape
+          closeOnDimmerClick
+          onClose={() => setOpenModal(false)}
+        >
+          <Modal.Content>
+            <p>Are you sure want to delete list?</p>
+          </Modal.Content>
+          <Modal.Actions>
+            <Button negative content="No" onClick={() => handleCancel()} />
+            <Button
+              positive
+              content="Yes"
+              onClick={() => handleConfirm()}
+            />
+          </Modal.Actions>
+        </Modal>
       </Table.Cell>
     </Table.Row>
   );

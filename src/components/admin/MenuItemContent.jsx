@@ -15,10 +15,10 @@ const MenuItemContent = ({
   intialSearchText,
 }) => {
   const [data, setData] = useState([]);
-  const [openModal, setOpenModal] = useState(false);
   const [deletedId, setDeletedId] = useState(null);
 
   const [fetching, setFetching] = useState(true);
+  const [loading, setLoading] = useState(false);
 
   const [activePage, setActivePage] = useState(1);
   const [totalPage, setTotalPage] = useState(null);
@@ -28,12 +28,14 @@ const MenuItemContent = ({
 
   const updateData = () => {
     try {
+      setLoading(true);
       fetchData(activePage, searchText, selectItemsNumber)
         .then((response) => {
           const result = handleResponse(response.data, selectItemsNumber);
           setData(result.data);
           setTotalPage(result.totalPages);
           setFetching(false);
+          setLoading(false);
         });
     } catch {
       ErrorHandling('Somethin go wrong!');
@@ -54,10 +56,6 @@ const MenuItemContent = ({
     }
   };
 
-  const updateStatusOfModal = (value) => {
-    setOpenModal(value);
-  };
-
   const updateDeletedId = (value) => {
     setDeletedId(value);
   };
@@ -66,14 +64,12 @@ const MenuItemContent = ({
 
   return (
     <>
-      <Search setActivePage={setActivePage} setSearchFilter={setSearchText} />
+      <Search loading={loading} setActivePage={setActivePage} setSearchFilter={setSearchText} />
       {!data.length ? <NotFoundResult searchText={searchText} /> : (
         <>
           <Component
             data={data}
             deleteData={deleteData}
-            openModal={openModal}
-            updateStatusOfModal={updateStatusOfModal}
             deletedId={deletedId}
             updateDeletedId={updateDeletedId}
           />
