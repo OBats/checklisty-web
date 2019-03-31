@@ -17,9 +17,10 @@ const TeamLists = ({ lists, listLoad, teamId, setLists }) => {
   }
 
   const [isOpen, setIsOpen] = useState(false);
+  const [listId, setListId] = useState(null);
 
-  const deleteReq = (id) => {
-    http.delete(`/api/checklists/${id}?teamId=${teamId}`)
+  const deleteReq = () => {
+    http.delete(`/api/checklists/${listId}?teamId=${teamId}`)
       .then((res) => {
         setLists(0);
       })
@@ -70,7 +71,7 @@ const TeamLists = ({ lists, listLoad, teamId, setLists }) => {
             inverted
             content="Remove checklist"
             trigger={(
-              <Button icon onClick={e => setIsOpen(true)}>
+              <Button icon onClick={(e) => { setListId(list.id); setIsOpen(true); }}>
                 <Icon name="remove" color="red" />
               </Button>
             )}
@@ -79,7 +80,7 @@ const TeamLists = ({ lists, listLoad, teamId, setLists }) => {
             open={isOpen}
             content="Are you realy want to delete this list?"
             onCancel={e => setIsOpen(false)}
-            onConfirm={(e) => { deleteReq(list.id); }}
+            onConfirm={(e) => { deleteReq(); }}
           />
         </List.Item>
       ))}
