@@ -1,5 +1,5 @@
 import React from 'react';
-import { Switch, Route, Redirect } from 'react-router-dom';
+import { Switch, Route } from 'react-router-dom';
 import { MessageContainer } from './components/toasters/MessagesHandling';
 import NavBar from './components/navbar/NavBar';
 import SignIn from './components/auth/form-based-auth/SignIn';
@@ -19,6 +19,7 @@ import ResetPassword from './components/auth/forgot-password/ResetPassword';
 import EditChecklistForm from './components/edit-checklist/EditForm/EditChecklistForm';
 import EditChecklistMarkdown from './components/edit-checklist/EditMarkdown/EditChecklistMarkdown';
 import AdminBoard from './components/admin/AdminBoard';
+import NotFound404 from './components/utils/404-page';
 
 const Routes = () => (
   <React.Fragment>
@@ -35,28 +36,12 @@ const Routes = () => (
       <ProtectedRoute exact path="/profile/myteam/:id" component={TeamView} />
       <ProtectedRoute exact path="/admin" component={AdminBoard} />
       <Route exact path="/:id" component={ShowCheckList} />
+      <ProtectedRoute exact path="/create-checklist/form" component={NewChecklistForm} />
+      <ProtectedRoute exact path="/create-checklist/markdown" component={NewChecklistMarkdown} />
+      <ProtectedRoute exact path="/edit-checklist/:slug" component={EditChecklistForm} />
+      <ProtectedRoute exact path="/edit-checklist-markdown/:slug" component={EditChecklistMarkdown} />
+      <Route component={NotFound404} />
       <ProtectedRoute exact path="/profile/myteam/:id/:slug" component={ShowTeamChecklist} />
-      <ProtectedRoute
-        exact
-        path="/create-checklist/form"
-        component={NewChecklistForm}
-      />
-      <ProtectedRoute
-        exact
-        path="/create-checklist/markdown"
-        component={NewChecklistMarkdown}
-      />
-      <ProtectedRoute
-        exact
-        path="/edit-checklist/:slug"
-        component={EditChecklistForm}
-      />
-      <ProtectedRoute
-        exact
-        path="/edit-checklist-markdown/:slug"
-        component={EditChecklistMarkdown}
-      />
-      <Redirect exact to="/" />
     </Switch>
     <MessageContainer />
   </React.Fragment>

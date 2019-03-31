@@ -12,7 +12,6 @@ import customNameSchema from './validationSchema';
 
 const CreateTeamBtn = (props) => {
   const { addSelectedUser, arrayOfSelectedUsers, history, teams } = props;
-
   const createTeam = async (values) => {
     const { data } = await http.post('/api/team', values);
     history.push(`/profile/myteam/${data.team._id}`);

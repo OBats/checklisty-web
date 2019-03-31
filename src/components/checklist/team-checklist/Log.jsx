@@ -19,7 +19,7 @@ const Log = ({ messages, userData }) => {
           <Header.Content>
             {'Log seems to be empty!'}
             <Header.Subheader>
-              All activity of your team with this checklist will appear here!
+              {'All activity of your team with this checklist will appear here!'}
             </Header.Subheader>
           </Header.Content>
         </Header>
@@ -84,9 +84,7 @@ const Log = ({ messages, userData }) => {
 
             </div>
             <div className={style.dateBlockStyle}>
-              <span className={!isMyMessage(elem.username)
-                ? style.dateStyle : style.dateStyleAlternative}
-              >
+              <span className={!isMyMessage(elem.username) ? style.dateStyle : style.dateStyleAlternative}>
                 {timeChecker(elem.date)}
               </span>
             </div>

@@ -20,7 +20,7 @@ class ChecklistTeamBlock extends Component {
       userClicked: false,
       messages: [],
     };
-    this.socket = openSocket('localhost:3030');
+    this.socket = openSocket(process.env.REACT_APP_URL || 'localhost:3030');
   }
 
   async componentDidMount() {
@@ -151,8 +151,6 @@ class ChecklistTeamBlock extends Component {
   }
 
   render() {
-    const { teamId } = this.props;
-
     if (this.state.arrayOfCheckboxArray) {
       return (
         <React.Fragment>

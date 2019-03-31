@@ -24,6 +24,7 @@ const MyTeam = (props) => {
     selectTeams,
     listsLoader,
     teamsAmount,
+    history,
   } = props;
 
   useEffect(() => () => {
@@ -64,7 +65,7 @@ const MyTeam = (props) => {
                     {teams.length !== 0
                       ? (
                         <>
-                          <ShowUserTeams teams={teams} />
+                          <ShowUserTeams teams={teams} history={history} />
                         )
                         </>
                       )
