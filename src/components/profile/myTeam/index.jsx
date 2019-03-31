@@ -30,6 +30,7 @@ const MyTeam = (props) => {
 
   useEffect(() => () => {
     changeComponentLoading(true);
+    fetchUserTeams(activePage, searchTeamValue, selectTeams);
   }, []);
 
   useEffect(() => {
