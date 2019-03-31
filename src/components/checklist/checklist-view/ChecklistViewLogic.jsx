@@ -28,16 +28,15 @@ class ChecklistViewLogic extends Component {
 
   componentWillReceiveProps(nextProps) {
     if (this.state.checkboxArray !== nextProps.arrayOfArrays || this.state.currentProgress !== this.getProgress()) {
-      const currentProgress = this.getProgress();
       if (nextProps.updateViewOfComponent) {
+        const currentProgress = this.getProgress();
         this.props.updateViewOfComponent(nextProps.arrayOfArrays, nextProps.checklistIndex);
+        this.setState({ checkboxArray: nextProps.arrayOfArrays, currentProgress });
       }
-      this.setState({ checkboxArray: nextProps.arrayOfArrays, currentProgress });
     }
   }
 
-  getProgress = () => {
-    const checkboxArray = this.props.arrayOfArrays;
+  getProgress = (checkboxArray = this.props.arrayOfArrays) => {
     const checkboxArrayTemporal = [...checkboxArray];
     let countOfCheckedItems = 0;
     for (let i = 0; i < checkboxArray.length; i += 1) {
@@ -54,7 +53,7 @@ class ChecklistViewLogic extends Component {
     const checkboxArrayTemporal = [...checkboxArray];
     checkboxArrayTemporal[index] = !checkboxArrayTemporal[index];
     const flag = checkboxArrayTemporal[index];
-    const currentProgress = this.getProgress();
+    const currentProgress = this.getProgress(checkboxArrayTemporal);
     this.props.countProgressOnCheckboxClick(flag, index, this.props.checklistIndex);
     this.setState({ checkboxArray, currentProgress });
   }
