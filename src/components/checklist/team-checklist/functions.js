@@ -37,7 +37,7 @@ const timeChecker = (inputDate) => {
   stringToReturn += getDateString(obj);
 
   const minutes = obj.minute;
-  stringToReturn += ` ${parseInt(obj.hour, 10) + 2}:${minutes}`;
+  stringToReturn += ` ${parseInt(obj.hour, 10) + 3}:${minutes}`;
 
   return stringToReturn;
 };

@@ -57,7 +57,7 @@
 .emptyMessage {
     display: flex;
     align-items: center;
-    height: 200px !important;
+    height: 300px !important;
     overflow: auto;
     padding: 5px;
     border-radius: 10px;

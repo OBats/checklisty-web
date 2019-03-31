@@ -17,21 +17,36 @@ class ChecklistViewLogic extends Component {
   componentDidMount() {
     const accordionIndexArray = [];
     const { data } = this.state;
-    let counter = 0;
     for (let i = 0; i < data.items_data.length; i += 1) {
       accordionIndexArray.push(-1);
     }
-    for (let i = 0; i < this.state.checkboxArray.length; i += 1) {
-      if (this.state.checkboxArray[i] === true) {
-        counter += 1;
-      }
-    }
-    const currentProgress = (
-      (counter / this.state.checkboxArray.length) * 100
-    ).toFixed(0);
+    const currentProgress = this.getProgress();
     this.setState({
       checkboxArray: this.props.arrayOfArrays, accordionIndexArray, currentProgress,
     });
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (this.state.checkboxArray !== nextProps.arrayOfArrays || this.state.currentProgress !== this.getProgress()) {
+      const currentProgress = this.getProgress();
+      if (nextProps.updateViewOfComponent) {
+        this.props.updateViewOfComponent(nextProps.arrayOfArrays, nextProps.checklistIndex);
+      }
+      this.setState({ checkboxArray: nextProps.arrayOfArrays, currentProgress });
+    }
+  }
+
+  getProgress = () => {
+    const checkboxArray = this.props.arrayOfArrays;
+    const checkboxArrayTemporal = [...checkboxArray];
+    let countOfCheckedItems = 0;
+    for (let i = 0; i < checkboxArray.length; i += 1) {
+      if (checkboxArrayTemporal[i] === true) {
+        countOfCheckedItems += 1;
+      }
+    }
+    const currentProgress = ((countOfCheckedItems / checkboxArray.length) * 100).toFixed(0);
+    return currentProgress;
   }
 
   handleChecked = (index) => {
@@ -39,19 +54,8 @@ class ChecklistViewLogic extends Component {
     const checkboxArrayTemporal = [...checkboxArray];
     checkboxArrayTemporal[index] = !checkboxArrayTemporal[index];
     const flag = checkboxArrayTemporal[index];
-    let countOfCheckedItems = 0;
-
-    for (let i = 0; i < checkboxArray.length; i += 1) {
-      if (checkboxArrayTemporal[i] === true) {
-        countOfCheckedItems += 1;
-      }
-    }
-    const currentProgress = (
-      (countOfCheckedItems / checkboxArray.length) * 100
-    ).toFixed(0);
-
+    const currentProgress = this.getProgress();
     this.props.countProgressOnCheckboxClick(flag, index, this.props.checklistIndex);
-
     this.setState({ checkboxArray, currentProgress });
   }
 

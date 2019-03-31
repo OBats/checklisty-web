@@ -47,8 +47,7 @@ class ChecklistTeamBlock extends Component {
     );
 
     this.socket.on('emit-data', (data) => {
-      arrayOfCheckboxArray = data.arrayValues;
-      const { messages } = data;
+      const { messages, arrayOfCheckboxArray } = data;
       return this.setState({ arrayOfCheckboxArray, messages });
     });
 
@@ -85,16 +84,12 @@ class ChecklistTeamBlock extends Component {
     this.socket.emit('handle-checklist-change', {
       id: this.state.idOfTeamChecklistRelation,
       messages,
-      arrayValues: arrayOfCheckboxArray,
+      arrayOfCheckboxArray,
       userData: this.props.userData,
-      checklistData: {
-        sectionIndex: indexOfSection, elementIndex: indexOfElement, value: flag, sectionValue: null,
-      },
+      checklistData: { sectionIndex: indexOfSection, elementIndex: indexOfElement, value: flag, sectionValue: null },
     });
 
-    this.setState({
-      amountOfCheckedCheckboxes, wholeChecklistProgress, arrayOfCheckboxArray, userClicked: true,
-    });
+    this.setState({ amountOfCheckedCheckboxes, wholeChecklistProgress, arrayOfCheckboxArray, userClicked: true });
   }
 
   countProgressOnAdditionalButton = async (difference, indexOfSection) => {
@@ -125,15 +120,13 @@ class ChecklistTeamBlock extends Component {
     this.socket.emit('handle-checklist-change', {
       id: this.state.idOfTeamChecklistRelation,
       messages,
-      arrayValues: arrayOfCheckboxArray,
+      arrayOfCheckboxArray,
       userData: this.props.userData,
       checklistData: {
         sectionIndex: indexOfSection, value: null, sectionValue: valueForWholeSection,
       },
     });
-    this.setState({
-      wholeChecklistProgress, amountOfCheckedCheckboxes, arrayOfCheckboxArray, userClicked: true,
-    });
+    this.setState({ wholeChecklistProgress, amountOfCheckedCheckboxes, arrayOfCheckboxArray, userClicked: true });
   }
 
   updateViewOfComponent = (checkboxArray, sectionIndex) => {
@@ -145,9 +138,7 @@ class ChecklistTeamBlock extends Component {
     const { wholeChecklistProgress, amountOfCheckedCheckboxes } = countAmountOfCheckedItems(
       sections_data, arrayOfCheckboxArray, amountOfAllCheckboxes, saveCurrentProgress,
     );
-    this.setState({
-      wholeChecklistProgress, amountOfCheckedCheckboxes, arrayOfCheckboxArray, userClicked: true,
-    });
+    this.setState({ wholeChecklistProgress, amountOfCheckedCheckboxes, arrayOfCheckboxArray, userClicked: true });
   }
 
   render() {
