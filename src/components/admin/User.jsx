@@ -47,11 +47,9 @@ const User = ({
       return ErrorHandling('You can not give moderator rights to blocked user!');
     }
     try {
-      console.log('before', loadingOnRole);
       setLoadingOnRole(true);
       const response = await http.put(`api/admin/users/${user._id}/role?userRole=${role.value}`);
       setValueOfRole(role);
-      console.log('after', loadingOnRole);
       InfoToaster(response.data);
       setLoadingOnRole(false);
     } catch {
@@ -93,7 +91,7 @@ const User = ({
       </Table.Cell>
       <Table.Cell className={styles.gridColum}>
         <Select
-          className={(user.isBlocked ? styles.statusSelector : styles.statusBlocked)}
+          className={(userStatus.value === 'active' ? styles.statusSelector : styles.statusBlocked)}
           value={status}
           isSearchable={false}
           isLoading={loadingOnStatus}
