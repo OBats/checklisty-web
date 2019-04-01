@@ -8,7 +8,7 @@ const UsersBoard = ({
   deletedId,
   updateDeletedId,
 }) => (
-  <Table celled>
+  <Table celled unstackable>
     <Table.Header>
       <Table.Row>
         <Table.HeaderCell textAlign="center">Username</Table.HeaderCell>

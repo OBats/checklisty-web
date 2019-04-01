@@ -15,10 +15,16 @@ const get = (url, params) => {
   });
 
   request.catch((error) => {
+    if (!error.response) {
+      ErrorHandling(error.message);
+      return;
+    }
+
     if (error.response.status === unauthorizedStatus) {
       store.dispatch(handleSignOut());
       localStorage.removeItem('access-token');
     }
+
     ErrorHandling(error.response.data.message);
   });
 
@@ -33,6 +39,11 @@ const post = (url, params) => {
   });
 
   request.catch((error) => {
+    if (!error.response) {
+      ErrorHandling(error.message);
+      return;
+    }
+
     if (error.response.status === unauthorizedStatus) {
       store.dispatch(handleSignOut());
       localStorage.removeItem('access-token');
@@ -52,6 +63,11 @@ const put = (url, params) => {
   });
 
   request.catch((error) => {
+    if (!error.response) {
+      ErrorHandling(error.message);
+      return;
+    }
+
     if (error.response.status === unauthorizedStatus) {
       store.dispatch(handleSignOut());
       localStorage.removeItem('access-token');
@@ -70,6 +86,11 @@ const patch = (url, params) => {
   });
 
   request.catch((error) => {
+    if (!error.response) {
+      ErrorHandling(error.message);
+      return;
+    }
+
     if (error.response.status === unauthorizedStatus) {
       store.dispatch(handleSignOut());
       localStorage.removeItem('access-token');
@@ -89,6 +110,11 @@ const del = (url) => {
   });
 
   request.catch((error) => {
+    if (!error.response) {
+      ErrorHandling(error.message);
+      return;
+    }
+
     if (error.response.status === unauthorizedStatus) {
       store.dispatch(handleSignOut());
       localStorage.removeItem('access-token');

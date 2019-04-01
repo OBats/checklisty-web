@@ -1,7 +1,7 @@
 import React from 'react';
 import { Segment, Search as SemanticSearch } from 'semantic-ui-react';
 
-const Search = ({ setSearchFilter, setActivePage }) => {
+const Search = ({ setSearchFilter, setActivePage, loading }) => {
   const handleSearch = (e) => {
     const { value } = e.target;
 
@@ -15,6 +15,7 @@ const Search = ({ setSearchFilter, setActivePage }) => {
         showNoResults={false}
         placeholder="Search users..."
         onSearchChange={handleSearch}
+        loading={loading}
       />
     </Segment>
   );

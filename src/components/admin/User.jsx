@@ -71,7 +71,7 @@ const User = ({
 
   return (
     <Table.Row>
-      <Table.Cell className={styles.userContent}>
+      <Table.Cell width={6}>
         <Header as="h4" image>
           <Image avatar rounded src={user.image} />
           <Header.Content>
@@ -79,7 +79,7 @@ const User = ({
           </Header.Content>
         </Header>
       </Table.Cell>
-      <Table.Cell className={styles.gridColum}>
+      <Table.Cell className={styles.gridColum} width={4}>
         <Select
           className={styles.roleSelector}
           isLoading={loadingOnRole}
@@ -87,16 +87,18 @@ const User = ({
           isSearchable={false}
           onChange={value => handleChangeOfRole(value)}
           options={roles}
+          components={{ IndicatorSeparator: () => null }}
         />
       </Table.Cell>
-      <Table.Cell className={styles.gridColum}>
+      <Table.Cell className={styles.gridColum} width={4}>
         <Select
-          className={(userStatus.value === 'active' ? styles.statusSelector : styles.statusBlocked)}
+          className={(status.value === 'active' ? styles.statusSelector : styles.statusBlocked)}
           value={status}
           isSearchable={false}
           isLoading={loadingOnStatus}
           onChange={value => handleChangeOfStatus(value)}
           options={statuses}
+          components={{ IndicatorSeparator: () => null }}
         />
       </Table.Cell>
       <Table.Cell className={styles.deleteButton}>

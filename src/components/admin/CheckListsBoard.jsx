@@ -8,7 +8,7 @@ const CheckListsBoard = ({
   deletedId,
   updateDeletedId,
 }) => (
-  <Table celled>
+  <Table celled unstackable>
     <Table.Header>
       <Table.Row>
         <Table.HeaderCell>Title</Table.HeaderCell>

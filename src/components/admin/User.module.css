@@ -1,11 +1,7 @@
 .gridColum.gridColum.gridColum {
-    max-width: 40px;
     text-align: center;
 }
 
-.userContent.userContent.userContent {
-    width: 40%;
-}
 /*styles for role selector*/
 .roleSelector {
     width: 100%;
@@ -34,10 +30,6 @@
     box-shadow: none;
 }
 
-.roleSelector div div>span {
-    display: none;
-}
-
 /*styles for status active*/
 .statusSelector {
     display: flex;
@@ -63,10 +55,6 @@
 
 .statusSelector>div>div {
     justify-content: center;
-}
-
-.statusSelector div div>span {
-    display: none;
 }
 
 .statusSelector div div div>svg {
@@ -109,7 +97,12 @@
 }
 
 .deleteButton.deleteButton {
-    width: 7%;
+    width: 5%;
+    text-align: center;
+}
+
+.deleteButton.deleteButton button {
+    margin-right: 0;
 }
 
 .confirmModal.confirmModal {
