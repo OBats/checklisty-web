@@ -46,8 +46,8 @@ const ListItem = ({ lists, del }) => {
           </List.Content>
           <Progress
             progress
+            indicating
             percent={list.progress}
-            color="green"
             style={{ margin: '0 1em', width: '10em' }}
           />
           <Popup

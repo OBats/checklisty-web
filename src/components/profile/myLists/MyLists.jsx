@@ -86,9 +86,6 @@ const MyList = (props) => {
     <NoLists />
   ) : (
     <Container>
-      <Header as="h1">
-        <Header.Content>Your Lists</Header.Content>
-      </Header>
       <ListStatistic
         setFiltered={setFiltered}
         setSearching={setSearching}
