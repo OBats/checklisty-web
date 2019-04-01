@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import PropTypes from 'prop-types';
 import { Form, Icon, Segment, Checkbox } from 'semantic-ui-react';
 import { Formik } from 'formik';
 import { checklistSchema, customUrlSchema } from './utils/validationSchemas';
@@ -115,6 +116,10 @@ const NewChecklistForm = ({ location }) => {
       render={checklistForm}
     />
   );
+};
+
+NewChecklistForm.propTypes = {
+  location: PropTypes.object.isRequired,
 };
 
 export default NewChecklistForm;

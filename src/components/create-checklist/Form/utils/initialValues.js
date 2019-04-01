@@ -1,4 +1,4 @@
-const initiaalValues = {
+const initialValues = {
   title: '',
   isPrivate: false,
   sections_data: [{
@@ -15,4 +15,4 @@ const initiaalValues = {
   }],
 };
 
-export default initiaalValues;
+export default initialValues;
