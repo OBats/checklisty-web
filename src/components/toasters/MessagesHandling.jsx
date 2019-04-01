@@ -4,12 +4,12 @@ import 'react-toastify/dist/ReactToastify.css';
 
 let toastId;
 
-export const ErrorHandling = (msg) => {
+export const ErrorHandling = (msg, timeout = 2000) => {
   if (!toast.isActive(toastId)) {
     toastId = toast.error(msg, {
       toastId,
       position: 'bottom-center',
-      autoClose: 2000,
+      autoClose: timeout,
       hideProgressBar: false,
       closeOnClick: true,
       pauseOnHover: true,
@@ -18,7 +18,6 @@ export const ErrorHandling = (msg) => {
     });
   }
 };
-
 
 export const SuccessHandling = msg => toast.success(msg, {
   position: 'bottom-center',

@@ -2,6 +2,7 @@ import React from 'react';
 import { Grid } from 'semantic-ui-react';
 import ChatSideBar from './ChatSideBar';
 import Chat from './Chat';
+import styles from './css/ChatContainer.module.css';
 
 const ChatContainer = ({ teamId }) => (
   <Grid colums={2} divided>
@@ -9,7 +10,7 @@ const ChatContainer = ({ teamId }) => (
       <Grid.Column width={4}>
         <ChatSideBar teamId={teamId} />
       </Grid.Column>
-      <Grid.Column width={12}>
+      <Grid.Column className={styles.block} width={12}>
         <Chat teamId={teamId} />
       </Grid.Column>
     </Grid.Row>
