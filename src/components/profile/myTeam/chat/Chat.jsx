@@ -77,6 +77,7 @@ const Chat = ({ userData, teamId }) => {
     });
 
     socket.on('message', (messageData) => {
+      textareaValue = null;
       setMessage('');
       setMessagesInfo(prevState => ([...prevState, messageData]));
       scrollToBottom();
