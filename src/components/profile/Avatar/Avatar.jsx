@@ -45,8 +45,12 @@ class AvatarForProfile extends React.Component {
           this.props.saveUserData(res);
           SuccessHandling('Image changed!');
         })
-        .catch((err) => {
-          ErrorHandling(err.message);
+        .catch((error) => {
+          if (error.response.status === 500) {
+            ErrorHandling('Server is down. Please try again later.');
+          } else {
+            ErrorHandling(error.response.data.message);
+          }
           this.setState(() => ({
             modalOpen: false,
           }));

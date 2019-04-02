@@ -19,13 +19,14 @@ const get = (url, params) => {
       ErrorHandling(error.message);
       return;
     }
-
-    if (error.response.status === unauthorizedStatus) {
-      store.dispatch(handleSignOut());
-      localStorage.removeItem('access-token');
+    try {
+      if (error.response.status === unauthorizedStatus) {
+        store.dispatch(handleSignOut());
+        localStorage.removeItem('access-token');
+      }
+    } catch (error) {
+      throw error;
     }
-
-    ErrorHandling(error.response.data.message);
   });
 
   return request;
@@ -43,12 +44,14 @@ const post = (url, params) => {
       ErrorHandling(error.message);
       return;
     }
-
-    if (error.response.status === unauthorizedStatus) {
-      store.dispatch(handleSignOut());
-      localStorage.removeItem('access-token');
+    try {
+      if (error.response.status === unauthorizedStatus) {
+        store.dispatch(handleSignOut());
+        localStorage.removeItem('access-token');
+      }
+    } catch (error) {
+      throw error;
     }
-    ErrorHandling(error.response.data.message);
   });
 
   return request;
@@ -67,12 +70,14 @@ const put = (url, params) => {
       ErrorHandling(error.message);
       return;
     }
-
-    if (error.response.status === unauthorizedStatus) {
-      store.dispatch(handleSignOut());
-      localStorage.removeItem('access-token');
+    try {
+      if (error.response.status === unauthorizedStatus) {
+        store.dispatch(handleSignOut());
+        localStorage.removeItem('access-token');
+      }
+    } catch (error) {
+      throw error;
     }
-    ErrorHandling(error.response.data.message);
   });
 
   return request;
@@ -91,11 +96,14 @@ const patch = (url, params) => {
       return;
     }
 
-    if (error.response.status === unauthorizedStatus) {
-      store.dispatch(handleSignOut());
-      localStorage.removeItem('access-token');
+    try {
+      if (error.response.status === unauthorizedStatus) {
+        store.dispatch(handleSignOut());
+        localStorage.removeItem('access-token');
+      }
+    } catch (error) {
+      throw error;
     }
-    ErrorHandling(error.response.data.message);
   });
 
   return request;
@@ -114,12 +122,14 @@ const del = (url) => {
       ErrorHandling(error.message);
       return;
     }
-
-    if (error.response.status === unauthorizedStatus) {
-      store.dispatch(handleSignOut());
-      localStorage.removeItem('access-token');
+    try {
+      if (error.response.status === unauthorizedStatus) {
+        store.dispatch(handleSignOut());
+        localStorage.removeItem('access-token');
+      }
+    } catch (error) {
+      throw error;
     }
-    ErrorHandling(error.response.data.message);
   });
 
   return request;

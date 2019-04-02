@@ -29,8 +29,8 @@ const MyList = (props) => {
         const { data } = await http.get(`/api/checklists/author=${user._id}`);
         if (data.length) setChecklists(data);
         setLoading(false);
-      } catch {
-        ErrorHandling('Something go wrong!');
+      } catch (error) {
+        ErrorHandling(error.response.data.message);
       }
     };
 
@@ -72,8 +72,8 @@ const MyList = (props) => {
         changePage(currentPage, updatedChecklists);
         SuccessHandling(res.data.message);
       });
-    } catch {
-      ErrorHandling('Something go wrong!');
+    } catch (error) {
+      ErrorHandling(error.response.data.message);
     }
   };
 
