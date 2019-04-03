@@ -17,7 +17,7 @@ const ChatSideBar = ({ teamId }) => {
         setTeamMembers(undefined);
         setLoading(false);
       });
-  });
+  }, []);
 
   if (loading) return <Loader>Loading</Loader>;
   if (teamMembers === undefined) return <div>Oops, something went wrong!</div>;

@@ -47,7 +47,7 @@ export const MessageContainer = () => (
     rtl={false}
     pauseOnVisibilityChange
     draggable
-    transition={Zoom}
     preventDuplicates
+    transition={Zoom}
   />
 );
