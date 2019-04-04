@@ -44,7 +44,7 @@ const MyTeam = (props) => {
   }
   if (teamsAmount === 0) {
     return (
-      <NoTeam />
+      <NoTeam history={history} />
     );
   }
   if (teams) {

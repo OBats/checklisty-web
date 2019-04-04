@@ -5,7 +5,7 @@ const initialState = {
   checklists: null,
   componentLoader: true,
   totalPage: 1,
-  listsLoader: false,
+  listsLoader: true,
   activePage: 1,
   searchFilter: '',
   selectItems: 5,

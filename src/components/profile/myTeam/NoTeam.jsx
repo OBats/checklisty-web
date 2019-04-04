@@ -6,7 +6,7 @@ import logo from './team.svg';
 import CreateTeamBtn from './createTeam/CreateTeamBtn';
 
 
-const NoTeam = () => (
+const NoTeam = ({ history }) => (
   <div className={styles.container}>
     <div>
       <img src={logo} alt="team-icon" />
@@ -29,7 +29,7 @@ const NoTeam = () => (
               <img src={logo} alt="team-icon" className={styles.teamIcon} />
                     Create New Team
             </Header>
-            <CreateTeamBtn />
+            <CreateTeamBtn history={history} />
           </Grid.Column>
         </Grid.Row>
       </Grid>

@@ -9,8 +9,8 @@ export default function fetchData(activePage, searchFilter, selectItems) {
         dispatch({ type: 'FETCH_CHECKLISTS', payload: res.data.result });
         dispatch({ type: 'SAVE_SEARCH_VALUE', payload: searchFilter });
         dispatch({ type: 'CHANGE_COMPONENT_LOADING', payload: false });
-        dispatch({ type: 'CHANGE_LISTS_LOADING', payload: false });
         dispatch({ type: 'CHANGE_TOTAL_PAGE_VALUE', payload: Math.ceil((res.data.totalItems) / selectItems) });
+        dispatch({ type: 'CHANGE_LISTS_LOADING', payload: false });
       });
   };
 }

@@ -4,14 +4,17 @@ import { Icon } from 'semantic-ui-react';
 import { debounce } from 'throttle-debounce';
 import styles from '../../main/MainPage/MainPage.module.css';
 import { saveSearchTeamValue, resetActivePage } from '../../../actions/selectUserAction';
+import fetchUserTeams from '../../../actions/fetchUserTeams';
+import { changeListsLoading } from '../../../actions/checklistsAction';
 
 
 function SearchBar(props) {
   const [resetTeamSearch, setResetTeam] = useState(false);
   const textInput = React.createRef();
-  const { saveSearchTeamValue, searchTeamValue } = props;
+  const { saveSearchTeamValue, searchTeamValue, activePage, fetchUserTeams, selectTeams, changeListsLoading } = props;
 
   const onChangeSearch = debounce(500, (text) => {
+    changeListsLoading(true);
     if (text === '') {
       saveSearchTeamValue('');
     }
@@ -19,19 +22,25 @@ function SearchBar(props) {
     props.resetActivePage();
   });
   const onKeyPressSearch = debounce(500, (keyPressed) => {
+    changeListsLoading(true);
     if (keyPressed === 'Enter') {
       if (searchTeamValue === '') {
         saveSearchTeamValue('');
+        fetchUserTeams(activePage, searchTeamValue, selectTeams);
       }
 
       saveSearchTeamValue(searchTeamValue);
+      fetchUserTeams(activePage, searchTeamValue, selectTeams);
     }
   });
   const onClickSearch = () => {
+    changeListsLoading(true);
     if (searchTeamValue === '') {
       saveSearchTeamValue('');
+      fetchUserTeams(activePage, searchTeamValue, selectTeams);
     }
     saveSearchTeamValue(searchTeamValue);
+    fetchUserTeams(activePage, searchTeamValue, selectTeams);
     props.resetActivePage();
   };
 
@@ -69,9 +78,11 @@ function SearchBar(props) {
   );
 }
 
-const mapStateToProps = ({ selectedUsers }) => (
+const mapStateToProps = ({ selectedUsers, checklists }) => (
   {
     searchTeamValue: selectedUsers.searchTeamValue,
+    activePage: selectedUsers.activePage,
+    selectTeams: selectedUsers.selectTeams,
   });
 
 const mapDispatchToProps = dispatch => ({
@@ -80,6 +91,12 @@ const mapDispatchToProps = dispatch => ({
   },
   resetActivePage: () => {
     dispatch(resetActivePage());
+  },
+  fetchUserTeams: (activePage, searchTeamValue, selectTeams) => {
+    dispatch(fetchUserTeams(activePage, searchTeamValue, selectTeams));
+  },
+  changeListsLoading: (listsLoader) => {
+    dispatch(changeListsLoading(listsLoader));
   },
 });
 

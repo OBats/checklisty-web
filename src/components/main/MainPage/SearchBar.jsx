@@ -4,13 +4,15 @@ import { debounce } from 'throttle-debounce';
 import { connect } from 'react-redux';
 import styles from './MainPage.module.css';
 import { resetActivePage, saveSearchValue, changeListsLoading } from '../../../actions/checklistsAction';
+import fetchData from '../../../actions/fetchData';
 
 function SearchBar(props) {
   const [isReset, setReset] = useState(false);
   const textInput = React.createRef();
-  const { saveSearchValue, searchFilter } = props;
+  const { saveSearchValue, searchFilter, activePage, selectItems, fetchData, changeListsLoading } = props;
 
   const onChangeSearch = debounce(500, (text) => {
+    changeListsLoading(true);
     if (text === '') {
       saveSearchValue('');
     }
@@ -18,20 +20,25 @@ function SearchBar(props) {
     props.resetActivePage();
   });
   const onKeyPressSearch = debounce(500, (keyPressed) => {
+    changeListsLoading(true);
     if (keyPressed === 'Enter') {
       if (searchFilter === '') {
         saveSearchValue('');
+        fetchData(activePage, searchFilter, selectItems);
       }
 
       saveSearchValue(searchFilter);
+      fetchData(activePage, searchFilter, selectItems);
     }
   });
   const onClickSearch = () => {
+    changeListsLoading(true);
     if (searchFilter === '') {
       saveSearchValue('');
+      fetchData(activePage, searchFilter, selectItems);
     }
     saveSearchValue(searchFilter);
-    props.resetActivePage();
+    fetchData(activePage, searchFilter, selectItems);
   };
 
   const resetInput = () => {
@@ -73,6 +80,7 @@ const mapStateToProps = ({ checklists }) => (
     searchFilter: checklists.searchFilter,
     activePage: checklists.activePage,
     listsLoader: checklists.listsLoader,
+    selectItems: checklists.selectItems,
   });
 
 const mapDispatchToProps = dispatch => ({
@@ -84,6 +92,9 @@ const mapDispatchToProps = dispatch => ({
   },
   resetActivePage: () => {
     dispatch(resetActivePage());
+  },
+  fetchData: (activePage, searchFilter, selectItems) => {
+    dispatch(fetchData(activePage, searchFilter, selectItems));
   },
 });
 
