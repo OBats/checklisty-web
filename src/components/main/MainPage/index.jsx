@@ -9,7 +9,7 @@ import ShowListOfCheckList from './ShowListOfCheckList';
 import SearchBar from './SearchBar';
 import SelectPage from './SelectHowManyCheclists';
 import fetchData from '../../../actions/fetchData';
-import { changeComponentLoading, changeListsLoading } from '../../../actions/checklistsAction';
+import { changeComponentLoading, resetActivePage } from '../../../actions/checklistsAction';
 
 const MainPage = (props) => {
   const {
@@ -21,11 +21,13 @@ const MainPage = (props) => {
     checklists,
     fetchData,
     changeComponentLoading,
-    changeListsLoading,
+    resetActivePage,
   } = props;
 
   useEffect(() => () => {
     changeComponentLoading(true);
+    resetActivePage();
+    fetchData(activePage, searchFilter, selectItems);
     return () => {
       changeComponentLoading(true);
     };
@@ -92,8 +94,8 @@ const mapDispatchToProps = dispatch => ({
   changeComponentLoading: (componentLoader) => {
     dispatch(changeComponentLoading(componentLoader));
   },
-  changeListsLoading: (listsLoader) => {
-    dispatch(changeListsLoading(listsLoader));
+  resetActivePage: () => {
+    dispatch(resetActivePage());
   },
 });
 

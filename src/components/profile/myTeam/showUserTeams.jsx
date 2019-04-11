@@ -36,7 +36,7 @@ const ShowUserTeams = (props) => {
                 {currentTeam.name}
               </div>
               <div className={styles.teamCreator}>
-                {currentTeam.creator.username}
+                {currentTeam.creator === null ? 'Creator was deleted' : currentTeam.creator.username}
               </div>
             </div>
             <div className={styles.additionalInfo}>

@@ -31,7 +31,6 @@ const TeamView = (props) => {
       <div className={loaderStyle.loader}>Loading...</div>
     );
   }
-
   return (
     <Container>
       <TeamTabs id={props.match.params.id} />

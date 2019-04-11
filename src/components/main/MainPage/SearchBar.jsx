@@ -11,7 +11,7 @@ function SearchBar(props) {
   const textInput = React.createRef();
   const { saveSearchValue, searchFilter, activePage, selectItems, fetchData, changeListsLoading } = props;
 
-  const onChangeSearch = debounce(500, (text) => {
+  const onChangeSearch = debounce(750, (text) => {
     changeListsLoading(true);
     if (text === '') {
       saveSearchValue('');
@@ -19,7 +19,7 @@ function SearchBar(props) {
     saveSearchValue(text);
     props.resetActivePage();
   });
-  const onKeyPressSearch = debounce(500, (keyPressed) => {
+  const onKeyPressSearch = debounce(750, (keyPressed) => {
     changeListsLoading(true);
     if (keyPressed === 'Enter') {
       if (searchFilter === '') {

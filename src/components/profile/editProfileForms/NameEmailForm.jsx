@@ -9,7 +9,7 @@ import { NameEmailSchema } from './profileValidationSchema';
 import { ErrorHandling,
   SuccessHandling } from '../../toasters/MessagesHandling';
 
-const NameEmailForm = ({ saveUserData }) => (
+const NameEmailForm = ({ saveUserData, userData }) => (
   <Grid centered verticalAlign="middle">
     <Grid.Column>
       <Formik
@@ -64,7 +64,7 @@ const NameEmailForm = ({ saveUserData }) => (
               }`}
               id="firstname"
               fluid
-              placeholder="Firstname"
+              placeholder={userData.firstname}
               type="text"
               name="firstname"
               onChange={handleChange}
@@ -81,7 +81,7 @@ const NameEmailForm = ({ saveUserData }) => (
               }`}
               id="lastname"
               fluid
-              placeholder="Lastname"
+              placeholder={userData.lastname}
               type="text"
               name="lastname"
               onChange={handleChange}
@@ -98,7 +98,7 @@ const NameEmailForm = ({ saveUserData }) => (
               }`}
               id="username"
               fluid
-              placeholder="Username"
+              placeholder={userData.username}
               type="text"
               name="username"
               onChange={handleChange}
@@ -115,7 +115,7 @@ const NameEmailForm = ({ saveUserData }) => (
               }`}
               id="email"
               fluid
-              placeholder="Email"
+              placeholder={userData.email}
               type="text"
               name="email"
               onChange={handleChange}
@@ -144,8 +144,8 @@ const mapDispatchToProps = dispatch => ({
     dispatch(saveUserData(data));
   },
 });
+const mapStateToProps = ({ user }) => ({
+  userData: user.userData,
+});
 
-export default connect(
-  null,
-  mapDispatchToProps,
-)(NameEmailForm);
+export default connect(mapStateToProps, mapDispatchToProps)(NameEmailForm);
