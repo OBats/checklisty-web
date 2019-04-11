@@ -1,10 +1,9 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable react/prop-types */
 import React, { useState, useEffect } from 'react';
-import { Header, Container, Segment, Loader } from 'semantic-ui-react';
+import { Container, Segment, Loader } from 'semantic-ui-react';
 import { connect } from 'react-redux';
-import { SuccessHandling,
-  ErrorHandling } from '../../toasters/MessagesHandling';
+import { SuccessHandling, ErrorHandling } from '../../toasters/MessagesHandling';
 import http from '../../../api/http';
 import ListItem from './ListItem';
 import ListStatistic from './ListsStatistic';

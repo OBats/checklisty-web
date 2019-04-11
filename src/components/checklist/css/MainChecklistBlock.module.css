@@ -2,8 +2,7 @@
     display: flex !important;
     flex-direction: column;
     max-width: 768px;
-    width: 100%;
-    margin: 0 auto;
+    width: 100%; 
 }
 
 .progressbarHeader {
