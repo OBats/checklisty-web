@@ -60,7 +60,7 @@ class ShowCheckList extends Component {
         <Header title={checkList.title} />
         <div className={styles.checkListContainer}>
           <MainChecklistBlock checkListData={checkList} />
-          {this.canBeCopied() && <CopyList user={userData.userData} checkList={checkList} />}
+          {/* {this.canBeCopied() && <CopyList user={userData.userData} checkList={checkList} />} */}
         </div>
         <Footer />
       </div>
