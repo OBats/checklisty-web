@@ -1,133 +1,101 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import ChecklistViewComponents from './ChecklistViewComponents';
 
-class ChecklistViewLogic extends Component {
-  constructor(props) {
-    super(props);
-    const { checkListData } = this.props;
-    this.state = {
-      data: checkListData,
-      checkboxArray: this.props.arrayOfArrays,
-      accordionIndexArray: [],
-      isWholeChecklistHidden: false,
-      currentProgress: 0,
-    };
-  }
+const ChecklistViewLogic = (props) => {
+  const data = props.checkListData;
+  const [checkboxArray, setCheckboxArray] = useState(props.arrayOfArrays);
+  const [accordionIndexArray, setAccordionIndexArray] = useState([]);
+  const [isWholeChecklistHidden, setIsWholeChecklistHidden] = useState(false);
+  const [currentProgress, setCurrentProgress] = useState(0);
 
-  componentDidMount() {
-    const accordionIndexArray = [];
-    const { data } = this.state;
-    for (let i = 0; i < data.items_data.length; i += 1) {
-      accordionIndexArray.push(-1);
-    }
-    const currentProgress = this.getProgress();
-    this.setState({
-      checkboxArray: this.props.arrayOfArrays, accordionIndexArray, currentProgress,
-    });
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (this.state.checkboxArray !== nextProps.arrayOfArrays || this.state.currentProgress !== this.getProgress()) {
-      if (nextProps.updateViewOfComponent) {
-        const currentProgress = this.getProgress();
-        this.props.updateViewOfComponent(nextProps.arrayOfArrays, nextProps.checklistIndex);
-        this.setState({ checkboxArray: nextProps.arrayOfArrays, currentProgress });
-      }
-    }
-  }
-
-  getProgress = (checkboxArray = this.props.arrayOfArrays) => {
-    const checkboxArrayTemporal = [...checkboxArray];
+  const getProgress = (checkboxArrayTemporal = props.arrayOfArrays) => {
     let countOfCheckedItems = 0;
-    for (let i = 0; i < checkboxArray.length; i += 1) {
+    for (let i = 0; i < checkboxArrayTemporal.length; i += 1) {
       if (checkboxArrayTemporal[i] === true) {
         countOfCheckedItems += 1;
       }
     }
-    const currentProgress = ((countOfCheckedItems / checkboxArray.length) * 100).toFixed(0);
+    const currentProgress = ((countOfCheckedItems / checkboxArrayTemporal.length) * 100).toFixed(0);
     return currentProgress;
-  }
+  };
 
-  handleChecked = (index) => {
-    const checkboxArray = this.props.arrayOfArrays;
+  useEffect(() => {
+    const accordionIndexArrayTemp = [];
+    for (let i = 0; i < data.items_data.length; i += 1) {
+      accordionIndexArrayTemp.push(-1);
+    }
+    const currentProgressTemp = getProgress();
+    setCheckboxArray(props.arrayOfArrays);
+    setAccordionIndexArray(accordionIndexArrayTemp);
+    setCurrentProgress(currentProgressTemp);
+  }, []);
+
+
+  useEffect(() => {
+    if (currentProgress !== getProgress()) {
+      if (props.updateViewOfComponent) {
+        const currentProgressTemp = getProgress();
+        props.updateViewOfComponent(props.arrayOfArrays, props.checklistIndex);
+        setCheckboxArray(props.arrayOfArrays);
+        setCurrentProgress(currentProgressTemp);
+      }
+    }
+  }, [props.arrayOfArrays]);
+
+  const handleChecked = (index) => {
+    const checkboxArray = props.arrayOfArrays;
     const checkboxArrayTemporal = [...checkboxArray];
     checkboxArrayTemporal[index] = !checkboxArrayTemporal[index];
     const flag = checkboxArrayTemporal[index];
-    const currentProgress = this.getProgress(checkboxArrayTemporal);
-    this.props.countProgressOnCheckboxClick(flag, index, this.props.checklistIndex);
-    this.setState({ checkboxArray, currentProgress });
-  }
+    const currentProgress = getProgress(checkboxArrayTemporal);
+    props.countProgressOnCheckboxClick(flag, index, props.checklistIndex);
+    setCheckboxArray(checkboxArrayTemporal);
+    setCurrentProgress(currentProgress);
+  };
 
-  handleClickAccordion = (index) => {
-    const { accordionIndexArray } = this.state;
+  const handleClickAccordion = (index) => {
     const accordionIndexArrayTemporal = [...accordionIndexArray];
     accordionIndexArrayTemporal[index] = accordionIndexArrayTemporal[index] === 0 ? -1 : 0;
-    this.setState({ accordionIndexArray: accordionIndexArrayTemporal });
-  }
+    setAccordionIndexArray(accordionIndexArrayTemporal);
+  };
 
-  handleClickEyeButton = () => {
-    const { isWholeChecklistHidden } = this.state;
-    this.setState({ isWholeChecklistHidden: !isWholeChecklistHidden });
-  }
+  const handleSetAllCheckboxes = () => {
+    const difference = checkboxArray.length - checkboxArray.filter(elem => elem === true).length;
+    props.countProgressOnAdditionalButton(difference, props.checklistIndex);
+    setCheckboxArray(checkboxArray.map(() => true));
+    setCurrentProgress(100);
+  };
 
-  handleSetAllCheckboxes = () => {
-    const difference = this.state.checkboxArray.length - this.state.checkboxArray
-      .filter(elem => elem === true).length;
-    this.props.countProgressOnAdditionalButton(difference, this.props.checklistIndex);
-    this.setState(({ checkboxArray }) => ({
-      checkboxArray: checkboxArray.map(() => true),
-      currentProgress: 100,
-    }));
-  }
+  const handleResetAllCheckboxes = () => {
+    const difference = checkboxArray.filter(elem => elem === false).length - checkboxArray.length;
+    props.countProgressOnAdditionalButton(difference, props.checklistIndex);
+    setCheckboxArray(checkboxArray.map(() => false));
+    setCurrentProgress(0);
+  };
 
-  handleResetAllCheckboxes = () => {
-    const difference = this.state.checkboxArray
-      .filter(elem => elem === false).length - this.state.checkboxArray.length;
-    this.props.countProgressOnAdditionalButton(difference, this.props.checklistIndex);
-    this.setState(({ checkboxArray }) => ({
-      checkboxArray: checkboxArray.map(() => false),
-      currentProgress: 0,
-    }));
-  }
+  const handleOpenAllAccordions = () => setAccordionIndexArray(accordionIndexArray.map(() => 0));
 
-  handleOpenAllAccordions = () => {
-    this.setState(({ accordionIndexArray }) => ({
-      accordionIndexArray: accordionIndexArray.map(() => 0),
-    }));
-  }
+  const handleCloseAllAccordions = () => setAccordionIndexArray(accordionIndexArray.map(() => -1));
 
-  handleCloseAllAccordions = () => {
-    this.setState(({ accordionIndexArray }) => ({
-      accordionIndexArray: accordionIndexArray.map(() => -1),
-    }));
-  }
+  const handleClickEyeButton = () => setIsWholeChecklistHidden(!isWholeChecklistHidden);
 
-  render() {
-    const {
-      data,
-      currentProgress,
-      isWholeChecklistHidden,
-      accordionIndexArray,
-      checkboxArray,
-    } = this.state;
-    const { checklistIndex } = this.props;
-    return (
-      <ChecklistViewComponents
-        data={data}
-        currentProgress={currentProgress}
-        isWholeChecklistHidden={isWholeChecklistHidden}
-        accordionIndexArray={accordionIndexArray}
-        checkboxArray={checkboxArray}
-        checklistIndex={checklistIndex}
-        handleChecked={this.handleChecked}
-        handleClickAccordion={this.handleClickAccordion}
-        handleClickEyeButton={this.handleClickEyeButton}
-        handleOpenAllAccordions={this.handleOpenAllAccordions}
-        handleCloseAllAccordions={this.handleCloseAllAccordions}
-        handleSetAllCheckboxes={this.handleSetAllCheckboxes}
-        handleResetAllCheckboxes={this.handleResetAllCheckboxes}
-      />
-    );
-  }
-}
+  return (
+    <ChecklistViewComponents
+      data={data}
+      currentProgress={currentProgress}
+      isWholeChecklistHidden={isWholeChecklistHidden}
+      accordionIndexArray={accordionIndexArray}
+      checkboxArray={checkboxArray}
+      checklistIndex={props.checklistIndex}
+      handleChecked={handleChecked}
+      handleClickAccordion={handleClickAccordion}
+      handleClickEyeButton={handleClickEyeButton}
+      handleOpenAllAccordions={handleOpenAllAccordions}
+      handleCloseAllAccordions={handleCloseAllAccordions}
+      handleSetAllCheckboxes={handleSetAllCheckboxes}
+      handleResetAllCheckboxes={handleResetAllCheckboxes}
+    />
+  );
+};
+
 export default ChecklistViewLogic;

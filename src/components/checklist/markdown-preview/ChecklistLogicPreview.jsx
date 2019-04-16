@@ -1,41 +1,37 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import ChecklistViewComponents from '../checklist-view/ChecklistViewComponents';
 
-class ChecklistLogicPreview extends Component {
-  constructor(props) {
-    super(props);
-    const { checkListData } = this.props;
-    this.state = {
-      data: checkListData,
-      checkboxArray: null,
-      accordionIndexArray: [],
-      isWholeChecklistHidden: false,
-      currentProgress: 0,
-    };
-  }
+const ChecklistLogicPreview = (props) => {
+  const [checkboxArray, setCheckboxArray] = useState(null);
+  const [accordionIndexArray, setAccordionIndexArray] = useState(null);
+  const [data, setData] = useState(props.checkListData);
+  const [isWholeChecklistHidden, setIsWholeCHecklistHidden] = useState(false);
+  const [currentProgress, setCurrentProgress] = useState(0);
 
-  componentDidMount() { this.startInitializing(true); }
-
-  componentWillReceiveProps({ checkListData }) { this.startInitializing(false, checkListData); }
-
-  startInitializing = (onMount, checkListData) => {
+  const startInitializing = (onMount, checkListData) => {
     const accordionIndexArray = [];
     const checkboxArray = [];
-    const { data } = this.state;
     for (let i = 0; i < data.items_data.length; i += 1) {
       accordionIndexArray.push(-1);
       checkboxArray.push(false);
     }
     if (onMount) {
-      return this.setState({ checkboxArray, accordionIndexArray });
+      setCheckboxArray(checkboxArray);
+      setAccordionIndexArray(accordionIndexArray);
+    } else {
+      setData(checkListData);
+      setCheckboxArray(checkboxArray);
+      setAccordionIndexArray(accordionIndexArray);
     }
-    return this.setState({
-      data: checkListData, checkboxArray, accordionIndexArray,
-    });
-  }
+  };
 
-  handleChecked = (index) => {
-    const { checkboxArray } = this.state;
+  useEffect(() => { startInitializing(true); }, []);
+
+  useEffect(() => {
+    startInitializing(false, props.checkListData);
+  }, [props.checkListData]);
+
+  const handleChecked = (index) => {
     const checkboxArrayTemporal = [...checkboxArray];
     checkboxArrayTemporal[index] = !checkboxArrayTemporal[index];
     let countOfCheckedItems = 0;
@@ -48,78 +44,53 @@ class ChecklistLogicPreview extends Component {
     const currentProgress = (
       (countOfCheckedItems / checkboxArray.length) * 100
     ).toFixed(0);
+    setCheckboxArray(checkboxArrayTemporal);
+    setCurrentProgress(currentProgress);
+  };
 
-    this.setState({ checkboxArray: checkboxArrayTemporal, currentProgress });
-  }
-
-  handleClickAccordion = (index) => {
-    const { accordionIndexArray } = this.state;
+  const handleClickAccordion = (index) => {
     const accordionIndexArrayTemporal = [...accordionIndexArray];
     accordionIndexArrayTemporal[index] = accordionIndexArrayTemporal[index] === 0 ? -1 : 0;
-    this.setState({
-      accordionIndexArray: accordionIndexArrayTemporal,
-    });
-  }
+    setAccordionIndexArray(accordionIndexArrayTemporal);
+  };
 
-  handleClickEyeButton = () => {
-    const { isWholeChecklistHidden } = this.state;
-    this.setState({ isWholeChecklistHidden: !isWholeChecklistHidden });
-  }
+  const handleClickEyeButton = () => setIsWholeCHecklistHidden(!isWholeChecklistHidden);
 
-  handleSetAllCheckboxes = () => {
-    this.setState(({ checkboxArray }) => ({
-      checkboxArray: checkboxArray.map(() => true),
-      currentProgress: 100,
-    }));
-  }
+  const handleSetAllCheckboxes = () => {
+    setCheckboxArray(checkboxArray.map(() => true));
+    setCurrentProgress(100);
+  };
 
-  handleResetAllCheckboxes = () => {
-    this.setState(({ checkboxArray }) => ({
-      checkboxArray: checkboxArray.map(() => false),
-      currentProgress: 0,
-    }));
-  }
+  const handleResetAllCheckboxes = () => {
+    setCheckboxArray(checkboxArray.map(() => false));
+    setCurrentProgress(0);
+  };
 
-  handleOpenAllAccordions = () => {
-    this.setState(({ accordionIndexArray }) => ({
-      accordionIndexArray: accordionIndexArray.map(() => 0),
-    }));
-  }
+  const handleOpenAllAccordions = () => setAccordionIndexArray(accordionIndexArray.map(() => 0));
 
-  handleCloseAllAccordions = () => {
-    this.setState(({ accordionIndexArray }) => ({
-      accordionIndexArray: accordionIndexArray.map(() => -1),
-    }));
-  }
+  const handleCloseAllAccordions = () => setAccordionIndexArray(accordionIndexArray.map(() => -1));
 
-  render() {
-    const {
-      data,
-      currentProgress,
-      isWholeChecklistHidden,
-      accordionIndexArray,
-      checkboxArray,
-    } = this.state;
-    const { checklistIndex } = this.props;
-    if (checkboxArray) {
-      return (
-        <ChecklistViewComponents
-          data={data}
-          currentProgress={currentProgress}
-          isWholeChecklistHidden={isWholeChecklistHidden}
-          accordionIndexArray={accordionIndexArray}
-          checkboxArray={checkboxArray}
-          checklistIndex={checklistIndex}
-          handleChecked={this.handleChecked}
-          handleClickAccordion={this.handleClickAccordion}
-          handleClickEyeButton={this.handleClickEyeButton}
-          handleOpenAllAccordions={this.handleOpenAllAccordions}
-          handleCloseAllAccordions={this.handleCloseAllAccordions}
-          handleSetAllCheckboxes={this.handleSetAllCheckboxes}
-          handleResetAllCheckboxes={this.handleResetAllCheckboxes}
-        />
-      );
-    } return null;
-  }
-}
+  const { checklistIndex } = props;
+
+  if (checkboxArray) {
+    return (
+      <ChecklistViewComponents
+        data={data}
+        currentProgress={currentProgress}
+        isWholeChecklistHidden={isWholeChecklistHidden}
+        accordionIndexArray={accordionIndexArray}
+        checkboxArray={checkboxArray}
+        checklistIndex={checklistIndex}
+        handleChecked={handleChecked}
+        handleClickAccordion={handleClickAccordion}
+        handleClickEyeButton={handleClickEyeButton}
+        handleOpenAllAccordions={handleOpenAllAccordions}
+        handleCloseAllAccordions={handleCloseAllAccordions}
+        handleSetAllCheckboxes={handleSetAllCheckboxes}
+        handleResetAllCheckboxes={handleResetAllCheckboxes}
+      />
+    );
+  } return null;
+};
+
 export default ChecklistLogicPreview;

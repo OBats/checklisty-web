@@ -28,23 +28,21 @@ const MainBlockComponents = (props) => {
   }
   return (
     <div className={style.checklistColumn}>
-      {!props.hideMainProgressbar && (
-        <div className={style.progressBlock}>
-          <Segment>
-            <p className={style.progressbarHeader}>Progress of the whole checklist:</p>
-            <Progress
-              percent={currentProgress}
-              indicating
-              size="large"
-              className={style.progressbar}
-            >
-              {!props.loggedUser && <PortalExampleControlled property={props.userClicked} />}
-              {`${currentProgress}% or 
+      <div className={style.progressBlock}>
+        <Segment>
+          <p className={style.progressbarHeader}>Progress of the whole checklist:</p>
+          <Progress
+            percent={currentProgress}
+            indicating
+            size="large"
+            className={style.progressbar}
+          >
+            {!props.loggedUser && <PortalExampleControlled property={props.userClicked} />}
+            {`${currentProgress}% or 
                   ${amountOfCheckedItems}/${amountOfAllCheckboxes} items`}
-            </Progress>
-          </Segment>
-        </div>
-      )}
+          </Progress>
+        </Segment>
+      </div>
       {(checkListData && props.arrayOfCheckboxArray.length > 0) && checkListData.sections_data.map(
         (elem, index) => (
           <ChecklistViewLogic
