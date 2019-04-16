@@ -1,5 +1,11 @@
 .BannerWrapper {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box;
+  text-align: center;
 }
 
 .banner {

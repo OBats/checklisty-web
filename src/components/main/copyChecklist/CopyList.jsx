@@ -1,9 +1,11 @@
 /* eslint-disable no-underscore-dangle */
 /* eslint-disable react/prop-types */
 import React, { useState } from 'react';
-import { Segment, Icon, Button } from 'semantic-ui-react';
+import { Dropdown, Icon, Button } from 'semantic-ui-react';
 import { SuccessHandling, ErrorHandling, InfoToaster } from '../../toasters/MessagesHandling';
 import http from '../../../api/http';
+
+import styles from './CopyList.module.css';
 
 const CopyList = ({ user, checkList }) => {
   const [isCopied, setCopied] = useState(checkList.copiedBy.includes(user._id));
@@ -23,24 +25,25 @@ const CopyList = ({ user, checkList }) => {
     }
   };
 
+  const text = isCopied ? 'Already Copied' : 'Coppy list';
+
   return (
-    <Segment
-      compact
-      floated="right"
-      style={{ marginTop: 0 }}
+    <Dropdown
+      className={styles.dropdown}
+      icon="bars"
+      multiple
+      item
+      pointing="top right"
     >
-      <Button
-        icon
-        basic
-        onClick={copy}
-      >
-        <Icon
-          name="copy"
-          color={isCopied ? 'green' : 'grey'}
-          size="large"
-        />
-      </Button>
-    </Segment>
+      <Dropdown.Menu>
+        <Dropdown.Item>
+          <Button onClick={copy} className={styles.dropdownButton}>
+            <Icon name="edit" color={isCopied ? 'green' : 'grey'} />
+            {text}
+          </Button>
+        </Dropdown.Item>
+      </Dropdown.Menu>
+    </Dropdown>
   );
 };
 
