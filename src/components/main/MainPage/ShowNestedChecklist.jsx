@@ -21,7 +21,7 @@ const ShowNestedChecklist = (props) => {
     } catch (error) {
       console.log(error);
     }
-  }, []);
+  }, [slug]);
 
   if (loading) {
     return (

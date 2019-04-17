@@ -18,7 +18,7 @@ const CreateNestedChecklist = (props) => {
   const [isSaving, setIsSaving] = useState(false);
   const author = props.userData._id;
 
-  const filterSearchingResults = (seacrhResults) => {
+  const filterSearchingResults = useCallback((seacrhResults) => {
     const filteredArr = [];
     let match = false;
 
@@ -34,11 +34,11 @@ const CreateNestedChecklist = (props) => {
       }
     }
     setFiltredResults(filteredArr);
-  };
+  });
 
   useEffect(() => {
     filterSearchingResults(seacrhResults);
-  }, [nestedChecklist]);
+  }, [filterSearchingResults, nestedChecklist, seacrhResults]);
 
   const changeTitle = (value) => {
     setTitle(value);
