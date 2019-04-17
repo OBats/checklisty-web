@@ -18,7 +18,7 @@ const UsersBoard = ({
       </Table.Row>
     </Table.Header>
     <Table.Body>
-      {data.map(user => user.role !== 'admin' && (
+      {data.map(user => (
         <User
           key={user._id}
           user={user}
