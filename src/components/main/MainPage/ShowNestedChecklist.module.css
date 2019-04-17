@@ -1,0 +1,6 @@
+.wrapper {
+  min-height: calc(100vh - 80px);
+  margin-top: -14px;
+  padding-top: 40px;
+  background: #EDEDED;
+}

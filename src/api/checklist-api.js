@@ -15,3 +15,15 @@ export const updateChecklist = (slug, values) => (
 export const updateSlug = (id, newSlug) => (
   http.patch('/api/checklists/new-slug', { id, newSlug })
 );
+
+export const findChecklists = searchValue => (
+  http.get(`/api/checklists/search=${searchValue}`)
+);
+
+export const createNestedChecklist = values => (
+  http.post('/api/checklists/create-nested-checklist', values)
+);
+
+export const getNestedChecklist = slug => (
+  http.get(`/api/checklists/get-nested-checklist/${slug}`)
+);

@@ -5,7 +5,7 @@ import { Link, NavLink } from 'react-router-dom';
 import { Menu, Dropdown, Icon, Image } from 'semantic-ui-react';
 import { signOut } from '../../api/auth-api';
 import style from './NavBar.module.css';
-import home from './logo.png';
+import home from '../main/logo.png';
 import { handleSignOut } from '../../actions/user';
 import avatar from '../profile/Avatar/avatar.png';
 

@@ -1,0 +1,104 @@
+.nestedChecklistWrapper {
+  min-height: calc(100vh - 80px);
+  margin-top: -14px;
+  padding-top: 30px;
+  background-color: #EDEDED;
+}
+
+.searchBarWrapper,
+.searchBarWrapper div {
+  display: flex;
+  align-items: center;
+}
+
+.searchBarWrapper {
+  position: relative;
+  margin-bottom: 50px;
+}
+
+.searchBar {
+  width: 100%;
+  max-height: 38px;
+}
+
+.createBtn {
+  max-height: 38px;
+  justify-content: flex-end;
+}
+
+.removeBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.segmentWrapper {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+}
+
+.listWrapper.listWrapper {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 0;
+  align-items: center;
+  justify-content: center;
+}
+
+.titleInputWrapper {
+  display: flex;
+  width: 100%;
+}
+
+.titleInput {
+  width: 240px;
+  height: 38px;
+  border: none;
+  border-bottom: 2px solid #3A4753;
+  background: transparent;
+  padding-right: 10px;
+}
+
+.titleInput,
+.titleInput::-webkit-input-placeholder {
+  font-weight: bold;
+  font-size: 28px;
+  color: #3A4753;
+}
+
+.titleInput::-webkit-input-placeholder {
+  opacity: 0.7;
+
+}
+
+.isPrivateWrapper.isPrivateWrapper {
+  min-width: 170px;
+  margin: 0 20px 0 0;
+}
+
+.headerWrapper {
+  padding: 20px;
+}
+
+.checklistLogo {
+  max-width: 135px;
+}
+
+.checkListLinkWrapper {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  padding-right: 20px;
+  border-top: 2px solid #A2C9C7;
+  transition: 0.5s ease;
+}
+
+.checkListLinkWrapper:hover {
+  background-color: rgb(221, 231, 241);
+}
+
+.checkListLinkWrapper:first-child {
+  border-top: none;
+}
