@@ -18,8 +18,7 @@
         "allowImportExportEverywhere": true
     },
     "plugins": [
-        "react",
-        "react-hooks"
+        "react"
     ],
     "parser": "babel-eslint",
     "rules": {
@@ -84,8 +83,6 @@
         "react/no-string-refs": 1,
         "react/no-unused-state": 1,
         "react/prop-types": 1,
-        "react-hooks/rules-of-hooks": 1,
-        "react-hooks/exhaustive-deps": 1,
         "no-loop-func": 1,
         "no-restricted-globals": 1,
         "camelcase": 1,

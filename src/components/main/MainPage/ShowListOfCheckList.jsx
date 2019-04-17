@@ -18,11 +18,13 @@ const ShowListOfCheckList = (props) => {
   if (data) {
     return (
       data.map(currentCheckList => (
-        <div className={!nested ? styles.checkListLinkWrapper : style.checkListLinkWrapper}>
+        <div
+          key={currentCheckList.id || currentCheckList._id}
+          className={!nested ? styles.checkListLinkWrapper : style.checkListLinkWrapper}
+        >
           <Link
             to={!currentCheckList.checklists_data ? `/${currentCheckList.slug}` : `/nested-checklist/${currentCheckList.slug}`}
             className={styles.checkListLink}
-            key={currentCheckList.id || currentCheckList._id}
             target={nested ? '_blank' : '_self'}
           >
             <div className={styles.imageContainer}>
