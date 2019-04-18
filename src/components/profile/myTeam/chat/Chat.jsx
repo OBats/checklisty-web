@@ -43,8 +43,9 @@ const Chat = ({ userData, teamId }) => {
   const [typingValue, setTypingValue] = useState('');
   const [messagesInfo, setMessagesInfo] = useState([]);
   const [typedUser, setTypedUser] = useState('');
-  const [connectedUser, setConnectedUser] = useState([]);
-  const [disconnectedUser, setDisconnectedUser] = useState([]);
+  const [connectedUserNumber, setConnectedUserNumber] = useState(0);
+  const [connectedUser, setConnectedUser] = useState('');
+  const [disconnectedUser, setDisconnectedUser] = useState('');
 
   const { username, image: avatar } = userData;
 
@@ -91,11 +92,15 @@ const Chat = ({ userData, teamId }) => {
 
     socket.emit('userConnection', username);
     socket.on('userConnection', (user) => {
-      setConnectedUser(prevState => ([...prevState, user]));
+      setConnectedUser(user);
+    });
+
+    socket.on('connectedUserNumber', (number) => {
+      setConnectedUserNumber(number);
     });
 
     socket.on('userDisconnection', (user) => {
-      setDisconnectedUser(prevState => ([...prevState, user]));
+      setDisconnectedUser(user);
     });
 
     socket.on('connect_error', () => {
@@ -159,30 +164,26 @@ const Chat = ({ userData, teamId }) => {
     <div className={styles.chat}>
       <header className={styles.chatHeader}>
         <h2>Team Chat</h2>
-        <div title="Total messages" className={styles.headerInfo}>
-          <span><Icon name="wechat" /></span>
-          <span className={styles.msgNumber}>{messagesInfo.length}</span>
+        <div className={styles.headerInfo}>
+          <div className={styles.totalMsg} title="Total messages">
+            <span><Icon name="wechat" /></span>
+            <span>{messagesInfo.length}</span>
+          </div>
+          <div className={styles.onlineUsers} title="Online users">
+            <span><Icon name="user" /></span>
+            <span>{connectedUserNumber}</span>
+          </div>
         </div>
         <div className={styles.floatStatusBlock}>
           {connectedUser && (
-            connectedUser.map(user => (
-              <span
-                className={`${styles.floatStatus} ${styles.floatStatusConnected}`}
-                key={Math.random()}
-              >
-                {`${user} has been connected`}
-              </span>
-            ))
+            <span className={`${styles.floatStatus} ${styles.floatStatusConnected}`}>
+              {`${connectedUser} has been connected`}
+            </span>
           )}
           {disconnectedUser && (
-            disconnectedUser.map(user => (
-              <span
-                className={`${styles.floatStatus} ${styles.floatStatusDisConnected}`}
-                key={Math.random()}
-              >
-                {`${user} has left the chat`}
-              </span>
-            ))
+            <span className={`${styles.floatStatus} ${styles.floatStatusDisConnected}`}>
+              {`${disconnectedUser} has left the chat`}
+            </span>
           )}
         </div>
       </header>
