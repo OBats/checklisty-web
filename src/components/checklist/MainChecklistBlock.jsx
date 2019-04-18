@@ -29,6 +29,7 @@ const MainChecklistBlock = (props) => {
         setArrayOfCheckboxArray(arrayOfCheckboxArray);
         setReadyToShow(true);
         setWholeChecklistProgress(0);
+        return;
       }
       const response = await http.post('/api/checklists/create-users-checklists', {
         userID: userData._id,
