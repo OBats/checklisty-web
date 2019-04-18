@@ -22,40 +22,34 @@ const MainChecklistBlock = (props) => {
 
       if (!loggedUser) {
         arrayOfCheckboxArray = initArrayOfCheckboxes(sections_data);
-        const amountOfAllCheckboxes = sections_data.reduce(
-          (sum, current) => (sum + current.items_data.length), 0,
-        );
-        setAmountOfAllCheckboxes(amountOfAllCheckboxes);
-        setArrayOfCheckboxArray(arrayOfCheckboxArray);
-        setReadyToShow(true);
-        setWholeChecklistProgress(0);
-        return;
-      }
-      const response = await http.post('/api/checklists/create-users-checklists', {
-        userID: userData._id,
-        checklistID: checkListData.id,
-        checklistData: checkListData.id,
-        checkboxes_data: arrayOfCheckboxArray,
-      });
-      if (response.data.checkboxes_data.length < 1) {
-        arrayOfCheckboxArray = initArrayOfCheckboxes(sections_data);
       } else {
-        arrayOfCheckboxArray = response.data.checkboxes_data;
+        const response = await http.post('/api/checklists/create-users-checklists', {
+          userID: userData._id,
+          checklistID: checkListData.id,
+          checklistData: checkListData.id,
+          checkboxes_data: arrayOfCheckboxArray,
+        });
+        if (response.data.checkboxes_data.length < 1) {
+          arrayOfCheckboxArray = initArrayOfCheckboxes(sections_data);
+        } else {
+          arrayOfCheckboxArray = response.data.checkboxes_data;
+        }
+        setIdOfUserChecklistRelation(response.data._id);
       }
-      const amountOfAllCheckboxes = sections_data.reduce((
-        sum, current,
-      ) => (sum + current.items_data.length), 0);
 
-      const { wholeChecklistProgress, amountOfCheckedCheckboxes } = countAmountOfCheckedItems(
+      const amountOfAllCheckboxes = sections_data.reduce(
+        (sum, current) => (sum + current.items_data.length), 0,
+      );
+
+      const { wholeChecklistProgressTemp, amountOfCheckedCheckboxesTemp } = countAmountOfCheckedItems(
         sections_data, arrayOfCheckboxArray, amountOfAllCheckboxes, saveCurrentProgress,
       );
 
       setAmountOfAllCheckboxes(amountOfAllCheckboxes);
-      setAmountOfCheckedCheckboxes(amountOfCheckedCheckboxes);
+      setAmountOfCheckedCheckboxes(amountOfCheckedCheckboxesTemp);
       setArrayOfCheckboxArray(arrayOfCheckboxArray);
-      setIdOfUserChecklistRelation(response.data._id);
       setReadyToShow(true);
-      setWholeChecklistProgress(wholeChecklistProgress);
+      setWholeChecklistProgress(wholeChecklistProgressTemp);
     };
     didMounted();
   }, []);
@@ -64,7 +58,7 @@ const MainChecklistBlock = (props) => {
     const { sections_data } = props.checkListData;
     const { saveCurrentProgress } = props;
     arrayOfCheckboxArray[indexOfSection][indexOfElement] = flag;
-    const { wholeChecklistProgress, amountOfCheckedCheckboxes } = countAmountOfCheckedItems(
+    const { wholeChecklistProgressTemp, amountOfCheckedCheckboxesTemp } = countAmountOfCheckedItems(
       sections_data, arrayOfCheckboxArray, amountOfAllCheckboxes, saveCurrentProgress,
     );
     if (props.loggedUser) {
@@ -74,8 +68,8 @@ const MainChecklistBlock = (props) => {
       });
     }
 
-    setAmountOfCheckedCheckboxes(amountOfCheckedCheckboxes);
-    setWholeChecklistProgress(wholeChecklistProgress);
+    setAmountOfCheckedCheckboxes(amountOfCheckedCheckboxesTemp);
+    setWholeChecklistProgress(wholeChecklistProgressTemp);
     setArrayOfCheckboxArray(arrayOfCheckboxArray);
     setUserClicked(true);
   };
@@ -91,7 +85,7 @@ const MainChecklistBlock = (props) => {
       arrayOfCheckboxArray[indexOfSection] = arrayOfCheckboxArray[indexOfSection]
         .map(() => valueForWholeSection);
     }
-    const { wholeChecklistProgress, amountOfCheckedCheckboxes } = countAmountOfCheckedItems(
+    const { wholeChecklistProgressTemp, amountOfCheckedCheckboxesTemp } = countAmountOfCheckedItems(
       sections_data, arrayOfCheckboxArray, amountOfAllCheckboxes, saveCurrentProgress,
     );
     if (loggedUser) {
@@ -100,8 +94,8 @@ const MainChecklistBlock = (props) => {
         checkboxArray: arrayOfCheckboxArray,
       });
     }
-    setWholeChecklistProgress(wholeChecklistProgress);
-    setAmountOfCheckedCheckboxes(amountOfCheckedCheckboxes);
+    setWholeChecklistProgress(wholeChecklistProgressTemp);
+    setAmountOfCheckedCheckboxes(amountOfCheckedCheckboxesTemp);
     setArrayOfCheckboxArray(arrayOfCheckboxArray);
     setUserClicked(true);
   };
