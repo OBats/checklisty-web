@@ -4,10 +4,11 @@ import TeamListsContainer from './TeamListsContainer';
 import ChatContainer from '../chat/ChatContainer';
 import loaderStyle from '../../../main/loader.module.css';
 import http from '../../../../api/http';
+import styles from './TeamView.module.css';
 
 const panes = [
   { menuItem: 'Team checklists', render: props => <Tab.Pane><TeamListsContainer id={props.id} /></Tab.Pane> },
-  { menuItem: 'Chat', render: props => <Tab.Pane><ChatContainer teamId={props.id} /></Tab.Pane> },
+  { menuItem: 'Chat', render: props => <Tab.Pane className={styles.chatTab}><ChatContainer teamId={props.id} /></Tab.Pane> },
 ];
 
 const TeamView = (props) => {
@@ -24,7 +25,7 @@ const TeamView = (props) => {
     } else {
       setLoading(false);
     }
-  });
+  }, [token, props.history, props.match.params.id]);
 
   if (loading) {
     return (

@@ -8,17 +8,19 @@ import { Icon } from 'semantic-ui-react';
 import timeChecker from '../../../checklist/team-checklist/functions';
 import http from '../../../../api/http';
 import { ErrorHandling } from '../../../toasters/MessagesHandling';
+import checkTextAreaValue from './utils/checkTextareaValue';
 import loaderStyle from '../../../main/loader.module.css';
 import styles from './css/Chat.module.css';
 
 const baseURL = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_URL : 'http://localhost:3030';
 
-const enterKey = 13;
+const ENTER_KEY = 13;
+
+let textareaValue = '';
 let socket;
 let typedUserTimeout;
 let connectTimeout;
 let disConnectTimeout;
-let textareaValue;
 let scrollingToElement;
 
 const stopShowTypedUser = (cb) => {
@@ -38,28 +40,30 @@ const hideDisConnectedUser = (cb) => {
 
 const Chat = ({ userData, teamId }) => {
   const [isLoading, setLoading] = useState(true);
-  const [message, setMessage] = useState('');
+  const [typingValue, setTypingValue] = useState('');
   const [messagesInfo, setMessagesInfo] = useState([]);
   const [typedUser, setTypedUser] = useState('');
-  const [connectedUser, setConnectedUser] = useState([]);
-  const [disconnectedUser, setDisconnectedUser] = useState([]);
+  const [connectedUserNumber, setConnectedUserNumber] = useState(0);
+  const [connectedUser, setConnectedUser] = useState('');
+  const [disconnectedUser, setDisconnectedUser] = useState('');
 
   const { username, image: avatar } = userData;
 
-  const scrollToBottom = () => {
-    scrollingToElement.scrollIntoView({ behavior: 'smooth' });
+  const scrollToBottom = (transition) => {
+    scrollingToElement.scrollIntoView({ behavior: transition });
+  };
+
+  const removeTypingMsg = () => {
+    socket.emit('typing', false);
   };
 
   useEffect(() => {
     http.get(`api/team/chat/${teamId}`)
       .then((res) => {
         const { data } = res;
+
         setMessagesInfo(data);
-
-        if (data.length > 5) {
-          scrollToBottom();
-        }
-
+        scrollToBottom('auto');
         setLoading(false);
       })
       .catch((error) => {
@@ -77,28 +81,30 @@ const Chat = ({ userData, teamId }) => {
     });
 
     socket.on('message', (messageData) => {
-      textareaValue = null;
-      setMessage('');
+      removeTypingMsg();
       setMessagesInfo(prevState => ([...prevState, messageData]));
-      scrollToBottom();
+      scrollToBottom('smooth');
     });
 
     socket.on('typing', (user) => {
-      scrollToBottom();
       setTypedUser(user);
     });
 
     socket.emit('userConnection', username);
     socket.on('userConnection', (user) => {
-      setConnectedUser(prevState => ([...prevState, user]));
+      setConnectedUser(user);
+    });
+
+    socket.on('connectedUserNumber', (number) => {
+      setConnectedUserNumber(number);
     });
 
     socket.on('userDisconnection', (user) => {
-      setDisconnectedUser(prevState => ([...prevState, user]));
+      setDisconnectedUser(user);
     });
 
     socket.on('connect_error', () => {
-      ErrorHandling('Something went wrong. Reconnect...', false);
+      ErrorHandling('Something went wrong. Reconnecting...', false);
     });
 
     socket.on('reconnect', () => {
@@ -106,11 +112,7 @@ const Chat = ({ userData, teamId }) => {
     });
 
     return () => socket.disconnect();
-  }, []);
-
-  const removeTypingMsg = () => {
-    socket.emit('typing', false);
-  };
+  }, [teamId, username]);
 
   const removeConnectedUser = () => {
     setConnectedUser('');
@@ -124,33 +126,35 @@ const Chat = ({ userData, teamId }) => {
   hideDisConnectedUser(removeDisConnectedUser);
 
   const onSendClick = () => {
-    scrollToBottom();
+    const message = checkTextAreaValue(textareaValue);
 
-    if (!textareaValue) {
-      return;
+    if (message) {
+      socket.emit('message', ({
+        username,
+        avatar,
+        message,
+        teamId,
+        createdAt: new Date(),
+      }));
+
+      setTypingValue('');
+      textareaValue = null;
     }
 
-    socket.emit('message', ({
-      username,
-      avatar,
-      message,
-      teamId,
-      createdAt: new Date(),
-    }));
-
-    removeTypingMsg();
-    textareaValue = null;
+    scrollToBottom('smooth');
   };
 
   const onEnterPress = (evt) => {
-    if (evt.keyCode === enterKey && !evt.shiftKey) {
+    if (evt.keyCode === ENTER_KEY && !evt.shiftKey) {
+      evt.preventDefault();
+
       onSendClick();
     }
   };
 
   const onMsgChange = (evt) => {
     textareaValue = evt.target.value;
-    setMessage(textareaValue);
+    setTypingValue(textareaValue);
 
     socket.emit('typing', username);
     stopShowTypedUser(removeTypingMsg);
@@ -161,31 +165,25 @@ const Chat = ({ userData, teamId }) => {
       <header className={styles.chatHeader}>
         <h2>Team Chat</h2>
         <div className={styles.headerInfo}>
-          <span><Icon name="wechat" /></span>
-          {messagesInfo.length > 0 && (
-            <span className={styles.msgNumber}>{messagesInfo.length}</span>
-          )}
+          <div className={styles.totalMsg} title="Total messages">
+            <span><Icon name="wechat" /></span>
+            <span>{messagesInfo.length}</span>
+          </div>
+          <div className={styles.onlineUsers} title="Online users">
+            <span><Icon name="user" /></span>
+            <span>{connectedUserNumber}</span>
+          </div>
         </div>
         <div className={styles.floatStatusBlock}>
           {connectedUser && (
-            connectedUser.map(user => (
-              <span
-                className={`${styles.floatStatus} ${styles.floatStatusConnected}`}
-                key={Math.random()}
-              >
-                {`${user} has been connected`}
-              </span>
-            ))
+            <span className={`${styles.floatStatus} ${styles.floatStatusConnected}`}>
+              {`${connectedUser} has been connected`}
+            </span>
           )}
           {disconnectedUser && (
-            disconnectedUser.map(user => (
-              <span
-                className={`${styles.floatStatus} ${styles.floatStatusDisConnected}`}
-                key={Math.random()}
-              >
-                {`${user} has left the chat`}
-              </span>
-            ))
+            <span className={`${styles.floatStatus} ${styles.floatStatusDisConnected}`}>
+              {`${disconnectedUser} has left the chat`}
+            </span>
           )}
         </div>
       </header>
@@ -217,19 +215,14 @@ const Chat = ({ userData, teamId }) => {
             ))
           )}
           <div ref={(el) => { scrollingToElement = el; }} />
-          {typedUser && (
-            <span className={styles.typedUser}><em>{`${typedUser} is typing...`}</em></span>
-          )}
         </div>
       </div>
-      <div
-        className={styles.formBlock}
-      >
+      <div className={styles.formBlock}>
         <Textarea
           className={styles.chatTextarea}
-          minRows={2}
+          minRows={1}
           placeholder="Message..."
-          value={message}
+          value={typingValue}
           onChange={onMsgChange}
           onKeyDown={onEnterPress}
         />
@@ -237,10 +230,17 @@ const Chat = ({ userData, teamId }) => {
           className={styles.sendButton}
           type="submit"
           onClick={onSendClick}
-          disabled={!textareaValue}
         >
           <Icon name="send" size="large" />
         </button>
+      </div>
+      <div className={styles.typedUser}>
+        {typedUser && (
+          <p>
+            <span className={styles.typedUserName}>{`${typedUser}`}</span>
+            <span>is typing...</span>
+          </p>
+        )}
       </div>
     </div>
   );

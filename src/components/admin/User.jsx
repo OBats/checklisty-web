@@ -12,6 +12,7 @@ const User = ({
   updateDeletedId,
 }) => {
   const roles = [
+    { value: 'admin', label: 'admin' },
     { value: 'moderator', label: 'moderator' },
     { value: 'user', label: 'user' },
   ];
@@ -43,8 +44,8 @@ const User = ({
 
   const handleChangeOfRole = async (role) => {
     if (role.value === valueOfRole.value) return InfoToaster(`The role is already: ${role.value}`);
-    if (status.value === 'blocked' && role.value === 'moderator') {
-      return ErrorHandling('You can not give moderator rights to blocked user!');
+    if (status.value === 'blocked') {
+      return ErrorHandling('You can not change role for blocked user!');
     }
     try {
       setLoadingOnRole(true);
@@ -52,8 +53,9 @@ const User = ({
       setValueOfRole(role);
       InfoToaster(response.data);
       setLoadingOnRole(false);
-    } catch {
-      ErrorHandling('The request failed, please try again!');
+    } catch (error) {
+      ErrorHandling(error.response.data.message);
+      setLoadingOnRole(false);
     }
   };
 

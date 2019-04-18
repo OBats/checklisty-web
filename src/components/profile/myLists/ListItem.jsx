@@ -38,7 +38,7 @@ const ListItem = ({ lists, del }) => {
         >
           <List.Icon name={list.isPrivate ? 'lock' : 'unlock'} color={list.isPrivate ? 'red' : 'green'} />
           <List.Content style={{ paddingLeft: '25px' }}>
-            <List.Header as="a" href={`/${list.slug}`}>{list.title}</List.Header>
+            <Link to={`/${list.slug}`}><List.Header>{list.title}</List.Header></Link>
             <List.Description as="div" style={{ display: 'flex', alignItems: 'center' }}>
               {showCreationData(list.creation_date)}
               {<Tags tags={list.tags} />}

@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React, { useEffect, useState } from 'react';
 import { connect } from 'react-redux';
 import openSocket from 'socket.io-client';
 import http from '../../../api/http';
@@ -7,73 +7,74 @@ import MainBlockComponents from '../main-block/MainBlockComponents';
 import { initArrayOfCheckboxes, countAmountOfCheckedItems } from '../main-block/tools';
 import ChecklistTeamHeader from './ChecklistTeamHeader';
 
-class ChecklistTeamBlock extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      wholeChecklistProgress: 0,
-      amountOfAllCheckboxes: 0,
-      amountOfCheckedCheckboxes: 0,
-      arrayOfCheckboxArray: [],
-      idOfTeamChecklistRelation: null,
-      readyToShow: false,
-      userClicked: false,
-      messages: [],
+const ChecklistTeamBlock = (props) => {
+  const [wholeChecklistProgress, setWholeChecklistProgress] = useState(0);
+  const [amountOfAllCheckboxes, setAmountOfAllCheckboxes] = useState(0);
+  const [amountOfCheckedCheckboxes, setAmountOfCheckedCheckboxes] = useState(0);
+  const [arrayOfCheckboxArray, setArrayOfCheckboxArray] = useState([]);
+  const [idOfTeamChecklistRelation, setIdOfTeamChecklistRelation] = useState(null);
+  const [readyToShow, setReadyToShow] = useState(false);
+  const [userClicked, setUserClicked] = useState(false);
+  const [messages, setMessages] = useState([]);
+
+  const socket = openSocket(process.env.REACT_APP_URL || 'localhost:3030');
+
+  useEffect(() => {
+    const didMounted = async () => {
+      const { sections_data } = props.checkListData;
+      const { saveCurrentProgress, checkListData, teamId } = props;
+      let arrayOfCheckboxArrayTemp = [];
+      const response = await http.post('/api/checklists/create-teams-checklists', {
+        teamID: teamId || window.location.href.split('/')[5],
+        checklistID: checkListData.id,
+        checklistData: checkListData.id,
+        checkboxes_data: arrayOfCheckboxArrayTemp,
+      });
+      if (response.data.checkboxes_data.length < 1) {
+        arrayOfCheckboxArrayTemp = initArrayOfCheckboxes(sections_data);
+      } else {
+        arrayOfCheckboxArrayTemp = response.data.checkboxes_data;
+      }
+      const amountOfAllCheckboxesTemp = sections_data.reduce((
+        sum, current,
+      ) => (sum + current.items_data.length), 0);
+
+      const { wholeChecklistProgressTemp, amountOfCheckedCheckboxesTemp } = countAmountOfCheckedItems(
+        sections_data, arrayOfCheckboxArrayTemp, amountOfAllCheckboxesTemp, saveCurrentProgress,
+      );
+
+      socket.on('emit-data', (data) => {
+        const { messages, arrayOfCheckboxArray, checklistID } = data;
+        if (checklistID === props.checkListData.id) {
+          setMessages(messages);
+          setArrayOfCheckboxArray(arrayOfCheckboxArray);
+        }
+      });
+
+      setAmountOfAllCheckboxes(amountOfAllCheckboxesTemp);
+      setAmountOfCheckedCheckboxes(amountOfCheckedCheckboxesTemp);
+      setArrayOfCheckboxArray(arrayOfCheckboxArrayTemp);
+      setIdOfTeamChecklistRelation(response.data._id);
+      setReadyToShow(true);
+      setWholeChecklistProgress(wholeChecklistProgressTemp);
+      setMessages(response.data.teamLog || []);
     };
-    this.socket = openSocket(process.env.REACT_APP_URL || 'localhost:3030');
-  }
+    didMounted();
+  }, []);
 
-  async componentDidMount() {
-    const { sections_data } = this.props.checkListData;
-    const { saveCurrentProgress, checkListData, teamId } = this.props;
-    let arrayOfCheckboxArray = [];
-    const response = await http.post('/api/checklists/create-teams-checklists', {
-      teamID: teamId || window.location.href.split('/')[5],
-      checklistID: checkListData.id,
-      checklistData: checkListData.id,
-      checkboxes_data: arrayOfCheckboxArray,
-    });
-    if (response.data.checkboxes_data.length < 1) {
-      arrayOfCheckboxArray = initArrayOfCheckboxes(sections_data);
-    } else {
-      arrayOfCheckboxArray = response.data.checkboxes_data;
-    }
-    const amountOfAllCheckboxes = sections_data.reduce((
-      sum, current,
-    ) => (sum + current.items_data.length), 0);
+  useEffect(() => (() => socket.disconnect()), []);
 
-    const { wholeChecklistProgress, amountOfCheckedCheckboxes } = countAmountOfCheckedItems(
-      sections_data, arrayOfCheckboxArray, amountOfAllCheckboxes, saveCurrentProgress,
+  const countProgressOnCheckboxClick = async (flag, indexOfElement, indexOfSection) => {
+    const { sections_data } = props.checkListData;
+    const { saveCurrentProgress } = props;
+    const arrayOfCheckboxArrayTemp = [...arrayOfCheckboxArray];
+    arrayOfCheckboxArrayTemp[indexOfSection][indexOfElement] = flag;
+    const { wholeChecklistProgressTemp, amountOfCheckedCheckboxesTemp } = countAmountOfCheckedItems(
+      sections_data, arrayOfCheckboxArrayTemp, amountOfAllCheckboxes, saveCurrentProgress,
     );
-
-    this.socket.on('emit-data', (data) => {
-      const { messages, arrayOfCheckboxArray } = data;
-      return this.setState({ arrayOfCheckboxArray, messages });
-    });
-
-    return this.setState({
-      amountOfAllCheckboxes,
-      amountOfCheckedCheckboxes,
-      arrayOfCheckboxArray,
-      idOfTeamChecklistRelation: response.data._id,
-      readyToShow: true,
-      wholeChecklistProgress,
-      messages: response.data.teamLog || [],
-    });
-  }
-
-  countProgressOnCheckboxClick = async (flag, indexOfElement, indexOfSection) => {
-    const { amountOfAllCheckboxes } = this.state;
-    const { sections_data } = this.props.checkListData;
-    const { saveCurrentProgress } = this.props;
-    const arrayOfCheckboxArray = [...this.state.arrayOfCheckboxArray];
-    arrayOfCheckboxArray[indexOfSection][indexOfElement] = flag;
-    const { wholeChecklistProgress, amountOfCheckedCheckboxes } = countAmountOfCheckedItems(
-      sections_data, arrayOfCheckboxArray, amountOfAllCheckboxes, saveCurrentProgress,
-    );
-    const messages = [...this.state.messages];
-    messages.unshift({
-      userData: this.props.userData,
+    const messagesTemp = [...messages];
+    messagesTemp.unshift({
+      userData: props.userData,
       itemValue: flag,
       title: sections_data[indexOfSection].items_data[indexOfElement].item_title,
       sectionTitle: sections_data[indexOfSection].section_title,
@@ -81,90 +82,94 @@ class ChecklistTeamBlock extends Component {
       date: new Date(),
       checklistData: { sectionIndex: indexOfSection, elementIndex: indexOfElement },
     });
-    this.socket.emit('handle-checklist-change', {
-      id: this.state.idOfTeamChecklistRelation,
-      messages,
-      arrayOfCheckboxArray,
-      userData: this.props.userData,
+    socket.emit('handle-checklist-change', {
+      id: idOfTeamChecklistRelation,
+      checklistID: props.checkListData.id,
+      messages: messagesTemp,
+      arrayOfCheckboxArray: arrayOfCheckboxArrayTemp,
+      userData: props.userData,
       checklistData: { sectionIndex: indexOfSection, elementIndex: indexOfElement, value: flag, sectionValue: null },
     });
+    setAmountOfCheckedCheckboxes(amountOfCheckedCheckboxesTemp);
+    setWholeChecklistProgress(wholeChecklistProgressTemp);
+    setArrayOfCheckboxArray(arrayOfCheckboxArrayTemp);
+    setUserClicked(true);
+  };
 
-    this.setState({ amountOfCheckedCheckboxes, wholeChecklistProgress, arrayOfCheckboxArray, userClicked: true });
-  }
-
-  countProgressOnAdditionalButton = async (difference, indexOfSection) => {
-    const { amountOfAllCheckboxes } = this.state;
-    const { sections_data } = this.props.checkListData;
-    const { saveCurrentProgress } = this.props;
-    const arrayOfCheckboxArray = [...this.state.arrayOfCheckboxArray];
+  const countProgressOnAdditionalButton = async (difference, indexOfSection) => {
+    const { sections_data } = props.checkListData;
+    const { saveCurrentProgress } = props;
+    const arrayOfCheckboxArrayTemp = [...arrayOfCheckboxArray];
     let valueForWholeSection;
 
     if (difference > 0) valueForWholeSection = true;
     if (difference < 0) valueForWholeSection = false;
     if (difference !== 0) {
-      arrayOfCheckboxArray[indexOfSection] = arrayOfCheckboxArray[indexOfSection]
+      arrayOfCheckboxArrayTemp[indexOfSection] = arrayOfCheckboxArrayTemp[indexOfSection]
         .map(() => valueForWholeSection);
     }
-    const { wholeChecklistProgress, amountOfCheckedCheckboxes } = countAmountOfCheckedItems(
-      sections_data, arrayOfCheckboxArray, amountOfAllCheckboxes, saveCurrentProgress,
+    const { wholeChecklistProgressTemp, amountOfCheckedCheckboxesTemp } = countAmountOfCheckedItems(
+      sections_data, arrayOfCheckboxArrayTemp, amountOfAllCheckboxes, saveCurrentProgress,
     );
-    const messages = [...this.state.messages];
-    messages.unshift({
-      userData: this.props.userData,
+    const messagesTemp = [...messages];
+    messagesTemp.unshift({
+      userData: props.userData,
       itemValue: valueForWholeSection,
       sectionTitle: sections_data[indexOfSection].section_title,
       forSection: true,
       date: new Date(),
       checklistData: { sectionIndex: indexOfSection },
     });
-    this.socket.emit('handle-checklist-change', {
-      id: this.state.idOfTeamChecklistRelation,
-      messages,
-      arrayOfCheckboxArray,
-      userData: this.props.userData,
-      checklistData: {
-        sectionIndex: indexOfSection, value: null, sectionValue: valueForWholeSection,
-      },
+    socket.emit('handle-checklist-change', {
+      id: idOfTeamChecklistRelation,
+      checklistID: props.checkListData.id,
+      messages: messagesTemp,
+      arrayOfCheckboxArray: arrayOfCheckboxArrayTemp,
+      userData: props.userData,
+      checklistData: { sectionIndex: indexOfSection, value: null, sectionValue: valueForWholeSection },
     });
-    this.setState({ wholeChecklistProgress, amountOfCheckedCheckboxes, arrayOfCheckboxArray, userClicked: true });
-  }
+    setWholeChecklistProgress(wholeChecklistProgressTemp);
+    setAmountOfCheckedCheckboxes(amountOfCheckedCheckboxesTemp);
+    setArrayOfCheckboxArray(arrayOfCheckboxArrayTemp);
+    setUserClicked(true);
+  };
 
-  updateViewOfComponent = (checkboxArray, sectionIndex) => {
-    const { amountOfAllCheckboxes } = this.state;
-    const { sections_data } = this.props.checkListData;
-    const { saveCurrentProgress } = this.props;
-    const arrayOfCheckboxArray = [...this.state.arrayOfCheckboxArray];
-    arrayOfCheckboxArray[sectionIndex] = checkboxArray;
-    const { wholeChecklistProgress, amountOfCheckedCheckboxes } = countAmountOfCheckedItems(
-      sections_data, arrayOfCheckboxArray, amountOfAllCheckboxes, saveCurrentProgress,
+  const updateViewOfComponent = (checkboxArray, sectionIndex) => {
+    const { sections_data } = props.checkListData;
+    const { saveCurrentProgress } = props;
+    const arrayOfCheckboxArrayTemp = [...arrayOfCheckboxArray];
+    arrayOfCheckboxArrayTemp[sectionIndex] = checkboxArray;
+    const { wholeChecklistProgressTemp, amountOfCheckedCheckboxesTemp } = countAmountOfCheckedItems(
+      sections_data, arrayOfCheckboxArrayTemp, amountOfAllCheckboxes, saveCurrentProgress,
     );
-    this.setState({ wholeChecklistProgress, amountOfCheckedCheckboxes, arrayOfCheckboxArray, userClicked: true });
-  }
+    setWholeChecklistProgress(wholeChecklistProgressTemp);
+    setAmountOfCheckedCheckboxes(amountOfCheckedCheckboxesTemp);
+    setArrayOfCheckboxArray(arrayOfCheckboxArrayTemp);
+    setUserClicked(true);
+  };
 
-  render() {
-    if (this.state.arrayOfCheckboxArray) {
-      return (
-        <React.Fragment>
-          <ChecklistTeamHeader messages={this.state.messages} />
-          <MainBlockComponents
-            hideMainProgressbar={this.props.hideMainProgressbar}
-            arrayOfCheckboxArray={this.state.arrayOfCheckboxArray}
-            checkListData={this.props.checkListData}
-            amountOfCheckedCheckboxes={this.state.amountOfCheckedCheckboxes}
-            amountOfAllCheckboxes={this.state.amountOfAllCheckboxes}
-            wholeChecklistProgress={this.state.wholeChecklistProgress}
-            readyToShow={this.state.readyToShow}
-            userClicked={this.state.userClicked}
-            countProgressOnCheckboxClick={this.countProgressOnCheckboxClick}
-            countProgressOnAdditionalButton={this.countProgressOnAdditionalButton}
-            updateViewOfComponent={this.updateViewOfComponent}
-          />
-        </React.Fragment>
-      );
-    }
-    return null;
+  if (arrayOfCheckboxArray) {
+    return (
+      <React.Fragment>
+        <ChecklistTeamHeader messages={messages} />
+        <MainBlockComponents
+          hideMainProgressbar={props.hideMainProgressbar}
+          arrayOfCheckboxArray={arrayOfCheckboxArray}
+          checkListData={props.checkListData}
+          amountOfCheckedCheckboxes={amountOfCheckedCheckboxes}
+          amountOfAllCheckboxes={amountOfAllCheckboxes}
+          wholeChecklistProgress={wholeChecklistProgress}
+          readyToShow={readyToShow}
+          userClicked={userClicked}
+          countProgressOnCheckboxClick={countProgressOnCheckboxClick}
+          countProgressOnAdditionalButton={countProgressOnAdditionalButton}
+          updateViewOfComponent={updateViewOfComponent}
+        />
+      </React.Fragment>
+    );
   }
-}
+  return null;
+};
 
 const mapStateToProps = ({ user }) => ({
   userData: user.userData,

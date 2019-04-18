@@ -1,6 +1,9 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import logo from '../../navbar/logo.png';
+import { Button, Icon } from 'semantic-ui-react';
+import logo from '../logo.png';
+import logoNested from '../checklist-logo.png';
+import style from '../../nested-checklists/create-nested-checklist/css/CreateNestedChecklist.module.css';
 import styles from './MainPage.module.css';
 
 const ShowListOfCheckList = (props) => {
@@ -11,39 +14,63 @@ const ShowListOfCheckList = (props) => {
   };
 
   const showCreationData = data => `Created: ${data.slice(0, 10).split('-').reverse().join('/')}`;
-  const { data } = props;
+  const { data, removeChecklist, nested } = props;
   if (data) {
     return (
       data.map(currentCheckList => (
-        <Link
-          to={`/${currentCheckList.slug}`}
-          className={styles.checkListLink}
-          key={currentCheckList.id}
+        <div
+          key={currentCheckList.id || currentCheckList._id}
+          className={!nested ? styles.checkListLinkWrapper : style.checkListLinkWrapper}
         >
-          <div className={styles.imageContainer}>
-            <div>
-              <img src={logo} alt="checklist-logo" />
-            </div>
-          </div>
-          <div className={styles.checkListInfo}>
-            <div className={styles.titleAndAuthor}>
-              <div className={styles.title}>
-                {currentCheckList.title}
-              </div>
-              <div className={styles.author}>
-                {currentCheckList.author === null ? 'User was deleted' : currentCheckList.author.username}
-              </div>
-            </div>
-            <div className={styles.checkListAmount}>
+          <Link
+            to={!currentCheckList.checklists_data ? `/${currentCheckList.slug}` : `/nested-checklist/${currentCheckList.slug}`}
+            className={styles.checkListLink}
+            target={nested ? '_blank' : '_self'}
+          >
+            <div className={styles.imageContainer}>
               <div>
-                {countingItems(currentCheckList.sections_data)}
-              </div>
-              <div>
-                {showCreationData(currentCheckList.creation_date)}
+                <img
+                  src={!currentCheckList.checklists_data ? logo : logoNested}
+                  alt="checklist-logo"
+                  className={!nested ? styles.checklistLogo : [styles.checklistLogo, style.checklistLogo].join(' ')}
+                />
               </div>
             </div>
-          </div>
-        </Link>
+            <div className={styles.checkListInfo}>
+              <div className={styles.titleAndAuthor}>
+                <div className={styles.title}>
+                  {currentCheckList.title}
+                </div>
+                <div className={styles.author}>
+                  {currentCheckList.author === null ? 'User was deleted' : currentCheckList.author.username}
+                </div>
+              </div>
+              <div className={styles.checkListAmount}>
+                <div>
+                  {currentCheckList.sections_data
+                    ? countingItems(currentCheckList.sections_data)
+                    : `${currentCheckList.checklists_data.length} checklists`}
+                </div>
+                <div>
+                  {showCreationData(currentCheckList.creation_date)}
+                </div>
+              </div>
+            </div>
+          </Link>
+          {removeChecklist
+            && (
+              <div className={style.removeBtn}>
+                <Button
+                  icon
+                  key={`${currentCheckList._id}` || `${currentCheckList.id}`}
+                  onClick={() => removeChecklist(currentCheckList.id)}
+                >
+                  <Icon name="trash alternate" color="red" />
+                </Button>
+              </div>
+            )
+          }
+        </div>
       ))
     );
   }

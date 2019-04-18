@@ -1,92 +1,88 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import http from '../../api/http';
 import { saveCurrentProgress } from '../../actions/mainProgressbar';
 import MainBlockComponents from './main-block/MainBlockComponents';
 import { initArrayOfCheckboxes, countAmountOfCheckedItems } from './main-block/tools';
 
-class MainChecklistBlock extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      wholeChecklistProgress: 0,
-      amountOfAllCheckboxes: 0,
-      amountOfCheckedCheckboxes: 0,
-      arrayOfCheckboxArray: [],
-      idOfUserChecklistRelation: null,
-      readyToShow: false,
-      userClicked: false,
-    };
-  }
+const MainChecklistBlock = (props) => {
+  const [wholeChecklistProgress, setWholeChecklistProgress] = useState(0);
+  const [amountOfAllCheckboxes, setAmountOfAllCheckboxes] = useState(0);
+  const [amountOfCheckedCheckboxes, setAmountOfCheckedCheckboxes] = useState(0);
+  const [arrayOfCheckboxArray, setArrayOfCheckboxArray] = useState([]);
+  const [idOfUserChecklistRelation, setIdOfUserChecklistRelation] = useState(null);
+  const [readyToShow, setReadyToShow] = useState(false);
+  const [userClicked, setUserClicked] = useState(false);
 
-  async componentDidMount() {
-    const { sections_data } = this.props.checkListData;
-    const { saveCurrentProgress, loggedUser, userData, checkListData } = this.props;
-    let arrayOfCheckboxArray = [];
+  useEffect(() => {
+    const didMounted = async () => {
+      const { sections_data } = props.checkListData;
+      const { saveCurrentProgress, loggedUser, userData, checkListData } = props;
+      let arrayOfCheckboxArray = [];
 
-    if (!loggedUser) {
-      arrayOfCheckboxArray = initArrayOfCheckboxes(sections_data);
-      const amountOfAllCheckboxes = sections_data.reduce(
-        (sum, current) => (sum + current.items_data.length), 0,
-      );
-      return this.setState({
-        amountOfAllCheckboxes, arrayOfCheckboxArray, readyToShow: true, wholeChecklistProgress: 0,
+      if (!loggedUser) {
+        arrayOfCheckboxArray = initArrayOfCheckboxes(sections_data);
+        const amountOfAllCheckboxes = sections_data.reduce(
+          (sum, current) => (sum + current.items_data.length), 0,
+        );
+        setAmountOfAllCheckboxes(amountOfAllCheckboxes);
+        setArrayOfCheckboxArray(arrayOfCheckboxArray);
+        setReadyToShow(true);
+        setWholeChecklistProgress(0);
+        return;
+      }
+      const response = await http.post('/api/checklists/create-users-checklists', {
+        userID: userData._id,
+        checklistID: checkListData.id,
+        checklistData: checkListData.id,
+        checkboxes_data: arrayOfCheckboxArray,
       });
-    }
-    const response = await http.post('/api/checklists/create-users-checklists', {
-      userID: userData._id,
-      checklistID: checkListData.id,
-      checklistData: checkListData.id,
-      checkboxes_data: arrayOfCheckboxArray,
-    });
-    if (response.data.checkboxes_data.length < 1) {
-      arrayOfCheckboxArray = initArrayOfCheckboxes(sections_data);
-    } else {
-      arrayOfCheckboxArray = response.data.checkboxes_data;
-    }
-    const amountOfAllCheckboxes = sections_data.reduce((
-      sum, current,
-    ) => (sum + current.items_data.length), 0);
+      if (response.data.checkboxes_data.length < 1) {
+        arrayOfCheckboxArray = initArrayOfCheckboxes(sections_data);
+      } else {
+        arrayOfCheckboxArray = response.data.checkboxes_data;
+      }
+      const amountOfAllCheckboxes = sections_data.reduce((
+        sum, current,
+      ) => (sum + current.items_data.length), 0);
 
-    const { wholeChecklistProgress, amountOfCheckedCheckboxes } = countAmountOfCheckedItems(
-      sections_data, arrayOfCheckboxArray, amountOfAllCheckboxes, saveCurrentProgress,
-    );
-    return this.setState({
-      amountOfAllCheckboxes,
-      amountOfCheckedCheckboxes,
-      arrayOfCheckboxArray,
-      idOfUserChecklistRelation: response.data._id,
-      readyToShow: true,
-      wholeChecklistProgress,
-    });
-  }
+      const { wholeChecklistProgress, amountOfCheckedCheckboxes } = countAmountOfCheckedItems(
+        sections_data, arrayOfCheckboxArray, amountOfAllCheckboxes, saveCurrentProgress,
+      );
 
-  countProgressOnCheckboxClick = async (flag, indexOfElement, indexOfSection) => {
-    const { amountOfAllCheckboxes } = this.state;
-    const { sections_data } = this.props.checkListData;
-    const { saveCurrentProgress } = this.props;
-    const arrayOfCheckboxArray = [...this.state.arrayOfCheckboxArray];
+      setAmountOfAllCheckboxes(amountOfAllCheckboxes);
+      setAmountOfCheckedCheckboxes(amountOfCheckedCheckboxes);
+      setArrayOfCheckboxArray(arrayOfCheckboxArray);
+      setIdOfUserChecklistRelation(response.data._id);
+      setReadyToShow(true);
+      setWholeChecklistProgress(wholeChecklistProgress);
+    };
+    didMounted();
+  }, []);
+
+  const countProgressOnCheckboxClick = async (flag, indexOfElement, indexOfSection) => {
+    const { sections_data } = props.checkListData;
+    const { saveCurrentProgress } = props;
     arrayOfCheckboxArray[indexOfSection][indexOfElement] = flag;
-
     const { wholeChecklistProgress, amountOfCheckedCheckboxes } = countAmountOfCheckedItems(
       sections_data, arrayOfCheckboxArray, amountOfAllCheckboxes, saveCurrentProgress,
     );
-    if (this.props.loggedUser) {
+    if (props.loggedUser) {
       await http.post('/api/checklists/set-checkbox-data', {
-        id: this.state.idOfUserChecklistRelation,
+        id: idOfUserChecklistRelation,
         checkboxArray: arrayOfCheckboxArray,
       });
     }
-    this.setState({
-      amountOfCheckedCheckboxes, wholeChecklistProgress, arrayOfCheckboxArray, userClicked: true,
-    });
-  }
 
-  countProgressOnAdditionalButton = async (difference, indexOfSection) => {
-    const { amountOfAllCheckboxes, idOfUserChecklistRelation } = this.state;
-    const { sections_data } = this.props.checkListData;
-    const { loggedUser, saveCurrentProgress } = this.props;
-    const arrayOfCheckboxArray = [...this.state.arrayOfCheckboxArray];
+    setAmountOfCheckedCheckboxes(amountOfCheckedCheckboxes);
+    setWholeChecklistProgress(wholeChecklistProgress);
+    setArrayOfCheckboxArray(arrayOfCheckboxArray);
+    setUserClicked(true);
+  };
+
+  const countProgressOnAdditionalButton = async (difference, indexOfSection) => {
+    const { sections_data } = props.checkListData;
+    const { loggedUser, saveCurrentProgress } = props;
     let valueForWholeSection;
 
     if (difference > 0) valueForWholeSection = true;
@@ -104,28 +100,26 @@ class MainChecklistBlock extends Component {
         checkboxArray: arrayOfCheckboxArray,
       });
     }
-    this.setState({
-      wholeChecklistProgress, amountOfCheckedCheckboxes, arrayOfCheckboxArray, userClicked: true,
-    });
-  }
+    setWholeChecklistProgress(wholeChecklistProgress);
+    setAmountOfCheckedCheckboxes(amountOfCheckedCheckboxes);
+    setArrayOfCheckboxArray(arrayOfCheckboxArray);
+    setUserClicked(true);
+  };
 
-  render() {
-    return (
-      <MainBlockComponents
-        hideMainProgressbar={this.props.hideMainProgressbar}
-        arrayOfCheckboxArray={this.state.arrayOfCheckboxArray}
-        checkListData={this.props.checkListData}
-        amountOfCheckedCheckboxes={this.state.amountOfCheckedCheckboxes}
-        amountOfAllCheckboxes={this.state.amountOfAllCheckboxes}
-        wholeChecklistProgress={this.state.wholeChecklistProgress}
-        readyToShow={this.state.readyToShow}
-        userClicked={this.state.userClicked}
-        countProgressOnCheckboxClick={this.countProgressOnCheckboxClick}
-        countProgressOnAdditionalButton={this.countProgressOnAdditionalButton}
-      />
-    );
-  }
-}
+  return (
+    <MainBlockComponents
+      arrayOfCheckboxArray={arrayOfCheckboxArray}
+      checkListData={props.checkListData}
+      amountOfCheckedCheckboxes={amountOfCheckedCheckboxes}
+      amountOfAllCheckboxes={amountOfAllCheckboxes}
+      wholeChecklistProgress={wholeChecklistProgress}
+      readyToShow={readyToShow}
+      userClicked={userClicked}
+      countProgressOnCheckboxClick={countProgressOnCheckboxClick}
+      countProgressOnAdditionalButton={countProgressOnAdditionalButton}
+    />
+  );
+};
 
 const mapStateToProps = ({ user }) => ({
   userData: user.userData,

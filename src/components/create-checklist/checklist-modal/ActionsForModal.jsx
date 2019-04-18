@@ -29,6 +29,16 @@ const ActionsForModal = (props) => {
               </Button>
             </Link>
           </div>
+          <div className={style.regularButton}>
+            <Link to={{ pathname: '/create-checklist/nested', query: { teamId: props.teamId } }}>
+              <Button animated="vertical" color="yellow">
+                <Button.Content visible>Nested Checklists</Button.Content>
+                <Button.Content hidden>
+                  <Icon name="check" />
+                </Button.Content>
+              </Button>
+            </Link>
+          </div>
         </div>
         <div className={style.alternativeBlock}>
           <Button color="red" inverted onClick={props.close}>

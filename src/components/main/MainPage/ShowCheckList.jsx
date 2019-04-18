@@ -11,7 +11,6 @@ import styles from './ShowCheckList.module.css';
 import Footer from '../Footer';
 import MainChecklistBlock from '../../checklist/MainChecklistBlock';
 import NotFound404 from '../../utils/404-page';
-import CopyList from '../copyChecklist/CopyList';
 
 class ShowCheckList extends Component {
   constructor(props) {
@@ -21,6 +20,7 @@ class ShowCheckList extends Component {
       checkList: null,
       loading: true,
       userData: props.user,
+      canBeCopied: false,
     };
   }
 
@@ -34,20 +34,17 @@ class ShowCheckList extends Component {
           checkList: res.data,
           loading: false,
         });
+        if (this.state.userData.loggedUser && this.state.checkList.author !== this.state.userData.userData._id) {
+          this.setState({ canBeCopied: true });
+        }
       })
       .catch(() => {
         this.setState({ loading: false });
       });
   }
 
-  canBeCopied = () => {
-    if (!this.state.userData.loggedUser) return false;
-    if (this.state.checkList.author === this.state.userData.userData._id) return false;
-    return true;
-  };
-
   render() {
-    const { loading, checkList, userData } = this.state;
+    const { loading, checkList, userData, canBeCopied } = this.state;
     if (loading) {
       return (
         <div className={loaderStyle.loader}>Loading...</div>
@@ -57,10 +54,9 @@ class ShowCheckList extends Component {
     }
     return (
       <div>
-        <Header title={checkList.title} />
+        <Header user={userData.userData} checkList={checkList} canBeCopied={canBeCopied} title={checkList.title} />
         <div className={styles.checkListContainer}>
           <MainChecklistBlock checkListData={checkList} />
-          {/* {this.canBeCopied() && <CopyList user={userData.userData} checkList={checkList} />} */}
         </div>
         <Footer />
       </div>

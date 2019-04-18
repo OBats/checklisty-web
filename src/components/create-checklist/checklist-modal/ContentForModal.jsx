@@ -33,6 +33,20 @@ const MarkdownSegment = () => (
   </Segment>
 );
 
+const NestedChecklistSegment = () => (
+  <Segment className={style.contentItem}>
+    <Header size="small" icon>
+      <Icon name="clipboard list" color="yellow" />
+      {'Create nested checklists'}
+    </Header>
+    <p className={style.descriptionText}>
+      {`This option is recommended for advanced user.
+        Here you can simply add markdown from your local file
+        or put something down in the field on the next page.`}
+    </p>
+  </Segment>
+);
+
 const ContentForModal = (props) => {
   if (props.loggedUser) {
     return (
@@ -55,6 +69,16 @@ const ContentForModal = (props) => {
             <div className={style.smallScreenStyle}>
               <Link to="/create-checklist/markdown">
                 <MarkdownSegment />
+              </Link>
+            </div>
+          </div>
+          <div className={style.regularBlock}>
+            <div className={style.bigScreenStyle}>
+              <NestedChecklistSegment />
+            </div>
+            <div className={style.smallScreenStyle}>
+              <Link to="/create-checklist/nested">
+                <NestedChecklistSegment />
               </Link>
             </div>
           </div>

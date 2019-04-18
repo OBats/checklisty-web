@@ -21,6 +21,8 @@ import EditChecklistMarkdown from './components/edit-checklist/EditMarkdown/Edit
 import Chat from './components/profile/myTeam/chat/Chat';
 import AdminBoard from './components/admin/AdminBoard';
 import NotFound404 from './components/utils/404-page';
+import CreateNestedChecklist from './components/nested-checklists/create-nested-checklist/CreateNestedChecklist';
+import ShowNestedChecklist from './components/main/MainPage/ShowNestedChecklist';
 
 const Routes = () => (
   <React.Fragment>
@@ -37,12 +39,14 @@ const Routes = () => (
       <ProtectedRoute exact path="/profile/myteam/:id" component={TeamView} />
       <ProtectedRoute exact path="/admin" component={AdminBoard} />
       <Route exact path="/:id" component={ShowCheckList} />
+      <Route exact path="/nested-checklist/:id" component={ShowNestedChecklist} />
       <ProtectedRoute exact path="/create-checklist/form" component={NewChecklistForm} />
       <ProtectedRoute exact path="/create-checklist/markdown" component={NewChecklistMarkdown} />
       <ProtectedRoute exact path="/edit-checklist/:slug" component={EditChecklistForm} />
       <ProtectedRoute exact path="/edit-checklist-markdown/:slug" component={EditChecklistMarkdown} />
       <ProtectedRoute exact path="/profile/myteam/chat" component={Chat} />
       <ProtectedRoute exact path="/profile/myteam/:id/:slug" component={ShowTeamChecklist} />
+      <ProtectedRoute exact path="/create-checklist/nested" component={CreateNestedChecklist} />
       <Route component={NotFound404} />
     </Switch>
     <MessageContainer />
