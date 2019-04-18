@@ -34,8 +34,7 @@ class ShowCheckList extends Component {
           checkList: res.data,
           loading: false,
         });
-        if (this.state.userData.loggedUser
-            && this.state.checkList.author !== this.state.userData.userData._id) {
+        if (this.state.userData.loggedUser && this.state.checkList.author !== this.state.userData.userData._id) {
           this.setState({ canBeCopied: true });
         }
       })

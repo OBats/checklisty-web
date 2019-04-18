@@ -8,12 +8,12 @@ import http from '../../../api/http';
 import styles from './CopyList.module.css';
 
 const CopyList = ({ user, checkList }) => {
-  const [isCopied, setCopied] = useState(checkList.copiedBy.includes(user._id));
+  const [isCopied, setCopied] = useState(user.copiedLists.includes(checkList.id));
   const copy = () => {
     if (isCopied) {
       InfoToaster('List already copied');
     } else {
-      http.get(`/api/checklists/copy/${checkList.slug}`)
+      http.get(`/api/checklists/copy/${checkList.id}`)
         .then((res) => {
           if (res.status === 200) {
             SuccessHandling('List copied');
