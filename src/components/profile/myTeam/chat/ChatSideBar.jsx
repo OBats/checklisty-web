@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import { Loader, Image, List } from 'semantic-ui-react';
+import { Loader, Image, List, Icon, Popup } from 'semantic-ui-react';
 import http from '../../../../api/http';
 import avatar from '../../Avatar/avatar.png';
 import styles from './css/ChatSideBar.module.css';
 
-const ChatSideBar = ({ teamId }) => {
+const ChatSideBar = ({ teamId, onlineUsers }) => {
   const [loading, setLoading] = useState(true);
   const [teamMembers, setTeamMembers] = useState(null);
+  console.log(onlineUsers);
 
   useEffect(() => {
     http.get(`/api/team/${teamId}/members`)
@@ -26,9 +27,14 @@ const ChatSideBar = ({ teamId }) => {
   return (
     <List divided>
       { teamMembers.map(member => (
-        <List.Item className={styles.user} key={member.id}>
+        <List.Item key={member.id} className={styles.user}>
+          <List.Content floated="right" style={{ marginTop: '5px' }}>
+            { onlineUsers.includes(member.username)
+              ? <Popup trigger={<Icon color="green" name="circle" />} content="Online" />
+              : <Popup trigger={<Icon name="circle outline" />} content="Offline" /> }
+          </List.Content>
           <Image avatar src={member.image || avatar} />
-          <List.Content>
+          <List.Content style={{ marginTop: '5px' }}>
             <List.Header>
               { member.firstName && member.lastName
                 ? `${member.firstName} ${member.lastName}` : member.username }

@@ -25,7 +25,7 @@ const TeamView = (props) => {
     } else {
       setLoading(false);
     }
-  }, [token, props.history, props.match.params.id]);
+  }, []);
 
   if (loading) {
     return (

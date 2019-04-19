@@ -38,7 +38,7 @@ const hideDisConnectedUser = (cb) => {
   disConnectTimeout = setTimeout(cb, 2000);
 };
 
-const Chat = ({ userData, teamId }) => {
+const Chat = ({ userData, teamId, setOnlineUsers }) => {
   const [isLoading, setLoading] = useState(true);
   const [typingValue, setTypingValue] = useState('');
   const [messagesInfo, setMessagesInfo] = useState([]);
@@ -78,6 +78,10 @@ const Chat = ({ userData, teamId }) => {
 
     socket.on('connect', () => {
       socket.emit('joinRoom', { teamId, username });
+    });
+
+    socket.on('onlineUsers', (onlineUsers) => {
+      setOnlineUsers(onlineUsers);
     });
 
     socket.on('message', (messageData) => {
