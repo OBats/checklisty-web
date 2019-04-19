@@ -16,6 +16,7 @@ const selectedUsers = (props) => {
                 <img src={currentUser.image} alt="user avatar" />
               </div>
               <div className={styles.userInfo}>
+
                 <span>
 Username:
                   {currentUser.username}

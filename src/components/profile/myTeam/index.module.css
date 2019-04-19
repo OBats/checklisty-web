@@ -157,8 +157,26 @@
     justify-content: center;
 }
 .loaderContainer{
-    height: 380px;
+    height: 403px;
     display: flex;
     align-items: center;
+}
+@media (max-width: 1300px){
+    .teamContainer{
+        margin: 2% 20% 0;
+    }
+}
+@media (max-width: 1000px){
+    .teamLogo{
+        width: 8%;
+    }
+    .teamContainer{
+        margin: 2% 15% 0;
+    }
+}
+@media (max-width: 680px){
+    .createNewTeam{
+        right: -70px;
+    }
 }
 

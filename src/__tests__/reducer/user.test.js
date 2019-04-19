@@ -3,7 +3,7 @@ import reducer from '../../reducer/user';
 describe('reducer', () => {
   it('Auth reducer initial state is correct', () => {
     const action = { type: 'UNKNOWN_ACTION' };
-    const initialState = { loggedUser: false, userData: null };
+    const initialState = { loggedUser: false, userData: null, userInvites: null };
 
     expect(reducer(undefined, action)).toEqual(initialState);
   });
@@ -14,7 +14,12 @@ describe('reducer', () => {
 
     expect(reducer(undefined, action)).toEqual(currentState);
   });
+  it('should store user invites', () => {
+    const action = { type: 'FETCH_USER_INVITES', payload: {} };
+    const currentState = { loggedUser: false, userData: null, userInvites: {} };
 
+    expect(reducer(undefined, action)).toEqual(currentState);
+  });
   it('should change state after sign out', () => {
     const action = { type: 'HANDLE_SIGN_OUT' };
     const initialState = { loggedUser: false, userData: null };

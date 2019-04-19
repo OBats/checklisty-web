@@ -11,7 +11,7 @@ const SuggestionSearch = (props) => {
   const [userData, setData] = useState(null);
 
   const updateData = () => {
-    if (userData === null) {
+    if (data === null) {
       return null;
     }
     let counter = 0;

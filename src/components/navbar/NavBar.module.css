@@ -81,11 +81,6 @@
     padding: 0px 5px;
     
   }
-
-  /* .menu.menu.menu>a {
-    padding-left: 40px;
-  } */
-
   .menu.menu.menu>div {
     padding-right: 10px;
   }
@@ -97,6 +92,50 @@
   .NavBarMenu.NavBarMenu.NavBarMenu.NavBarMenu.NavBarMenu {
     left: -15px;
   }
+}
+.notificationContainer {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  cursor: pointer;
+}
+.notificationIcon{
+  position: relative;
+}
+.notificationList{
+  border-bottom: 1px solid black;
+  margin-bottom: 10px;
+}
+.notificationBtns{
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  margin-top: 10px;
+}
+.mainInfo{
+  font-size: 15px;
+  font-style: italic;
+  text-decoration: underline;
+}
+.inviteText{
+  font-weight: bold;
+}
+.uncheckedAmount{
+  width: 20px;
+  height: 20px;
+  background-color: red;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50px;
+  position: absolute;
+  z-index: 999999;
+  bottom: 30px;
+}
+.noNotification{
+  min-width: 220px;
+  text-align: center;
 }
 
 @media screen and (max-width: 380px) {

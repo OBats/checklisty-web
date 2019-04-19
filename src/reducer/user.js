@@ -1,7 +1,7 @@
 /* eslint-disable default-case */
 /* eslint-disable indent */
 
-const initialState = { loggedUser: false, userData: null };
+const initialState = { loggedUser: false, userData: null, userInvites: null };
 
 const reducer = (state = initialState, action) => {
     switch (action.type) {
@@ -15,6 +15,18 @@ const reducer = (state = initialState, action) => {
             return {
                 userData: null,
                 loggedUser: false,
+            };
+        }
+        case 'FETCH_USER_INVITES': {
+            return {
+                ...state,
+                userInvites: action.payload,
+            };
+        }
+        case 'DECLINE_INVITE': {
+            return {
+                ...state,
+                userInvites: action.payload,
             };
         }
         default:

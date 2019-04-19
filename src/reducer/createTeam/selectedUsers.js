@@ -2,7 +2,7 @@
 /* eslint-disable indent */
 
 const initialState = {
-    arrayOfSelectedUsers: null,
+    arrayOfSelectedUsers: [],
     showSuggestion: false,
     showSelectedUsers: false,
     searchUserValue: '',
