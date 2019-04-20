@@ -14,25 +14,25 @@ const ShowListOfCheckList = (props) => {
   };
 
   const showCreationData = data => `Created: ${data.slice(0, 10).split('-').reverse().join('/')}`;
-  const { data, removeChecklist, nested } = props;
+  const { data, removeChecklist, createNestedPage, showNestedPage } = props;
   if (data) {
     return (
       data.map(currentCheckList => (
         <div
           key={currentCheckList.id || currentCheckList._id}
-          className={!nested ? styles.checkListLinkWrapper : style.checkListLinkWrapper}
+          className={createNestedPage ? style.checkListLinkWrapper : styles.checkListLinkWrapper}
         >
           <Link
             to={!currentCheckList.checklists_data ? `/${currentCheckList.slug}` : `/nested-checklist/${currentCheckList.slug}`}
             className={styles.checkListLink}
-            target={nested ? '_blank' : '_self'}
+            target={createNestedPage && '_blank'}
           >
             <div className={styles.imageContainer}>
               <div>
                 <img
                   src={!currentCheckList.checklists_data ? logo : logoNested}
                   alt="checklist-logo"
-                  className={!nested ? styles.checklistLogo : [styles.checklistLogo, style.checklistLogo].join(' ')}
+                  className={showNestedPage || createNestedPage ? [styles.checklistLogo, style.checklistLogo].join(' ') : styles.checklistLogo}
                 />
               </div>
             </div>
@@ -62,7 +62,6 @@ const ShowListOfCheckList = (props) => {
               <div className={style.removeBtn}>
                 <Button
                   icon
-                  key={`${currentCheckList._id}` || `${currentCheckList.id}`}
                   onClick={() => removeChecklist(currentCheckList.id)}
                 >
                   <Icon name="trash alternate" color="red" />
