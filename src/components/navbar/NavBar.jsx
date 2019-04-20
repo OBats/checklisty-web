@@ -3,6 +3,7 @@ import React, { useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Link, NavLink } from 'react-router-dom';
 import { Menu, Dropdown, Icon, Image, Popup, Button, Checkbox } from 'semantic-ui-react';
+import KeyboardEventHandler from 'react-keyboard-event-handler';
 import { signOut } from '../../api/auth-api';
 import style from './NavBar.module.css';
 import home from '../main/logo.png';
@@ -11,6 +12,7 @@ import avatar from '../profile/Avatar/avatar.png';
 import Notification from './Notification';
 import UncheckedMsg from './UncheckedMsg';
 import { fetchUserInvites } from '../../actions/fetchUserInvites';
+import { startConfetti, stopConfetti } from '../main/confetti';
 
 
 const NavBar = ({ userData, handleSignOut, userInvites, componentLoader, listsLoader, fetchUserInvites }) => {
@@ -21,6 +23,17 @@ const NavBar = ({ userData, handleSignOut, userInvites, componentLoader, listsLo
   }, [componentLoader, listsLoader]);
   return (
     <Menu className={style.menu} inverted borderless>
+      <KeyboardEventHandler
+        handleKeys={['alt+o', 'alt+s']}
+        onKeyEvent={(key, e) => {
+          if (key === 'alt+o') {
+            startConfetti();
+            setTimeout(() => stopConfetti(), 5500);
+          } else if (key === 'alt+s') {
+            stopConfetti();
+          }
+        }}
+      />
       <Menu.Item name="main" position="left" as={Link} to="/">
         <img src={home} alt="home" />
         <span className={style.home}>Checklisty</span>

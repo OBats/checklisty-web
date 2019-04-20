@@ -8,7 +8,6 @@ import InviteMembers from './inviteMember/inviteMembers';
 const ChatSideBar = ({ teamId, onlineUsers }) => {
   const [loading, setLoading] = useState(true);
   const [teamMembers, setTeamMembers] = useState(null);
-  console.log(onlineUsers);
 
   useEffect(() => {
     http.get(`/api/team/${teamId}/members`)
