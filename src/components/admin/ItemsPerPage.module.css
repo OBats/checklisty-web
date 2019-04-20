@@ -18,3 +18,12 @@
 .perPageText{
     margin-right: 5px;
 }
+
+@media only screen and (max-device-width: 800px) {
+    .selectContainer {
+        margin: 10px 0;
+    }
+    .select {
+        padding: 0;
+    }
+}

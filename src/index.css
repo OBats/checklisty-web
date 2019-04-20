@@ -12,3 +12,17 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New",
     monospace;
 }
+
+/* mobiles in portrait */
+@media only screen and (max-device-width: 414px) and (orientation: portrait) {
+  .ui.secondary.pointing.menu .item {
+    padding: .7em;
+    min-width: 1em;
+  }
+}
+
+@media only screen and (max-device-width: 600px) {
+  .ui.table {
+    width: 600px;
+  }
+}

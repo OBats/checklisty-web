@@ -1,0 +1,84 @@
+.chartContainer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.checklistsToday {
+    display: flex;
+    justify-content: center;
+    width: 200px;
+    padding: 10px;
+    text-align: center;
+    border-radius: 8px;
+    font-size: 18px;
+}
+
+.checklistsToday span {
+    font-size: 24px;
+    color: #8BB6D8;
+}
+.usersToday span {
+    font-size: 24px;
+    color: #77D7D3;
+}
+
+.usersToday {
+    display: flex;
+    justify-content: center;
+    width: 200px;
+    padding: 10px;
+    text-align: center;
+    border-radius: 8px;
+    font-size: 18px;
+}
+
+.header {
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+}
+
+.select {
+    display: flex;
+    width: 30%;
+    justify-content: center;
+    margin-left: 20px;
+    /* border-bottom: 2px solid #8BB6D8; */
+}
+.select>div {
+    width: 100%;
+    border: none;
+}
+
+.select>div>div {
+    justify-content: center;
+}
+
+.select div:hover {
+    box-shadow: none;
+}
+
+.select div:focus {
+    box-shadow: none;
+}
+
+.select div:focus-within {
+    box-shadow: none;
+}
+
+.checklistsChart, .usersChart {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+@media only screen and (max-device-width: 700px) {
+    .chartContainer {
+        flex-direction: column;
+    }
+}
