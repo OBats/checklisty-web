@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { SuccessHandling, ErrorHandling } from '../toasters/MessagesHandling';
 import loaderStyle from '../main/loader.module.css';
+import styles from './MenuItemContent.module.css';
 
 import Search from './Search';
 import Pagination from './Pagination';
@@ -37,8 +38,8 @@ const MenuItemContent = ({
           setFetching(false);
           setLoading(false);
         });
-    } catch {
-      ErrorHandling('Somethin go wrong!');
+    } catch (error) {
+      ErrorHandling(error.response.message);
     }
   };
 
@@ -73,7 +74,7 @@ const MenuItemContent = ({
             deletedId={deletedId}
             updateDeletedId={updateDeletedId}
           />
-          <div style={{ display: 'flex', justifyContent: 'center' }}>
+          <div className={styles.bottom} style={{ display: 'flex', justifyContent: 'center' }}>
             <Pagination
               activePage={activePage}
               totalPage={totalPage}
