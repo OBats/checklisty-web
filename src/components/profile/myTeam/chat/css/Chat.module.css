@@ -1,7 +1,9 @@
+.chat {
+  font-family: 'Open Sans', Arial, sans-serif;
+}
+
 .chatHeader {
-  min-height: 95px;
-  margin: 0;
-  padding: 15px 0px;
+  padding: 0 0 10px;
   color: #2B314A;
   border-bottom: 1px solid #e9e9e9;
 }
@@ -9,6 +11,7 @@
 .chatHeader h2,
 .headerInfo {
   padding: 0 20px;
+  font-family: inherit;
 }
 
 .headerInfo {
@@ -35,7 +38,7 @@
 
 .floatStatus {
   position: absolute;
-  bottom: -45px;
+  bottom: -40px;
   left: 0;
   display: block;
   width: 100%;
@@ -53,10 +56,6 @@
 }
 .floatStatusDisConnected {
   background-color: rgb(119, 0, 0);
-}
-
-.chatHeader p {
-  font-size: 18px;
 }
 
 .teamChat {
@@ -163,22 +162,4 @@
   padding-right: 5px;
   font-weight: bold;
 }
-.listContainer{
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  min-height: 480px;
-}
-.inviteMembers{
-  background-color: #343e4f !important;
-  color: #fff !important;
-}
-.inviteModal{
-  display: flex !important;
-  flex-direction: column !important;
-  align-items: center !important;
-  justify-content: center !important;
-}
-.inviteMembersBtn{
-  margin-top: 20px !important;
-}
+

@@ -2,15 +2,12 @@ import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import io from 'socket.io-client';
-import Textarea from 'react-textarea-autosize';
 import { toast } from 'react-toastify';
-import { Icon } from 'semantic-ui-react';
-import timeChecker from '../../../checklist/team-checklist/functions';
+import chatOnlineUsers from '../../../../actions/chatOnlineUsers';
 import http from '../../../../api/http';
 import { ErrorHandling } from '../../../toasters/MessagesHandling';
 import checkTextAreaValue from './utils/checkTextareaValue';
-import loaderStyle from '../../../main/loader.module.css';
-import styles from './css/Chat.module.css';
+import ChatView from './ChatView';
 
 const baseURL = process.env.NODE_ENV === 'production' ? process.env.REACT_APP_URL : 'http://localhost:3030';
 
@@ -22,6 +19,14 @@ let typedUserTimeout;
 let connectTimeout;
 let disConnectTimeout;
 let scrollingToElement;
+
+const setScrollingToElement = (el) => {
+  scrollingToElement = el;
+};
+
+const scrollToBottom = (transition) => {
+  scrollingToElement.scrollIntoView({ behavior: transition });
+};
 
 const stopShowTypedUser = (cb) => {
   clearTimeout(typedUserTimeout);
@@ -38,7 +43,7 @@ const hideDisConnectedUser = (cb) => {
   disConnectTimeout = setTimeout(cb, 2000);
 };
 
-const Chat = ({ userData, teamId, setOnlineUsers }) => {
+const Chat = ({ userData, teamId, setChatOnlineUsers }) => {
   const [isLoading, setLoading] = useState(true);
   const [typingValue, setTypingValue] = useState('');
   const [messagesInfo, setMessagesInfo] = useState([]);
@@ -48,10 +53,6 @@ const Chat = ({ userData, teamId, setOnlineUsers }) => {
   const [disconnectedUser, setDisconnectedUser] = useState('');
 
   const { username, image: avatar } = userData;
-
-  const scrollToBottom = (transition) => {
-    scrollingToElement.scrollIntoView({ behavior: transition });
-  };
 
   const removeTypingMsg = () => {
     socket.emit('typing', false);
@@ -81,7 +82,7 @@ const Chat = ({ userData, teamId, setOnlineUsers }) => {
     });
 
     socket.on('onlineUsers', (onlineUsers) => {
-      setOnlineUsers(onlineUsers);
+      setChatOnlineUsers(onlineUsers);
     });
 
     socket.on('message', (messageData) => {
@@ -116,7 +117,7 @@ const Chat = ({ userData, teamId, setOnlineUsers }) => {
     });
 
     return () => socket.disconnect();
-  }, [teamId, username]);
+  }, []);
 
   const removeConnectedUser = () => {
     setConnectedUser('');
@@ -165,88 +166,19 @@ const Chat = ({ userData, teamId, setOnlineUsers }) => {
   };
 
   return (
-    <div className={styles.chat}>
-      <header className={styles.chatHeader}>
-        <h2>Team Chat</h2>
-        <div className={styles.headerInfo}>
-          <div className={styles.totalMsg} title="Total messages">
-            <span><Icon name="wechat" /></span>
-            <span>{messagesInfo.length}</span>
-          </div>
-          <div className={styles.onlineUsers} title="Online users">
-            <span><Icon name="user" /></span>
-            <span>{connectedUserNumber}</span>
-          </div>
-        </div>
-        <div className={styles.floatStatusBlock}>
-          {connectedUser && (
-            <span className={`${styles.floatStatus} ${styles.floatStatusConnected}`}>
-              {`${connectedUser} has been connected`}
-            </span>
-          )}
-          {disconnectedUser && (
-            <span className={`${styles.floatStatus} ${styles.floatStatusDisConnected}`}>
-              {`${disconnectedUser} has left the chat`}
-            </span>
-          )}
-        </div>
-      </header>
-
-      <div className={styles.chatContainer}>
-        <div className={styles.output}>
-          {isLoading && (
-            <div className={loaderStyle.loader}>Loading...</div>
-          )}
-          {messagesInfo.length > 0 && (
-            messagesInfo.map(messageInfo => (
-              <div
-                key={Math.random()}
-                className={styles.chatMsgItem}
-              >
-                <div className={styles.avatarBlock}>
-                  <img src={messageInfo.avatar} alt="User avatar" width="50" height="50" />
-                </div>
-
-                <div className={styles.msgInfoContainer}>
-                  <div className={styles.msgInfo}>
-                    <p className={styles.chatUser}>{`${messageInfo.username}`}</p>
-                    <p className={styles.msgDate}>{timeChecker(messageInfo.createdAt)}</p>
-                  </div>
-
-                  <p className={styles.chatMsg}>{messageInfo.message}</p>
-                </div>
-              </div>
-            ))
-          )}
-          <div ref={(el) => { scrollingToElement = el; }} />
-        </div>
-      </div>
-      <div className={styles.formBlock}>
-        <Textarea
-          className={styles.chatTextarea}
-          minRows={1}
-          placeholder="Message..."
-          value={typingValue}
-          onChange={onMsgChange}
-          onKeyDown={onEnterPress}
-        />
-        <button
-          className={styles.sendButton}
-          type="submit"
-          onClick={onSendClick}
-        >
-          <Icon name="send" size="large" />
-        </button>
-      </div>
-      <div className={styles.typedUser}>
-        {typedUser && (
-          <p>
-            <span className={styles.typedUserName}>{`${typedUser}`}</span>
-            <span>is typing...</span>
-          </p>
-        )}
-      </div>
-    </div>
+    <ChatView
+      messagesInfo={messagesInfo}
+      connectedUserNumber={connectedUserNumber}
+      connectedUser={connectedUser}
+      disconnectedUser={disconnectedUser}
+      isLoading={isLoading}
+      typingValue={typingValue}
+      onMsgChange={onMsgChange}
+      onEnterPress={onEnterPress}
+      onSendClick={onSendClick}
+      typedUser={typedUser}
+      setScrollingToElement={setScrollingToElement}
+    />
   );
 };
 
@@ -254,9 +186,16 @@ const mapStateToProps = ({ user }) => ({
   userData: user.userData,
 });
 
+const mapDispatchToProps = dispatch => ({
+  setChatOnlineUsers: (onlineUsers) => {
+    dispatch(chatOnlineUsers(onlineUsers));
+  },
+});
+
 Chat.propTypes = {
   userData: PropTypes.object.isRequired,
   teamId: PropTypes.string.isRequired,
+  setChatOnlineUsers: PropTypes.func.isRequired,
 };
 
-export default connect(mapStateToProps)(Chat);
+export default connect(mapStateToProps, mapDispatchToProps)(Chat);

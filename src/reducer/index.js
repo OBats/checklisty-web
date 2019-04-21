@@ -6,6 +6,7 @@ import progressbar from './progressbar';
 import selectedUsers from './createTeam/selectedUsers';
 import historyPagination from './historyPagination';
 import teamName from './teamName';
+import chatOnlineUsers from './createTeam/chatOnlineUsers';
 
 export default combineReducers({
   user,
@@ -14,4 +15,5 @@ export default combineReducers({
   selectedUsers,
   historyPagination,
   teamName,
+  chatOnlineUsers,
 });
