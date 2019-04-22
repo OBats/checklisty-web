@@ -28,6 +28,10 @@ const selectedUsers = (props) => {
                   <img src={currentUser.image === undefined ? avatar : currentUser.image} alt="user avatar" />
                 </div>
                 <div className={styles.userInfo}>
+                  <div>
+                    <span>{`${currentUser.firstname} `}</span>
+                    <span>{currentUser.lastname}</span>
+                  </div>
                   <span>
 Username:
                     {currentUser.username}

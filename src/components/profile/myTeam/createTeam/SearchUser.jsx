@@ -8,16 +8,16 @@ import SuggestionSearch from './Suggestion';
 import styles from './createModal.module.css';
 
 
-const getUsers = (setState, searchUsersValue, changeState) => {
+const getUsers = (setState, searchUsersValue, changeState, creator) => {
   http.get(`api/team/searchUsers/searchUsers=${searchUsersValue}`)
     .then((res) => {
-      setState(res.data);
+      setState(res.data.filter(currentUser => currentUser._id !== creator));
       changeState(true);
     });
 };
 
 const SearchUser = (props) => {
-  const { changeSuggestionState } = props;
+  const { changeSuggestionState, userData } = props;
   const [data, setData] = useState(null);
 
   const onChangeUser = debounce(500, (text) => {
@@ -25,9 +25,8 @@ const SearchUser = (props) => {
       changeSuggestionState(false);
       return false;
     }
-    getUsers(setData, text, changeSuggestionState);
+    getUsers(setData, text, changeSuggestionState, userData._id);
   });
-
   return (
     <div className={styles.findMembersContainer}>
       <h2>Find your teammates</h2>
@@ -42,11 +41,12 @@ const SearchUser = (props) => {
   );
 };
 
-const mapStateToProps = ({ selectedUsers }) => (
+const mapStateToProps = ({ selectedUsers, user }) => (
   {
     arrayOfSelectedUsers: selectedUsers.arrayOfSelectedUsers,
     showSuggestion: selectedUsers.showSuggestion,
     searchUserValue: selectedUsers.searchUserValue,
+    userData: user.userData,
   });
 
 const mapDispatchToProps = dispatch => ({

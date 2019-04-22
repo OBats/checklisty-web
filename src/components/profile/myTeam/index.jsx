@@ -49,54 +49,56 @@ const MyTeam = (props) => {
   }
   if (teams) {
     return (
-      <div className={styles.myTeamList}>
+      <>
         <Header title="My Teams" />
-        <div className={styles.myTeamContent}>
-          <div className={styles.mainContent}>
-            <SearchBar />
+        <div className={styles.myTeamList}>
+          <div className={styles.myTeamContent}>
+            <div className={styles.mainContent}>
+              <SearchBar />
 
-            <div className={styles.content}>
-              {listsLoader
+              <div className={styles.content}>
+                {listsLoader
+                  ? (
+                    <div className={styles.loaderContainer}>
+                      <Loader />
+                    </div>
+                  )
+                  : (
+                    <>
+                      {teams.length !== 0
+                        ? (
+                          <>
+                            <ShowUserTeams teams={teams} history={history} />
+                          </>
+                        )
+                        : (
+                          <div className={styles.notFoundContainer}>
+                            <NotFound notFound={searchTeamValue} />
+                          </div>
+                        )
+                      }
+                    </>
+                  )}
+              </div>
+              {teams.length !== 0
                 ? (
-                  <div className={styles.loaderContainer}>
-                    <Loader />
+                  <div className={styles.selectContainer}>
+                    <div className={styles.selectTeams}>
+                      <SelectItems />
+                    </div>
                   </div>
                 )
-                : (
-                  <>
-                    {teams.length !== 0
-                      ? (
-                        <>
-                          <ShowUserTeams teams={teams} history={history} />
-                        </>
-                      )
-                      : (
-                        <div className={styles.notFoundContainer}>
-                          <NotFound notFound={searchTeamValue} />
-                        </div>
-                      )
-                    }
-                  </>
-                )}
+                : null}
+
+              {teams.length !== 0
+                ? <Pagination />
+                : null}
             </div>
-            {teams.length !== 0
-              ? (
-                <div className={styles.selectContainer}>
-                  <div className={styles.selectTeams}>
-                    <SelectItems />
-                  </div>
-                </div>
-              )
-              : null}
 
-            {teams.length !== 0
-              ? <Pagination />
-              : null}
           </div>
-
+          <Footer />
         </div>
-        <Footer />
-      </div>
+      </>
     );
   }
   return null;

@@ -168,7 +168,7 @@
         right: 70px;
     }
 }
-@media (min-width: 410px) and (max-width: 520px){
+@media (max-width: 520px){
     .checkListLink{
         width: 100%;
     }
@@ -181,6 +181,9 @@
     }
     .searchInput{
         min-width: 90%;
+    }
+    .seearchInputTeam{
+        min-width: 50%;
     }
     
 }

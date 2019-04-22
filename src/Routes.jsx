@@ -18,7 +18,6 @@ import ForgotPassword from './components/auth/forgot-password/ForgotPassword';
 import ResetPassword from './components/auth/forgot-password/ResetPassword';
 import EditChecklistForm from './components/edit-checklist/EditForm/EditChecklistForm';
 import EditChecklistMarkdown from './components/edit-checklist/EditMarkdown/EditChecklistMarkdown';
-import Chat from './components/profile/myTeam/chat/Chat';
 import AdminBoard from './components/admin/AdminBoard';
 import NotFound404 from './components/utils/404-page';
 import CreateNestedChecklist from './components/nested-checklists/create-nested-checklist/CreateNestedChecklist';
@@ -44,7 +43,6 @@ const Routes = () => (
       <ProtectedRoute exact path="/create-checklist/markdown" component={NewChecklistMarkdown} />
       <ProtectedRoute exact path="/edit-checklist/:slug" component={EditChecklistForm} />
       <ProtectedRoute exact path="/edit-checklist-markdown/:slug" component={EditChecklistMarkdown} />
-      <ProtectedRoute exact path="/profile/myteam/chat" component={Chat} />
       <ProtectedRoute exact path="/profile/myteam/:id/:slug" component={ShowTeamChecklist} />
       <ProtectedRoute exact path="/create-checklist/nested" component={CreateNestedChecklist} />
       <Route component={NotFound404} />

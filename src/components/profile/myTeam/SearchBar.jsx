@@ -54,7 +54,7 @@ function SearchBar(props) {
     <div className={styles.searchBarContainer}>
       <input
         type="text"
-        className={styles.searchInput}
+        className={[styles.searchInput, styles.searchInputTeam].join(' ')}
         placeholder="Search..."
         onChange={e => onChangeSearch(e.target.value)}
         onKeyPress={e => onKeyPressSearch(e.key)}

@@ -5,6 +5,7 @@ import { Grid, Menu } from 'semantic-ui-react';
 import CheckListsBoard from './CheckListsBoard';
 import UsersBoard from './UsersBoard';
 import MenuItemContent from './MenuItemContent';
+import Dashboard from './Dashboard';
 import { ErrorHandling } from '../toasters/MessagesHandling';
 
 import style from './AdminBoard.module.css';
@@ -41,8 +42,8 @@ const AdminBoard = ({ userData }) => {
     };
 
     return (
-      <Grid className={style.grid}>
-        <Grid.Column width={4} className={style.columnMenuBar}>
+      <Grid className={style.grid} doubling columns={2}>
+        <Grid.Column width={2} className={style.columnMenuBar}>
           <Menu fluid vertical tabular>
             {userData.role === 'admin'
             && (
@@ -56,6 +57,11 @@ const AdminBoard = ({ userData }) => {
             <Menu.Item
               name="checklists"
               active={activeItem === 'checklists'}
+              onClick={handleItemClick}
+            />
+            <Menu.Item
+              name="dashboard"
+              active={activeItem === 'dashboard'}
               onClick={handleItemClick}
             />
           </Menu>
@@ -83,6 +89,9 @@ const AdminBoard = ({ userData }) => {
                 intialSearchText=""
               />
             )}
+          {userData.role === 'admin' && activeItem === 'dashboard'
+            && <Dashboard />
+          }
         </Grid.Column>
       </Grid>
     );

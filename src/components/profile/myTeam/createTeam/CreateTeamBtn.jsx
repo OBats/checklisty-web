@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Formik, Form } from 'formik';
 import { Button, Modal, Input, Icon } from 'semantic-ui-react';
 import { connect } from 'react-redux';
@@ -20,6 +20,7 @@ const CreateTeamBtn = (props) => {
   const resetPreviousData = () => {
     addSelectedUser([]);
   };
+  useEffect(() => () => addSelectedUser([]), []);
   if (teams) {
     return (
       <Modal

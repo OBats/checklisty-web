@@ -31,7 +31,6 @@ export class App extends Component {
 
   render() {
     const { fetching } = this.state;
-
     if (fetching) return <div className={loaderStyle.loader}>Loading...</div>;
     return <BrowserRouter><Routes /></BrowserRouter>;
   }
@@ -39,12 +38,14 @@ export class App extends Component {
 
 const mapStateToProps = ({ user }) => ({
   loggedUser: user.loggedUser,
+  userData: user.userData,
 });
 
 const mapDispatchToProps = dispatch => ({
   makingValidationOfUser: async () => {
     await dispatch(makingValidationOfUser());
   },
+
 });
 
 export default connect(mapStateToProps, mapDispatchToProps)(App);

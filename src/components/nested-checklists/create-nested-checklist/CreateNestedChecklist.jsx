@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { debounce } from 'throttle-debounce';
-import { Search, Segment, Container, Button, Icon, Checkbox, Header } from 'semantic-ui-react';
+import { Search, Segment, Container, Button, Icon, Checkbox, Header, Popup } from 'semantic-ui-react';
 import { findChecklists, createNestedChecklist } from '../../../api/checklist-api';
 import ShowListOfCheckList from '../../main/MainPage/ShowListOfCheckList';
 import style from './css/CreateNestedChecklist.module.css';
 import { ErrorHandling, SuccessHandling } from '../../toasters/MessagesHandling';
+import Footer from '../../main/Footer';
 
 const CreateNestedChecklist = (props) => {
   const [searching, setSearching] = useState(false);
@@ -59,7 +60,10 @@ const CreateNestedChecklist = (props) => {
           setSearching(false);
           filterSearchingResults(res.data);
         })
-        .catch(() => setSearching(false));
+        .catch(() => {
+          setSearching(false);
+          setSeacrhResults([]);
+        });
     } else {
       setSearching(false);
       setSeacrhResults([]);
@@ -91,78 +95,101 @@ const CreateNestedChecklist = (props) => {
   };
 
   return (
-    <div className={style.nestedChecklistWrapper}>
-      <Container>
-        <div className={style.searchBarWrapper}>
-          <Search
-            id="searchInput"
-            className={style.searchBar}
-            loading={searching}
-            onResultSelect={handleResultSelect}
-            onSearchChange={e => handleSearchChange(e.target.value, nestedChecklist)}
-            results={filtredResults}
-            value={searchQuery}
-            placeholder="Search checklists..."
-          />
-          <Segment color="blue" className={style.isPrivateWrapper}>
-            <Icon
-              color={isPrivate ? 'red' : 'green'}
-              name={isPrivate ? 'lock' : 'unlock'}
-              size="large"
+    <>
+      <div className={style.nestedChecklistWrapper}>
+        <Container>
+          <div className={style.searchBarWrapper}>
+            <Search
+              id="searchInput"
+              className={style.searchBar}
+              loading={searching}
+              onResultSelect={handleResultSelect}
+              onSearchChange={e => handleSearchChange(e.target.value, nestedChecklist)}
+              results={filtredResults}
+              value={searchQuery}
+              placeholder="Search checklists..."
             />
-            <Checkbox
-              fitted
-              label={isPrivate ? 'Private' : 'Public'}
-              name="isPrivate"
-              toggle
-              checked={!!isPrivate}
-              onChange={() => setIsPrivate(!isPrivate)}
-            />
-          </Segment>
-          <div className={style.createBtn}>
-            <Button
-              positive
-              content="Save"
-              loading={isSaving}
-              onClick={() => handleCreating(title, author, isPrivate, nestedChecklist)}
-              disabled={nestedChecklist.length < 1 || title.length < 1}
-            />
-          </div>
-        </div>
-        <div className={style.segmentWrapper}>
-          <div className={style.titleInputWrapper}>
-            <input
-              className={style.titleInput}
-              value={title}
-              onChange={e => changeTitle(e.target.value)}
-              type="text"
-              placeholder="Title..."
-            />
-          </div>
-          <Segment className={style.listWrapper}>
-            {nestedChecklist.length > 0
-              ? (
-                <ShowListOfCheckList
-                  data={nestedChecklist}
-                  removeChecklist={handleRemove}
-                  nested
+            <div className={style.btnWrapper}>
+              <Segment color="blue" className={style.isPrivateWrapper}>
+                <Icon
+                  color={isPrivate ? 'red' : 'green'}
+                  name={isPrivate ? 'lock' : 'unlock'}
+                  size="large"
                 />
-              )
-              : (
-                <>
-                  <label htmlFor="searchInput" className={style.headerWrapper}>
-                    <Header as="h2" icon>
-                      <Icon name="search plus" />
-                      Find and add checklists...
-                    </Header>
-                  </label>
-                </>
-              )
-            }
-          </Segment>
-        </div>
-      </Container>
-    </div>
+                <Checkbox
+                  fitted
+                  label={isPrivate ? 'Private' : 'Public'}
+                  name="isPrivate"
+                  toggle
+                  checked={!!isPrivate}
+                  onChange={() => setIsPrivate(!isPrivate)}
+                />
+              </Segment>
+              {nestedChecklist.length < 1 || title.length < 1
+                ? (
+                  <Popup
+                    trigger={(
+                      <div>
+                        <Button
+                          positive
+                          content="Save"
+                          disabled
+                        />
+                      </div>
+                    )}
+                    wide="very"
+                    content="Add title and at least one checklist to save"
+                    position="bottom right"
+                    verticalOffset={5}
+                    horizontalOffset={-15}
+                  />
+                )
+                : (
+                  <Button
+                    positive
+                    content="Save"
+                    loading={isSaving}
+                    onClick={() => handleCreating(title, author, isPrivate, nestedChecklist)}
+                  />
+                )}
+            </div>
+          </div>
+          <div className={style.segmentWrapper}>
+            <div className={style.titleInputWrapper}>
+              <input
+                className={style.titleInput}
+                value={title}
+                onChange={e => changeTitle(e.target.value)}
+                type="text"
+                placeholder="Title..."
+              />
+            </div>
+            <Segment className={style.listWrapper}>
+              {nestedChecklist.length > 0
+                ? (
+                  <ShowListOfCheckList
+                    data={nestedChecklist}
+                    removeChecklist={handleRemove}
+                    createNestedPage
+                  />
+                )
+                : (
+                  <>
+                    <label htmlFor="searchInput" className={style.headerWrapper}>
+                      <Header as="h2" icon>
+                        <Icon name="search plus" />
+                        Find and add checklists...
+                      </Header>
+                    </label>
+                  </>
+                )
+              }
+            </Segment>
+          </div>
+        </Container>
+      </div>
+      <Footer />
+    </>
   );
 };
 
