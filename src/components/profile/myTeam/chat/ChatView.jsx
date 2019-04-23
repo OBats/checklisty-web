@@ -5,6 +5,7 @@ import { Icon } from 'semantic-ui-react';
 import Textarea from 'react-textarea-autosize';
 import timeChecker from '../../../checklist/team-checklist/functions';
 import loaderStyle from '../../../main/loader.module.css';
+import avatar from '../../Avatar/avatar.png';
 import styles from './css/Chat.module.css';
 
 const ChatView = ({
@@ -60,7 +61,7 @@ const ChatView = ({
               className={styles.chatMsgItem}
             >
               <div className={styles.avatarBlock}>
-                <img src={messageInfo.avatar} alt="User avatar" width="50" height="50" />
+                <img src={messageInfo.avatar || avatar} alt="User avatar" width="50" height="50" />
               </div>
 
               <div className={styles.msgInfoContainer}>
