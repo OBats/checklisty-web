@@ -60,9 +60,9 @@ const ChecklistTeamBlock = (props) => {
       setMessages(response.data.teamLog || []);
     };
     didMounted();
-  }, []);
 
-  useEffect(() => (() => socket.disconnect()), []);
+    return () => socket.disconnect();
+  }, []);
 
   const countProgressOnCheckboxClick = async (flag, indexOfElement, indexOfSection) => {
     const { sections_data } = props.checkListData;
