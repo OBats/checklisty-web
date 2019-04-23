@@ -80,10 +80,6 @@
 @media screen and (max-width: 480px) {
   .menu.menu.menu {
     padding: 0px 5px;
-
-  }
-  .menu.menu.menu>div {
-    padding-right: 10px;
   }
 
   .NavBarAvatarWrapper.NavBarAvatarWrapper.NavBarAvatarWrapper.NavBarAvatarWrapper {

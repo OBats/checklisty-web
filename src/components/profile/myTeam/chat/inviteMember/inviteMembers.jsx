@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { addSelectedUser } from '../../../../../actions/selectUserAction';
 import SelectedUsers from '../../createTeam/SelectedUsers';
 import SearchUser from '../../createTeam/SearchUser';
-import styles from '../css/ChatSideBar.module.css';
+import styles from '../css/Chat.module.css';
 import http from '../../../../../api/http';
 
 
