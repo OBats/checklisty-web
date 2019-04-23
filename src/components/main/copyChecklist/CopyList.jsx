@@ -25,7 +25,7 @@ const CopyList = ({ user, checkList }) => {
     }
   };
 
-  const text = isCopied ? 'Already Copied' : 'Coppy list';
+  const text = isCopied ? 'Already Copied' : 'Copy list';
 
   return (
     <Dropdown
