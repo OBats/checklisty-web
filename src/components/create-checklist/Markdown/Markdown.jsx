@@ -4,6 +4,7 @@ import ChecklistPreviewForMarkodwn from '../../checklist/ChecklistPreviewForMark
 import styles from './css/NewChecklistMarkdown.module.css';
 import 'brace/mode/markdown';
 import 'brace/theme/textmate';
+import MarkdownDescr from './MarkdownDescr';
 
 const Markdown = ({ errorArr, ...props }) => {
   const errors = errorArr.map(err => ({
@@ -39,6 +40,7 @@ const Markdown = ({ errorArr, ...props }) => {
               tabSize: 1,
             }}
           />
+          <MarkdownDescr />
         </div>
         <div className={styles.markdownPreview}>
           <h1 className={styles.checklistTitle}>{props.checkList.title}</h1>

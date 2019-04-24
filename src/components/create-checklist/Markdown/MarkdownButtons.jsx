@@ -32,7 +32,7 @@ const MarkdownButtons = (props) => {
     <div className={styles.btnWrapper}>
       <Segment compact>
         <Button className={styles.btn} onClick={() => handleClick()}>Upload markdown...</Button>
-        <Button className={styles.btn} onClick={() => setIsOpen(true)}>Clear markdown</Button>
+        <Button className={styles.btn} onClick={() => setIsOpen(true)}>Clear markdown...</Button>
         <span className={styles.saveCloseWrapper}>
           <div className={styles.isPrivateWrapper}>
             <Icon
@@ -67,7 +67,7 @@ const MarkdownButtons = (props) => {
             onClick={() => setIsConfirmOpen(true)}
             disabled={isMdValid}
           >
-            Close
+            Close...
           </Button>
         </span>
         <Modal

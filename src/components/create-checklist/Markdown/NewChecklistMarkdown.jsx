@@ -4,8 +4,7 @@ import { mdParse } from './MakdownParser';
 import previewExample from './mdExample';
 import Markdown from './Markdown';
 import styles from './css/NewChecklistMarkdown.module.css';
-import { ErrorHandling,
-  SuccessHandling } from '../../toasters/MessagesHandling';
+import { ErrorHandling, SuccessHandling } from '../../toasters/MessagesHandling';
 import MarkdownButtons from './MarkdownButtons';
 import Footer from '../../main/Footer';
 

@@ -21,6 +21,7 @@
 }
 
 .markdownEditor {
+  position: relative;
   width: 40%;
 }
 
@@ -153,7 +154,7 @@ input:focus {
 .mdDescrBtn {
   position: absolute;
   top: 0;
-  right: 0;
+  right: 15px;
 }
 
 .mdDescrBtn {
