@@ -22,31 +22,35 @@ import AdminBoard from './components/admin/AdminBoard';
 import NotFound404 from './components/utils/404-page';
 import CreateNestedChecklist from './components/nested-checklists/create-nested-checklist/CreateNestedChecklist';
 import ShowNestedChecklist from './components/main/MainPage/ShowNestedChecklist';
+import Footer from './components/main/Footer';
 
 const Routes = () => (
   <React.Fragment>
     <NavBar />
-    <Switch>
-      <Route exact path="/" component={HomePage} />
-      <Route exact path="/auth/signin/" component={SignIn} />
-      <Route exact path="/auth/signup/" component={SignUp} />
-      <Route exact path="/auth/forgot-password/" component={ForgotPassword} />
-      <Route exact path="/auth/reset-password/" component={ResetPassword} />
-      <ProtectedRoute exact path="/profile/maininfo" component={ProfileInfo} />
-      <ProtectedRoute exact path="/profile/mylists" component={ProfileLists} />
-      <ProtectedRoute exact path="/profile/myteam" component={ProfileTeam} />
-      <ProtectedRoute exact path="/profile/myteam/:id" component={TeamView} />
-      <ProtectedRoute exact path="/admin" component={AdminBoard} />
-      <Route exact path="/:id" component={ShowCheckList} />
-      <Route exact path="/nested-checklist/:id" component={ShowNestedChecklist} />
-      <ProtectedRoute exact path="/create-checklist/form" component={NewChecklistForm} />
-      <ProtectedRoute exact path="/create-checklist/markdown" component={NewChecklistMarkdown} />
-      <ProtectedRoute exact path="/edit-checklist/:slug" component={EditChecklistForm} />
-      <ProtectedRoute exact path="/edit-checklist-markdown/:slug" component={EditChecklistMarkdown} />
-      <ProtectedRoute exact path="/profile/myteam/:id/:slug" component={ShowTeamChecklist} />
-      <ProtectedRoute exact path="/create-checklist/nested" component={CreateNestedChecklist} />
-      <Route component={NotFound404} />
-    </Switch>
+    <div style={{ paddingBottom: '5rem' }}>
+      <Switch>
+        <Route exact path="/" component={HomePage} />
+        <Route exact path="/auth/signin/" component={SignIn} />
+        <Route exact path="/auth/signup/" component={SignUp} />
+        <Route exact path="/auth/forgot-password/" component={ForgotPassword} />
+        <Route exact path="/auth/reset-password/" component={ResetPassword} />
+        <ProtectedRoute exact path="/profile/maininfo" component={ProfileInfo} />
+        <ProtectedRoute exact path="/profile/mylists" component={ProfileLists} />
+        <ProtectedRoute exact path="/profile/myteam" component={ProfileTeam} />
+        <ProtectedRoute exact path="/profile/myteam/:id" component={TeamView} />
+        <ProtectedRoute exact path="/admin" component={AdminBoard} />
+        <Route exact path="/:id" component={ShowCheckList} />
+        <Route exact path="/nested-checklist/:id" component={ShowNestedChecklist} />
+        <ProtectedRoute exact path="/create-checklist/form" component={NewChecklistForm} />
+        <ProtectedRoute exact path="/create-checklist/markdown" component={NewChecklistMarkdown} />
+        <ProtectedRoute exact path="/edit-checklist/:slug" component={EditChecklistForm} />
+        <ProtectedRoute exact path="/edit-checklist-markdown/:slug" component={EditChecklistMarkdown} />
+        <ProtectedRoute exact path="/profile/myteam/:id/:slug" component={ShowTeamChecklist} />
+        <ProtectedRoute exact path="/create-checklist/nested" component={CreateNestedChecklist} />
+        <Route component={NotFound404} />
+      </Switch>
+    </div>
+    <Footer />
     <MessageContainer />
   </React.Fragment>
 );

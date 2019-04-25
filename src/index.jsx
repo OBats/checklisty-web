@@ -8,13 +8,16 @@ import store from './store';
 import * as serviceWorker from './serviceWorker';
 import './index.css';
 
+const root = document.getElementById('root');
+root.style.position = 'relative';
+root.style.minHeight = '100vh';
 
 // eslint-disable-next-line react/jsx-filename-extension
 ReactDOM.render(
   <Provider store={store}>
     <App />
   </Provider>,
-  document.getElementById('root'),
+  root,
 );
 
 // If you want your app to work offline and load faster, you can change

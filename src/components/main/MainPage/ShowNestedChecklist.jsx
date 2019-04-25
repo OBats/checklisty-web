@@ -6,7 +6,6 @@ import loader from '../loader.module.css';
 import styles from './ShowNestedChecklist.module.css';
 import NotFound404 from '../../utils/404-page';
 import { ErrorHandling } from '../../toasters/MessagesHandling';
-import Footer from '../Footer';
 import Header from '../Header';
 
 const ShowNestedChecklist = (props) => {
@@ -54,7 +53,6 @@ const ShowNestedChecklist = (props) => {
           </div>
         </Container>
       </div>
-      <Footer />
     </>
   );
 };

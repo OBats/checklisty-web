@@ -10,7 +10,7 @@ import PasswordForm from './editProfileForms/PasswordForm';
 const panes = [
   { menuItem: 'Edit Profile',
     render: () => (
-      <Tab.Pane>
+      <Tab.Pane className={styles.footerFix}>
         <Grid.Row>
           <div className={styles.profileAvatar}>
             <AvatarForProfile />

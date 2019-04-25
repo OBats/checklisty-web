@@ -1,13 +1,13 @@
 /* eslint-disable no-use-before-define */
 /* eslint-disable import/no-mutable-exports */
 /* eslint-disable  no-bitwise */
-const maxParticleCount = 150; // set max confetti count
-const particleSpeed = 2; // set the particle animation speed
-let startConfetti; // call to start confetti animation
-let stopConfetti; // call to stop adding confetti
-let toggleConfetti; // call to start or stop the confetti animation depending on whether it's already running
-let removeConfetti; // call to stop the confetti animation and remove all confetti immediately
-let isConfettiRunning; // call and returns true or false depending on whether the animation is running
+const maxParticleCount = 150;
+const particleSpeed = 2;
+let startConfetti;
+let stopConfetti;
+let toggleConfetti;
+let removeConfetti;
+let isConfettiRunning;
 
 (function () {
   startConfetti = startConfettiInner;

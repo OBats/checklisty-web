@@ -9,7 +9,6 @@ import jsonToMd from '../../create-checklist/Markdown/JsonToMdParser';
 import MarkdownButtons from '../../create-checklist/Markdown/MarkdownButtons';
 import loaderStyle from '../../main/loader.module.css';
 import NotFound404 from '../../utils/404-page';
-import Footer from '../../main/Footer';
 
 const NewChecklistMarkdown = (props) => {
   const [mdValue, setMdValue] = useState('');
@@ -179,7 +178,6 @@ const NewChecklistMarkdown = (props) => {
           teamId={teamId}
         />
       </div>
-      <Footer />
     </div>
   );
 };

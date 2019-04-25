@@ -1,5 +1,5 @@
 .nestedChecklistWrapper {
-  min-height: calc(100vh - 160px);
+  min-height: calc(100vh - 160px + 6rem);
   margin-top: -14px;
   padding: 30px 0;
   background-color: #EDEDED;

@@ -8,7 +8,6 @@ import http from '../../../api/http';
 import loaderStyle from '../loader.module.css';
 import Header from '../Header';
 import styles from './ShowCheckList.module.css';
-import Footer from '../Footer';
 import MainChecklistBlock from '../../checklist/MainChecklistBlock';
 import NotFound404 from '../../utils/404-page';
 
@@ -58,7 +57,6 @@ class ShowCheckList extends Component {
         <div className={styles.checkListContainer}>
           <MainChecklistBlock checkListData={checkList} />
         </div>
-        <Footer />
       </div>
     );
   }
