@@ -23,6 +23,7 @@ const TeamView = (props) => {
     if (token) {
       http.get(`/api/team/join/a?token=${token}`)
         .then(() => {
+          setLoading(false);
           props.history.push(`/profile/myteam/${props.match.params.id}`);
         })
         .catch(() => props.history.push('/profile/myteam'));
