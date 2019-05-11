@@ -1,3 +1,7 @@
 .chatTab.chatTab.chatTab {
     border: 0;
 }
+.footerFix.footerFix.footerFix.footerFix.footerFix {
+    min-height: 500px;
+    margin-bottom: 1rem;
+}

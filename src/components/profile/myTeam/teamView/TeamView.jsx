@@ -10,7 +10,7 @@ import { saveTeamName } from '../../../../actions/saveTeamName';
 import Header from '../../../main/Header';
 
 const panes = [
-  { menuItem: 'Team checklists', render: props => <Tab.Pane><TeamListsContainer id={props.id} /></Tab.Pane> },
+  { menuItem: 'Team checklists', render: props => <Tab.Pane className={styles.footerFix}><TeamListsContainer id={props.id} /></Tab.Pane> },
   { menuItem: 'Chat', render: props => <Tab.Pane className={styles.chatTab}><ChatContainer teamId={props.id} /></Tab.Pane> },
 ];
 

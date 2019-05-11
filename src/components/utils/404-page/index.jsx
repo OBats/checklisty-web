@@ -2,7 +2,6 @@ import React from 'react';
 import { Button } from 'semantic-ui-react';
 import Link from 'react-router-dom/Link';
 import styles from './css/NotFound404.module.css';
-import Footer from '../../main/Footer';
 
 const NotFound404 = () => (
   <>
@@ -25,7 +24,6 @@ const NotFound404 = () => (
         </Link>
       </div>
     </div>
-    <Footer />
   </>
 );
 

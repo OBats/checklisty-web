@@ -6,7 +6,6 @@ import { findChecklists, createNestedChecklist } from '../../../api/checklist-ap
 import ShowListOfCheckList from '../../main/MainPage/ShowListOfCheckList';
 import style from './css/CreateNestedChecklist.module.css';
 import { ErrorHandling, SuccessHandling } from '../../toasters/MessagesHandling';
-import Footer from '../../main/Footer';
 
 const CreateNestedChecklist = (props) => {
   const [searching, setSearching] = useState(false);
@@ -188,7 +187,6 @@ const CreateNestedChecklist = (props) => {
           </div>
         </Container>
       </div>
-      <Footer />
     </>
   );
 };
